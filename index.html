@@ -38,6 +38,14 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        .details-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .details-list li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -45,65 +53,58 @@
         <h1>PHP Bug Tracker</h1>
     </header>
     <main>
-        <h2>Open Bugs</h2>
-        <table>
+        <h2>Bug List</h2>
+        <table id="bugTable">
             <thead>
                 <tr>
                     <th>Bug ID</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Last Updated</th>
+                    <th>Identifier</th>
+                    <th>Bug Hit</th>
                     <th>Details</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>PHP-1234</td>
-                    <td>Segmentation fault in function xyz</td>
-                    <td>Open</td>
-                    <td>2024-07-30</td>
-                    <td><a href="#">View Details</a></td>
-                </tr>
-                <tr>
-                    <td>PHP-1235</td>
-                    <td>Memory leak in function abc</td>
-                    <td>In Progress</td>
-                    <td>2024-07-29</td>
-                    <td><a href="#">View Details</a></td>
-                </tr>
-                <!-- Add more bug rows as needed -->
-            </tbody>
-        </table>
-
-        <h2>Closed Bugs</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Bug ID</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Last Updated</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>PHP-1230</td>
-                    <td>Array index out of bounds</td>
-                    <td>Closed</td>
-                    <td>2024-07-28</td>
-                    <td><a href="#">View Details</a></td>
-                </tr>
-                <tr>
-                    <td>PHP-1231</td>
-                    <td>Null pointer dereference</td>
-                    <td>Closed</td>
-                    <td>2024-07-27</td>
-                    <td><a href="#">View Details</a></td>
-                </tr>
-                <!-- Add more closed bug rows as needed -->
+                <!-- Rows will be populated by JavaScript -->
             </tbody>
         </table>
     </main>
+
+    <script>
+        // Fetch and populate bug data
+        fetch('bugs.json')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#bugTable tbody');
+                data.forEach(bug => {
+                    const tr = document.createElement('tr');
+
+                    const bugIDCell = document.createElement('td');
+                    bugIDCell.textContent = bug.bugID;
+                    tr.appendChild(bugIDCell);
+
+                    const identifierCell = document.createElement('td');
+                    identifierCell.textContent = bug.identifier;
+                    tr.appendChild(identifierCell);
+
+                    const bugHitCell = document.createElement('td');
+                    bugHitCell.textContent = bug.bugHit;
+                    tr.appendChild(bugHitCell);
+
+                    const detailsCell = document.createElement('td');
+                    const ul = document.createElement('ul');
+                    ul.className = 'details-list';
+                    bug.details.forEach(detail => {
+                        const li = document.createElement('li');
+                        li.textContent = detail;
+                        ul.appendChild(li);
+                    });
+                    detailsCell.appendChild(ul);
+                    tr.appendChild(detailsCell);
+
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error loading bug data:', error));
+    </script>
 </body>
 </html>
