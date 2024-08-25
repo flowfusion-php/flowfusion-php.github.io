@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Bug Tracker</title>
+    <title>FlowFusion PHP Bug Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -95,8 +95,11 @@
                     ul.className = 'details-list';
                     bug.details.forEach(detail => {
                         const li = document.createElement('li');
-                        li.textContent = detail;
-                        ul.appendChild(li);
+                        const link = document.createElement('a');
+                        link.href = `/${detail}/`; // Create link to the corresponding folder
+                        link.textContent = detail; // Set the text content to the detail
+                        li.appendChild(link); // Append the link to the list item
+                        ul.appendChild(li); // Append the list item to the list
                     });
                     detailsCell.appendChild(ul);
                     tr.appendChild(detailsCell);
