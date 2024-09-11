@@ -1,12 +1,13 @@
 --TEST--
-Bug #74836 (isset on zero-prefixed numeric indexes in array broken)+Test usleep() function
+Bug #60494 (iconv_mime_decode does ignore special characters)+testing integer overflow (32bit)
 --INI--
-implicit_flush=0
-serialize_precision=5
---SKIPIF--
-<?php
-if (getenv("SKIP_SLOW_TESTS")) die("skip slow test");
-?>
+precision=14
+error_reporting=8191
+session.cookie_secure=TRUE
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0215
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,54 +72,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = "1234567890a";
-$a[10] = "42";
-$i = "010";
-var_dump($s["10"], isset($s["10"]));
-var_dump($s["010"], isset($s["010"]));
-var_dump($s[$i], isset($s[$i]));
-var_dump($a["10"], isset($a["10"]));
-var_dump($a["010"], isset($a["010"]));
-var_dump($a[$i], isset($a[$i]));
-$fusion = $s;
+var_dump(iconv_mime_decode('Ã¤'));
+var_dump(iconv_mime_decode('Ã¶'));
+var_dump(iconv_mime_decode('Ã'));
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-set_time_limit(20);
-echo "*** Testing usleep() : basic functionality ***\n";
-$sleeptime = 1000000; // == 1 seconds
-// Test passes if sleeps for at least 98% of specified time
-$sleeplow = $sleeptime - ($sleeptime * 2 /100);
-$fusion = microtime(true);
-// Sleep for a while
-usleep($sleeptime);
-$time_end = microtime(true);
-$time = ($time_end - $time_start) * 1000 * 1000;
-$summary = "Thread slept for " . $time . " micro-seconds\n";
-if ($time >= $sleeplow) {
-    echo "TEST PASSED: $summary";
-} else {
-    echo "TEST FAILED: $summary";
+$doubles = array(
+    076545676543223,
+    032325463734,
+    0777777,
+    07777777777777,
+    033333333333333,
+    );
+foreach ($doubles as $d) {
+    $l = (double)$d;
+    var_dump($l);
 }
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+iconv
 --EXPECTF--
-string(1) "a"
-bool(true)
-string(1) "a"
-bool(true)
-string(1) "a"
-bool(true)
-string(2) "42"
-bool(true)
-
-Warning: Undefined array key "010" in %s on line %d
-NULL
+Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
 bool(false)
 
-Warning: Undefined array key "010" in %s on line %d
-NULL
+Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
 bool(false)
-*** Testing usleep() : basic functionality ***
-TEST PASSED: Thread slept for %f micro-seconds
+
+Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
+bool(false)
+float(4308640384%d)
+float(3545655%d)
+float(262143)
+float(549755813%d)
+float(1884877076%d)
+Done

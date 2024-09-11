@@ -61,33 +61,99 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-    echo "--- testing: $longVal ---\n";
-    try {
-        var_dump(dechex($longVal));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
+class Test {
+    public int|float $prop;
+    public int|bool $prop2;
 }
-$fusion = $longVal;
+/* Incrementing a int|float property past int min/max is legal */
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+var_dump(is_double($test->prop));
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$r =& $test->prop;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+/* Incrementing a non-int|float property past int min/max is an error,
+ * even if the result of the overflow (a float) would technically be allowed
+ * under a type coercion. */
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = array(
-   "0","65","-44", "1.2", "-7.7", "abc", "123abc", "123e5", "123e5xyz", " 123abc", "123 abc", "123abc ", "3.4a",
-   "a5.9"
-);
-foreach ($strVals as $strVal) {
-   echo "--- testing: '$strVal' ---\n";
-   var_dump(bin2hex(~$strVal));
-}
+var_dump(count(range(PHP_INT_MIN + 513, PHP_INT_MIN)));
+var_dump(count(range(PHP_INT_MIN, PHP_INT_MIN + 513)));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -1,16 +1,15 @@
 --TEST--
-JIT ASSIGN: Typed reference error with return value+set $value parameter variance
+Interface may contain only get with no implementation+JIT ASSIGN_DIM: 015
 --INI--
 opcache.enable=1
 opcache.enable_cli=1
 opcache.file_update_protection=0
-opcache.protect_memory=1
-session.use_cookies=1
-opcache.jit_buffer_size=1M
+default_charset=UTF-8
+implicit_flush=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0001
+opcache.jit=1002
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -75,40 +74,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public string $x;
+interface I {
+    public $prop { get; }
 }
-function test() {
-    $test = new Test;
-    $test->x = "";
-    $r =& $test->x;
-    +($r = $y);
+class A implements I {
+    public $prop { get {} }
 }
-try {
-    test();
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $test;
+$fusion = $prop;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface X {}
-interface Y extends X {}
-class A {
-    public Y $prop {
-        set(X $fusion) {}
-    }
-}
-class B extends A {
-    public Y $prop {
-        set(Y $prop) {}
-    }
-}
+set_error_handler(function($code, $msg) use (&$my_var) {
+	echo "Error: $msg\n";
+    $my_var = 0;
+});
+$my_var[] = $fusion;
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-Warning: Undefined variable $y in %s on line %d
-Cannot assign null to reference held by property Test::$x of type string
-Fatal error: Declaration of B::$prop::set(Y $prop): void must be compatible with A::$prop::set(X $prop): void in %s on line %d
+
+Error: Undefined variable $y
+DONE

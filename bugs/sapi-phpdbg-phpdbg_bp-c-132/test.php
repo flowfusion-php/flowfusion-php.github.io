@@ -61,23 +61,21 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class A {
-    function getFn() {
-        return function() {
-        };
-    }
-}
-$a = new A;
-try {
-    $c = $a->getFn()->b = new stdClass;
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $c;
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+echo "*** Testing date_create() : basic functionality ***\n";
+var_dump( date_create() );
+var_dump( date_create("GMT") );
+var_dump( date_create("2005-07-14 22:30:41") );
+var_dump( date_create("2005-07-14 22:30:41 GMT") );
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

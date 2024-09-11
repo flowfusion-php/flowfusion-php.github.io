@@ -1,62 +1,501 @@
-*** Testing session_set_save_handler() : using closures as callbacks ***
-string(5) "files"
+$_main:
+     ; (lines=67, args=0, vars=8, tmps=2)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused521.php:1-82
+0000 ASSIGN CV0($pharconfig) int(0)
+0001 INCLUDE_OR_EVAL (require_once) string("files/phar_oo_test.inc")
+0002 V8 = NEW 1 string("Phar")
+0003 SEND_VAR_EX CV2($fname) 1
+0004 DO_FCALL
+0005 ASSIGN CV1($phar) V8
+0006 INIT_METHOD_CALL 1 CV1($phar) string("setInfoClass")
+0007 SEND_VAL_EX string("SplFileObject") 1
+0008 DO_FCALL
+0009 ASSIGN_DIM CV1($phar) string("f.php")
+0010 OP_DATA string("hi")
+0011 INIT_FCALL 1 96 string("var_dump")
+0012 T8 = ISSET_ISEMPTY_DIM_OBJ (isset) CV1($phar) string("f.php")
+0013 SEND_VAL T8 1
+0014 DO_ICALL
+0015 T8 = FETCH_DIM_R CV1($phar) string("f.php")
+0016 ECHO T8
+0017 ECHO string("
+")
+0018 UNSET_DIM CV1($phar) string("f.php")
+0019 INIT_FCALL 1 96 string("var_dump")
+0020 T8 = ISSET_ISEMPTY_DIM_OBJ (isset) CV1($phar) string("f.php")
+0021 SEND_VAL T8 1
+0022 DO_ICALL
+0023 ASSIGN CV3($fusion) CV0($pharconfig)
+0024 INIT_FCALL 1 96 string("array_rand")
+0025 INIT_FCALL 0 80 string("get_defined_vars")
+0026 V9 = DO_ICALL
+0027 T8 = ASSIGN CV5($definedVars) V9
+0028 SEND_VAL T8 1
+0029 V9 = DO_ICALL
+0030 T8 = FETCH_DIM_R CV5($definedVars) V9
+0031 ASSIGN CV4($v1) T8
+0032 JMPZ CV3($fusion) 0035
+0033 T9 = QM_ASSIGN int(1)
+0034 JMP 0036
+0035 T9 = QM_ASSIGN int(1)
+0036 T8 = FRAMELESS_ICALL_3(substr) string("foo") int(1)
+0037 OP_DATA T9
+0038 ECHO T8
+0039 INIT_FCALL 1 96 string("array_rand")
+0040 INIT_FCALL 0 80 string("get_defined_vars")
+0041 V9 = DO_ICALL
+0042 T8 = ASSIGN CV5($definedVars) V9
+0043 SEND_VAL T8 1
+0044 V9 = DO_ICALL
+0045 T8 = FETCH_DIM_R CV5($definedVars) V9
+0046 ASSIGN CV6($v2) T8
+0047 INIT_FCALL 1 96 string("array_rand")
+0048 INIT_FCALL 0 80 string("get_defined_vars")
+0049 V9 = DO_ICALL
+0050 T8 = ASSIGN CV5($definedVars) V9
+0051 SEND_VAL T8 1
+0052 V9 = DO_ICALL
+0053 T8 = FETCH_DIM_R CV5($definedVars) V9
+0054 ASSIGN CV7($v3) T8
+0055 INIT_FCALL 4 144 string("var_dump")
+0056 SEND_VAL string("random_var:") 1
+0057 SEND_VAR CV4($v1) 2
+0058 SEND_VAR CV6($v2) 3
+0059 SEND_VAR CV7($v3) 4
+0060 DO_ICALL
+0061 INIT_FCALL 3 304 string("var_fusion")
+0062 SEND_VAR CV4($v1) 1
+0063 SEND_VAR CV6($v2) 2
+0064 SEND_VAR CV7($v3) 3
+0065 DO_UCALL
+0066 RETURN int(1)
+LIVE RANGES:
+     8: 0003 - 0005 (new)
+     8: 0037 - 0038 (tmp/var)
 
-Warning: session_module_name(): Session handler module "" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 68
-bool(false)
+fuzz_internal_interface:
+     ; (lines=97, args=1, vars=18, tmps=5)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused521.php:2-50
+0000 CV0($vars) = RECV 1
+0001 ASSIGN CV1($result) array(...)
+0002 INIT_FCALL 0 80 string("get_loaded_extensions")
+0003 V18 = DO_ICALL
+0004 ASSIGN CV2($extensions) V18
+0005 ASSIGN CV3($allInternalFunctions) array(...)
+0006 INIT_FCALL 0 80 string("get_defined_functions")
+0007 V18 = DO_ICALL
+0008 ASSIGN CV4($definedFunctions) V18
+0009 T18 = FETCH_DIM_R CV4($definedFunctions) string("internal")
+0010 ASSIGN CV5($internalFunctions) T18
+0011 INIT_FCALL 2 112 string("array_merge")
+0012 SEND_VAR CV3($allInternalFunctions) 1
+0013 SEND_VAR CV5($internalFunctions) 2
+0014 V18 = DO_ICALL
+0015 ASSIGN CV3($allInternalFunctions) V18
+0016 V18 = FE_RESET_R CV2($extensions) 0030
+0017 FE_FETCH_R V18 CV6($extension) 0030
+0018 INIT_FCALL 1 96 string("get_extension_funcs")
+0019 SEND_VAR CV6($extension) 1
+0020 V19 = DO_ICALL
+0021 ASSIGN CV7($functions) V19
+0022 T19 = TYPE_CHECK TYPE [null, true, long, double, string, array, object, resource] CV7($functions)
+0023 JMPZ T19 0017
+0024 INIT_FCALL 2 112 string("array_merge")
+0025 SEND_VAR CV3($allInternalFunctions) 1
+0026 SEND_VAR CV7($functions) 2
+0027 V19 = DO_ICALL
+0028 ASSIGN CV3($allInternalFunctions) V19
+0029 JMP 0017
+0030 FE_FREE V18
+0031 INIT_FCALL 2 112 string("array_filter")
+0032 SEND_VAR CV3($allInternalFunctions) 1
+0033 T18 = DECLARE_LAMBDA_FUNCTION 0
+0034 SEND_VAL T18 2
+0035 V18 = DO_ICALL
+0036 ASSIGN CV3($allInternalFunctions) V18
+0037 V18 = FE_RESET_R CV0($vars) 0095
+0038 T19 = FE_FETCH_R V18 CV8($v1) 0095
+0039 ASSIGN CV9($i) T19
+0040 V19 = FE_RESET_R CV0($vars) 0093
+0041 T20 = FE_FETCH_R V19 CV10($v2) 0093
+0042 ASSIGN CV11($j) T20
+0043 INIT_FCALL 1 96 string("array_rand")
+0044 SEND_VAR CV3($allInternalFunctions) 1
+0045 V21 = DO_ICALL
+0046 T20 = FETCH_DIM_R CV3($allInternalFunctions) V21
+0047 ASSIGN CV12($randomFunction) T20
+0048 V20 = NEW 1 string("ReflectionFunction")
+0049 SEND_VAR_EX CV12($randomFunction) 1
+0050 DO_FCALL
+0051 ASSIGN CV13($reflection) V20
+0052 INIT_METHOD_CALL 0 CV13($reflection) string("getNumberOfParameters")
+0053 V20 = DO_FCALL
+0054 ASSIGN CV14($numParams) V20
+0055 ASSIGN CV15($args) array(...)
+0056 ASSIGN CV16($k) int(0)
+0057 JMP 0067
+0058 T21 = MOD CV16($k) int(2)
+0059 T20 = IS_EQUAL T21 int(0)
+0060 JMPZ T20 0063
+0061 T20 = QM_ASSIGN CV8($v1)
+0062 JMP 0064
+0063 T20 = QM_ASSIGN CV10($v2)
+0064 ASSIGN_DIM CV15($args) NEXT
+0065 OP_DATA T20
+0066 PRE_INC CV16($k)
+0067 T20 = IS_SMALLER CV16($k) CV14($numParams)
+0068 JMPNZ T20 0058
+0069 T21 = ROPE_INIT 3 string("Calling function: ")
+0070 T21 = ROPE_ADD 1 T21 CV12($randomFunction)
+0071 T20 = ROPE_END 2 T21 string(" with arguments: ")
+0072 ECHO T20
+0073 T21 = FRAMELESS_ICALL_2(implode) string(", ") CV15($args)
+0074 T20 = CONCAT T21 string("
+")
+0075 ECHO T20
+0076 INIT_METHOD_CALL 1 CV13($reflection) string("invokeArgs")
+0077 SEND_VAR_EX CV15($args) 1
+0078 V20 = DO_FCALL
+0079 V21 = FETCH_DIM_W CV1($result) CV12($randomFunction)
+0080 ASSIGN_DIM V21 NEXT
+0081 OP_DATA V20
+0082 JMP 0041
+0083 CV17($e) = CATCH string("Throwable")
+0084 T21 = ROPE_INIT 3 string("Error calling function ")
+0085 T21 = ROPE_ADD 1 T21 CV12($randomFunction)
+0086 T20 = ROPE_END 2 T21 string(": ")
+0087 INIT_METHOD_CALL 0 CV17($e) string("getMessage")
+0088 V22 = DO_FCALL
+0089 T21 = CONCAT T20 V22
+0090 T20 = CONCAT T21 string("
+")
+0091 ECHO T20
+0092 JMP 0041
+0093 FE_FREE V19
+0094 JMP 0038
+0095 FE_FREE V18
+0096 RETURN CV1($result)
+LIVE RANGES:
+     18: 0017 - 0030 (loop)
+     18: 0038 - 0095 (loop)
+     19: 0041 - 0093 (loop)
+     20: 0049 - 0051 (new)
+     21: 0069 - 0071 (rope)
+     20: 0079 - 0080 (tmp/var)
+     21: 0084 - 0086 (rope)
+     20: 0087 - 0089 (tmp/var)
+EXCEPTION TABLE:
+     0043, 0083, -, -
 
-Warning: session_module_name(): Session handler module "blah" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 69
-bool(false)
+{closure:fuzz_internal_interface():20}:
+     ; (lines=4, args=1, vars=1, tmps=2)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused521.php:20-22
+0000 CV0($func) = RECV 1
+0001 T2 = FRAMELESS_ICALL_2(strpos) CV0($func) string("posix_")
+0002 T1 = IS_NOT_IDENTICAL T2 int(0)
+0003 RETURN T1
 
-Warning: session_module_name(): Session handler module "foo" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 70
-bool(false)
+var_fusion:
+     ; (lines=24, args=3, vars=6, tmps=2)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused521.php:51-62
+0000 CV0($var1) = RECV 1
+0001 CV1($var2) = RECV 2
+0002 CV2($var3) = RECV 3
+0003 ASSIGN CV3($result) array(...)
+0004 T6 = INIT_ARRAY 3 (packed) CV0($var1) NEXT
+0005 T6 = ADD_ARRAY_ELEMENT CV1($var2) NEXT
+0006 T6 = ADD_ARRAY_ELEMENT CV2($var3) NEXT
+0007 ASSIGN CV4($vars) T6
+0008 INIT_FCALL 1 1248 string("fuzz_internal_interface")
+0009 SEND_VAR CV4($vars) 1
+0010 DO_UCALL
+0011 INIT_FCALL 1 1248 string("fuzz_internal_interface")
+0012 SEND_VAR CV4($vars) 1
+0013 DO_UCALL
+0014 INIT_FCALL 1 1248 string("fuzz_internal_interface")
+0015 SEND_VAR CV4($vars) 1
+0016 DO_UCALL
+0017 RETURN CV3($result)
+0018 CV5($e) = CATCH string("ReflectionException")
+0019 INIT_METHOD_CALL 0 CV5($e) string("getMessage")
+0020 V7 = DO_FCALL
+0021 T6 = CONCAT string("Error: ") V7
+0022 ECHO T6
+0023 RETURN CV3($result)
+LIVE RANGES:
+     6: 0005 - 0007 (tmp/var)
+EXCEPTION TABLE:
+     0008, 0018, -, -
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 74
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Starting session again..!
+$_main:
+     ; (lines=55, args=0, vars=6, tmps=2)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/files/phar_oo_test.inc:1-50
+0000 INIT_FCALL 2 112 string("ini_set")
+0001 SEND_VAL string("date.timezone") 1
+0002 SEND_VAL string("GMT") 2
+0003 DO_ICALL
+0004 T7 = FRAMELESS_ICALL_1(dirname) string("/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/files/phar_oo_test.inc")
+0005 T6 = CONCAT T7 string("/phar_oo_test.phar.php")
+0006 ASSIGN CV0($fname) T6
+0007 T6 = CONCAT string("phar://") CV0($fname)
+0008 ASSIGN CV1($pname) T6
+0009 T7 = CONCAT string("<?php include \"") CV1($pname)
+0010 T6 = CONCAT T7 string("/a.php\"; __HALT_COMPILER(); ?>")
+0011 ASSIGN CV2($file) T6
+0012 ASSIGN CV3($files) array(...)
+0013 T6 = ISSET_ISEMPTY_CV (isset) CV4($pharconfig)
+0014 JMPNZ T6 0016
+0015 ASSIGN CV4($pharconfig) int(0)
+0016 SWITCH_LONG CV4($pharconfig) 0: 0025, 1: 0036, 2: 0039, 3: 0042, default: 0025
+0017 T6 = IS_EQUAL CV4($pharconfig) int(0)
+0018 JMPNZ T6 0025
+0019 T6 = IS_EQUAL CV4($pharconfig) int(1)
+0020 JMPNZ T6 0036
+0021 T6 = IS_EQUAL CV4($pharconfig) int(2)
+0022 JMPNZ T6 0039
+0023 T6 = IS_EQUAL CV4($pharconfig) int(3)
+0024 JMPNZ T6 0042
+0025 ASSIGN_DIM CV3($files) string("a.php")
+0026 OP_DATA string("<?php echo \"This is a.php\\n\"; ?>")
+0027 ASSIGN_DIM CV3($files) string("b.php")
+0028 OP_DATA string("<?php echo \"This is b.php\\n\"; ?>")
+0029 ASSIGN_DIM CV3($files) string("b/c.php")
+0030 OP_DATA string("<?php echo \"This is b/c.php\\n\"; ?>")
+0031 ASSIGN_DIM CV3($files) string("b/d.php")
+0032 OP_DATA string("<?php echo \"This is b/d.php\\n\"; ?>")
+0033 ASSIGN_DIM CV3($files) string("e.php")
+0034 OP_DATA string("<?php echo \"This is e.php\\n\"; ?>")
+0035 JMP 0044
+0036 ASSIGN_DIM CV3($files) string("a.csv")
+0037 OP_DATA string("1,2,3
+2,a,b
+3,\"c\",\"'e'\"")
+0038 JMP 0044
+0039 ASSIGN_DIM CV3($files) string("a.csv")
+0040 OP_DATA string("1,2,3
+2,a,b
+3,\"c\",\"'e'\"
+4
+5,5
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 85
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
-array(4) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-  ["Bar"]=>
-  string(3) "Foo"
-}
-Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
-Cleanup
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
-Destroy [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+7,777")
+0041 JMP 0044
+0042 ASSIGN_DIM CV3($files) string("a.php")
+0043 OP_DATA string("<?php echo new new class;")
+0044 INIT_FCALL 6 176 string("mktime")
+0045 SEND_VAL int(12) 1
+0046 SEND_VAL int(0) 2
+0047 SEND_VAL int(0) 3
+0048 SEND_VAL int(3) 4
+0049 SEND_VAL int(1) 5
+0050 SEND_VAL int(2006) 6
+0051 V6 = DO_ICALL
+0052 ASSIGN CV5($ftime) V6
+0053 INCLUDE_OR_EVAL (include) string("phar_test.inc")
+0054 RETURN int(1)
 
-Fatal error: Uncaught Error: Cannot create references to/from string offsets in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php:98
-Stack trace:
-#0 {main}
-  thrown in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 98
+$_main:
+     ; (lines=180, args=0, vars=22, tmps=4)
+     ; (after optimizer)
+     ; /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/files/phar_test.inc:1-77
+0000 INIT_FCALL 1 96 string("date_default_timezone_set")
+0001 SEND_VAL string("UTC") 1
+0002 DO_ICALL
+0003 ASSIGN CV0($manifest) string("")
+0004 ASSIGN CV1($glags) int(0)
+0005 V22 = FE_RESET_R CV2($files) 0092
+0006 T23 = FE_FETCH_R V22 CV3($cont) 0092
+0007 ASSIGN CV4($name) T23
+0008 BIND_GLOBAL CV5($gflags) string("gflags")
+0009 BIND_GLOBAL CV2($files) string("files")
+0010 ASSIGN CV6($comp) null
+0011 ASSIGN CV7($crc32) null
+0012 ASSIGN CV8($clen) null
+0013 ASSIGN CV9($ulen) null
+0014 T23 = ISSET_ISEMPTY_CV (isset) CV11($ftime)
+0015 JMPZ T23 0018
+0016 T23 = QM_ASSIGN CV11($ftime)
+0017 JMP 0029
+0018 T25 = BEGIN_SILENCE
+0019 INIT_FCALL 6 176 string("mktime")
+0020 SEND_VAL int(12) 1
+0021 SEND_VAL int(0) 2
+0022 SEND_VAL int(0) 3
+0023 SEND_VAL int(3) 4
+0024 SEND_VAL int(1) 5
+0025 SEND_VAL int(2006) 6
+0026 V24 = DO_ICALL
+0027 END_SILENCE T25
+0028 T23 = QM_ASSIGN V24
+0029 ASSIGN CV10($time) T23
+0030 ASSIGN CV12($flags) int(0)
+0031 ASSIGN CV13($perm) int(438)
+0032 ASSIGN CV14($meta) null
+0033 T23 = TYPE_CHECK (array) CV3($cont)
+0034 JMPZ T23 0044
+0035 V23 = FE_RESET_R array(...) 0043
+0036 FE_FETCH_R V23 CV15($what) 0043
+0037 T24 = ISSET_ISEMPTY_DIM_OBJ (isset) CV3($cont) CV15($what)
+0038 JMPZ T24 0036
+0039 T25 = FETCH_DIM_R CV3($cont) CV15($what)
+0040 V24 = FETCH_W (local) CV15($what)
+0041 ASSIGN V24 T25
+0042 JMP 0036
+0043 FE_FREE V23
+0044 T23 = ISSET_ISEMPTY_CV (empty) CV6($comp)
+0045 JMPZ T23 0047
+0046 ASSIGN CV6($comp) CV3($cont)
+0047 T23 = ISSET_ISEMPTY_CV (empty) CV9($ulen)
+0048 JMPZ T23 0051
+0049 T23 = STRLEN CV3($cont)
+0050 ASSIGN CV9($ulen) T23
+0051 T23 = ISSET_ISEMPTY_CV (empty) CV8($clen)
+0052 JMPZ T23 0055
+0053 T23 = STRLEN CV6($comp)
+0054 ASSIGN CV8($clen) T23
+0055 T23 = ISSET_ISEMPTY_CV (empty) CV7($crc32)
+0056 JMPZ T23 0062
+0057 INIT_FCALL 1 96 string("crc32")
+0058 T23 = CAST (string) CV3($cont)
+0059 SEND_VAL T23 1
+0060 V23 = DO_ICALL
+0061 ASSIGN CV7($crc32) V23
+0062 T23 = ISSET_ISEMPTY_CV (isset) CV14($meta)
+0063 JMPZ T23 0068
+0064 INIT_FCALL 1 96 string("serialize")
+0065 SEND_VAR CV14($meta) 1
+0066 V23 = DO_ICALL
+0067 ASSIGN CV14($meta) V23
+0068 INIT_FCALL 2 112 string("pack")
+0069 SEND_VAL string("V") 1
+0070 T23 = STRLEN CV4($name)
+0071 SEND_VAL T23 2
+0072 V24 = DO_ICALL
+0073 T23 = CONCAT V24 CV4($name)
+0074 ASSIGN_OP (CONCAT) CV0($manifest) T23
+0075 INIT_FCALL 7 192 string("pack")
+0076 SEND_VAL string("VVVVVV") 1
+0077 SEND_VAR CV9($ulen) 2
+0078 SEND_VAR CV10($time) 3
+0079 SEND_VAR CV8($clen) 4
+0080 SEND_VAR CV7($crc32) 5
+0081 T23 = BW_OR CV12($flags) CV13($perm)
+0082 SEND_VAL T23 6
+0083 T23 = STRLEN CV14($meta)
+0084 SEND_VAL T23 7
+0085 V24 = DO_ICALL
+0086 T23 = CONCAT V24 CV14($meta)
+0087 ASSIGN_OP (CONCAT) CV0($manifest) T23
+0088 ASSIGN_OP (BW_OR) CV5($gflags) CV12($flags)
+0089 ASSIGN_DIM CV2($files) CV4($name)
+0090 OP_DATA CV6($comp)
+0091 JMP 0006
+0092 FE_FREE V22
+0093 T22 = ISSET_ISEMPTY_CV (isset) CV16($alias)
+0094 JMPNZ T22 0096
+0095 ASSIGN CV16($alias) string("hio")
+0096 T22 = ISSET_ISEMPTY_CV (isset) CV17($pmeta)
+0097 JMPZ T22 0103
+0098 INIT_FCALL 1 96 string("serialize")
+0099 SEND_VAR CV17($pmeta) 1
+0100 V22 = DO_ICALL
+0101 ASSIGN CV17($pmeta) V22
+0102 JMP 0104
+0103 ASSIGN CV17($pmeta) string("")
+0104 INIT_FCALL 5 160 string("pack")
+0105 SEND_VAL string("VnVV") 1
+0106 T22 = COUNT CV2($files)
+0107 SEND_VAL T22 2
+0108 T22 = ISSET_ISEMPTY_CV (isset) CV18($hasdir)
+0109 JMPZ T22 0112
+0110 T22 = QM_ASSIGN int(4368)
+0111 JMP 0113
+0112 T22 = QM_ASSIGN int(4096)
+0113 SEND_VAL T22 3
+0114 SEND_VAR CV5($gflags) 4
+0115 T22 = STRLEN CV16($alias)
+0116 SEND_VAL T22 5
+0117 V22 = DO_ICALL
+0118 T23 = CONCAT V22 CV16($alias)
+0119 INIT_FCALL 2 112 string("pack")
+0120 SEND_VAL string("V") 1
+0121 T22 = STRLEN CV17($pmeta)
+0122 SEND_VAL T22 2
+0123 V24 = DO_ICALL
+0124 T22 = CONCAT T23 V24
+0125 T23 = CONCAT T22 CV17($pmeta)
+0126 T22 = CONCAT T23 CV0($manifest)
+0127 ASSIGN CV0($manifest) T22
+0128 T22 = CAST (string) CV19($file)
+0129 ASSIGN CV19($file) T22
+0130 INIT_FCALL 2 112 string("pack")
+0131 SEND_VAL string("V") 1
+0132 T22 = STRLEN CV0($manifest)
+0133 SEND_VAL T22 2
+0134 V23 = DO_ICALL
+0135 T22 = CONCAT V23 CV0($manifest)
+0136 ASSIGN_OP (CONCAT) CV19($file) T22
+0137 V22 = FE_RESET_R CV2($files) 0142
+0138 FE_FETCH_R V22 CV3($cont) 0142
+0139 T23 = CAST (string) CV3($cont)
+0140 ASSIGN_OP (CONCAT) CV19($file) T23
+0141 JMP 0138
+0142 FE_FREE V22
+0143 INIT_FCALL 2 112 string("file_put_contents")
+0144 SEND_VAR CV20($fname) 1
+0145 SEND_VAR CV19($file) 2
+0146 DO_ICALL
+0147 T23 = BEGIN_SILENCE
+0148 T22 = FETCH_R (local) string("gzip")
+0149 END_SILENCE T23
+0150 JMPZ T22 0163
+0151 INIT_FCALL_BY_NAME 2 string("gzopen")
+0152 SEND_VAR_EX CV20($fname) 1
+0153 SEND_VAL_EX string("w") 2
+0154 V22 = DO_FCALL_BY_NAME
+0155 ASSIGN CV21($fp) V22
+0156 INIT_FCALL 2 112 string("fwrite")
+0157 SEND_VAR CV21($fp) 1
+0158 SEND_VAR CV19($file) 2
+0159 DO_ICALL
+0160 INIT_FCALL 1 96 string("fclose")
+0161 SEND_VAR CV21($fp) 1
+0162 DO_ICALL
+0163 T23 = BEGIN_SILENCE
+0164 T22 = FETCH_R (local) string("bz2")
+0165 END_SILENCE T23
+0166 JMPZ T22 0179
+0167 INIT_FCALL_BY_NAME 2 string("bzopen")
+0168 SEND_VAR_EX CV20($fname) 1
+0169 SEND_VAL_EX string("w") 2
+0170 V22 = DO_FCALL_BY_NAME
+0171 ASSIGN CV21($fp) V22
+0172 INIT_FCALL 2 112 string("fwrite")
+0173 SEND_VAR CV21($fp) 1
+0174 SEND_VAR CV19($file) 2
+0175 DO_ICALL
+0176 INIT_FCALL 1 96 string("fclose")
+0177 SEND_VAR CV21($fp) 1
+0178 DO_ICALL
+0179 RETURN int(1)
+LIVE RANGES:
+     22: 0006 - 0092 (loop)
+     25: 0019 - 0027 (silence)
+     24: 0027 - 0028 (tmp/var)
+     23: 0036 - 0043 (loop)
+     25: 0040 - 0041 (tmp/var)
+     23: 0119 - 0124 (tmp/var)
+     22: 0138 - 0142 (loop)
+     23: 0148 - 0149 (silence)
+     22: 0149 - 0150 (tmp/var)
+     23: 0164 - 0165 (silence)
+     22: 0165 - 0166 (tmp/var)
+
+Deprecated: strlen(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/files/phar_test.inc on line 42
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in

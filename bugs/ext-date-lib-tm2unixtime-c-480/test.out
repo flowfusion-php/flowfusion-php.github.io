@@ -1,98 +1,78 @@
-string(1) "a"
-bool(true)
-string(1) "a"
-bool(true)
-string(1) "a"
-bool(true)
-string(2) "42"
-bool(true)
-
-Warning: Undefined array key "010" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 71
-NULL
+Notice: iconv_mime_decode(): Detected an illegal character in input string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 64
 bool(false)
 
-Warning: Undefined array key "010" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 72
-NULL
+Notice: iconv_mime_decode(): Detected an illegal character in input string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 65
 bool(false)
-*** Testing usleep() : basic functionality ***
 
-Warning: Undefined variable $time_start in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 84
-TEST PASSED: Thread slept for 1.7260394688151E+15 micro-seconds
+Notice: iconv_mime_decode(): Detected an illegal character in input string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 66
+bool(false)
+float(4308640384659)
+float(3545655260)
+float(262143)
+float(549755813887)
+float(1884877076187)
+Done
 string(11) "random_var:"
 array(0) {
 }
-int(1000000)
-float(1.726E+15)
-Calling function: preg_last_error with arguments: 
-Calling function: xml_parser_get_option with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array, 1000000
-Error calling function xml_parser_get_option: xml_parser_get_option(): Argument #1 ($parser) must be of type XMLParser, array given
-Calling function: settype with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array, 1.7260394688151E+15
-
-Warning: settype(): Argument #1 ($var) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
-Error calling function settype: settype(): Argument #2 ($type) must be a valid type
-Calling function: is_callable with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-1000000, Array, 1000000
-
-Warning: is_callable(): Argument #3 ($callable_name) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
-Error calling function is_callable: is_callable(): Argument #2 ($syntax_only) must be of type bool, array given
-Calling function: error_clear_last with arguments: 
-Calling function: key_exists with arguments: 1000000, 1.7260394688151E+15
-Error calling function key_exists: key_exists(): Argument #2 ($array) must be of type array, float given
-Calling function: stream_get_transports with arguments: 
-Calling function: gettype with arguments: 1.7260394688151E+15
-Calling function: closedir with arguments: 1.7260394688151E+15
-Error calling function closedir: closedir(): Argument #1 ($dir_handle) must be of type resource or null, float given
-Calling function: floatval with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+float(1884877076187)
+float(1884877076187)
+Calling function: error_get_last with arguments: 
+Calling function: spl_object_id with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
 Array
-Calling function: preg_replace with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array, 1000000, Array, 1000000, Array
-
-Warning: preg_replace(): Argument #5 ($count) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
-Calling function: array_key_last with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Error calling function spl_object_id: spl_object_id(): Argument #1 ($object) must be of type object, array given
+Calling function: is_link with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
 Array
-Calling function: get_declared_classes with arguments: 
-Calling function: xmlwriter_flush with arguments: 1000000, 1000000
-Error calling function xmlwriter_flush: xmlwriter_flush(): Argument #1 ($writer) must be of type XMLWriter, int given
-Calling function: xmlwriter_end_dtd_attlist with arguments: 1000000
-Error calling function xmlwriter_end_dtd_attlist: xmlwriter_end_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, int given
-Calling function: set_time_limit with arguments: 1.7260394688151E+15
-Calling function: hash_update with arguments: 1.7260394688151E+15, 1000000
-Error calling function hash_update: hash_update(): Argument #1 ($context) must be of type HashContext, float given
-Calling function: register_tick_function with arguments: 1.7260394688151E+15, 1.7260394688151E+15
-Error calling function register_tick_function: register_tick_function(): Argument #1 ($callback) must be a valid callback, no array or string given
-Calling function: is_double with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array
-Calling function: xml_set_character_data_handler with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array, 1000000
-Error calling function xml_set_character_data_handler: xml_set_character_data_handler(): Argument #1 ($parser) must be of type XMLParser, array given
-Calling function: get_defined_functions with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-Array
-Error calling function get_defined_functions: get_defined_functions(): Argument #1 ($exclude_disabled) must be of type bool, array given
-Calling function: fileatime with arguments: 1000000
-Calling function: iconv_mime_decode with arguments: 1000000, 1000000, 1000000
+Error calling function is_link: is_link(): Argument #1 ($filename) must be of type string, array given
+Calling function: implode with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+1884877076187, Array
+Calling function: session_cache_expire with arguments: 1884877076187
 
-Warning: iconv_mime_decode(): Wrong encoding, conversion from "???" to "1000000" is not allowed in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
-Calling function: array_keys with arguments: 1000000, 1.7260394688151E+15, 1000000
-Error calling function array_keys: array_keys(): Argument #1 ($array) must be of type array, int given
-Calling function: iptcembed with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
-1.7260394688151E+15, Array, 1.7260394688151E+15
-Error calling function iptcembed: iptcembed(): Argument #2 ($filename) must be of type string, array given
-Calling function: mktime with arguments: 1.7260394688151E+15, 1000000, 1.7260394688151E+15, 1000000, 1.7260394688151E+15, 1000000
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 1797978152284909 * 43200 cannot be represented in type 'long long'
+Warning: session_cache_expire(): Session cache expiration cannot be changed after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 41
+Calling function: ord with arguments: 1884877076187
+Calling function: stream_set_write_buffer with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+1884877076187, Array
+Error calling function stream_set_write_buffer: stream_set_write_buffer(): Argument #1 ($stream) must be of type resource, float given
+Calling function: stream_get_wrappers with arguments: 
+Calling function: array_pad with arguments: 1884877076187, 1884877076187, 1884877076187
+Error calling function array_pad: array_pad(): Argument #1 ($array) must be of type array, float given
+Calling function: session_encode with arguments: 
+
+Warning: session_encode(): Cannot encode non-existent session in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 41
+Calling function: date_isodate_set with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+Array, 1884877076187, Array, 1884877076187
+Error calling function date_isodate_set: date_isodate_set(): Argument #1 ($object) must be of type DateTime, array given
+Calling function: strlen with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+Array
+Error calling function strlen: strlen(): Argument #1 ($string) must be of type string, array given
+Calling function: sin with arguments: 1884877076187
+Calling function: array_find_key with arguments: 1884877076187, 1884877076187
+Error calling function array_find_key: array_find_key(): Argument #1 ($array) must be of type array, float given
+Calling function: enum_exists with arguments: 1884877076187, 1884877076187
+Calling function: enum_exists with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+1884877076187, Array
+Error calling function enum_exists: enum_exists(): Argument #2 ($autoload) must be of type bool, array given
+Calling function: xmlwriter_write_attribute with arguments: 1884877076187, 1884877076187, 1884877076187
+Error calling function xmlwriter_write_attribute: xmlwriter_write_attribute(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: is_resource with arguments: 1884877076187
+Calling function: cli_get_process_title with arguments: 
+Calling function: restore_exception_handler with arguments: 
+Calling function: error_reporting with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused723.php on line 38
+Array
+Error calling function error_reporting: error_reporting(): Argument #1 ($error_level) must be of type ?int, array given
+Calling function: strlen with arguments: 1884877076187
+Calling function: count with arguments: 1884877076187, 1884877076187
+Error calling function count: count(): Argument #2 ($mode) must be either COUNT_NORMAL or COUNT_RECURSIVE
+Calling function: output_add_rewrite_var with arguments: 1884877076187, 1884877076187
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 747771727117088 * 43200 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

@@ -1,15 +1,19 @@
 --TEST--
-Test session_set_save_handler() function : using closures as callbacks+Bug #71539.2 (Memory error on $arr[$a] =& $arr[$b] if RHS rehashes)
+Phar object: unset file+Test ct eval of frameless function
 --INI--
-session.save_path=
-session.name=PHPSESSID
-session.save_handler=files
-session.upload_progress.enabled=0
-serialize_precision=5
+phar.readonly=0
+phar.require_hash=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.optimization_level=-1
+opcache.opt_debug_level=0x20000
+zend_test.observer.enabled=0
+session.cookie_httponly=0
+session.use_strict_mode=1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1021
+opcache.jit=1151
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -74,123 +78,43 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start();
-echo "*** Testing session_set_save_handler() : using closures as callbacks ***\n";
-require_once "save_handler_closures.inc";
-var_dump(session_module_name());
-var_dump(session_module_name(FALSE));
-var_dump(session_module_name("blah"));
-var_dump(session_module_name("foo"));
-$path = __DIR__ . '/session_set_save_handler_closures';
-@mkdir($path);
-session_save_path($path);
-session_set_save_handler($open_closure, $close_closure, $read_closure, $write_closure, $destroy_closure, $gc_closure);
-session_start();
-$_SESSION["Blah"] = "Hello World!";
-$_SESSION["Foo"] = FALSE;
-$_SESSION["Guff"] = 1234567890;
-var_dump($_SESSION);
-session_write_close();
-session_unset();
-var_dump($_SESSION);
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler($open_closure, $close_closure, $read_closure, $write_closure, $destroy_closure, $gc_closure);
-session_start();
-$_SESSION['Bar'] = 'Foo';
-var_dump($_SESSION);
-session_write_close();
-echo "Cleanup\n";
-session_start();
-session_destroy();
-ob_end_flush();
-@rmdir($path);
-$fusion = $session_id;
+$pharconfig = 0;
+require_once 'files/phar_oo_test.inc';
+$phar = new Phar($fname);
+$phar->setInfoClass('SplFileObject');
+$phar['f.php'] = 'hi';
+var_dump(isset($phar['f.php']));
+echo $phar['f.php'];
+echo "\n";
+unset($phar['f.php']);
+var_dump(isset($phar['f.php']));
+$fusion = $pharconfig;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$a = [0,1,2,3,4,5,6];
-$a[200] =& $fusion[100];
-$a[100] =42;
-var_dump($a);
+echo substr('foo', 1, $fusion ? 1 : 1);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-session
+phar
+opcache
+--CLEAN--
+<?php
+unlink(__DIR__ . '/files/phar_oo_012.phar.php');
+__halt_compiler();
+?>
 --EXPECTF--
-*** Testing session_set_save_handler() : using closures as callbacks ***
-string(%d) "%s"
-
-Warning: session_module_name(): Session handler module "" cannot be found in %s on line %d
+bool(true)
+hi
 bool(false)
+$_main:
+     ; (lines=3, args=0, vars=1, tmps=0)
+     ; (after optimizer)
+     ; %sct_eval_frameless_002.php:1-4
+0000 CHECK_VAR CV0($foo)
+0001 ECHO string("o")
+0002 RETURN int(1)
 
-Warning: session_module_name(): Session handler module "blah" cannot be found in %s on line %d
-bool(false)
-
-Warning: session_module_name(): Session handler module "foo" cannot be found in %s on line %d
-bool(false)
-
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
-Open [%s,PHPSESSID]
-Read [%s,%s]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
-Close [%s,PHPSESSID]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Starting session again..!
-
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
-Open [%s,PHPSESSID]
-Read [%s,%s]
-array(4) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-  ["Bar"]=>
-  string(3) "Foo"
-}
-Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
-Close [%s,PHPSESSID]
-Cleanup
-Open [%s,PHPSESSID]
-Read [%s,%s]
-Destroy [%s,%s]
-Close [%s,PHPSESSID]
-array(9) {
-  [0]=>
-  int(0)
-  [1]=>
-  int(1)
-  [2]=>
-  int(2)
-  [3]=>
-  int(3)
-  [4]=>
-  int(4)
-  [5]=>
-  int(5)
-  [6]=>
-  int(6)
-  [100]=>
-  &int(42)
-  [200]=>
-  &int(42)
-}
+Warning: Undefined variable $foo in %s on line %d
+o

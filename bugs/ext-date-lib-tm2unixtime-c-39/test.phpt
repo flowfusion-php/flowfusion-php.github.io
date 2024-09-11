@@ -1,12 +1,5 @@
 --TEST--
-Test dechex function : 64bit long tests+Test ~N operator : various numbers as strings
---INI--
-date.timezone=America/Vancouver
-opcache.max_accelerated_files=4000
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+Increment/decrement a typed property with int|float type+Bug #71132 (range function produces 2 segfaults with long integers)
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,94 +64,120 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-    echo "--- testing: $longVal ---\n";
-    try {
-        var_dump(dechex($longVal));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
+class Test {
+    public int|float $prop;
+    public int|bool $prop2;
 }
-$fusion = $longVal;
+/* Incrementing a int|float property past int min/max is legal */
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+var_dump(is_double($test->prop));
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$r =& $test->prop;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+/* Incrementing a non-int|float property past int min/max is an error,
+ * even if the result of the overflow (a float) would technically be allowed
+ * under a type coercion. */
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = array(
-   "0","65","-44", "1.2", "-7.7", "abc", "123abc", "123e5", "123e5xyz", " 123abc", "123 abc", "123abc ", "3.4a",
-   "a5.9"
-);
-foreach ($strVals as $strVal) {
-   echo "--- testing: '$strVal' ---\n";
-   var_dump(bin2hex(~$strVal));
-}
+var_dump(count(range(PHP_INT_MIN + 513, PHP_INT_MIN)));
+var_dump(count(range(PHP_INT_MIN, PHP_INT_MIN + 513)));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
---- testing: 9223372036854775807 ---
-string(16) "7fffffffffffffff"
---- testing: -9223372036854775808 ---
-string(16) "8000000000000000"
---- testing: 2147483647 ---
-string(8) "7fffffff"
---- testing: -2147483648 ---
-string(16) "ffffffff80000000"
---- testing: 9223372034707292160 ---
-string(16) "7fffffff80000000"
---- testing: -9223372034707292160 ---
-string(16) "8000000080000000"
---- testing: 2147483648 ---
-string(8) "80000000"
---- testing: -2147483649 ---
-string(16) "ffffffff7fffffff"
---- testing: 4294967294 ---
-string(8) "fffffffe"
---- testing: 4294967295 ---
-string(8) "ffffffff"
---- testing: 4294967293 ---
-string(8) "fffffffd"
---- testing: 9223372036854775806 ---
-string(16) "7ffffffffffffffe"
---- testing: 9.2233720368548E+18 ---
-dechex(): Argument #1 ($num) must be of type int, float given
---- testing: -9223372036854775807 ---
-string(16) "8000000000000001"
---- testing: -9.2233720368548E+18 ---
-string(16) "8000000000000000"
---- testing: '0' ---
-string(2) "cf"
---- testing: '65' ---
-string(4) "c9ca"
---- testing: '-44' ---
-string(6) "d2cbcb"
---- testing: '1.2' ---
-string(6) "ced1cd"
---- testing: '-7.7' ---
-string(8) "d2c8d1c8"
---- testing: 'abc' ---
-string(6) "9e9d9c"
---- testing: '123abc' ---
-string(12) "cecdcc9e9d9c"
---- testing: '123e5' ---
-string(10) "cecdcc9aca"
---- testing: '123e5xyz' ---
-string(16) "cecdcc9aca878685"
---- testing: ' 123abc' ---
-string(14) "dfcecdcc9e9d9c"
---- testing: '123 abc' ---
-string(14) "cecdccdf9e9d9c"
---- testing: '123abc ' ---
-string(14) "cecdcc9e9d9cdf"
---- testing: '3.4a' ---
-string(8) "ccd1cb9e"
---- testing: 'a5.9' ---
-string(8) "9ecad1c6"
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+int(514)
+int(514)

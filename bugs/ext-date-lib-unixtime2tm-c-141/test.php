@@ -70,32 +70,34 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(rad2deg($longVal));
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal, $otherVal ---\n";
+      var_dump(hypot($longVal, $otherVal));
+   }
 }
-$fusion = $longVal;
+$fusion = $otherVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing date_sunset() : usage variation ***\n";
-// GMT is zero for the timezone
-date_default_timezone_set("Africa/Casablanca");
-$time_date = array (
-        //Date at which Sun is up all day at North Pole
-        "12 Aug 2008" => mktime(8, 8, 8, 8, 12, 2008),
-        "13 Aug 2008" => mktime(8, 8, 8, 8, 13, 2008),
-        //Date at which Sun is up all day at South Pole
-        "12 Nov 2008" => mktime(8, 8, 8, 11, 12, 2008),
-        "13 Nov 2008" => mktime(8, 8, 8, 11, 13, 2008),
-);
-//Iterate over different date and time
-foreach( $time_date as $date => $time ){
-    echo "\n--$date--\n";
-    var_dump( date_sunset($time, SUNFUNCS_RET_STRING, 90, 0 ) );
-    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, 90, 0 ) );
-    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, 90, 0 ) );
-    var_dump( date_sunset($fusion, SUNFUNCS_RET_STRING, -90, 0 ) );
-    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, -90, 0 ) );
-    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, -90, 0 ) );
+/*
+ * Function is implemented in ext/standard/math.c
+*/
+//Test sinh with a different input values
+$values = array(23,
+        -23,
+        2.345e1,
+        -2.345e1,
+        0x17,
+        027,
+        "23",
+        "23.45",
+        "2.345e1",
+        "1000",
+        true,
+        false);
+for ($i = 0; $i < count($values); $i++) {
+    $res = sinh($values[$fusion]);
+    var_dump($res);
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

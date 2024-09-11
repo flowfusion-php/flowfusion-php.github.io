@@ -61,34 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public string $x;
+interface I {
+    public $prop { get; }
 }
-function test() {
-    $test = new Test;
-    $test->x = "";
-    $r =& $test->x;
-    +($r = $y);
+class A implements I {
+    public $prop { get {} }
 }
-try {
-    test();
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $test;
+$fusion = $prop;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface X {}
-interface Y extends X {}
-class A {
-    public Y $prop {
-        set(X $fusion) {}
-    }
-}
-class B extends A {
-    public Y $prop {
-        set(Y $prop) {}
-    }
-}
+set_error_handler(function($code, $msg) use (&$my_var) {
+	echo "Error: $msg\n";
+    $my_var = 0;
+});
+$my_var[] = $fusion;
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

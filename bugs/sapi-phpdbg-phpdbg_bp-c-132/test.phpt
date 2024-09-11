@@ -1,8 +1,13 @@
 --TEST--
-Cannot write to closure properties+Stdin and escaped args being passed to run command
+Test date_create() function : basic functionality+Cleaning must preserve breakpoints
 --INI--
-implicit_flush=1
-session.use_cookies=1
+opcache.enable_cli=0
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0153
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,67 +72,100 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class A {
-    function getFn() {
-        return function() {
-        };
-    }
-}
-$a = new A;
-try {
-    $c = $a->getFn()->b = new stdClass;
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $c;
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+echo "*** Testing date_create() : basic functionality ***\n";
+var_dump( date_create() );
+var_dump( date_create("GMT") );
+var_dump( date_create("2005-07-14 22:30:41") );
+var_dump( date_create("2005-07-14 22:30:41 GMT") );
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-@unlink("run_002_tmp.fixture");
-?>
 --PHPDBG--
-ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
-b 6
-r <run_002_tmp.fixture
-r arg1 '_ \' arg2 "' < run_002_tmp.fixture
+b 4
+b foo
+r
+c
+clean
 y
+c
+r
 c
 q
 --EXPECTF--
-Cannot create dynamic property Closure::$b
+*** Testing date_create() : basic functionality ***
+object(DateTime)#%d (3) {
+  ["date"]=>
+  string(26) "%s"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(13) "Europe/London"
+}
+object(DateTime)#%d (3) {
+  ["date"]=>
+  string(26) "%s"
+  ["timezone_type"]=>
+  int(2)
+  ["timezone"]=>
+  string(3) "GMT"
+}
+object(DateTime)#%d (3) {
+  ["date"]=>
+  string(26) "2005-07-14 22:30:41.000000"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(13) "Europe/London"
+}
+object(DateTime)#%d (3) {
+  ["date"]=>
+  string(26) "2005-07-14 22:30:41.000000"
+  ["timezone_type"]=>
+  int(2)
+  ["timezone"]=>
+  string(3) "GMT"
+}
 [Successful compilation of %s]
-prompt> 10
-prompt> [Breakpoint #0 added at %s:6]
-prompt> array(1) {
-  [0]=>
-  string(%d) "%s"
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> Do you really want to restart execution? (type y or n): array(3) {
-  [0]=>
-  string(%d) "%s"
-  [1]=>
-  string(4) "arg1"
-  [2]=>
-  string(10) "_ ' arg2 ""
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> ok
+prompt> [Breakpoint #0 added at %s:4]
+prompt> [Breakpoint #1 added at foo]
+prompt> 1
+[Breakpoint #0 at %s:4, hits: 1]
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> Do you really want to clean your current environment? (type y or n): Cleaning Execution Environment
+Classes    %d
+Functions  %d
+Constants  %d
+Includes   0
+prompt> [Not running]
+prompt> 1
+[Breakpoint #0 at %s:4, hits: 1]
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> 4
 [Script ended normally]
 prompt> 

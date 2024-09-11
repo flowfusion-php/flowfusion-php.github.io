@@ -70,30 +70,27 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   $longVal--;
-   var_dump($longVal);
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal, $otherVal ---\n";
+      var_dump(fmod($longVal, $otherVal));
+   }
 }
 $fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$validCallback = function () { return true; };
-$fusion = function () { return; };
-$oneCallback = function () { return 1; };
-ob_start();
-try {
-    $ret = session_set_save_handler($nullCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
-    session_start();
-} catch (TypeError $exception) {
-    echo $exception->getMessage() . "\n";
+class Value {
+    public function __construct(public readonly string $value) {
+    }
 }
-try {
-    $ret = session_set_save_handler($oneCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
-    session_start();
-} catch (TypeError $exception) {
-    echo $exception->getMessage() . "\n";
-}
-ob_end_flush();
+$map = new WeakMap();
+$obj = new Value('a');
+$map[$obj] = $fusion;
+gc_collect_cycles();
+var_dump($map);
+$obj = null;
+gc_collect_cycles();
+var_dump($map);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
