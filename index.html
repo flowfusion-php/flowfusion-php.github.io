@@ -9,101 +9,80 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-            background-color: #f9f9f9;
         }
         h1 {
-            color: #333;
+            font-size: 24px;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        li {
-            margin: 10px 0;
+        table, th, td {
+            border: 1px solid black;
         }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
+        th, td {
+            padding: 10px;
+            text-align: left;
         }
-        button:focus {
-            outline: none;
+        th {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
         }
         .bug-content {
             display: none;
             margin-top: 10px;
             padding: 10px;
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .bug-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .bug-link:hover {
-            text-decoration: underline;
         }
     </style>
     <script>
         // Function to format the identifier to a corresponding HTML file path
-        function formatIdentifier(identifier) {
-            let formatted = identifier.replace("/php-src/", "");
+        function formatIdentifier(crashSite) {
+            let formatted = crashSite.replace("/php-src/", "");
             formatted = formatted.replace(/[\/:.]/g, "-");
             return formatted + "/index.html";
         }
 
-        // Function to toggle visibility of the sub HTML content
-        function toggleBugContent(event) {
-            const bugContent = event.target.nextElementSibling;
-            if (bugContent.style.display === "none" || bugContent.style.display === "") {
-                bugContent.style.display = "block";
-            } else {
-                bugContent.style.display = "none";
-            }
-        }
-
-        // Function to read the JSON file and display bugs with buttons
+        // Function to read the JSON file and display bugs in a table
         async function loadBugs() {
             try {
                 const response = await fetch('./bugs.json');
                 const bugs = await response.json();
-                
-                const bugListContainer = document.getElementById('bug-list');
+
+                const bugTableBody = document.getElementById('bug-table-body');
 
                 bugs.forEach(bug => {
-                    // Create a new list item for each bug
-                    const listItem = document.createElement('li');
+                    // Create a new table row
+                    const row = document.createElement('tr');
 
-                    // Create a button element
-                    const bugButton = document.createElement('button');
-                    bugButton.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
-                    bugButton.addEventListener('click', toggleBugContent);
+                    // Bug ID
+                    const bugIDCell = document.createElement('td');
+                    bugIDCell.textContent = bug.bugID;
+                    row.appendChild(bugIDCell);
 
-                    // Create a div to contain the sub HTML (hidden by default)
-                    const bugContent = document.createElement('div');
-                    bugContent.className = 'bug-content';
+                    // Crash site
+                    const crashSiteCell = document.createElement('td');
+                    crashSiteCell.textContent = bug.identifier; // renamed from 'identifier' to 'crash site'
+                    row.appendChild(crashSiteCell);
 
-                    // Create a link element inside the hidden content
+                    // Bug Hits
+                    const bugHitsCell = document.createElement('td');
+                    bugHitsCell.textContent = bug.bugHit;
+                    row.appendChild(bugHitsCell);
+
+                    // Link to bug details
+                    const linkCell = document.createElement('td');
                     const bugLink = document.createElement('a');
                     bugLink.href = formatIdentifier(bug.identifier);
-                    bugLink.className = 'bug-link';
-                    bugLink.textContent = `View Bug Details: ${bug.identifier}`;
-                    bugLink.target = "_blank"; // Opens the link in a new tab
+                    bugLink.textContent = "View Details";
+                    bugLink.target = "_blank"; // Opens in a new tab
+                    linkCell.appendChild(bugLink);
+                    row.appendChild(linkCell);
 
-                    // Append the link to the hidden content div
-                    bugContent.appendChild(bugLink);
-
-                    // Append the button and hidden content to the list item
-                    listItem.appendChild(bugButton);
-                    listItem.appendChild(bugContent);
-
-                    // Append the list item to the bug list container
-                    bugListContainer.appendChild(listItem);
+                    // Append the row to the table body
+                    bugTableBody.appendChild(row);
                 });
             } catch (error) {
                 console.error('Error loading bugs:', error);
@@ -116,8 +95,18 @@
 </head>
 <body>
     <h1>Bug List</h1>
-    <ul id="bug-list">
-        <!-- Bugs will be dynamically loaded here -->
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Bug ID</th>
+                <th>Crash Site</th>
+                <th>Bug Hits</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody id="bug-table-body">
+            <!-- Bugs will be dynamically loaded here -->
+        </tbody>
+    </table>
 </body>
 </html>
