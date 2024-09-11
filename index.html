@@ -4,17 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:focus {
+            outline: none;
+        }
+        .bug-content {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .bug-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .bug-link:hover {
+            text-decoration: underline;
+        }
+    </style>
     <script>
         // Function to format the identifier to a corresponding HTML file path
         function formatIdentifier(identifier) {
-            // Remove the "/php-src" part
-            let formatted = identifier.replace("/php-src", "");
-            // Replace remaining characters to fit the file pattern
-            formatted = formatted.replace(/[\/:]/g, "_");
-            return "." + formatted;
+            let formatted = identifier.replace("/php-src/", "");
+            formatted = formatted.replace(/[\/:.]/g, "-");
+            return formatted + "/index.html";
         }
 
-        // Function to read the JSON file and display bugs with links
+        // Function to toggle visibility of the sub HTML content
+        function toggleBugContent(event) {
+            const bugContent = event.target.nextElementSibling;
+            if (bugContent.style.display === "none" || bugContent.style.display === "") {
+                bugContent.style.display = "block";
+            } else {
+                bugContent.style.display = "none";
+            }
+        }
+
+        // Function to read the JSON file and display bugs with buttons
         async function loadBugs() {
             try {
                 const response = await fetch('./bugs.json');
@@ -26,13 +79,28 @@
                     // Create a new list item for each bug
                     const listItem = document.createElement('li');
 
-                    // Create a link element
+                    // Create a button element
+                    const bugButton = document.createElement('button');
+                    bugButton.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
+                    bugButton.addEventListener('click', toggleBugContent);
+
+                    // Create a div to contain the sub HTML (hidden by default)
+                    const bugContent = document.createElement('div');
+                    bugContent.className = 'bug-content';
+
+                    // Create a link element inside the hidden content
                     const bugLink = document.createElement('a');
                     bugLink.href = formatIdentifier(bug.identifier);
-                    bugLink.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
+                    bugLink.className = 'bug-link';
+                    bugLink.textContent = `View Bug Details: ${bug.identifier}`;
+                    bugLink.target = "_blank"; // Opens the link in a new tab
 
-                    // Append the link to the list item
-                    listItem.appendChild(bugLink);
+                    // Append the link to the hidden content div
+                    bugContent.appendChild(bugLink);
+
+                    // Append the button and hidden content to the list item
+                    listItem.appendChild(bugButton);
+                    listItem.appendChild(bugContent);
 
                     // Append the list item to the bug list container
                     bugListContainer.appendChild(listItem);
