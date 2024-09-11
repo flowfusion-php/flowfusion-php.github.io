@@ -3,111 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowFusion PHP Bug Tracker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+    <title>Bug List</title>
+    <script>
+        // Function to format the identifier to a corresponding HTML file path
+        function formatIdentifier(identifier) {
+            // Remove the "/php-src" part
+            let formatted = identifier.replace("/php-src", "");
+            // Replace remaining characters to fit the file pattern
+            formatted = formatted.replace(/[\/:]/g, "_");
+            return "." + formatted + ".html";
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
+
+        // Function to read the JSON file and display bugs with links
+        async function loadBugs() {
+            try {
+                const response = await fetch('./bug.json');
+                const bugs = await response.json();
+                
+                const bugListContainer = document.getElementById('bug-list');
+
+                bugs.forEach(bug => {
+                    // Create a new list item for each bug
+                    const listItem = document.createElement('li');
+
+                    // Create a link element
+                    const bugLink = document.createElement('a');
+                    bugLink.href = formatIdentifier(bug.identifier);
+                    bugLink.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
+
+                    // Append the link to the list item
+                    listItem.appendChild(bugLink);
+
+                    // Optionally, you can append more details
+                    const detailList = document.createElement('ul');
+                    bug.details.forEach(detail => {
+                        const detailItem = document.createElement('li');
+                        detailItem.textContent = `Detail: ${detail}`;
+                        detailList.appendChild(detailItem);
+                    });
+
+                    // Append the detail list to the list item
+                    listItem.appendChild(detailList);
+
+                    // Append the list item to the bug list container
+                    bugListContainer.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Error loading bugs:', error);
+            }
         }
-        main {
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .details-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .details-list li {
-            margin-bottom: 5px;
-        }
-    </style>
+
+        // Load bugs on page load
+        window.onload = loadBugs;
+    </script>
 </head>
 <body>
-    <header>
-        <h1>PHP Bug Tracker</h1>
-    </header>
-    <main>
-        <h2>Bug List</h2>
-        <table id="bugTable">
-            <thead>
-                <tr>
-                    <th>Bug ID</th>
-                    <th>Identifier</th>
-                    <th>Bug Hit</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Rows will be populated by JavaScript -->
-            </tbody>
-        </table>
-    </main>
-
-    <script>
-        // Fetch and populate bug data
-        fetch('bugs.json')
-            .then(response => response.json())
-            .then(data => {
-                const tbody = document.querySelector('#bugTable tbody');
-                data.forEach(bug => {
-                    const tr = document.createElement('tr');
-
-                    const bugIDCell = document.createElement('td');
-                    bugIDCell.textContent = bug.bugID;
-                    tr.appendChild(bugIDCell);
-
-                    const identifierCell = document.createElement('td');
-                    identifierCell.textContent = bug.identifier;
-                    tr.appendChild(identifierCell);
-
-                    const bugHitCell = document.createElement('td');
-                    bugHitCell.textContent = bug.bugHit;
-                    tr.appendChild(bugHitCell);
-
-                    const detailsCell = document.createElement('td');
-                    const ul = document.createElement('ul');
-                    ul.className = 'details-list';
-                    bug.details.forEach(detail => {
-                        const li = document.createElement('li');
-                        const link = document.createElement('a');
-                        link.href = `/bugs/${detail}/`; // Update to link to /bugs/<detail>/
-                        link.textContent = detail; // Set the text content to the detail
-                        li.appendChild(link); // Append the link to the list item
-                        ul.appendChild(li); // Append the list item to the list
-                    });
-                    detailsCell.appendChild(ul);
-                    tr.appendChild(detailsCell);
-
-                    tbody.appendChild(tr);
-                });
-            })
-            .catch(error => console.error('Error loading bug data:', error));
-    </script>
+    <h1>Bug List</h1>
+    <ul id="bug-list">
+        <!-- Bugs will be dynamically loaded here -->
+    </ul>
 </body>
 </html>
+
