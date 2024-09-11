@@ -61,31 +61,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class I extends DateTimeZone
-{
-	private   int $var1;
-	private       $var2 = 2;
-	protected int $var3 = 3;
-	protected     $var4;
-	function __construct($tz)
-	{
-		parent::__construct($tz);
-		$this->var1 = 1;
-		$this->var4 = 4;
-	}
+$xml = "<root><a>1</a><a>2</a></root>";
+$xml = simplexml_load_string($xml);
+$a = $xml->a;
+foreach ($a as $test) {
+    echo "Iteration\n";
+    var_dump($a->key());
+    var_dump($a->getName());
+    var_dump((string) $test);
 }
-$i = new I('Europe/Kyiv');
-$s = serialize($i);
-$u = unserialize($s);
-var_dump($i, str_replace(chr(0), '!', $s), $u);
-$fusion = $u;
+var_dump($a);
+$fusion = $a;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $this->b = $value; }
+        set(int $value) { $fusion->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -93,7 +86,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $fusion->b = 2;
+        $this->b = 2;
         $this->d = 4;
     }
 }

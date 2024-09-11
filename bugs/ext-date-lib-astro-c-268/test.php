@@ -61,26 +61,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$num = 100004313234244; // exceeds 32 bits
-$conn = new PDO('sqlite::memory:');
-$conn->query('CREATE TABLE users (id INTEGER NOT NULL, num INTEGER NOT NULL, PRIMARY KEY(id))');
-$stmt = $conn->prepare('insert into users (id, num) values (:id, :num)');
-$stmt->bindValue(':id', 1, PDO::PARAM_INT);
-$stmt->bindValue(':num', $num, PDO::PARAM_INT);
-$stmt->execute();
-$stmt = $conn->query('SELECT num FROM users');
-$result = $stmt->fetchAll(PDO::FETCH_COLUMN);
-var_dump($num,$result[0]);
-$fusion = $result;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function &ref() {
-    $fusion = "str";
-    $str .= "str";
-    return $str;
+class foo extends ArrayIterator {
+    public function __construct( ) {
+        parent::__construct(array(
+        'test1'=>'test888',
+        'test2'=>'what?',
+        'test3'=>'test999'));
+    }
 }
-var_dump(true ? ref() : ref());
-var_dump(ref() ?: ref());
-var_dump(ref() ?? ref());
+$h = new foo;
+$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
+$i->replacement = '[$0]';
+foreach ($i as $name=>$value) {
+    echo $name . '=>' . $value . "\n";
+}
+$i->replacement = '$1';
+foreach ($i as $name=>$value) {
+    echo $name . '=>' . $value . "\n";
+}
+$h = new foo;
+$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
+$i->replacement = '[$1]';
+foreach ($i as $name=>$value) {
+    echo $name . '=>' . $value . "\n";
+}
+$fusion = $h;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$i = PHP_INT_MAX;
+try {
+    $fusion = [$i => 42, new stdClass];
+    var_dump($array);
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+function test($x = [PHP_INT_MAX => 42, "foo"]) {}
+try {
+    test();
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

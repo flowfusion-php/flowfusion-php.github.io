@@ -57,190 +57,405 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>this bug has been detected for 27 times</pre>
+            <pre>this bug has been detected for 28 times</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php]
-prompt&gt; [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php:4]
-prompt&gt; [Breakpoint #1 added at foo]
-prompt&gt; *** Testing date_create() : basic functionality ***
-object(DateTime)#1 (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2024-09-11 07:38:32.040905&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(3)
-  [&quot;timezone&quot;]=&gt;
-  string(13) &quot;Europe/London&quot;
-}
-object(DateTime)#1 (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2024-09-11 07:38:32.041087&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(2)
-  [&quot;timezone&quot;]=&gt;
-  string(3) &quot;GMT&quot;
-}
-object(DateTime)#1 (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2005-07-14 22:30:41.000000&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(3)
-  [&quot;timezone&quot;]=&gt;
-  string(13) &quot;Europe/London&quot;
-}
-object(DateTime)#1 (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2005-07-14 22:30:41.000000&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(2)
-  [&quot;timezone&quot;]=&gt;
-  string(3) &quot;GMT&quot;
-}
-123
-[Breakpoint #1 in foo() at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php:77, hits: 1]
-&gt;00077: 	echo 4;
- 00078: }
- 00079: $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-prompt&gt; 4string(11) &quot;random_var:&quot;
-array(1) {
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php]
+prompt&gt; 10
+prompt&gt; [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php:6]
+prompt&gt; array(1) {
   [0]=&gt;
-  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;
+  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;
 }
-array(1) {
-  [0]=&gt;
-  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;
-}
+string(10) &quot;stdin
+data&quot;
+ok
+1200000
+1300000
+1400000
+1500000
+string(11) &quot;random_var:&quot;
 int(1)
+array(1) {
+  [0]=&gt;
+  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;
+}
+array(8) {
+  [&quot;_GET&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_POST&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_COOKIE&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_FILES&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;argv&quot;]=&gt;
+  array(1) {
+    [0]=&gt;
+    string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;
+  }
+  [&quot;argc&quot;]=&gt;
+  int(1)
+  [&quot;v1&quot;]=&gt;
+  int(1)
+  [&quot;definedVars&quot;]=&gt;
+  array(6) {
+    [&quot;_GET&quot;]=&gt;
+    array(0) {
+    }
+    [&quot;_POST&quot;]=&gt;
+    array(0) {
+    }
+    [&quot;_COOKIE&quot;]=&gt;
+    array(0) {
+    }
+    [&quot;_FILES&quot;]=&gt;
+    array(0) {
+    }
+    [&quot;argv&quot;]=&gt;
+    array(1) {
+      [0]=&gt;
+      string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;
+    }
+    [&quot;argc&quot;]=&gt;
+    int(1)
+  }
+}
+Calling function: stream_socket_client with arguments: 1, 1, 1, 1, 1, 1
+
+Warning: stream_socket_client(): Argument #2 ($error_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: stream_socket_client(): Argument #3 ($error_message) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function stream_socket_client: stream_socket_client(): Argument #6 ($context) must be of type resource or null, int given
 Calling function: stream_wrapper_register with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array, Array
-Error calling function stream_wrapper_register: stream_wrapper_register(): Argument #1 ($protocol) must be of type string, array given
-Calling function: socket_set_timeout with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array, Array
-Error calling function socket_set_timeout: socket_set_timeout(): Argument #1 ($stream) must be of type resource, array given
-Calling function: getdate with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array
-Error calling function getdate: getdate(): Argument #1 ($timestamp) must be of type ?int, array given
-Calling function: timezone_identifiers_list with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array
-Error calling function timezone_identifiers_list: timezone_identifiers_list(): Argument #1 ($timezoneGroup) must be of type int, array given
-Calling function: session_save_path with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array
-Error calling function session_save_path: session_save_path(): Argument #1 ($path) must be of type ?string, array given
-Calling function: htmlentities with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, 1, Array, 1
-Error calling function htmlentities: htmlentities(): Argument #1 ($string) must be of type string, array given
-Calling function: xml_get_error_code with arguments: 1
-Error calling function xml_get_error_code: xml_get_error_code(): Argument #1 ($parser) must be of type XMLParser, int given
-Calling function: xml_parser_create with arguments: 1
-Error calling function xml_parser_create: xml_parser_create(): Argument #1 ($encoding) is not a supported source encoding
-Calling function: call_user_func with arguments: 1, 1
-Error calling function call_user_func: call_user_func(): Argument #1 ($callback) must be a valid callback, no array or string given
-Calling function: html_entity_decode with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array, Array
-Error calling function html_entity_decode: html_entity_decode(): Argument #1 ($string) must be of type string, array given
-Calling function: date_get_last_errors with arguments: 
-Calling function: phpdbg_clear with arguments: 
-Calling function: ob_list_handlers with arguments: 
-Calling function: round with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array, Array
-Error calling function round: round(): Argument #1 ($num) must be of type int|float, array given
-Calling function: lstat with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array
-Error calling function lstat: lstat(): Argument #1 ($filename) must be of type string, array given
-Calling function: uksort with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-1, Array
-
-Warning: uksort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 41
-Error calling function uksort: uksort(): Argument #1 ($array) must be of type array, int given
-Calling function: htmlspecialchars_decode with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-1, Array
-Error calling function htmlspecialchars_decode: htmlspecialchars_decode(): Argument #2 ($flags) must be of type int, array given
-Calling function: is_finite with arguments: 1
-Calling function: xmlwriter_start_dtd_element with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array
-Error calling function xmlwriter_start_dtd_element: xmlwriter_start_dtd_element(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: chmod with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array
-Error calling function chmod: chmod(): Argument #1 ($filename) must be of type string, array given
-Calling function: vprintf with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, 1
-Error calling function vprintf: vprintf(): Argument #1 ($format) must be of type string, array given
-Calling function: array_fill with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array, Array
-Error calling function array_fill: array_fill(): Argument #1 ($start_index) must be of type int, array given
-Calling function: xmlwriter_flush with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, Array
-Error calling function xmlwriter_flush: xmlwriter_flush(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: array_combine with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-Array, 1
-Error calling function array_combine: array_combine(): Argument #2 ($values) must be of type array, int given
-Calling function: round with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
 1, Array, 1
-Error calling function round: round(): Argument #2 ($precision) must be of type int, array given
-Calling function: getimagesizefromstring with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 38
-1, Array
 
-Warning: getimagesizefromstring(): Argument #2 ($image_info) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 41
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function stream_wrapper_register: stream_wrapper_register(): Argument #2 ($class) must be a valid class name, Array given
+Calling function: ob_implicit_flush with arguments: 1
+Calling function: ctype_upper with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
 
-Notice: getimagesizefromstring(): Error reading from 1! in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 41
-Calling function: asort with arguments: 1, 1
+Deprecated: ctype_upper(): Argument of type array will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: stream_get_meta_data with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function stream_get_meta_data: stream_get_meta_data(): Argument #1 ($stream) must be of type resource, array given
+Calling function: ini_alter with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
 
-Warning: asort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php on line 41
-Error calling function asort: asort(): Argument #1 ($array) must be of type array, int given
-/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16: runtime error: member access within misaligned address 0x000000000052 for type &#x27;phpdbg_breakbase_t&#x27; (aka &#x27;struct _phpdbg_breakbase_t&#x27;), which requires 8 byte alignment
-0x000000000052: note: pointer points here
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function ini_alter: ini_alter(): Argument #1 ($option) must be of type string, array given
+Calling function: stream_socket_server with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, 1, Array, 1, Array
+
+Warning: stream_socket_server(): Argument #2 ($error_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: stream_socket_server(): Argument #3 ($error_message) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function stream_socket_server: stream_socket_server(): Argument #1 ($address) must be of type string, array given
+Calling function: class_parents with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function class_parents: class_parents(): Argument #2 ($autoload) must be of type bool, array given
+Calling function: php_sapi_name with arguments: 
+Calling function: getmxrr with arguments: 1, 1, 1
+
+Warning: getmxrr(): Argument #2 ($hosts) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: getmxrr(): Argument #3 ($weights) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: str_decrement with arguments: 1
+Calling function: memory_get_peak_usage with arguments: 1
+Calling function: ord with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function ord: ord(): Argument #1 ($character) must be of type string, array given
+Calling function: utf8_decode with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+
+Deprecated: Function utf8_decode() is deprecated since 8.2, visit the php.net documentation for various alternatives in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function utf8_decode: utf8_decode(): Argument #1 ($string) must be of type string, array given
+Calling function: strptime with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+
+Deprecated: Function strptime() is deprecated since 8.2, use date_parse_from_format() (for locale-independent parsing), or IntlDateFormatter::parse() (for locale-dependent parsing) instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function strptime: strptime(): Argument #1 ($timestamp) must be of type string, array given
+Calling function: xmlwriter_start_dtd_attlist with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, 1
+Error calling function xmlwriter_start_dtd_attlist: xmlwriter_start_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: array_slice with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array, Array
+Error calling function array_slice: array_slice(): Argument #2 ($offset) must be of type int, array given
+Calling function: ob_end_clean with arguments: 
+
+Notice: ob_end_clean(): Failed to delete buffer. No buffer to delete in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: log10 with arguments: 1
+Calling function: session_encode with arguments: 
+
+Warning: session_encode(): Cannot encode non-existent session in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: timezone_name_get with arguments: 1
+Error calling function timezone_name_get: timezone_name_get(): Argument #1 ($object) must be of type DateTimeZone, int given
+Calling function: simplexml_load_file with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, 1, Array, 1, Array
+Error calling function simplexml_load_file: simplexml_load_file(): Argument #1 ($filename) must be of type string, array given
+Calling function: stream_socket_sendto with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array, Array
+Error calling function stream_socket_sendto: stream_socket_sendto(): Argument #1 ($socket) must be of type resource, array given
+Calling function: xml_get_current_byte_index with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function xml_get_current_byte_index: xml_get_current_byte_index(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: finfo_close with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function finfo_close: finfo_close(): Argument #1 ($finfo) must be of type finfo, array given
+Calling function: natsort with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+
+Warning: natsort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: abs with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function abs: abs(): Argument #1 ($num) must be of type int|float, array given
+[Script ended normally]
+prompt&gt; array(3) {
+  [0]=&gt;
+  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;
+  [1]=&gt;
+  string(4) &quot;arg1&quot;
+  [2]=&gt;
+  string(10) &quot;_ &#x27; arg2 &quot;&quot;
+}
+string(10) &quot;stdin
+data&quot;
+ok
+1200000
+1300000
+1400000
+1500000
+string(11) &quot;random_var:&quot;
+array(0) {
+}
+array(0) {
+}
+array(0) {
+}
+Calling function: is_numeric with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Calling function: Dom\import_simplexml with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function Dom\import_simplexml: Dom\import_simplexml(): Argument #1 ($node) must be of type object, array given
+Calling function: stripcslashes with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function stripcslashes: stripcslashes(): Argument #1 ($string) must be of type string, array given
+Calling function: escapeshellcmd with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function escapeshellcmd: escapeshellcmd(): Argument #1 ($command) must be of type string, array given
+Calling function: xmlwriter_open_memory with arguments: 
+Calling function: stream_context_set_option with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array, Array
+Error calling function stream_context_set_option: stream_context_set_option(): Argument #1 ($context) must be of type resource, array given
+Calling function: xml_parser_set_option with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array
+Error calling function xml_parser_set_option: xml_parser_set_option(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: compact with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function compact: Cannot call compact() dynamically
+Calling function: xml_get_current_byte_index with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function xml_get_current_byte_index: xml_get_current_byte_index(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: phpdbg_clear with arguments: 
+Calling function: getmxrr with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array
+
+Warning: getmxrr(): Argument #2 ($hosts) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+
+Warning: getmxrr(): Argument #3 ($weights) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Error calling function getmxrr: getmxrr(): Argument #1 ($hostname) must be of type string, array given
+Calling function: md5_file with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function md5_file: md5_file(): Argument #1 ($filename) must be of type string, array given
+Calling function: ctype_cntrl with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+
+Deprecated: ctype_cntrl(): Argument of type array will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 41
+Calling function: stream_bucket_make_writeable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function stream_bucket_make_writeable: stream_bucket_make_writeable(): Argument #1 ($brigade) must be of type resource, array given
+Calling function: xml_parser_set_option with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array
+Error calling function xml_parser_set_option: xml_parser_set_option(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: get_declared_interfaces with arguments: 
+Calling function: memory_get_usage with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function memory_get_usage: memory_get_usage(): Argument #1 ($real_usage) must be of type bool, array given
+Calling function: intval with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function intval: intval(): Argument #2 ($base) must be of type int, array given
+Calling function: setrawcookie with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array, Array, Array, Array, Array
+Error calling function setrawcookie: setrawcookie(): Argument #1 ($name) must be of type string, array given
+Calling function: str_decrement with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Error calling function str_decrement: str_decrement(): Argument #1 ($string) must be of type string, array given
+Calling function: fdiv with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function fdiv: fdiv(): Argument #1 ($num1) must be of type float, array given
+Calling function: is_null with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array
+Calling function: realpath_cache_get with arguments: 
+Calling function: http_clear_last_response_headers with arguments: 
+Calling function: xml_set_start_namespace_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array
+Error calling function xml_set_start_namespace_decl_handler: xml_set_start_namespace_decl_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: timezone_name_from_abbr with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php on line 38
+Array, Array, Array
+Error calling function timezone_name_from_abbr: timezone_name_from_abbr(): Argument #1 ($abbr) must be of type string, array given
+Calling function: sys_getloadavg with arguments: 
+/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16: runtime error: member access within misaligned address 0x2c770c1fba36c0fc for type &#x27;phpdbg_breakbase_t&#x27; (aka &#x27;struct _phpdbg_breakbase_t&#x27;), which requires 8 byte alignment
+0x2c770c1fba36c0fc: note: pointer points here
 &lt;memory cannot be printed&gt;
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16 in
             </pre>
@@ -312,21 +527,14 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-//Set the default time zone
-date_default_timezone_set(&quot;Europe/London&quot;);
-echo &quot;*** Testing date_create() : basic functionality ***\n&quot;;
-var_dump( date_create() );
-var_dump( date_create(&quot;GMT&quot;) );
-var_dump( date_create(&quot;2005-07-14 22:30:41&quot;) );
-var_dump( date_create(&quot;2005-07-14 22:30:41 GMT&quot;) );
+var_dump($argv);
+var_dump(stream_get_contents(STDIN));
+echo &quot;ok\n&quot;;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
-}
+echo 1200000.00.&quot;\n&quot;;
+echo 1300000.00.&quot;\n&quot;;
+echo 1400000.00.&quot;\n&quot;;
+echo 1500000.00.&quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
@@ -340,15 +548,7 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test date_create() function : basic functionality+Cleaning must preserve breakpoints
---INI--
-opcache.enable_cli=0
-opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0153
+Stdin and escaped args being passed to run command+Bug #43053 (Regression: some numbers shown in scientific notation)
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -413,103 +613,64 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-//Set the default time zone
-date_default_timezone_set(&quot;Europe/London&quot;);
-echo &quot;*** Testing date_create() : basic functionality ***\n&quot;;
-var_dump( date_create() );
-var_dump( date_create(&quot;GMT&quot;) );
-var_dump( date_create(&quot;2005-07-14 22:30:41&quot;) );
-var_dump( date_create(&quot;2005-07-14 22:30:41 GMT&quot;) );
+var_dump($argv);
+var_dump(stream_get_contents(STDIN));
+echo &quot;ok\n&quot;;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
-}
+echo 1200000.00.&quot;\n&quot;;
+echo 1300000.00.&quot;\n&quot;;
+echo 1400000.00.&quot;\n&quot;;
+echo 1500000.00.&quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
+--CLEAN--
+&lt;?php
+@unlink(&quot;run_002_tmp.fixture&quot;);
+?&gt;
 --PHPDBG--
-b 4
-b foo
-r
-c
-clean
+ev file_put_contents(&quot;run_002_tmp.fixture&quot;, &quot;stdin\ndata&quot;)
+b 6
+r &lt;run_002_tmp.fixture
+r arg1 &#x27;_ \&#x27; arg2 &quot;&#x27; &lt; run_002_tmp.fixture
 y
-c
-r
 c
 q
 --EXPECTF--
-*** Testing date_create() : basic functionality ***
-object(DateTime)#%d (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;%s&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(3)
-  [&quot;timezone&quot;]=&gt;
-  string(13) &quot;Europe/London&quot;
-}
-object(DateTime)#%d (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;%s&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(2)
-  [&quot;timezone&quot;]=&gt;
-  string(3) &quot;GMT&quot;
-}
-object(DateTime)#%d (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2005-07-14 22:30:41.000000&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(3)
-  [&quot;timezone&quot;]=&gt;
-  string(13) &quot;Europe/London&quot;
-}
-object(DateTime)#%d (3) {
-  [&quot;date&quot;]=&gt;
-  string(26) &quot;2005-07-14 22:30:41.000000&quot;
-  [&quot;timezone_type&quot;]=&gt;
-  int(2)
-  [&quot;timezone&quot;]=&gt;
-  string(3) &quot;GMT&quot;
-}
 [Successful compilation of %s]
-prompt&gt; [Breakpoint #0 added at %s:4]
-prompt&gt; [Breakpoint #1 added at foo]
-prompt&gt; 1
-[Breakpoint #0 at %s:4, hits: 1]
-&gt;00004: echo 2;
- 00005: echo 3;
- 00006: foo();
-prompt&gt; 23
-[Breakpoint #1 in foo() at %s:9, hits: 1]
-&gt;00009: 	echo 4;
- 00010: }
- 00011: 
-prompt&gt; Do you really want to clean your current environment? (type y or n): Cleaning Execution Environment
-Classes    %d
-Functions  %d
-Constants  %d
-Includes   0
-prompt&gt; [Not running]
-prompt&gt; 1
-[Breakpoint #0 at %s:4, hits: 1]
-&gt;00004: echo 2;
- 00005: echo 3;
- 00006: foo();
-prompt&gt; 23
-[Breakpoint #1 in foo() at %s:9, hits: 1]
-&gt;00009: 	echo 4;
- 00010: }
- 00011: 
-prompt&gt; 4
+prompt&gt; 10
+prompt&gt; [Breakpoint #0 added at %s:6]
+prompt&gt; array(1) {
+  [0]=&gt;
+  string(%d) &quot;%s&quot;
+}
+string(10) &quot;stdin
+data&quot;
+[Breakpoint #0 at %s:6, hits: 1]
+&gt;00006: echo &quot;ok\n&quot;;
+ 00007: 
+prompt&gt; Do you really want to restart execution? (type y or n): array(3) {
+  [0]=&gt;
+  string(%d) &quot;%s&quot;
+  [1]=&gt;
+  string(4) &quot;arg1&quot;
+  [2]=&gt;
+  string(10) &quot;_ &#x27; arg2 &quot;&quot;
+}
+string(10) &quot;stdin
+data&quot;
+[Breakpoint #0 at %s:6, hits: 1]
+&gt;00006: echo &quot;ok\n&quot;;
+ 00007: 
+prompt&gt; ok
 [Script ended normally]
 prompt&gt; 
+1200000
+1300000
+1400000
+1500000
 
             </pre>
         </div>
@@ -553,30 +714,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0153&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused994.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused138.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

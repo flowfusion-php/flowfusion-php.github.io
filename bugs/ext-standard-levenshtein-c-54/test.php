@@ -70,27 +70,71 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
 foreach ($longVals as $longVal) {
    foreach($otherVals as $otherVal) {
-       echo "--- testing: $longVal, $otherVal ---\n";
-      var_dump(fmod($longVal, $otherVal));
+       echo "--- testing: $longVal ^ $otherVal ---\n";
+      var_dump($longVal^$otherVal);
    }
 }
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Value {
-    public function __construct(public readonly string $value) {
-    }
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+       echo "--- testing: $otherVal ^ $longVal ---\n";
+      var_dump($otherVal^$longVal);
+   }
 }
-$map = new WeakMap();
-$obj = new Value('a');
-$map[$obj] = $fusion;
-gc_collect_cycles();
-var_dump($map);
-$obj = null;
-gc_collect_cycles();
-var_dump($map);
+$fusion = $otherVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$isspaceChars = " \t\n\r\f\v";
+$goodInputs = [
+    '0b1111111111111111111111111111111',
+    '+0b1111111111111111111111111111111',
+    '-0b1111111111111111111111111111111',
+    $isspaceChars . '0b1111111111111111111111111111111',
+    $isspaceChars . '+0b1111111111111111111111111111111',
+    $isspaceChars . '-0b1111111111111111111111111111111',
+    '0b',
+    '0B',
+    '0B1',
+    '0b000',
+    '0b001',
+    '0b00100',
+    '0b1 1'
+];
+$badInputs = [
+    'b101',
+    '0b00200',
+    '--0b123',
+    '++0b123',
+    '0bb123',
+    '0 b123',
+];
+print "--- Good Inputs - Base = 0 ---\n";
+foreach ($goodInputs as $input) {
+    var_dump(
+        intval($input, 0)
+    );
+}
+print "--- Good Inputs - Base = 2 ---\n";
+foreach ($fusion as $input) {
+    var_dump(
+        intval($input, 2)
+    );
+}
+print "--- Good Inputs - Base = default ---\n";
+foreach ($goodInputs as $input) {
+    var_dump(
+        intval($input)
+    );
+}
+print "--- Bad Inputs - Base = 0 ---\n";
+foreach ($badInputs as $input) {
+    var_dump(
+        intval($input, 0)
+    );
+}
+print '--- Done ---';
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -1,19 +1,14 @@
 --TEST--
-Phar object: unset file+Test ct eval of frameless function
+Phar: fopen a .phar for writing (existing file)+BackedEnum::tryFrom() unknown hash
 --INI--
-phar.readonly=0
+phar.readonly=1
 phar.require_hash=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.optimization_level=-1
-opcache.opt_debug_level=0x20000
-zend_test.observer.enabled=0
-session.cookie_httponly=0
-session.use_strict_mode=1
+memory_limit=33M
+date.timezone=Europe/Paris
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1151
+opcache.jit=0051
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -78,19 +73,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$pharconfig = 0;
-require_once 'files/phar_oo_test.inc';
-$phar = new Phar($fname);
-$phar->setInfoClass('SplFileObject');
-$phar['f.php'] = 'hi';
-var_dump(isset($phar['f.php']));
-echo $phar['f.php'];
-echo "\n";
-unset($phar['f.php']);
-var_dump(isset($phar['f.php']));
-$fusion = $pharconfig;
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a.php'] = '<?php echo "This is a\n"; ?>';
+$files['b.php'] = '<?php echo "This is b\n"; ?>';
+$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
+include 'files/phar_test.inc';
+var_dump(fopen($pname . '/b/c.php', 'wb'));
+include $pname . '/b/c.php';
+$fusion = $pname;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo substr('foo', 1, $fusion ? 1 : 1);
+enum Foo: string {
+    case Bar = 'B';
+}
+$s = 'A';
+$fusion++;
+var_dump(Foo::tryFrom($s));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -98,23 +98,9 @@ var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
 phar
-opcache
 --CLEAN--
-<?php
-unlink(__DIR__ . '/files/phar_oo_012.phar.php');
-__halt_compiler();
-?>
+<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php'); ?>
 --EXPECTF--
-bool(true)
-hi
+Warning: fopen(phar://%sopen_for_write_existing_c.phar.php/b/c.php): Failed to open stream: phar error: write operations disabled by the php.ini setting phar.readonly in %sopen_for_write_existing_c.php on line %d
 bool(false)
-$_main:
-     ; (lines=3, args=0, vars=1, tmps=0)
-     ; (after optimizer)
-     ; %sct_eval_frameless_002.php:1-4
-0000 CHECK_VAR CV0($foo)
-0001 ECHO string("o")
-0002 RETURN int(1)
-
-Warning: Undefined variable $foo in %s on line %d
-o
+This is b/c

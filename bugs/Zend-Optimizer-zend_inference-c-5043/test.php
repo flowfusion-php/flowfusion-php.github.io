@@ -61,19 +61,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$pharconfig = 0;
-require_once 'files/phar_oo_test.inc';
-$phar = new Phar($fname);
-$phar->setInfoClass('SplFileObject');
-$phar['f.php'] = 'hi';
-var_dump(isset($phar['f.php']));
-echo $phar['f.php'];
-echo "\n";
-unset($phar['f.php']);
-var_dump(isset($phar['f.php']));
-$fusion = $pharconfig;
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a.php'] = '<?php echo "This is a\n"; ?>';
+$files['b.php'] = '<?php echo "This is b\n"; ?>';
+$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
+include 'files/phar_test.inc';
+var_dump(fopen($pname . '/b/c.php', 'wb'));
+include $pname . '/b/c.php';
+$fusion = $pname;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo substr('foo', 1, $fusion ? 1 : 1);
+enum Foo: string {
+    case Bar = 'B';
+}
+$s = 'A';
+$fusion++;
+var_dump(Foo::tryFrom($s));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

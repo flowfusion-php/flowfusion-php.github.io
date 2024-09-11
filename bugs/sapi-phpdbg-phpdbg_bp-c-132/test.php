@@ -61,21 +61,14 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-//Set the default time zone
-date_default_timezone_set("Europe/London");
-echo "*** Testing date_create() : basic functionality ***\n";
-var_dump( date_create() );
-var_dump( date_create("GMT") );
-var_dump( date_create("2005-07-14 22:30:41") );
-var_dump( date_create("2005-07-14 22:30:41 GMT") );
+var_dump($argv);
+var_dump(stream_get_contents(STDIN));
+echo "ok\n";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
-}
+echo 1200000.00."\n";
+echo 1300000.00."\n";
+echo 1400000.00."\n";
+echo 1500000.00."\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

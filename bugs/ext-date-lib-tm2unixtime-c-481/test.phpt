@@ -1,9 +1,16 @@
 --TEST--
-Test >> operator : 64bit long tests+Test finfo_open() function : error functionality
+Bug #68104 (Segfault while pre-evaluating a disabled function)+comparing different variables (greater or equal than)
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+disable_functions=dl
+opcache.memory_consumption=7
+session.use_strict_mode=1
 --SKIPIF--
 <?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+if (getenv('SKIP_ASAN')) die('xleak dl() crashes LSan');
 ?>
+<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,612 +75,396 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo "--- testing: $longVal >> $otherVal ---\n";
-      try {
-        var_dump($longVal>>$otherVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
+var_dump(is_callable("dl"));
+try {
+    dl("a.so");
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo "--- testing: $otherVal >> $longVal ---\n";
-      try {
-        var_dump($otherVal>>$longVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-$fusion = $longVals;
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = __DIR__ . DIRECTORY_SEPARATOR . 'magic';
-echo "*** Testing finfo_open() : error functionality ***\n";
-var_dump( finfo_open( FILEINFO_MIME, 'foobarfile' ) );
-var_dump( finfo_open( PHP_INT_MAX - 1, $magicFile ) );
-try {
-    var_dump( finfo_open( 'foobar' ) );
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
+class test {
 }
-try {
-    var_dump( new finfo('foobar') );
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
+$a = array(
+    array(1,2,3),
+    "",
+    1,
+    2.5,
+    0,
+    "string",
+    "123",
+    "2.5",
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+);
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace("\n", "", $buf);
 }
+foreach($a as $var) {
+    for ($i = 0; $i < $fusion_cnt; $i++) {
+        my_dump($var);
+        echo ($var >= $a[$i]) ? " >= " : " < ";
+        my_dump($a[$i]);
+        echo "\n";
+    }
+}
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-fileinfo
+opcache
 --EXPECTF--
---- testing: 9223372036854775807 >> 0 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 >> 1 ---
-int(4611686018427387903)
---- testing: 9223372036854775807 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 7 ---
-int(72057594037927935)
---- testing: 9223372036854775807 >> 9 ---
-int(18014398509481983)
---- testing: 9223372036854775807 >> 65 ---
-int(0)
---- testing: 9223372036854775807 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 2147483647 ---
-int(0)
---- testing: 9223372036854775807 >> 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 >> 0 ---
-int(-9223372036854775808)
---- testing: -9223372036854775808 >> 1 ---
-int(-4611686018427387904)
---- testing: -9223372036854775808 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775808 >> 7 ---
-int(-72057594037927936)
---- testing: -9223372036854775808 >> 9 ---
-int(-18014398509481984)
---- testing: -9223372036854775808 >> 65 ---
-int(-1)
---- testing: -9223372036854775808 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775808 >> 2147483647 ---
-int(-1)
---- testing: -9223372036854775808 >> 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 >> 0 ---
-int(2147483647)
---- testing: 2147483647 >> 1 ---
-int(1073741823)
---- testing: 2147483647 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 7 ---
-int(16777215)
---- testing: 2147483647 >> 9 ---
-int(4194303)
---- testing: 2147483647 >> 65 ---
-int(0)
---- testing: 2147483647 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 2147483647 ---
-int(0)
---- testing: 2147483647 >> 9223372036854775807 ---
-int(0)
---- testing: -2147483648 >> 0 ---
-int(-2147483648)
---- testing: -2147483648 >> 1 ---
-int(-1073741824)
---- testing: -2147483648 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -2147483648 >> 7 ---
-int(-16777216)
---- testing: -2147483648 >> 9 ---
-int(-4194304)
---- testing: -2147483648 >> 65 ---
-int(-1)
---- testing: -2147483648 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -2147483648 >> 2147483647 ---
-int(-1)
---- testing: -2147483648 >> 9223372036854775807 ---
-int(-1)
---- testing: 9223372034707292160 >> 0 ---
-int(9223372034707292160)
---- testing: 9223372034707292160 >> 1 ---
-int(4611686017353646080)
---- testing: 9223372034707292160 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372034707292160 >> 7 ---
-int(72057594021150720)
---- testing: 9223372034707292160 >> 9 ---
-int(18014398505287680)
---- testing: 9223372034707292160 >> 65 ---
-int(0)
---- testing: 9223372034707292160 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372034707292160 >> 2147483647 ---
-int(0)
---- testing: 9223372034707292160 >> 9223372036854775807 ---
-int(0)
---- testing: -9223372034707292160 >> 0 ---
-int(-9223372034707292160)
---- testing: -9223372034707292160 >> 1 ---
-int(-4611686017353646080)
---- testing: -9223372034707292160 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372034707292160 >> 7 ---
-int(-72057594021150720)
---- testing: -9223372034707292160 >> 9 ---
-int(-18014398505287680)
---- testing: -9223372034707292160 >> 65 ---
-int(-1)
---- testing: -9223372034707292160 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372034707292160 >> 2147483647 ---
-int(-1)
---- testing: -9223372034707292160 >> 9223372036854775807 ---
-int(-1)
---- testing: 2147483648 >> 0 ---
-int(2147483648)
---- testing: 2147483648 >> 1 ---
-int(1073741824)
---- testing: 2147483648 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 2147483648 >> 7 ---
-int(16777216)
---- testing: 2147483648 >> 9 ---
-int(4194304)
---- testing: 2147483648 >> 65 ---
-int(0)
---- testing: 2147483648 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 2147483648 >> 2147483647 ---
-int(0)
---- testing: 2147483648 >> 9223372036854775807 ---
-int(0)
---- testing: -2147483649 >> 0 ---
-int(-2147483649)
---- testing: -2147483649 >> 1 ---
-int(-1073741825)
---- testing: -2147483649 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -2147483649 >> 7 ---
-int(-16777217)
---- testing: -2147483649 >> 9 ---
-int(-4194305)
---- testing: -2147483649 >> 65 ---
-int(-1)
---- testing: -2147483649 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -2147483649 >> 2147483647 ---
-int(-1)
---- testing: -2147483649 >> 9223372036854775807 ---
-int(-1)
---- testing: 4294967294 >> 0 ---
-int(4294967294)
---- testing: 4294967294 >> 1 ---
-int(2147483647)
---- testing: 4294967294 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967294 >> 7 ---
-int(33554431)
---- testing: 4294967294 >> 9 ---
-int(8388607)
---- testing: 4294967294 >> 65 ---
-int(0)
---- testing: 4294967294 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967294 >> 2147483647 ---
-int(0)
---- testing: 4294967294 >> 9223372036854775807 ---
-int(0)
---- testing: 4294967295 >> 0 ---
-int(4294967295)
---- testing: 4294967295 >> 1 ---
-int(2147483647)
---- testing: 4294967295 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967295 >> 7 ---
-int(33554431)
---- testing: 4294967295 >> 9 ---
-int(8388607)
---- testing: 4294967295 >> 65 ---
-int(0)
---- testing: 4294967295 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967295 >> 2147483647 ---
-int(0)
---- testing: 4294967295 >> 9223372036854775807 ---
-int(0)
---- testing: 4294967293 >> 0 ---
-int(4294967293)
---- testing: 4294967293 >> 1 ---
-int(2147483646)
---- testing: 4294967293 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967293 >> 7 ---
-int(33554431)
---- testing: 4294967293 >> 9 ---
-int(8388607)
---- testing: 4294967293 >> 65 ---
-int(0)
---- testing: 4294967293 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967293 >> 2147483647 ---
-int(0)
---- testing: 4294967293 >> 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775806 >> 0 ---
-int(9223372036854775806)
---- testing: 9223372036854775806 >> 1 ---
-int(4611686018427387903)
---- testing: 9223372036854775806 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775806 >> 7 ---
-int(72057594037927935)
---- testing: 9223372036854775806 >> 9 ---
-int(18014398509481983)
---- testing: 9223372036854775806 >> 65 ---
-int(0)
---- testing: 9223372036854775806 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775806 >> 2147483647 ---
-int(0)
---- testing: 9223372036854775806 >> 9223372036854775807 ---
-int(0)
---- testing: 9.2233720368548E+18 >> 0 ---
-int(-9223372036854775808)
---- testing: 9.2233720368548E+18 >> 1 ---
-int(-4611686018427387904)
---- testing: 9.2233720368548E+18 >> -1 ---
-Exception: Bit shift by negative number
---- testing: 9.2233720368548E+18 >> 7 ---
-int(-72057594037927936)
---- testing: 9.2233720368548E+18 >> 9 ---
-int(-18014398509481984)
---- testing: 9.2233720368548E+18 >> 65 ---
-int(-1)
---- testing: 9.2233720368548E+18 >> -44 ---
-Exception: Bit shift by negative number
---- testing: 9.2233720368548E+18 >> 2147483647 ---
-int(-1)
---- testing: 9.2233720368548E+18 >> 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 >> 0 ---
-int(-9223372036854775807)
---- testing: -9223372036854775807 >> 1 ---
-int(-4611686018427387904)
---- testing: -9223372036854775807 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775807 >> 7 ---
-int(-72057594037927936)
---- testing: -9223372036854775807 >> 9 ---
-int(-18014398509481984)
---- testing: -9223372036854775807 >> 65 ---
-int(-1)
---- testing: -9223372036854775807 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775807 >> 2147483647 ---
-int(-1)
---- testing: -9223372036854775807 >> 9223372036854775807 ---
-int(-1)
---- testing: -9.2233720368548E+18 >> 0 ---
-int(-9223372036854775808)
---- testing: -9.2233720368548E+18 >> 1 ---
-int(-4611686018427387904)
---- testing: -9.2233720368548E+18 >> -1 ---
-Exception: Bit shift by negative number
---- testing: -9.2233720368548E+18 >> 7 ---
-int(-72057594037927936)
---- testing: -9.2233720368548E+18 >> 9 ---
-int(-18014398509481984)
---- testing: -9.2233720368548E+18 >> 65 ---
-int(-1)
---- testing: -9.2233720368548E+18 >> -44 ---
-Exception: Bit shift by negative number
---- testing: -9.2233720368548E+18 >> 2147483647 ---
-int(-1)
---- testing: -9.2233720368548E+18 >> 9223372036854775807 ---
-int(-1)
---- testing: 0 >> 9223372036854775807 ---
-int(0)
---- testing: 0 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 0 >> 2147483647 ---
-int(0)
---- testing: 0 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 0 >> 9223372034707292160 ---
-int(0)
---- testing: 0 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 0 >> 2147483648 ---
-int(0)
---- testing: 0 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 0 >> 4294967294 ---
-int(0)
---- testing: 0 >> 4294967295 ---
-int(0)
---- testing: 0 >> 4294967293 ---
-int(0)
---- testing: 0 >> 9223372036854775806 ---
-int(0)
---- testing: 0 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 0 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 0 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 1 >> 9223372036854775807 ---
-int(0)
---- testing: 1 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 1 >> 2147483647 ---
-int(0)
---- testing: 1 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 1 >> 9223372034707292160 ---
-int(0)
---- testing: 1 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 1 >> 2147483648 ---
-int(0)
---- testing: 1 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 1 >> 4294967294 ---
-int(0)
---- testing: 1 >> 4294967295 ---
-int(0)
---- testing: 1 >> 4294967293 ---
-int(0)
---- testing: 1 >> 9223372036854775806 ---
-int(0)
---- testing: 1 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 1 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 1 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -1 >> 9223372036854775807 ---
-int(-1)
---- testing: -1 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: -1 >> 2147483647 ---
-int(-1)
---- testing: -1 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: -1 >> 9223372034707292160 ---
-int(-1)
---- testing: -1 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: -1 >> 2147483648 ---
-int(-1)
---- testing: -1 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: -1 >> 4294967294 ---
-int(-1)
---- testing: -1 >> 4294967295 ---
-int(-1)
---- testing: -1 >> 4294967293 ---
-int(-1)
---- testing: -1 >> 9223372036854775806 ---
-int(-1)
---- testing: -1 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -1 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: -1 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 7 >> 9223372036854775807 ---
-int(0)
---- testing: 7 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 7 >> 2147483647 ---
-int(0)
---- testing: 7 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 7 >> 9223372034707292160 ---
-int(0)
---- testing: 7 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 7 >> 2147483648 ---
-int(0)
---- testing: 7 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 7 >> 4294967294 ---
-int(0)
---- testing: 7 >> 4294967295 ---
-int(0)
---- testing: 7 >> 4294967293 ---
-int(0)
---- testing: 7 >> 9223372036854775806 ---
-int(0)
---- testing: 7 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 7 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 7 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9 >> 9223372036854775807 ---
-int(0)
---- testing: 9 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 9 >> 2147483647 ---
-int(0)
---- testing: 9 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 9 >> 9223372034707292160 ---
-int(0)
---- testing: 9 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 9 >> 2147483648 ---
-int(0)
---- testing: 9 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 9 >> 4294967294 ---
-int(0)
---- testing: 9 >> 4294967295 ---
-int(0)
---- testing: 9 >> 4294967293 ---
-int(0)
---- testing: 9 >> 9223372036854775806 ---
-int(0)
---- testing: 9 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 9 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 65 >> 9223372036854775807 ---
-int(0)
---- testing: 65 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 65 >> 2147483647 ---
-int(0)
---- testing: 65 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 65 >> 9223372034707292160 ---
-int(0)
---- testing: 65 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 65 >> 2147483648 ---
-int(0)
---- testing: 65 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 65 >> 4294967294 ---
-int(0)
---- testing: 65 >> 4294967295 ---
-int(0)
---- testing: 65 >> 4294967293 ---
-int(0)
---- testing: 65 >> 9223372036854775806 ---
-int(0)
---- testing: 65 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 65 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 65 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -44 >> 9223372036854775807 ---
-int(-1)
---- testing: -44 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: -44 >> 2147483647 ---
-int(-1)
---- testing: -44 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: -44 >> 9223372034707292160 ---
-int(-1)
---- testing: -44 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: -44 >> 2147483648 ---
-int(-1)
---- testing: -44 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: -44 >> 4294967294 ---
-int(-1)
---- testing: -44 >> 4294967295 ---
-int(-1)
---- testing: -44 >> 4294967293 ---
-int(-1)
---- testing: -44 >> 9223372036854775806 ---
-int(-1)
---- testing: -44 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -44 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: -44 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 9223372036854775807 ---
-int(0)
---- testing: 2147483647 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 2147483647 ---
-int(0)
---- testing: 2147483647 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 9223372034707292160 ---
-int(0)
---- testing: 2147483647 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 2147483648 ---
-int(0)
---- testing: 2147483647 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> 4294967294 ---
-int(0)
---- testing: 2147483647 >> 4294967295 ---
-int(0)
---- testing: 2147483647 >> 4294967293 ---
-int(0)
---- testing: 2147483647 >> 9223372036854775806 ---
-int(0)
---- testing: 2147483647 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 >> -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 2147483647 ---
-int(0)
---- testing: 9223372036854775807 >> -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 9223372034707292160 ---
-int(0)
---- testing: 9223372036854775807 >> -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 2147483648 ---
-int(0)
---- testing: 9223372036854775807 >> -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> 4294967294 ---
-int(0)
---- testing: 9223372036854775807 >> 4294967295 ---
-int(0)
---- testing: 9223372036854775807 >> 4294967293 ---
-int(0)
---- testing: 9223372036854775807 >> 9223372036854775806 ---
-int(0)
---- testing: 9223372036854775807 >> 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 >> -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
-*** Testing finfo_open() : error functionality ***
-
-Warning: finfo_open(%sfoobarfile): Failed to open stream: No such file or directory in %sfinfo_open_error.php on line %d
-
-Warning: finfo_open(%sfoobarfile): Failed to open stream: No such file or directory in %sfinfo_open_error.php on line %d
-
-Warning: finfo_open(): Failed to load magic database at "%sfoobarfile" in %sfinfo_open_error.php on line %d
 bool(false)
-
-Warning: finfo_open(): using regular magic file `%smagic' in %sfinfo_open_error.php on line %d
-object(finfo)#%d (0) {
-}
-finfo_open(): Argument #1 ($flags) must be of type int, string given
-finfo::__construct(): Argument #1 ($flags) must be of type int, string given
+Call to undefined function dl()
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= string(0) ""
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= int(1)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= float(2.5)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= int(0)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= string(6) "string"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= string(3) "123"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= string(3) "2.5"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= NULL
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= bool(true)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= bool(false)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} < object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} < object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} < object(test)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= array(0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= int(-9223372036854775808)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} >= string(20) "-9223372036854775808"
+string(0) "" < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(0) "" >= string(0) ""
+string(0) "" < int(1)
+string(0) "" < float(2.5)
+string(0) "" < int(0)
+string(0) "" < string(6) "string"
+string(0) "" < string(3) "123"
+string(0) "" < string(3) "2.5"
+string(0) "" >= NULL
+string(0) "" < bool(true)
+string(0) "" >= bool(false)
+string(0) "" < object(stdClass)#%d (0) {}
+string(0) "" < object(stdClass)#%d (0) {}
+string(0) "" < object(test)#%d (0) {}
+string(0) "" < array(0) {}
+string(0) "" < int(-9223372036854775808)
+string(0) "" < string(20) "-9223372036854775808"
+int(1) < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(1) >= string(0) ""
+int(1) >= int(1)
+int(1) < float(2.5)
+int(1) >= int(0)
+int(1) < string(6) "string"
+int(1) < string(3) "123"
+int(1) < string(3) "2.5"
+int(1) >= NULL
+int(1) >= bool(true)
+int(1) >= bool(false)
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class test could not be converted to int in %s on line %d
+ >= object(test)#%d (0) {}
+int(1) < array(0) {}
+int(1) >= int(-9223372036854775808)
+int(1) >= string(20) "-9223372036854775808"
+float(2.5) < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+float(2.5) >= string(0) ""
+float(2.5) >= int(1)
+float(2.5) >= float(2.5)
+float(2.5) >= int(0)
+float(2.5) < string(6) "string"
+float(2.5) < string(3) "123"
+float(2.5) >= string(3) "2.5"
+float(2.5) >= NULL
+float(2.5) >= bool(true)
+float(2.5) >= bool(false)
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ >= object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ >= object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class test could not be converted to float in %s on line %d
+ >= object(test)#%d (0) {}
+float(2.5) < array(0) {}
+float(2.5) >= int(-9223372036854775808)
+float(2.5) >= string(20) "-9223372036854775808"
+int(0) < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(0) >= string(0) ""
+int(0) < int(1)
+int(0) < float(2.5)
+int(0) >= int(0)
+int(0) < string(6) "string"
+int(0) < string(3) "123"
+int(0) < string(3) "2.5"
+int(0) >= NULL
+int(0) < bool(true)
+int(0) >= bool(false)
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ < object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ < object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class test could not be converted to int in %s on line %d
+ < object(test)#%d (0) {}
+int(0) < array(0) {}
+int(0) >= int(-9223372036854775808)
+int(0) >= string(20) "-9223372036854775808"
+string(6) "string" < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(6) "string" >= string(0) ""
+string(6) "string" >= int(1)
+string(6) "string" >= float(2.5)
+string(6) "string" >= int(0)
+string(6) "string" >= string(6) "string"
+string(6) "string" >= string(3) "123"
+string(6) "string" >= string(3) "2.5"
+string(6) "string" >= NULL
+string(6) "string" >= bool(true)
+string(6) "string" >= bool(false)
+string(6) "string" < object(stdClass)#%d (0) {}
+string(6) "string" < object(stdClass)#%d (0) {}
+string(6) "string" < object(test)#%d (0) {}
+string(6) "string" < array(0) {}
+string(6) "string" >= int(-9223372036854775808)
+string(6) "string" >= string(20) "-9223372036854775808"
+string(3) "123" < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "123" >= string(0) ""
+string(3) "123" >= int(1)
+string(3) "123" >= float(2.5)
+string(3) "123" >= int(0)
+string(3) "123" < string(6) "string"
+string(3) "123" >= string(3) "123"
+string(3) "123" >= string(3) "2.5"
+string(3) "123" >= NULL
+string(3) "123" >= bool(true)
+string(3) "123" >= bool(false)
+string(3) "123" < object(stdClass)#%d (0) {}
+string(3) "123" < object(stdClass)#%d (0) {}
+string(3) "123" < object(test)#%d (0) {}
+string(3) "123" < array(0) {}
+string(3) "123" >= int(-9223372036854775808)
+string(3) "123" >= string(20) "-9223372036854775808"
+string(3) "2.5" < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "2.5" >= string(0) ""
+string(3) "2.5" >= int(1)
+string(3) "2.5" >= float(2.5)
+string(3) "2.5" >= int(0)
+string(3) "2.5" < string(6) "string"
+string(3) "2.5" < string(3) "123"
+string(3) "2.5" >= string(3) "2.5"
+string(3) "2.5" >= NULL
+string(3) "2.5" >= bool(true)
+string(3) "2.5" >= bool(false)
+string(3) "2.5" < object(stdClass)#%d (0) {}
+string(3) "2.5" < object(stdClass)#%d (0) {}
+string(3) "2.5" < object(test)#%d (0) {}
+string(3) "2.5" < array(0) {}
+string(3) "2.5" >= int(-9223372036854775808)
+string(3) "2.5" >= string(20) "-9223372036854775808"
+NULL < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+NULL >= string(0) ""
+NULL < int(1)
+NULL < float(2.5)
+NULL >= int(0)
+NULL < string(6) "string"
+NULL < string(3) "123"
+NULL < string(3) "2.5"
+NULL >= NULL
+NULL < bool(true)
+NULL >= bool(false)
+NULL < object(stdClass)#%d (0) {}
+NULL < object(stdClass)#%d (0) {}
+NULL < object(test)#%d (0) {}
+NULL >= array(0) {}
+NULL < int(-9223372036854775808)
+NULL < string(20) "-9223372036854775808"
+bool(true) >= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(true) >= string(0) ""
+bool(true) >= int(1)
+bool(true) >= float(2.5)
+bool(true) >= int(0)
+bool(true) >= string(6) "string"
+bool(true) >= string(3) "123"
+bool(true) >= string(3) "2.5"
+bool(true) >= NULL
+bool(true) >= bool(true)
+bool(true) >= bool(false)
+bool(true) >= object(stdClass)#%d (0) {}
+bool(true) >= object(stdClass)#%d (0) {}
+bool(true) >= object(test)#%d (0) {}
+bool(true) >= array(0) {}
+bool(true) >= int(-9223372036854775808)
+bool(true) >= string(20) "-9223372036854775808"
+bool(false) < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(false) >= string(0) ""
+bool(false) < int(1)
+bool(false) < float(2.5)
+bool(false) >= int(0)
+bool(false) < string(6) "string"
+bool(false) < string(3) "123"
+bool(false) < string(3) "2.5"
+bool(false) >= NULL
+bool(false) < bool(true)
+bool(false) >= bool(false)
+bool(false) < object(stdClass)#%d (0) {}
+bool(false) < object(stdClass)#%d (0) {}
+bool(false) < object(test)#%d (0) {}
+bool(false) >= array(0) {}
+bool(false) < int(-9223372036854775808)
+bool(false) < string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} >= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} >= string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ < float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(0)
+object(stdClass)#%d (0) {} >= string(6) "string"
+object(stdClass)#%d (0) {} >= string(3) "123"
+object(stdClass)#%d (0) {} >= string(3) "2.5"
+object(stdClass)#%d (0) {} >= NULL
+object(stdClass)#%d (0) {} >= bool(true)
+object(stdClass)#%d (0) {} >= bool(false)
+object(stdClass)#%d (0) {} >= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} >= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} < object(test)#%d (0) {}
+object(stdClass)#%d (0) {} >= array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(-9223372036854775808)
+object(stdClass)#%d (0) {} >= string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} >= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} >= string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ < float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(0)
+object(stdClass)#%d (0) {} >= string(6) "string"
+object(stdClass)#%d (0) {} >= string(3) "123"
+object(stdClass)#%d (0) {} >= string(3) "2.5"
+object(stdClass)#%d (0) {} >= NULL
+object(stdClass)#%d (0) {} >= bool(true)
+object(stdClass)#%d (0) {} >= bool(false)
+object(stdClass)#%d (0) {} >= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} >= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} < object(test)#%d (0) {}
+object(stdClass)#%d (0) {} >= array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ >= int(-9223372036854775808)
+object(stdClass)#%d (0) {} >= string(20) "-9223372036854775808"
+object(test)#%d (0) {} >= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(test)#%d (0) {} >= string(0) ""
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ >= int(1)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to float in %s on line %d
+ < float(2.5)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ >= int(0)
+object(test)#%d (0) {} >= string(6) "string"
+object(test)#%d (0) {} >= string(3) "123"
+object(test)#%d (0) {} >= string(3) "2.5"
+object(test)#%d (0) {} >= NULL
+object(test)#%d (0) {} >= bool(true)
+object(test)#%d (0) {} >= bool(false)
+object(test)#%d (0) {} < object(stdClass)#%d (0) {}
+object(test)#%d (0) {} < object(stdClass)#%d (0) {}
+object(test)#%d (0) {} >= object(test)#%d (0) {}
+object(test)#%d (0) {} >= array(0) {}
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ >= int(-9223372036854775808)
+object(test)#%d (0) {} >= string(20) "-9223372036854775808"
+array(0) {} < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(0) {} >= string(0) ""
+array(0) {} >= int(1)
+array(0) {} >= float(2.5)
+array(0) {} >= int(0)
+array(0) {} >= string(6) "string"
+array(0) {} >= string(3) "123"
+array(0) {} >= string(3) "2.5"
+array(0) {} >= NULL
+array(0) {} < bool(true)
+array(0) {} >= bool(false)
+array(0) {} < object(stdClass)#%d (0) {}
+array(0) {} < object(stdClass)#%d (0) {}
+array(0) {} < object(test)#%d (0) {}
+array(0) {} >= array(0) {}
+array(0) {} >= int(-9223372036854775808)
+array(0) {} >= string(20) "-9223372036854775808"
+int(-9223372036854775808) < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(-9223372036854775808) >= string(0) ""
+int(-9223372036854775808) < int(1)
+int(-9223372036854775808) < float(2.5)
+int(-9223372036854775808) < int(0)
+int(-9223372036854775808) < string(6) "string"
+int(-9223372036854775808) < string(3) "123"
+int(-9223372036854775808) < string(3) "2.5"
+int(-9223372036854775808) >= NULL
+int(-9223372036854775808) >= bool(true)
+int(-9223372036854775808) >= bool(false)
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ < object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ < object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class test could not be converted to int in %s on line %d
+ < object(test)#%d (0) {}
+int(-9223372036854775808) < array(0) {}
+int(-9223372036854775808) >= int(-9223372036854775808)
+int(-9223372036854775808) >= string(20) "-9223372036854775808"
+string(20) "-9223372036854775808" < array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(20) "-9223372036854775808" >= string(0) ""
+string(20) "-9223372036854775808" < int(1)
+string(20) "-9223372036854775808" < float(2.5)
+string(20) "-9223372036854775808" < int(0)
+string(20) "-9223372036854775808" < string(6) "string"
+string(20) "-9223372036854775808" < string(3) "123"
+string(20) "-9223372036854775808" < string(3) "2.5"
+string(20) "-9223372036854775808" >= NULL
+string(20) "-9223372036854775808" >= bool(true)
+string(20) "-9223372036854775808" >= bool(false)
+string(20) "-9223372036854775808" < object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" < object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" < object(test)#%d (0) {}
+string(20) "-9223372036854775808" < array(0) {}
+string(20) "-9223372036854775808" >= int(-9223372036854775808)
+string(20) "-9223372036854775808" >= string(20) "-9223372036854775808"
+Done

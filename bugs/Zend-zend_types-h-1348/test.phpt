@@ -1,8 +1,12 @@
 --TEST--
-Bug GH-10747 (Private fields in serialized DateTimeZone objects throw)+Lazy objects: Foreach initializes object
+GH-12192 (SimpleXML infinite loop when getName() is called within foreach)+Lazy objects: Foreach initializes object
 --INI--
-session.gc_probability=1
-session.gc_probability=0
+opcache.max_accelerated_files=10
+opcache.optimization_level=2147483647
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0101
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,31 +71,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class I extends DateTimeZone
-{
-	private   int $var1;
-	private       $var2 = 2;
-	protected int $var3 = 3;
-	protected     $var4;
-	function __construct($tz)
-	{
-		parent::__construct($tz);
-		$this->var1 = 1;
-		$this->var4 = 4;
-	}
+$xml = "<root><a>1</a><a>2</a></root>";
+$xml = simplexml_load_string($xml);
+$a = $xml->a;
+foreach ($a as $test) {
+    echo "Iteration\n";
+    var_dump($a->key());
+    var_dump($a->getName());
+    var_dump((string) $test);
 }
-$i = new I('Europe/Kyiv');
-$s = serialize($i);
-$u = unserialize($s);
-var_dump($i, str_replace(chr(0), '!', $s), $u);
-$fusion = $u;
+var_dump($a);
+$fusion = $a;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $this->b = $value; }
+        set(int $value) { $fusion->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -99,7 +96,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $fusion->b = 2;
+        $this->b = 2;
         $this->d = 4;
     }
 }
@@ -143,35 +140,22 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-object(I)#1 (6) {
-  ["var1":"I":private]=>
-  int(1)
-  ["var2":"I":private]=>
-  int(2)
-  ["var3":protected]=>
-  int(3)
-  ["var4":protected]=>
-  int(4)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(11) "Europe/Kyiv"
-}
-string(143) "O:1:"I":6:{s:13:"timezone_type";i:3;s:8:"timezone";s:11:"Europe/Kyiv";s:7:"!I!var1";i:1;s:7:"!I!var2";i:2;s:7:"!*!var3";i:3;s:7:"!*!var4";i:4;}"
-object(I)#2 (6) {
-  ["var1":"I":private]=>
-  int(1)
-  ["var2":"I":private]=>
-  int(2)
-  ["var3":protected]=>
-  int(3)
-  ["var4":protected]=>
-  int(4)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(11) "Europe/Kyiv"
+--EXTENSIONS--
+simplexml
+--EXPECT--
+Iteration
+string(1) "a"
+string(1) "a"
+string(1) "1"
+Iteration
+string(1) "a"
+string(1) "a"
+string(1) "2"
+object(SimpleXMLElement)#2 (2) {
+  [0]=>
+  string(1) "1"
+  [1]=>
+  string(1) "2"
 }
 # Ghost:
 string(11) "initializer"
