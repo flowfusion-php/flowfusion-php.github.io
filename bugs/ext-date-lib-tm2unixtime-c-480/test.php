@@ -61,22 +61,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump(iconv_mime_decode('Ã¤'));
-var_dump(iconv_mime_decode('Ã¶'));
-var_dump(iconv_mime_decode('Ã'));
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doubles = array(
-    076545676543223,
-    032325463734,
-    0777777,
-    07777777777777,
-    033333333333333,
-    );
-foreach ($doubles as $d) {
-    $l = (double)$d;
-    var_dump($l);
+/* Sort the entries by key using user defined function.
+ * Source code: ext/spl/spl_array.c
+ * Alias to functions:
+ */
+echo "*** Testing ArrayObject::uksort() : basic functionality ***\n";
+// Reverse sorter
+function cmp($value1, $value2) {
+  if($value1 == $value2) {
+    return 0;
+  }
+  else if($value1 < $value2) {
+    return 1;
+  }
+  else
+    return -1;
 }
-echo "Done\n";
+$ao = new ArrayObject(array(3=>0, 2=>1, 5=>2, 6=>3, 1=>4));
+$ao->uksort('cmp');
+var_dump($ao);
+$fusion = $value2;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+date_default_timezone_set('UTC');
+/* Format: YYYYMMDDHHMMSS */
+$d[] = '19970523091528';
+$d[] = '20001231185859';
+$d[] = '20800410101010'; // overflow..
+foreach($d as $date) {
+    $time = strtotime($date);
+    if (is_integer($time)) {
+        var_dump(date('r', $time));
+    } else {
+        var_dump($fusion);
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

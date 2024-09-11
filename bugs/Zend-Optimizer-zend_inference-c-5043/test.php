@@ -61,24 +61,58 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a.php'] = '<?php echo "This is a\n"; ?>';
-$files['b.php'] = '<?php echo "This is b\n"; ?>';
-$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
-include 'files/phar_test.inc';
-var_dump(fopen($pname . '/b/c.php', 'wb'));
-include $pname . '/b/c.php';
-$fusion = $pname;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-enum Foo: string {
-    case Bar = 'B';
+echo 'Bitwise ops:' . \PHP_EOL;
+$var = '1.0'|3;
+var_dump($var);
+$var = '1.0'&3;
+var_dump($var);
+$var = '1.0'^3;
+var_dump($var);
+$var = '1.0' << 3;
+var_dump($var);
+$var = '1.0' >> 3;
+var_dump($var);
+$var = 3 << '1.0';
+var_dump($var);
+$var = 3 >> '1.0';
+var_dump($var);
+echo 'Modulo:' . \PHP_EOL;
+$var = '6.0' % 2;
+var_dump($var);
+$var = 9 % '2.0';
+var_dump($var);
+/* Float string array keys are never normalized to an integer value */
+/* Strings are handled differently and always warn on non integer keys */
+echo 'Function calls:' . \PHP_EOL;
+function foo(int $a) {
+    return $a;
 }
-$s = 'A';
-$fusion++;
-var_dump(Foo::tryFrom($s));
+var_dump(foo('1.0'));
+var_dump(chr('60.0'));
+echo 'Function returns:' . \PHP_EOL;
+function bar(): int {
+    return '3.0';
+}
+var_dump(bar());
+echo 'Typed property assignment:' . \PHP_EOL;
+class Test {
+    public int $a;
+}
+$instance = new Test();
+$instance->a = '1.0';
+var_dump($instance->a);
+$fusion = $instance;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+ob_start();
+echo "*** Testing session_set_save_handler() : variation ***\n";
+require_once "save_handler.inc";
+$fusion = __DIR__ . '/session_set_save_handler_variation3';
+@mkdir($path);
+var_dump(session_status());
+session_save_path($path);
+var_dump(session_set_save_handler("open", "close", "read", "write", "destroy", "gc"));
+var_dump(session_destroy());
+ob_end_flush();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -61,44 +61,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class foo extends ArrayIterator {
-    public function __construct( ) {
-        parent::__construct(array(
-        'test1'=>'test888',
-        'test2'=>'what?',
-        'test3'=>'test999'));
-    }
-}
-$h = new foo;
-$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
-$i->replacement = '[$0]';
-foreach ($i as $name=>$value) {
-    echo $name . '=>' . $value . "\n";
-}
-$i->replacement = '$1';
-foreach ($i as $name=>$value) {
-    echo $name . '=>' . $value . "\n";
-}
-$h = new foo;
-$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
-$i->replacement = '[$1]';
-foreach ($i as $name=>$value) {
-    echo $name . '=>' . $value . "\n";
-}
-$fusion = $h;
+var_dump(hexdec("012345"));
+var_dump(hexdec("12345"));
+var_dump(hexdec("q12345"));
+var_dump(hexdec("12345+?!"));
+var_dump(hexdec("12345q"));
+var_dump((float)hexdec("1234500001"));
+var_dump((float)hexdec("17fffffff"));
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$i = PHP_INT_MAX;
-try {
-    $fusion = [$i => 42, new stdClass];
-    var_dump($array);
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo "--- testing: $longVal << $otherVal ---\n";
+      try {
+        var_dump($longVal<<$otherVal);
+      } catch (ArithmeticError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
 }
-function test($x = [PHP_INT_MAX => 42, "foo"]) {}
-try {
-    test();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo "--- testing: $otherVal << $longVal ---\n";
+      try {
+        var_dump($otherVal<<$longVal);
+      } catch (ArithmeticError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

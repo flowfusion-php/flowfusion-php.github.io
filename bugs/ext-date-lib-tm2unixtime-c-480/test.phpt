@@ -1,13 +1,10 @@
 --TEST--
-Bug #60494 (iconv_mime_decode does ignore special characters)+testing integer overflow (32bit)
+Test ArrayObject::uksort() function : basic functionality+strtotime() and mysql timestamps (64 bit)
 --INI--
-precision=14
-error_reporting=8191
-session.cookie_secure=TRUE
-opcache.enable=1
+opcache.max_accelerated_files=10
 opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0215
+--SKIPIF--
+<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,41 +69,62 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump(iconv_mime_decode('Ã¤'));
-var_dump(iconv_mime_decode('Ã¶'));
-var_dump(iconv_mime_decode('Ã'));
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doubles = array(
-    076545676543223,
-    032325463734,
-    0777777,
-    07777777777777,
-    033333333333333,
-    );
-foreach ($doubles as $d) {
-    $l = (double)$d;
-    var_dump($l);
+/* Sort the entries by key using user defined function.
+ * Source code: ext/spl/spl_array.c
+ * Alias to functions:
+ */
+echo "*** Testing ArrayObject::uksort() : basic functionality ***\n";
+// Reverse sorter
+function cmp($value1, $value2) {
+  if($value1 == $value2) {
+    return 0;
+  }
+  else if($value1 < $value2) {
+    return 1;
+  }
+  else
+    return -1;
 }
-echo "Done\n";
+$ao = new ArrayObject(array(3=>0, 2=>1, 5=>2, 6=>3, 1=>4));
+$ao->uksort('cmp');
+var_dump($ao);
+$fusion = $value2;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+date_default_timezone_set('UTC');
+/* Format: YYYYMMDDHHMMSS */
+$d[] = '19970523091528';
+$d[] = '20001231185859';
+$d[] = '20800410101010'; // overflow..
+foreach($d as $date) {
+    $time = strtotime($date);
+    if (is_integer($time)) {
+        var_dump(date('r', $time));
+    } else {
+        var_dump($fusion);
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-iconv
---EXPECTF--
-Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
-bool(false)
-
-Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
-bool(false)
-
-Notice: iconv_mime_decode(): Detected an illegal character in input string in %s on line %d
-bool(false)
-float(4308640384%d)
-float(3545655%d)
-float(262143)
-float(549755813%d)
-float(1884877076%d)
-Done
+--EXPECT--
+*** Testing ArrayObject::uksort() : basic functionality ***
+object(ArrayObject)#1 (1) {
+  ["storage":"ArrayObject":private]=>
+  array(5) {
+    [6]=>
+    int(3)
+    [5]=>
+    int(2)
+    [3]=>
+    int(0)
+    [2]=>
+    int(1)
+    [1]=>
+    int(4)
+  }
+}
+string(31) "Fri, 23 May 1997 09:15:28 +0000"
+string(31) "Sun, 31 Dec 2000 18:58:59 +0000"
+string(31) "Wed, 10 Apr 2080 10:10:10 +0000"

@@ -1,14 +1,13 @@
 --TEST--
-Phar: fopen a .phar for writing (existing file)+BackedEnum::tryFrom() unknown hash
+Implicit string float to int conversions should not warn for literals if float has a fractional part equal to 0+Test session_set_save_handler() function : variation
 --INI--
-phar.readonly=1
-phar.require_hash=0
-memory_limit=33M
-date.timezone=Europe/Paris
+session.auto_start=1
+max_input_vars=4
+session.gc_probability=1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0051
+opcache.jit=0201
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -73,34 +72,96 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a.php'] = '<?php echo "This is a\n"; ?>';
-$files['b.php'] = '<?php echo "This is b\n"; ?>';
-$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
-include 'files/phar_test.inc';
-var_dump(fopen($pname . '/b/c.php', 'wb'));
-include $pname . '/b/c.php';
-$fusion = $pname;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-enum Foo: string {
-    case Bar = 'B';
+echo 'Bitwise ops:' . \PHP_EOL;
+$var = '1.0'|3;
+var_dump($var);
+$var = '1.0'&3;
+var_dump($var);
+$var = '1.0'^3;
+var_dump($var);
+$var = '1.0' << 3;
+var_dump($var);
+$var = '1.0' >> 3;
+var_dump($var);
+$var = 3 << '1.0';
+var_dump($var);
+$var = 3 >> '1.0';
+var_dump($var);
+echo 'Modulo:' . \PHP_EOL;
+$var = '6.0' % 2;
+var_dump($var);
+$var = 9 % '2.0';
+var_dump($var);
+/* Float string array keys are never normalized to an integer value */
+/* Strings are handled differently and always warn on non integer keys */
+echo 'Function calls:' . \PHP_EOL;
+function foo(int $a) {
+    return $a;
 }
-$s = 'A';
-$fusion++;
-var_dump(Foo::tryFrom($s));
+var_dump(foo('1.0'));
+var_dump(chr('60.0'));
+echo 'Function returns:' . \PHP_EOL;
+function bar(): int {
+    return '3.0';
+}
+var_dump(bar());
+echo 'Typed property assignment:' . \PHP_EOL;
+class Test {
+    public int $a;
+}
+$instance = new Test();
+$instance->a = '1.0';
+var_dump($instance->a);
+$fusion = $instance;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+ob_start();
+echo "*** Testing session_set_save_handler() : variation ***\n";
+require_once "save_handler.inc";
+$fusion = __DIR__ . '/session_set_save_handler_variation3';
+@mkdir($path);
+var_dump(session_status());
+session_save_path($path);
+var_dump(session_set_save_handler("open", "close", "read", "write", "destroy", "gc"));
+var_dump(session_destroy());
+ob_end_flush();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-phar
+session
 --CLEAN--
-<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php'); ?>
+<?php
+$path = __DIR__ . '/session_set_save_handler_variation3';
+rmdir($path);
+?>
 --EXPECTF--
-Warning: fopen(phar://%sopen_for_write_existing_c.phar.php/b/c.php): Failed to open stream: phar error: write operations disabled by the php.ini setting phar.readonly in %sopen_for_write_existing_c.php on line %d
+Bitwise ops:
+int(3)
+int(1)
+int(2)
+int(8)
+int(0)
+int(6)
+int(1)
+Modulo:
+int(0)
+int(1)
+Function calls:
+int(1)
+string(1) "<"
+Function returns:
+int(3)
+Typed property assignment:
+int(1)
+*** Testing session_set_save_handler() : variation ***
+int(2)
+
+Warning: session_save_path(): Session save path cannot be changed when a session is active in %s on line %d
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+
+Warning: session_set_save_handler(): Session save handler cannot be changed when a session is active in %s on line %d
 bool(false)
-This is b/c
+bool(true)

@@ -1,24 +1,138 @@
+Deprecated: PHP Startup: assert.warning INI setting is deprecated in Unknown on line 0
+
+Deprecated: PHP Startup: assert.callback INI setting is deprecated in Unknown on line 0
+
+Deprecated: PHP Startup: assert.exception INI setting is deprecated in Unknown on line 0
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 83
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 83
+Initial values: assert_options(ASSERT_CALLBACK) => [f1]
+Initial values: ini.get("assert.callback") => [f1]
+f1 called
+bool(false)
+
+Change callback function using ini.set and test return value
+
+Deprecated: ini_set(): assert.callback INI setting is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 88
+string(2) "f1"
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 89
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 89
+assert_options(ASSERT_CALLBACK) => [f2]
+ini.get("assert.callback") => [f2]
+f2 called
+bool(false)
+
+Change callback function using assert_options and test return value
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 94
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 94
+string(2) "f2"
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 95
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 95
+assert_options(ASSERT_CALLBACK) => [f3]
+ini.get("assert.callback") => [f2]
+f3 called
+bool(false)
+
+Reset the name of the callback routine to a class method
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 100
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 100
+string(2) "f3"
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 101
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 101
+assert_options(ASSERT_CALLBACK) => [c1]
+ini.get("assert.callback") => [f2]
+Invalid callback c1, function "c1" not found or invalid function name
+
+Reset callback options to use a class method
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 110
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 110
+string(2) "c1"
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 111
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 111
+array(2) {
+  [0]=>
+  string(2) "c1"
+  [1]=>
+  string(6) "assert"
+}
+ini.get("assert.callback") => [f2]
+
+Class assertion failed 113, "assert(0 != 0)"
+bool(false)
+
+Reset callback options to use an object method
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 117
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 117
+array(2) {
+  [0]=>
+  string(2) "c1"
+  [1]=>
+  string(6) "assert"
+}
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 118
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 118
+array(2) {
+  [0]=>
+  &object(c1)#2 (0) {
+  }
+  [1]=>
+  string(6) "assert"
+}
+ini.get("assert.callback") => [f2]
+
+Class assertion failed 120, "assert(0 != 0)"
+bool(false)
+
+Set callback to something silly
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 123
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 123
+
+Deprecated: Constant ASSERT_CALLBACK is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 124
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused135.php on line 124
+float(3.1410000000000000142108547152020037174224853515625)
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==3412178==ERROR: AddressSanitizer: SEGV on unknown address 0x7f8977597d80 (pc 0x7f89b7f26cf7 bp 0x7ffc907d8d50 sp 0x7ffc907d8340 T0)
-==3412178==The signal is caused by a WRITE memory access.
+==485207==ERROR: AddressSanitizer: SEGV on unknown address 0x7f206c19d710 (pc 0x7f20acb26cf7 bp 0x7ffd702657f0 sp 0x7ffd70264de0 T0)
+==485207==The signal is caused by a WRITE memory access.
 LLVMSymbolizer: error reading file: No such file or directory
-    #0 0x7f89b7f26cf7 in dasm_encode /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10
-    #1 0x7f89b7f5204c in ir_emit_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_x86.dasc:10804:8
-    #2 0x7f89b88e85e0 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2837:10
-    #3 0x7f89b87bed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
-    #4 0x7f89b84b911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
-    #5 0x7f89b841dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
-    #6 0x7f89b844fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
-    #7 0x7f89b7de28ab in zend_persist_property_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:825:7
-    #8 0x7f89b7daad34 in zend_persist_class_entry /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:975:21
-    #9 0x7f89b7e5a379 in zend_accel_inheritance_cache_add /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2431:23
-    #10 0x55656ab85109 in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3661:12
-    #11 0x55656a1dd7a1 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1332:7
-    #12 0x55656a1de354 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1366:9
-    #13 0x55656a85dffd in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5724:2
-    #14 0x7f89775976cf  (/dev/zero (deleted)+0x80036cf)
+    #0 0x7f20acb26cf7 in dasm_encode /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10
+    #1 0x7f20acb5204c in ir_emit_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_x86.dasc:10804:8
+    #2 0x7f20ad4e85e0 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2837:10
+    #3 0x7f20ad3bed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
+    #4 0x7f20ad0b911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
+    #5 0x7f20ad01dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
+    #6 0x7f20ad04fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
+    #7 0x7f20ac9e28ab in zend_persist_property_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:825:7
+    #8 0x7f20ac9aad34 in zend_persist_class_entry /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:975:21
+    #9 0x7f20aca5a379 in zend_accel_inheritance_cache_add /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2431:23
+    #10 0x55c32f785109 in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3661:12
+    #11 0x55c32eddd7a1 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1332:7
+    #12 0x55c32edde354 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1366:9
+    #13 0x55c32f45dffd in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5724:2
+    #14 0x7f206c19c213  (/dev/zero (deleted)+0x8008213)
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10 in dasm_encode
-==3412178==ABORTING
+==485207==ABORTING
