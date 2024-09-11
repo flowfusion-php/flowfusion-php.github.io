@@ -1,9 +1,20 @@
 --TEST--
-Bug #20382 [2] (strtotime ("Monday", $date) produces wrong result on DST changeover)+Using disable_functions INI to remove die
+Test disk_free_space and its alias diskfreespace() functions : basic functionality+Bug #60634 (Segmentation fault when trying to die() in SessionHandler::write()) - exception in write during exec
 --INI--
-disable_functions=die
+memory_limit=32M
+session.save_path=
+session.name=PHPSESSID
+session.save_handler=files
+expose_php=On
+session.gc_probability=0
+opcache.enable=1
 opcache.enable_cli=1
-opcache.max_accelerated_files=10
+opcache.jit_buffer_size=1024M
+opcache.jit=0201
+--SKIPIF--
+<?php
+if (getenv('CIRRUS_CI')) die('skip Inaccurate on Cirrus');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,173 +79,97 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tests = array(
-    array("Europe/Andorra",     PHP_INT_MIN, 17, 17, 1, 24764, 1970),
-    array("Asia/Dubai",         17, 17, 17, 1, 1, 1970),
-    array("Asia/Kabul",         17, 17, 17, 1, 1, 1970),
-    array("America/Antigua",    17, 17, 17, 1, 1, 1970),
-    array("America/Anguilla",   17, 17, 17, 1, 1, 1970),
-    array("Europe/Tirane",      17, 17, 17, 1, 4849, 1970),
-    array("Asia/Yerevan",       17, 17, 17, 1, 24764, 1970),
-    array("America/Curacao",    17, 17, 17, 1, 1, 1970),
-    array("Africa/Luanda",      17, 17, 17, 1, 1, 1970),
-    array("Antarctica/McMurdo", 17, 17, 17, 1, 24743, 1970),
-    array("Australia/Adelaide", 17, 17, 17, 1, 1, 1971),
-    array("Australia/Darwin",   17, 17, 17, 1, 88, 1971),
-    array("Australia/Perth",    17, 17, 17, 1, 1, 1971),
-    array("America/Aruba",      17, 17, 17, 1, 88, 1971),
-    array("Asia/Baku",          17, 17, 17, 1, 1, 1971),
-    array("Europe/Sarajevo",    17, 17, 17, 1, 1, 1971),
-    array("America/Barbados",   17, 17, 17, 1, 1, 1971),
-    array("Asia/Dacca",         17, 17, 17, 1, 1, 1971),
-    array("Europe/Brussels",    17, 17, 17, 1, 1, 1971),
-    array("Africa/Ouagadougou", 17, 17, 17, 1, 88, 1971),
-    array("Europe/Tirane",      17, 17, 17, 1, 4849, 1970),
-    array("America/Buenos_Aires", 17, 17, 17, 1, 1734, 1970),
-    array("America/Rosario",    17, 17, 17, 1, 1734, 1970),
-    array("Europe/Vienna",      17, 17, 17, 1, 3743, 1970),
-    array("Asia/Baku",          17, 17, 17, 1, 9490, 1970),
-);
-foreach ($tests as $test) {
-    date_default_timezone_set($test[0]);
-    print "{$test[0]}\n";
-    array_shift($test);
-    $timestamp = call_user_func_array('mktime', $test);
-    print "ts     = ". date("l Y-m-d H:i:s T", $timestamp). "\n";
-    $strtotime_tstamp = strtotime("first monday", $timestamp);
-    print "result = ".date("l Y-m-d H:i:s T", $strtotime_tstamp)."\n";
-    print "wanted = Monday            00:00:00\n\n";
+$file_path = __DIR__;
+echo "*** Testing with existing directory ***\n";
+var_dump( disk_free_space($file_path) );
+var_dump( diskfreespace($file_path) );
+echo "*** Testing with newly created directory ***\n";
+$dir = "/disk_free_space";
+mkdir($file_path.$dir);
+echo "\n Free Space before writing to a file\n";
+$space1 =  disk_free_space($file_path.$dir);
+var_dump( $space1 );
+$fh = fopen($file_path.$dir."/disk_free_space.tmp", "a");
+$data = str_repeat("x", 0xffff);
+fwrite($fh, $data);
+fclose($fh);
+echo "\n Free Space after writing to a file\n";
+$space2 =  disk_free_space($file_path.$dir);
+var_dump( $space2 );
+// Some file systems (like BTRFS) have a fuzzy notion of "free space" and will thus claim the same amount of free space
+if ($space1 >= $space2)
+  echo "\n Free Space Value Is Correct\n";
+else {
+  echo "\n Free Space Value Is Incorrect\n";
+  var_dump($space1, $space2);
 }
+echo "*** Testing with Binary Input ***\n";
+var_dump( disk_free_space(b"$file_path") );
+echo"\n--- Done ---";
+$fusion = $dir;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-die();
+ob_start();
+class MySessionHandler implements SessionHandlerInterface {
+    function open($fusion, $session_name): bool {
+        return true;
+    }
+    function close(): bool {
+        echo "close: goodbye cruel world\n";
+        return true;
+    }
+    function read($id): string|false {
+        return '';
+    }
+    function write($id, $session_data): bool {
+        echo "write: goodbye cruel world\n";
+        throw new Exception;
+    }
+    function destroy($id): bool {
+        return true;
+    }
+    function gc($maxlifetime): int {
+        return true;
+    }
+}
+session_set_save_handler(new MySessionHandler());
+session_start();
+session_write_close();
+echo "um, hi\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+session
+--CLEAN--
+<?php
+$file_path = __DIR__;
+unlink($file_path."/disk_free_space/disk_free_space.tmp");
+rmdir($file_path."/disk_free_space");
+?>
 --EXPECTF--
-Europe/Andorra
-ts     = Monday 2037-10-19 17:17:17 CEST
-result = Monday 2037-10-26 00:00:00 CET
-wanted = Monday            00:00:00
+*** Testing with existing directory ***
+float(%f)
+float(%f)
+*** Testing with newly created directory ***
 
-Asia/Dubai
-ts     = Thursday 1970-01-01 17:17:17 %s
-result = Monday 1970-01-05 00:00:00 %s
-wanted = Monday            00:00:00
+ Free Space before writing to a file
+float(%f)
 
-Asia/Kabul
-ts     = Thursday 1970-01-01 17:17:17 %s
-result = Monday 1970-01-05 00:00:00 %s
-wanted = Monday            00:00:00
+ Free Space after writing to a file
+float(%f)
 
-America/Antigua
-ts     = Thursday 1970-01-01 17:17:17 AST
-result = Monday 1970-01-05 00:00:00 AST
-wanted = Monday            00:00:00
+ Free Space Value Is Correct
+*** Testing with Binary Input ***
+float(%f)
 
-America/Anguilla
-ts     = Thursday 1970-01-01 17:17:17 AST
-result = Monday 1970-01-05 00:00:00 AST
-wanted = Monday            00:00:00
+--- Done ---
+write: goodbye cruel world
 
-Europe/Tirane
-ts     = Monday 1983-04-11 17:17:17 CET
-result = Monday 1983-04-18 01:00:00 CEST
-wanted = Monday            00:00:00
-
-Asia/Yerevan
-ts     = Monday 2037-10-19 17:17:17 +04
-result = Monday 2037-10-26 00:00:00 +04
-wanted = Monday            00:00:00
-
-America/Curacao
-ts     = Thursday 1970-01-01 17:17:17 AST
-result = Monday 1970-01-05 00:00:00 AST
-wanted = Monday            00:00:00
-
-Africa/Luanda
-ts     = Thursday 1970-01-01 17:17:17 WAT
-result = Monday 1970-01-05 00:00:00 WAT
-wanted = Monday            00:00:00
-
-Antarctica/McMurdo
-ts     = Monday 2037-09-28 17:17:17 NZDT
-result = Monday 2037-10-05 00:00:00 NZDT
-wanted = Monday            00:00:00
-
-Australia/Adelaide
-ts     = Friday 1971-01-01 17:17:17 ACST
-result = Monday 1971-01-04 00:00:00 ACST
-wanted = Monday            00:00:00
-
-Australia/Darwin
-ts     = Monday 1971-03-29 17:17:17 ACST
-result = Monday 1971-04-05 00:00:00 ACST
-wanted = Monday            00:00:00
-
-Australia/Perth
-ts     = Friday 1971-01-01 17:17:17 AWST
-result = Monday 1971-01-04 00:00:00 AWST
-wanted = Monday            00:00:00
-
-America/Aruba
-ts     = Monday 1971-03-29 17:17:17 AST
-result = Monday 1971-04-05 00:00:00 AST
-wanted = Monday            00:00:00
-
-Asia/Baku
-ts     = Friday 1971-01-01 17:17:17 +04
-result = Monday 1971-01-04 00:00:00 +04
-wanted = Monday            00:00:00
-
-Europe/Sarajevo
-ts     = Friday 1971-01-01 17:17:17 CET
-result = Monday 1971-01-04 00:00:00 CET
-wanted = Monday            00:00:00
-
-America/Barbados
-ts     = Friday 1971-01-01 17:17:17 AST
-result = Monday 1971-01-04 00:00:00 AST
-wanted = Monday            00:00:00
-
-Asia/Dacca
-ts     = Friday 1971-01-01 17:17:17 %s
-result = Monday 1971-01-04 00:00:00 %s
-wanted = Monday            00:00:00
-
-Europe/Brussels
-ts     = Friday 1971-01-01 17:17:17 CET
-result = Monday 1971-01-04 00:00:00 CET
-wanted = Monday            00:00:00
-
-Africa/Ouagadougou
-ts     = Monday 1971-03-29 17:17:17 GMT
-result = Monday 1971-04-05 00:00:00 GMT
-wanted = Monday            00:00:00
-
-Europe/Tirane
-ts     = Monday 1983-04-11 17:17:17 CET
-result = Monday 1983-04-18 01:00:00 CEST
-wanted = Monday            00:00:00
-
-America/Buenos_Aires
-ts     = Monday 1974-09-30 17:17:17 %s
-result = Monday 1974-10-07 00:00:00 %s
-wanted = Monday            00:00:00
-
-America/Rosario
-ts     = Monday 1974-09-30 17:17:17 %s
-result = Monday 1974-10-07 00:00:00 %s
-wanted = Monday            00:00:00
-
-Europe/Vienna
-ts     = Monday 1980-03-31 17:17:17 CET
-result = Monday 1980-04-07 00:00:00 CEST
-wanted = Monday            00:00:00
-
-Asia/Baku
-ts     = Monday 1995-12-25 17:17:17 +04
-result = Monday 1996-01-01 00:00:00 +04
-wanted = Monday            00:00:00
-Warning: Cannot disable function die() in Unknown on line 0
+Fatal error: Uncaught Exception in %s
+Stack trace:
+#0 [internal function]: MySessionHandler->write('%s', '')
+#1 %s(%d): session_write_close()
+#2 {main}
+  thrown in %s on line %d

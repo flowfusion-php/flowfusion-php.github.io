@@ -1,10 +1,10 @@
 --TEST--
-Phar::unlinkArchive()+Test array_merge() function : usage variations - Mixed keys
+array_intersect_ukey(): Basic test.+Phar::unlinkArchive()
 --INI--
 phar.require_hash=0
 phar.readonly=0
-error_reporting=E_ALL & ~E_DEPRECATED
-memory_limit=512M
+session.upload_progress.enabled=1
+auto_globals_jit=1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
@@ -73,6 +73,19 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+/*
+* Function is implemented in ext/standard/array.c
+*/
+function key_compare_func($key1, $key2) {
+    if ($key1 == $key2) return 0;
+    else if ($key1 > $key2) return 1;
+    else return -1;
+}
+$array1 = array('blue' => 1, 'red' => 2, 'green' => 3, 'purple' => 4);
+$array2 = array('green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan' => 8);
+var_dump(array_intersect_ukey($array1, $array2, 'key_compare_func'));
+$fusion = $array2;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 try {
 Phar::unlinkArchive("");
 } catch (Exception $e) {
@@ -101,7 +114,7 @@ $fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';
 $fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.zip';
 $stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
 $file = $stub;
-$files = array();
+$fusion = array();
 $files['a'] = 'a';
 $files['b'] = 'b';
 $files['c'] = 'c';
@@ -135,19 +148,6 @@ include Phar::running(true) . "/another.php";
 $phar['another.php'] = "hi\n";
 unset($phar);
 include $pname . '/evil.php';
-$fusion = $phar;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Pass array_merge() arrays with mixed keys to test how it attaches them to
- * existing arrays
- */
-echo "*** Testing array_merge() : usage variations ***\n";
-//mixed keys
-$arr1 = array('zero', 20 => 'twenty', 'thirty' => 30, true => 'bool');
-$fusion = array(0, 1, 2, null => 'null', 0 => 'float');
-var_dump(array_merge($arr1, $arr2));
-var_dump(array_merge($arr2, $arr1));
-echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -164,6 +164,12 @@ unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.zip');
 __HALT_COMPILER();
 ?>
 --EXPECTF--
+array(2) {
+  ["blue"]=>
+  int(1)
+  ["green"]=>
+  int(3)
+}
 Unknown phar archive ""
 Unknown phar archive "%sphar_unlinkarchive.phar"
 Unknown phar archive "%sphar_unlinkarchive.phar.tar": internal corruption of phar "%sphar_unlinkarchive.phar.tar" (truncated entry)
@@ -182,41 +188,3 @@ int(0)
 phar archive "%sphar_unlinkarchive.phar" cannot be unlinked from within itself
 string(%d) "%sphar_unlinkarchive.phar"
 hi
-*** Testing array_merge() : usage variations ***
-array(8) {
-  [0]=>
-  string(4) "zero"
-  [1]=>
-  string(6) "twenty"
-  ["thirty"]=>
-  int(30)
-  [2]=>
-  string(4) "bool"
-  [3]=>
-  string(5) "float"
-  [4]=>
-  int(1)
-  [5]=>
-  int(2)
-  [""]=>
-  string(4) "null"
-}
-array(8) {
-  [0]=>
-  string(5) "float"
-  [1]=>
-  int(1)
-  [2]=>
-  int(2)
-  [""]=>
-  string(4) "null"
-  [3]=>
-  string(4) "zero"
-  [4]=>
-  string(6) "twenty"
-  ["thirty"]=>
-  int(30)
-  [5]=>
-  string(4) "bool"
-}
-Done

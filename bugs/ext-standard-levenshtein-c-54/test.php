@@ -61,6 +61,19 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+function test() {
+    $i = 1;
+    try {
+        array_map('extract', [['i' => new stdClass]]);
+    } catch (\Error $e) {
+        echo $e->getMessage() . "\n";
+    }
+    $i += 1;
+    var_dump($i);
+}
+test();
+$fusion = $i;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
@@ -70,37 +83,27 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(cosh($longVal));
+   foreach($otherVals as $otherVal) {
+      echo "--- testing: $fusion << $otherVal ---\n";
+      try {
+        var_dump($longVal<<$otherVal);
+      } catch (ArithmeticError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
 }
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo { }
-$o = new Foo;
-try {
-    $o++;
-} catch (\TypeError $e) {
-    echo $e->getMessage(), PHP_EOL;
-    var_dump($o);
-}
-try {
-    $o--;
-} catch (\TypeError $e) {
-    echo $e->getMessage(), PHP_EOL;
-    var_dump($o);
-}
-try {
-    ++$o;
-} catch (\TypeError $e) {
-    echo $e->getMessage(), PHP_EOL;
-    var_dump($fusion);
-}
-try {
-    --$o;
-} catch (\TypeError $e) {
-    echo $e->getMessage(), PHP_EOL;
-    var_dump($o);
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo "--- testing: $otherVal << $longVal ---\n";
+      try {
+        var_dump($otherVal<<$longVal);
+      } catch (ArithmeticError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

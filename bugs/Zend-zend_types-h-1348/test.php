@@ -61,20 +61,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$foo = new class {
+    public int $bar = PHP_INT_MAX;
+};
 try {
-        function x() { throw new Exception("ERROR"); }
-                x(x());
-} catch(Exception $e) {
-        echo($e -> getMessage());
+    $foo->bar++;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
 }
-$fusion = $e;
+var_dump($foo);
+try {
+    $foo->bar += 1;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+try {
+    ++$foo->bar;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+try {
+    $foo->bar = $foo->bar + 1;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+$fusion = $t;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -83,7 +104,7 @@ class C {
         var_dump(__METHOD__);
         $this->a = 1;
         $this->b = 2;
-        $this->d = 4;
+        $fusion->d = 4;
     }
 }
 $reflector = new ReflectionClass(C::class);

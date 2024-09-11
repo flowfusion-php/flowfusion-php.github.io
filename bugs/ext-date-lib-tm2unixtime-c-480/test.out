@@ -1,4 +1,21 @@
-Warning: Cannot disable function die() in Unknown on line 0
-Europe/Andorra
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: -384307168202257563 * 43200 cannot be represented in type 'long long'
+*** Testing with existing directory ***
+float(790037004288)
+float(790037004288)
+*** Testing with newly created directory ***
+
+ Free Space before writing to a file
+float(790037000192)
+
+ Free Space after writing to a file
+float(790036934656)
+
+ Free Space Value Is Correct
+*** Testing with Binary Input ***
+float(790036934656)
+
+--- Done ---Calling function: libxml_get_external_entity_loader with arguments: 
+Calling function: move_uploaded_file with arguments: Resource id #5, 790037000192
+Error calling function move_uploaded_file: move_uploaded_file(): Argument #1 ($from) must be of type string, resource given
+Calling function: gmmktime with arguments: 790037000192, 790037000192, 790037000192, 790037000192, 790037000192, 790037000192
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 313424858732571 * 43200 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

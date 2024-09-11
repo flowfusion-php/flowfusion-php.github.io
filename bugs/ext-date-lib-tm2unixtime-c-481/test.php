@@ -61,28 +61,6 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class C {
-    public function __destruct() {
-        echo __METHOD__, "\n";
-    }
-}
-function f() {
-    $fiber = Fiber::getCurrent();
-    Fiber::suspend();
-}
-$fiber = new Fiber(function () {
-    $c = new C();
-    preg_replace_callback('#.#', f(...), '.');
-});
-print "1\n";
-$fiber->start();
-gc_collect_cycles();
-print "2\n";
-$fiber = null;
-gc_collect_cycles();
-print "3\n";
-$fusion = $c;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
@@ -92,9 +70,20 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(expm1($fusion));
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal, $otherVal ---\n";
+      var_dump(atan2($longVal, $otherVal));
+   }
+}
+$fusion = $otherVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$payload = 'O:23:"RecursiveFilterIterator":0:{}';
+try {
+    var_dump(unserialize($fusion));
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

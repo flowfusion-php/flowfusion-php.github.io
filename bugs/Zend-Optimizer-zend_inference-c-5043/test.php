@@ -61,6 +61,19 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+/*
+* Function is implemented in ext/standard/array.c
+*/
+function key_compare_func($key1, $key2) {
+    if ($key1 == $key2) return 0;
+    else if ($key1 > $key2) return 1;
+    else return -1;
+}
+$array1 = array('blue' => 1, 'red' => 2, 'green' => 3, 'purple' => 4);
+$array2 = array('green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan' => 8);
+var_dump(array_intersect_ukey($array1, $array2, 'key_compare_func'));
+$fusion = $array2;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 try {
 Phar::unlinkArchive("");
 } catch (Exception $e) {
@@ -89,7 +102,7 @@ $fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';
 $fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.zip';
 $stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
 $file = $stub;
-$files = array();
+$fusion = array();
 $files['a'] = 'a';
 $files['b'] = 'b';
 $files['c'] = 'c';
@@ -123,19 +136,6 @@ include Phar::running(true) . "/another.php";
 $phar['another.php'] = "hi\n";
 unset($phar);
 include $pname . '/evil.php';
-$fusion = $phar;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Pass array_merge() arrays with mixed keys to test how it attaches them to
- * existing arrays
- */
-echo "*** Testing array_merge() : usage variations ***\n";
-//mixed keys
-$arr1 = array('zero', 20 => 'twenty', 'thirty' => 30, true => 'bool');
-$fusion = array(0, 1, 2, null => 'null', 0 => 'float');
-var_dump(array_merge($arr1, $arr2));
-var_dump(array_merge($arr2, $arr1));
-echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

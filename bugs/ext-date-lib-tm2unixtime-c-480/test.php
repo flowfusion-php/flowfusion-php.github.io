@@ -61,45 +61,62 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tests = array(
-    array("Europe/Andorra",     PHP_INT_MIN, 17, 17, 1, 24764, 1970),
-    array("Asia/Dubai",         17, 17, 17, 1, 1, 1970),
-    array("Asia/Kabul",         17, 17, 17, 1, 1, 1970),
-    array("America/Antigua",    17, 17, 17, 1, 1, 1970),
-    array("America/Anguilla",   17, 17, 17, 1, 1, 1970),
-    array("Europe/Tirane",      17, 17, 17, 1, 4849, 1970),
-    array("Asia/Yerevan",       17, 17, 17, 1, 24764, 1970),
-    array("America/Curacao",    17, 17, 17, 1, 1, 1970),
-    array("Africa/Luanda",      17, 17, 17, 1, 1, 1970),
-    array("Antarctica/McMurdo", 17, 17, 17, 1, 24743, 1970),
-    array("Australia/Adelaide", 17, 17, 17, 1, 1, 1971),
-    array("Australia/Darwin",   17, 17, 17, 1, 88, 1971),
-    array("Australia/Perth",    17, 17, 17, 1, 1, 1971),
-    array("America/Aruba",      17, 17, 17, 1, 88, 1971),
-    array("Asia/Baku",          17, 17, 17, 1, 1, 1971),
-    array("Europe/Sarajevo",    17, 17, 17, 1, 1, 1971),
-    array("America/Barbados",   17, 17, 17, 1, 1, 1971),
-    array("Asia/Dacca",         17, 17, 17, 1, 1, 1971),
-    array("Europe/Brussels",    17, 17, 17, 1, 1, 1971),
-    array("Africa/Ouagadougou", 17, 17, 17, 1, 88, 1971),
-    array("Europe/Tirane",      17, 17, 17, 1, 4849, 1970),
-    array("America/Buenos_Aires", 17, 17, 17, 1, 1734, 1970),
-    array("America/Rosario",    17, 17, 17, 1, 1734, 1970),
-    array("Europe/Vienna",      17, 17, 17, 1, 3743, 1970),
-    array("Asia/Baku",          17, 17, 17, 1, 9490, 1970),
-);
-foreach ($tests as $test) {
-    date_default_timezone_set($test[0]);
-    print "{$test[0]}\n";
-    array_shift($test);
-    $timestamp = call_user_func_array('mktime', $test);
-    print "ts     = ". date("l Y-m-d H:i:s T", $timestamp). "\n";
-    $strtotime_tstamp = strtotime("first monday", $timestamp);
-    print "result = ".date("l Y-m-d H:i:s T", $strtotime_tstamp)."\n";
-    print "wanted = Monday            00:00:00\n\n";
+$file_path = __DIR__;
+echo "*** Testing with existing directory ***\n";
+var_dump( disk_free_space($file_path) );
+var_dump( diskfreespace($file_path) );
+echo "*** Testing with newly created directory ***\n";
+$dir = "/disk_free_space";
+mkdir($file_path.$dir);
+echo "\n Free Space before writing to a file\n";
+$space1 =  disk_free_space($file_path.$dir);
+var_dump( $space1 );
+$fh = fopen($file_path.$dir."/disk_free_space.tmp", "a");
+$data = str_repeat("x", 0xffff);
+fwrite($fh, $data);
+fclose($fh);
+echo "\n Free Space after writing to a file\n";
+$space2 =  disk_free_space($file_path.$dir);
+var_dump( $space2 );
+// Some file systems (like BTRFS) have a fuzzy notion of "free space" and will thus claim the same amount of free space
+if ($space1 >= $space2)
+  echo "\n Free Space Value Is Correct\n";
+else {
+  echo "\n Free Space Value Is Incorrect\n";
+  var_dump($space1, $space2);
 }
+echo "*** Testing with Binary Input ***\n";
+var_dump( disk_free_space(b"$file_path") );
+echo"\n--- Done ---";
+$fusion = $dir;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-die();
+ob_start();
+class MySessionHandler implements SessionHandlerInterface {
+    function open($fusion, $session_name): bool {
+        return true;
+    }
+    function close(): bool {
+        echo "close: goodbye cruel world\n";
+        return true;
+    }
+    function read($id): string|false {
+        return '';
+    }
+    function write($id, $session_data): bool {
+        echo "write: goodbye cruel world\n";
+        throw new Exception;
+    }
+    function destroy($id): bool {
+        return true;
+    }
+    function gc($maxlifetime): int {
+        return true;
+    }
+}
+session_set_save_handler(new MySessionHandler());
+session_start();
+session_write_close();
+echo "um, hi\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

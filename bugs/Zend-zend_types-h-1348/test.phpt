@@ -1,5 +1,5 @@
 --TEST--
-Bug #48428 (crash when exception is thrown while passing function arguments)+Lazy objects: Foreach initializes object
+Test typed properties overflowing+Lazy objects: Foreach initializes object
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,20 +64,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$foo = new class {
+    public int $bar = PHP_INT_MAX;
+};
 try {
-        function x() { throw new Exception("ERROR"); }
-                x(x());
-} catch(Exception $e) {
-        echo($e -> getMessage());
+    $foo->bar++;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
 }
-$fusion = $e;
+var_dump($foo);
+try {
+    $foo->bar += 1;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+try {
+    ++$foo->bar;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+try {
+    $foo->bar = $foo->bar + 1;
+} catch(TypeError $t) {
+    var_dump($t->getMessage());
+}
+var_dump($foo);
+$fusion = $t;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -86,7 +107,7 @@ class C {
         var_dump(__METHOD__);
         $this->a = 1;
         $this->b = 2;
-        $this->d = 4;
+        $fusion->d = 4;
     }
 }
 $reflector = new ReflectionClass(C::class);
@@ -129,8 +150,27 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-ERROR
+--EXPECTF--
+string(82) "Cannot increment property class@anonymous::$bar of type int past its maximal value"
+object(class@anonymous)#1 (1) {
+  ["bar"]=>
+  int(%d)
+}
+string(65) "Cannot assign float to property class@anonymous::$bar of type int"
+object(class@anonymous)#1 (1) {
+  ["bar"]=>
+  int(%d)
+}
+string(82) "Cannot increment property class@anonymous::$bar of type int past its maximal value"
+object(class@anonymous)#1 (1) {
+  ["bar"]=>
+  int(%d)
+}
+string(65) "Cannot assign float to property class@anonymous::$bar of type int"
+object(class@anonymous)#1 (1) {
+  ["bar"]=>
+  int(%d)
+}
 # Ghost:
 string(11) "initializer"
 string(14) "C::__construct"

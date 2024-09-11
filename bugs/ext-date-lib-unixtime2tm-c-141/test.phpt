@@ -1,9 +1,9 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+Handling of assign-ops and incdecs on overloaded properties using &__get()
+Bug #55253 (DateTime::add() and sub() result -1 hour on objects with time zone type 2)+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"
 --INI--
 date.timezone = UTC
-date.timezone=Asia/Chongqing
-opcache.interned_strings_buffer=131072
+error_reporting=E_ALL
+opcache.file_update_protection=2
 --SKIPIF--
 <?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
@@ -70,34 +70,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+date_default_timezone_set('America/New_York');
+$interval = new DateInterval('PT2H1M');
+$date3 = new DateTime('2010-10-04 02:18:48');
+$date2 = new DateTime('2010-10-04 02:18:48 EDT');
+echo 'Zone Type 3: ' . $date3->format('Y-m-d H:i:s T') . "\n";
+echo 'Zone Type 2: ' . $date2->format('Y-m-d H:i:s T') . "\n";
+echo $interval->format('Add %h hours %i minutes') . "\n";
+$date3->add($interval);
+$date2->add($interval);
+echo 'Zone Type 3: ' . $date3->format('Y-m-d H:i:s T') . "\n";
+echo 'Zone Type 2: ' . $date2->format('Y-m-d H:i:s T') . "\n";
+// Try subtracting from expected result.
+$date3 = new DateTime('2010-10-04 04:19:48');
+$date2 = new DateTime('2010-10-04 04:19:48 EDT');
+echo $interval->format('Subtract %h hours %i minutes from expected') . "\n";
+$date3->sub($interval);
+$date2->sub($interval);
+echo 'Zone Type 3: ' . $date3->format('Y-m-d H:i:s T') . "\n";
+echo 'Zone Type 2: ' . $date2->format('Y-m-d H:i:s T') . "\n";
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Test {
-    protected $a = 0;
-    protected $b = 0;
-    protected $c = 0;
-    public function &__get($name) {
-        echo "get($name)\n";
-        return $this->$name;
-    }
-    public function __set($name, $value) {
-        echo "set($name, $value)\n";
-    }
-}
-$test = new Test;
-var_dump($test->a += 1);
-var_dump($test->b++);
-var_dump(++$test->c);
-var_dump($test);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+Zone Type 3: 2010-10-04 02:18:48 EDT
+Zone Type 2: 2010-10-04 02:18:48 EDT
+Add 2 hours 1 minutes
+Zone Type 3: 2010-10-04 04:19:48 EDT
+Zone Type 2: 2010-10-04 04:19:48 EDT
+Subtract 2 hours 1 minutes from expected
+Zone Type 3: 2010-10-04 02:18:48 EDT
+Zone Type 2: 2010-10-04 02:18:48 EDT
 -292277022657-01-27T08:29:52+00:00
 Sun, 27 Jan -292277022657 08:29:52 +0000
 -292277022657-01-27T08:29:52+00:00
@@ -133,20 +143,3 @@ Sun, 04 Dec 292277026596 15:30:07 +0000
 96
 292277026596
 9223372036854775807
-get(a)
-set(a, 1)
-int(1)
-get(b)
-set(b, 1)
-int(0)
-get(c)
-set(c, 1)
-int(1)
-object(Test)#1 (3) {
-  ["a":protected]=>
-  int(0)
-  ["b":protected]=>
-  int(0)
-  ["c":protected]=>
-  int(0)
-}
