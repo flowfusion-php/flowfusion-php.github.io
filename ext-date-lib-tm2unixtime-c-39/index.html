@@ -57,83 +57,139 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>this bug has been detected for 40 times</pre>
+            <pre>this bug has been detected for 41 times</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
+*** Testing open_basedir configuration [file] ***
 bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-*** Testing array_walk() : basic functionality ***
--- Using array_walk() with default parameters to show array contents --
-string(5) &quot;lemon&quot;
-int(0)
 
-string(6) &quot;orange&quot;
-int(1)
+Warning: mkdir(): File exists in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 64
+bool(false)
 
-string(6) &quot;banana&quot;
-int(2)
+Warning: mkdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 65
+bool(false)
 
-string(5) &quot;apple&quot;
-int(3)
+Warning: mkdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 66
+bool(false)
 
-bool(true)
--- Using array_walk() with all parameters --
-string(5) &quot;lemon&quot;
+Warning: file_put_contents(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 67
 
-Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php on line 172
-NULL
-string(5) &quot;Added&quot;
+Warning: file_put_contents(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 67
 
-string(6) &quot;orange&quot;
+Warning: file_put_contents(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 68
 
-Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php on line 172
-NULL
-string(5) &quot;Added&quot;
+Warning: file_put_contents(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 68
 
-string(6) &quot;banana&quot;
+Warning: chdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 99
+bool(false)
 
-Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php on line 172
-NULL
-string(5) &quot;Added&quot;
+Warning: file(): open_basedir restriction in effect. File(../bad) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 78
 
-string(5) &quot;apple&quot;
+Warning: file(../bad): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 78
+bool(false)
 
-Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php on line 172
-NULL
-string(5) &quot;Added&quot;
+Warning: file(): open_basedir restriction in effect. File(../bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 79
 
-bool(true)
-Donestring(11) &quot;random_var:&quot;
-float(-9.223372036854776E+18)
-array(1) {
-  [0]=&gt;
-  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;
+Warning: file(../bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 79
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(..) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 80
+
+Warning: file(..): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 80
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(../) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 81
+
+Warning: file(../): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 81
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 82
+
+Warning: file(/): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 82
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(../bad/.) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 83
+
+Warning: file(../bad/.): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 83
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 85
+
+Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 85
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/../bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 86
+
+Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/../bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 86
+bool(false)
+array(0) {
 }
-object(Test)#2 (2) {
-  [&quot;prop&quot;]=&gt;
-  float(-9.223372036854776E+18)
-  [&quot;prop2&quot;]=&gt;
-  &amp;int(-9223372036854775808)
-}
-Calling function: gmmktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type &#x27;long long&#x27;
+
+Warning: file(): open_basedir restriction in effect. File(../ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 69
+
+Warning: file(../ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 69
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 70
+
+Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 70
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/../ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 71
+
+Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/../ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 71
+bool(false)
+*** Finished testing open_basedir configuration [file] ***
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset 9223372036854775807 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset -9223372036854775808 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset 2147483647 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset -2147483648 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset 9223372034707292160 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+
+Warning: Uninitialized string offset -9223372034707292160 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+
+Warning: Attempt to read property &quot;nodeName&quot; on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
+NULL
+string(11) &quot;random_var:&quot;
+string(42) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src&quot;
+int(-9223372034707292160)
+string(42) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src&quot;
+Calling function: xmlwriter_write_dtd_entity with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src
+Error calling function xmlwriter_write_dtd_entity: xmlwriter_write_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, string given
+Calling function: unpack with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, -9223372034707292160, /home/phpfuzz/WorkSpace/flowfusion/php-src
+Error calling function unpack: unpack(): Argument #3 ($offset) must be of type int, string given
+Calling function: finfo_set_flags with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src
+Error calling function finfo_set_flags: finfo_set_flags(): Argument #1 ($finfo) must be of type finfo, string given
+Calling function: array_key_last with arguments: -9223372034707292160
+Error calling function array_key_last: array_key_last(): Argument #1 ($array) must be of type array, int given
+Calling function: mktime with arguments: -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372034707292160 - 153722867245121536 cannot be represented in type &#x27;long long&#x27;
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in
             </pre>
         </div>
@@ -204,123 +260,30 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public int|float $prop;
-    public int|bool $prop2;
-}
-/* Incrementing a int|float property past int min/max is legal */
-$test = new Test;
-$test-&gt;prop = PHP_INT_MAX;
-$x = $test-&gt;prop++;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MAX;
-$x = ++$test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = $test-&gt;prop--;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = --$test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test = new Test;
-$test-&gt;prop = PHP_INT_MAX;
-$r =&amp; $test-&gt;prop;
-$x = $test-&gt;prop++;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MAX;
-$x = ++$test-&gt;prop;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = $test-&gt;prop--;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = --$test-&gt;prop;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-/* Incrementing a non-int|float property past int min/max is an error,
- * even if the result of the overflow (a float) would technically be allowed
- * under a type coercion. */
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $x = $test-&gt;prop2++;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $x = ++$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $x = $test-&gt;prop2--;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $x = --$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $r =&amp; $test-&gt;prop2;
-    $x = $test-&gt;prop2++;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $r =&amp; $test-&gt;prop2;
-    $x = ++$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $r =&amp; $test-&gt;prop2;
-    $x = $test-&gt;prop2--;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $r =&amp; $test-&gt;prop2;
-    $x = --$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-$fusion = $e;
+require_once &quot;open_basedir.inc&quot;;
+$initdir = getcwd();
+test_open_basedir_before(&quot;file&quot;);
+test_open_basedir_error(&quot;file&quot;);
+var_dump(file(&quot;ok.txt&quot;));
+var_dump(file(&quot;../ok/ok.txt&quot;));
+var_dump(file($initdir.&quot;/test/ok/ok.txt&quot;));
+var_dump(file($initdir.&quot;/test/ok/../ok/ok.txt&quot;));
+test_open_basedir_after(&quot;file&quot;);
+$fusion = $initdir;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;*** Testing array_walk() : basic functionality ***\n&quot;;
-// regular array
-$fruits = array(&quot;lemon&quot;, &quot;orange&quot;, &quot;banana&quot;, &quot;apple&quot;);
-function test_print($item, $key)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($key);  // key
-   echo &quot;\n&quot;; // new line to separate the output between each element
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    0, MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+);
+$dom = new DOMDocument;
+$dom-&gt;loadXML(&#x27;&lt;root&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/root&gt;&#x27;);
+$children = $dom-&gt;documentElement-&gt;childNodes;
+foreach ($longVals as $value) {
+    var_dump($fusion[$value]?-&gt;nodeName);
 }
-function with_userdata($item, $key, $user_data)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($fusion);  // key
-   var_dump($user_data); // user supplied data
-   echo &quot;\n&quot;; // new line to separate the output between each element
-}
-echo &quot;-- Using array_walk() with default parameters to show array contents --\n&quot;;
-var_dump( array_walk($fruits, &#x27;test_print&#x27;));
-echo &quot;-- Using array_walk() with all parameters --\n&quot;;
-var_dump( array_walk($fruits, &#x27;with_userdata&#x27;, &quot;Added&quot;));
-echo &quot;Done&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
@@ -334,10 +297,15 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Increment/decrement a typed property with int|float type+Test array_walk() function : basic functionality - regular array
+Test open_basedir configuration+GH-15654 (Signed integer overflow in ext/dom/nodelist.c)
 --INI--
-session.gc_maxlifetime=0
+open_basedir=.
+post_max_size=1M
 session.cookie_secure=0
+--SKIPIF--
+&lt;?php
+if (PHP_INT_SIZE != 8) die(&#x27;skip 64-bit only&#x27;);
+?&gt;
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -402,179 +370,113 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public int|float $prop;
-    public int|bool $prop2;
-}
-/* Incrementing a int|float property past int min/max is legal */
-$test = new Test;
-$test-&gt;prop = PHP_INT_MAX;
-$x = $test-&gt;prop++;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MAX;
-$x = ++$test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = $test-&gt;prop--;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = --$test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test = new Test;
-$test-&gt;prop = PHP_INT_MAX;
-$r =&amp; $test-&gt;prop;
-$x = $test-&gt;prop++;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MAX;
-$x = ++$test-&gt;prop;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = $test-&gt;prop--;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-$test-&gt;prop = PHP_INT_MIN;
-$x = --$test-&gt;prop;
-$r =&amp; $test-&gt;prop;
-var_dump(is_double($test-&gt;prop));
-/* Incrementing a non-int|float property past int min/max is an error,
- * even if the result of the overflow (a float) would technically be allowed
- * under a type coercion. */
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $x = $test-&gt;prop2++;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $x = ++$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $x = $test-&gt;prop2--;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $x = --$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $r =&amp; $test-&gt;prop2;
-    $x = $test-&gt;prop2++;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MAX;
-    $r =&amp; $test-&gt;prop2;
-    $x = ++$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $r =&amp; $test-&gt;prop2;
-    $x = $test-&gt;prop2--;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-try {
-    $test-&gt;prop2 = PHP_INT_MIN;
-    $r =&amp; $test-&gt;prop2;
-    $x = --$test-&gt;prop2;
-} catch (TypeError $e) {
-    echo $e-&gt;getMessage(), &quot;\n&quot;;
-}
-$fusion = $e;
+require_once &quot;open_basedir.inc&quot;;
+$initdir = getcwd();
+test_open_basedir_before(&quot;file&quot;);
+test_open_basedir_error(&quot;file&quot;);
+var_dump(file(&quot;ok.txt&quot;));
+var_dump(file(&quot;../ok/ok.txt&quot;));
+var_dump(file($initdir.&quot;/test/ok/ok.txt&quot;));
+var_dump(file($initdir.&quot;/test/ok/../ok/ok.txt&quot;));
+test_open_basedir_after(&quot;file&quot;);
+$fusion = $initdir;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;*** Testing array_walk() : basic functionality ***\n&quot;;
-// regular array
-$fruits = array(&quot;lemon&quot;, &quot;orange&quot;, &quot;banana&quot;, &quot;apple&quot;);
-function test_print($item, $key)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($key);  // key
-   echo &quot;\n&quot;; // new line to separate the output between each element
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    0, MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+);
+$dom = new DOMDocument;
+$dom-&gt;loadXML(&#x27;&lt;root&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/root&gt;&#x27;);
+$children = $dom-&gt;documentElement-&gt;childNodes;
+foreach ($longVals as $value) {
+    var_dump($fusion[$value]?-&gt;nodeName);
 }
-function with_userdata($item, $key, $user_data)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($fusion);  // key
-   var_dump($user_data); // user supplied data
-   echo &quot;\n&quot;; // new line to separate the output between each element
-}
-echo &quot;-- Using array_walk() with default parameters to show array contents --\n&quot;;
-var_dump( array_walk($fruits, &#x27;test_print&#x27;));
-echo &quot;-- Using array_walk() with all parameters --\n&quot;;
-var_dump( array_walk($fruits, &#x27;with_userdata&#x27;, &quot;Added&quot;));
-echo &quot;Done&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
---EXPECT--
+--EXTENSIONS--
+dom
+--CLEAN--
+&lt;?php
+require_once &quot;open_basedir.inc&quot;;
+delete_directories();
+?&gt;
+--EXPECTF--
+*** Testing open_basedir configuration [file] ***
 bool(true)
 bool(true)
 bool(true)
 bool(true)
 bool(true)
-bool(true)
-bool(true)
-bool(true)
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-*** Testing array_walk() : basic functionality ***
--- Using array_walk() with default parameters to show array contents --
-string(5) &quot;lemon&quot;
-int(0)
 
-string(6) &quot;orange&quot;
-int(1)
+Warning: file(): open_basedir restriction in effect. File(../bad) is not within the allowed path(s): (.) in %s on line %d
 
-string(6) &quot;banana&quot;
-int(2)
+Warning: file(../bad): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(5) &quot;apple&quot;
-int(3)
+Warning: file(): open_basedir restriction in effect. File(../bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
 
-bool(true)
--- Using array_walk() with all parameters --
-string(5) &quot;lemon&quot;
-int(0)
-string(5) &quot;Added&quot;
+Warning: file(../bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(6) &quot;orange&quot;
-int(1)
-string(5) &quot;Added&quot;
+Warning: file(): open_basedir restriction in effect. File(..) is not within the allowed path(s): (.) in %s on line %d
 
-string(6) &quot;banana&quot;
-int(2)
-string(5) &quot;Added&quot;
+Warning: file(..): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(5) &quot;apple&quot;
-int(3)
-string(5) &quot;Added&quot;
+Warning: file(): open_basedir restriction in effect. File(../) is not within the allowed path(s): (.) in %s on line %d
 
-bool(true)
-Done
+Warning: file(../): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(/): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(../bad/.) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(../bad/.): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(%s/test/bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(%s/test/bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(%s/test/bad/../bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(%s/test/bad/../bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
+array(1) {
+  [0]=&gt;
+  string(12) &quot;Hello World!&quot;
+}
+array(1) {
+  [0]=&gt;
+  string(12) &quot;Hello World!&quot;
+}
+array(1) {
+  [0]=&gt;
+  string(12) &quot;Hello World!&quot;
+}
+array(1) {
+  [0]=&gt;
+  string(12) &quot;Hello World!&quot;
+}
+*** Finished testing open_basedir configuration [file] ***
+string(1) &quot;a&quot;
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
 
             </pre>
         </div>
@@ -618,30 +520,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.gc_maxlifetime=0&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused976.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker12&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=.&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;post_max_size=1M&quot; -d &quot;session.cookie_secure=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

@@ -1,8 +1,13 @@
 --TEST--
-Increment/decrement a typed property with int|float type+Test array_walk() function : basic functionality - regular array
+Test open_basedir configuration+GH-15654 (Signed integer overflow in ext/dom/nodelist.c)
 --INI--
-session.gc_maxlifetime=0
+open_basedir=.
+post_max_size=1M
 session.cookie_secure=0
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die('skip 64-bit only');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,176 +72,110 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public int|float $prop;
-    public int|bool $prop2;
-}
-/* Incrementing a int|float property past int min/max is legal */
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-var_dump(is_double($test->prop));
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$r =& $test->prop;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-/* Incrementing a non-int|float property past int min/max is an error,
- * even if the result of the overflow (a float) would technically be allowed
- * under a type coercion. */
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $r =& $test->prop2;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $r =& $test->prop2;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $e;
+require_once "open_basedir.inc";
+$initdir = getcwd();
+test_open_basedir_before("file");
+test_open_basedir_error("file");
+var_dump(file("ok.txt"));
+var_dump(file("../ok/ok.txt"));
+var_dump(file($initdir."/test/ok/ok.txt"));
+var_dump(file($initdir."/test/ok/../ok/ok.txt"));
+test_open_basedir_after("file");
+$fusion = $initdir;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing array_walk() : basic functionality ***\n";
-// regular array
-$fruits = array("lemon", "orange", "banana", "apple");
-function test_print($item, $key)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($key);  // key
-   echo "\n"; // new line to separate the output between each element
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    0, MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+);
+$dom = new DOMDocument;
+$dom->loadXML('<root><a/><b/><c/></root>');
+$children = $dom->documentElement->childNodes;
+foreach ($longVals as $value) {
+    var_dump($fusion[$value]?->nodeName);
 }
-function with_userdata($item, $key, $user_data)
-{
-   // dump the arguments to check that they are passed
-   // with proper type
-   var_dump($item); // value
-   var_dump($fusion);  // key
-   var_dump($user_data); // user supplied data
-   echo "\n"; // new line to separate the output between each element
-}
-echo "-- Using array_walk() with default parameters to show array contents --\n";
-var_dump( array_walk($fruits, 'test_print'));
-echo "-- Using array_walk() with all parameters --\n";
-var_dump( array_walk($fruits, 'with_userdata', "Added"));
-echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
+--EXTENSIONS--
+dom
+--CLEAN--
+<?php
+require_once "open_basedir.inc";
+delete_directories();
+?>
+--EXPECTF--
+*** Testing open_basedir configuration [file] ***
 bool(true)
 bool(true)
 bool(true)
 bool(true)
 bool(true)
-bool(true)
-bool(true)
-bool(true)
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-*** Testing array_walk() : basic functionality ***
--- Using array_walk() with default parameters to show array contents --
-string(5) "lemon"
-int(0)
 
-string(6) "orange"
-int(1)
+Warning: file(): open_basedir restriction in effect. File(../bad) is not within the allowed path(s): (.) in %s on line %d
 
-string(6) "banana"
-int(2)
+Warning: file(../bad): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(5) "apple"
-int(3)
+Warning: file(): open_basedir restriction in effect. File(../bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
 
-bool(true)
--- Using array_walk() with all parameters --
-string(5) "lemon"
-int(0)
-string(5) "Added"
+Warning: file(../bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(6) "orange"
-int(1)
-string(5) "Added"
+Warning: file(): open_basedir restriction in effect. File(..) is not within the allowed path(s): (.) in %s on line %d
 
-string(6) "banana"
-int(2)
-string(5) "Added"
+Warning: file(..): Failed to open stream: %s in %s on line %d
+bool(false)
 
-string(5) "apple"
-int(3)
-string(5) "Added"
+Warning: file(): open_basedir restriction in effect. File(../) is not within the allowed path(s): (.) in %s on line %d
 
-bool(true)
-Done
+Warning: file(../): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(/): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(../bad/.) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(../bad/.): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(%s/test/bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(%s/test/bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
+
+Warning: file(): open_basedir restriction in effect. File(%s/test/bad/../bad/bad.txt) is not within the allowed path(s): (.) in %s on line %d
+
+Warning: file(%s/test/bad/../bad/bad.txt): Failed to open stream: %s in %s on line %d
+bool(false)
+array(1) {
+  [0]=>
+  string(12) "Hello World!"
+}
+array(1) {
+  [0]=>
+  string(12) "Hello World!"
+}
+array(1) {
+  [0]=>
+  string(12) "Hello World!"
+}
+array(1) {
+  [0]=>
+  string(12) "Hello World!"
+}
+*** Finished testing open_basedir configuration [file] ***
+string(1) "a"
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL

@@ -1,2 +1,6 @@
+Unknown phar archive ""
+Unknown phar archive "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused384.phar": unable to open phar for reading "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused384.phar"
+Unknown phar archive "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused384.phar.tar": internal corruption of phar "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused384.phar.tar" (truncated entry)
+Phar::unlinkArchive(): Argument #1 ($filename) must be of type string, array given
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in

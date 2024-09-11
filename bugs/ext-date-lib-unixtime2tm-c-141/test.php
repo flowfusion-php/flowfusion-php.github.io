@@ -61,44 +61,81 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
+class test {
+}
+$a = array(
+    array(1,2,3),
+    "",
+    1,
+    2.5,
+    0,
+    "string",
+    "123",
+    "2.5",
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+);
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace("\n", "", $buf);
+}
+foreach($a as $var) {
+    for ($i = 0; $i < $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var <= $a[$i]) ? " <= " : " > ";
+        my_dump($a[$i]);
+        echo "\n";
+    }
+}
+echo "Done\n";
+$fusion = $var;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-// Checks that JITed code does not crash in --repeat 2 after the UniqueList
-// class changes.
-if (!isset(opcache_get_status()['scripts'][__DIR__ . '/gh8461-004.inc'])) {
-    $initialRequest = true;
-    require __DIR__ . '/gh8461-004.inc';
-} else {
-    $initialRequest = false;
-    $y = 0;
-    class UniqueList
-    {
-        public const A = 1;
-        public const B = 1;
-        private $foo;
-        public function __construct($b)
-        {
-            global $y;
-            $y++;
-            $this->foo = self::A + $b;
-        }
+date_default_timezone_set('Europe/Lisbon');
+$time = 1150494719; // 16/June/2006
+$strs = array(
+    '',
+    " \t\r\n000",
+    'yesterday',
+    '22:49:12',
+    '22:49:12 bogusTZ',
+    '22.49.12.42GMT',
+    '22.49.12.42bogusTZ',
+    't0222',
+    't0222 t0222',
+    '022233',
+    '022233 bogusTZ',
+    '2-3-2004',
+    '2.3.2004',
+    '20060212T23:12:23UTC',
+    '20060212T23:12:23 bogusTZ',
+    '2006167', //pgydotd
+    'Jan-15-2006', //pgtextshort
+    '2006-Jan-15', //pgtextreverse
+    '10/Oct/2000:13:55:36 +0100', //clf
+    '10/Oct/2000:13:55:36 +00100', //clf
+    '2006',
+    '1986', // year
+    'JAN',
+    'January',
+);
+foreach ($strs as $str) {
+    $t = strtotime($str, $fusion);
+    if (is_integer($t)) {
+        var_dump(date(DATE_RFC2822, $t));
+    } else {
+        var_dump($t);
     }
 }
-class UniqueListLast extends UniqueList
-{
-    public function __construct()
-    {
-        parent::__construct(self::B);
-    }
-}
-for ($i = 0; $i < 10; $i++) {
-    new UniqueListLast();
-}
-var_dump($initialRequest ? $x : $y);
-print "OK";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

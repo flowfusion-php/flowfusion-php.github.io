@@ -1,5 +1,12 @@
 --TEST--
-Test ceil function : 64bit long tests+ZE2 class constants and scope
+Test cosh function : 64bit long tests+Cannot increment/decrement objects
+--INI--
+post_max_size=1024
+opcache.memory_consumption=7
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1152
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -79,27 +86,36 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(ceil($longVal));
+   var_dump(cosh($longVal));
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class ErrorCodes {
-    const FATAL = "Fatal error\n";
-    const WARNING = "Warning\n";
-    const INFO = "Informational message\n";
-    static function print_fatal_error_codes() {
-        echo "self::FATAL = " . self::FATAL;
-    }
+class Foo { }
+$o = new Foo;
+try {
+    $o++;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
 }
-class ErrorCodesDerived extends ErrorCodes {
-    const FATAL = "Worst error\n";
-    static function print_fatal_error_codes() {
-        echo "self::FATAL = " . self::FATAL;
-        echo "parent::FATAL = " . parent::FATAL;
-    }
+try {
+    $o--;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
 }
-/* Call the static function and move into the ErrorCodes scope */
-ErrorCodes::print_fatal_error_codes();
-ErrorCodesDerived::print_fatal_error_codes();
+try {
+    ++$o;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($fusion);
+}
+try {
+    --$o;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -107,35 +123,44 @@ var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
 --- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
+float(INF)
 --- testing: -9223372036854775808 ---
-float(-9.223372036854776E+18)
+float(INF)
 --- testing: 2147483647 ---
-float(2147483647)
+float(INF)
 --- testing: -2147483648 ---
-float(-2147483648)
+float(INF)
 --- testing: 9223372034707292160 ---
-float(9.223372034707292E+18)
+float(INF)
 --- testing: -9223372034707292160 ---
-float(-9.223372034707292E+18)
+float(INF)
 --- testing: 2147483648 ---
-float(2147483648)
+float(INF)
 --- testing: -2147483649 ---
-float(-2147483649)
+float(INF)
 --- testing: 4294967294 ---
-float(4294967294)
+float(INF)
 --- testing: 4294967295 ---
-float(4294967295)
+float(INF)
 --- testing: 4294967293 ---
-float(4294967293)
+float(INF)
 --- testing: 9223372036854775806 ---
-float(9.223372036854776E+18)
+float(INF)
 --- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
+float(INF)
 --- testing: -9223372036854775807 ---
-float(-9.223372036854776E+18)
+float(INF)
 --- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-self::FATAL = Fatal error
-self::FATAL = Worst error
-parent::FATAL = Fatal error
+float(INF)
+Cannot increment Foo
+object(Foo)#1 (0) {
+}
+Cannot decrement Foo
+object(Foo)#1 (0) {
+}
+Cannot increment Foo
+object(Foo)#1 (0) {
+}
+Cannot decrement Foo
+object(Foo)#1 (0) {
+}

@@ -61,28 +61,81 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+try {
+Phar::unlinkArchive("");
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar';
+$pdname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.tar';
+try {
+Phar::unlinkArchive($fname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+file_put_contents($pdname, 'blahblah');
+try {
+Phar::unlinkArchive($pdname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+try {
+    Phar::unlinkArchive(array());
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
 $pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.zip';
+$stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
 $files = array();
-$files['a.php'] = '<?php echo "This is a\n"; ?>';
-$files['b.php'] = '<?php echo "This is b\n"; ?>';
-$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
 include 'files/phar_test.inc';
-$fp = fopen($pname . '/b/new.php', 'wb');
-fwrite($fp, 'extra');
-fclose($fp);
-include $pname . '/b/c.php';
-include $pname . '/b/new.php';
-$fusion = $file;
+$phar = new Phar($fname);
+var_dump($phar->isFileFormat(Phar::ZIP));
+var_dump($phar->getStub());
+try {
+Phar::unlinkArchive($fname);
+} catch (Exception $e) {
+echo $e->getMessage(),"\n";
+}
+$phar = $phar->convertToExecutable(Phar::ZIP);
+var_dump($phar->isFileFormat(Phar::ZIP));
+var_dump($phar->getStub());
+copy($fname2, $fname3);
+$phar = new Phar($fname3);
+var_dump($phar->isFileFormat(Phar::ZIP));
+var_dump($phar->getStub());
+Phar::unlinkArchive($fname);
+var_dump(file_exists($fname));
+$phar = new Phar($fname);
+var_dump(count($phar));
+$phar['evil.php'] = '<?php
+try {
+Phar::unlinkArchive(Phar::running(false));
+} catch (Exception $e) {echo $e->getMessage(),"\n";}
+var_dump(Phar::running(false));
+include Phar::running(true) . "/another.php";
+?>';
+$phar['another.php'] = "hi\n";
+unset($phar);
+include $pname . '/evil.php';
+$fusion = $phar;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$foo = new class {
-    public int $fusion = 15;
-    public function &method() {
-        return $this->bar;
-    }
-};
-var_dump($foo->method());
+/*
+ * Pass array_merge() arrays with mixed keys to test how it attaches them to
+ * existing arrays
+ */
+echo "*** Testing array_merge() : usage variations ***\n";
+//mixed keys
+$arr1 = array('zero', 20 => 'twenty', 'thirty' => 30, true => 'bool');
+$fusion = array(0, 1, 2, null => 'null', 0 => 'float');
+var_dump(array_merge($arr1, $arr2));
+var_dump(array_merge($arr2, $arr1));
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -72,27 +72,36 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(ceil($longVal));
+   var_dump(cosh($longVal));
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class ErrorCodes {
-    const FATAL = "Fatal error\n";
-    const WARNING = "Warning\n";
-    const INFO = "Informational message\n";
-    static function print_fatal_error_codes() {
-        echo "self::FATAL = " . self::FATAL;
-    }
+class Foo { }
+$o = new Foo;
+try {
+    $o++;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
 }
-class ErrorCodesDerived extends ErrorCodes {
-    const FATAL = "Worst error\n";
-    static function print_fatal_error_codes() {
-        echo "self::FATAL = " . self::FATAL;
-        echo "parent::FATAL = " . parent::FATAL;
-    }
+try {
+    $o--;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
 }
-/* Call the static function and move into the ErrorCodes scope */
-ErrorCodes::print_fatal_error_codes();
-ErrorCodesDerived::print_fatal_error_codes();
+try {
+    ++$o;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($fusion);
+}
+try {
+    --$o;
+} catch (\TypeError $e) {
+    echo $e->getMessage(), PHP_EOL;
+    var_dump($o);
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

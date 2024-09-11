@@ -61,34 +61,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
-}
+$i = 1;
+echo $i++;
+echo $i++;
+echo $i++;
+echo $i++;
+$fusion = $i;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-goto a;
-try {
-    echo "1";
-a:
-    echo "2";
-    throw new Exception();
-} catch (Exception $e) {
-    echo "3";
+class Foo {
+  private $bar;
+  function __construct($bar) {
+    $this->bar = $bar;
+  }
+  function __destruct() {
+    echo __METHOD__,"\n";
+    unset($this->bar);
+  }
 }
-echo "4";
-goto b;
-try {
-    echo "5";
-    throw new Exception();
-} catch (Exception $e) {
-    echo "6";
-b:
-    echo "7";
+class Bar {
+  function __destruct() {
+    echo __METHOD__,"\n";
+    unset($this->bar);
+  }
 }
-echo "8\n";
+$y = new Bar();
+$fusion = new Foo($y);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
