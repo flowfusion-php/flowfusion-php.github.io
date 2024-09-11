@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
+<<<<<<< HEAD
             background-color: #f9f9f9;
         }
         h1 {
@@ -32,11 +33,35 @@
         }
         button:focus {
             outline: none;
+=======
+        }
+        h1 {
+            font-size: 24px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+>>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         }
         .bug-content {
             display: none;
             margin-top: 10px;
             padding: 10px;
+<<<<<<< HEAD
             background-color: #f1f1f1;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -47,10 +72,13 @@
         }
         .bug-link:hover {
             text-decoration: underline;
+=======
+>>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         }
     </style>
     <script>
         // Function to format the identifier to a corresponding HTML file path
+<<<<<<< HEAD
         function formatIdentifier(identifier) {
 <<<<<<< HEAD
             let formatted = identifier.replace("/php-src/", "");
@@ -59,10 +87,15 @@
             let formatted = identifier.replace("/php-src/", "");
             // Replace remaining characters to fit the file pattern
 >>>>>>> deff539ae5a3f06f89a1b983959e0c131543a1b9
+=======
+        function formatIdentifier(crashSite) {
+            let formatted = crashSite.replace("/php-src/", "");
+>>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
             formatted = formatted.replace(/[\/:.]/g, "-");
             return formatted + "/index.html";
         }
 
+<<<<<<< HEAD
         // Function to toggle visibility of the sub HTML content
         function toggleBugContent(event) {
             const bugContent = event.target.nextElementSibling;
@@ -74,17 +107,21 @@
         }
 
         // Function to read the JSON file and display bugs with buttons
+=======
+        // Function to read the JSON file and display bugs in a table
+>>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         async function loadBugs() {
             try {
                 const response = await fetch('./bugs.json');
                 const bugs = await response.json();
-                
-                const bugListContainer = document.getElementById('bug-list');
+
+                const bugTableBody = document.getElementById('bug-table-body');
 
                 bugs.forEach(bug => {
-                    // Create a new list item for each bug
-                    const listItem = document.createElement('li');
+                    // Create a new table row
+                    const row = document.createElement('tr');
 
+<<<<<<< HEAD
                     // Create a button element
                     const bugButton = document.createElement('button');
                     bugButton.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
@@ -110,6 +147,34 @@
 
                     // Append the list item to the bug list container
                     bugListContainer.appendChild(listItem);
+=======
+                    // Bug ID
+                    const bugIDCell = document.createElement('td');
+                    bugIDCell.textContent = bug.bugID;
+                    row.appendChild(bugIDCell);
+
+                    // Crash site
+                    const crashSiteCell = document.createElement('td');
+                    crashSiteCell.textContent = bug.identifier; // renamed from 'identifier' to 'crash site'
+                    row.appendChild(crashSiteCell);
+
+                    // Bug Hits
+                    const bugHitsCell = document.createElement('td');
+                    bugHitsCell.textContent = bug.bugHit;
+                    row.appendChild(bugHitsCell);
+
+                    // Link to bug details
+                    const linkCell = document.createElement('td');
+                    const bugLink = document.createElement('a');
+                    bugLink.href = formatIdentifier(bug.identifier);
+                    bugLink.textContent = "View Details";
+                    bugLink.target = "_blank"; // Opens in a new tab
+                    linkCell.appendChild(bugLink);
+                    row.appendChild(linkCell);
+
+                    // Append the row to the table body
+                    bugTableBody.appendChild(row);
+>>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
                 });
             } catch (error) {
                 console.error('Error loading bugs:', error);
@@ -122,9 +187,18 @@
 </head>
 <body>
     <h1>Bug List</h1>
-    <ul id="bug-list">
-        <!-- Bugs will be dynamically loaded here -->
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Bug ID</th>
+                <th>Crash Site</th>
+                <th>Bug Hits</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody id="bug-table-body">
+            <!-- Bugs will be dynamically loaded here -->
+        </tbody>
+    </table>
 </body>
 </html>
-
