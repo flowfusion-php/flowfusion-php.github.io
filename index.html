@@ -9,31 +9,6 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-<<<<<<< HEAD
-            background-color: #f9f9f9;
-        }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        button:focus {
-            outline: none;
-=======
         }
         h1 {
             font-size: 24px;
@@ -55,61 +30,22 @@
         }
         a {
             text-decoration: none;
->>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         }
         .bug-content {
             display: none;
             margin-top: 10px;
             padding: 10px;
-<<<<<<< HEAD
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .bug-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .bug-link:hover {
-            text-decoration: underline;
-=======
->>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         }
     </style>
     <script>
         // Function to format the identifier to a corresponding HTML file path
-<<<<<<< HEAD
-        function formatIdentifier(identifier) {
-<<<<<<< HEAD
-            let formatted = identifier.replace("/php-src/", "");
-=======
-            // Remove the "/php-src" part
-            let formatted = identifier.replace("/php-src/", "");
-            // Replace remaining characters to fit the file pattern
->>>>>>> deff539ae5a3f06f89a1b983959e0c131543a1b9
-=======
         function formatIdentifier(crashSite) {
             let formatted = crashSite.replace("/php-src/", "");
->>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
             formatted = formatted.replace(/[\/:.]/g, "-");
             return formatted + "/index.html";
         }
 
-<<<<<<< HEAD
-        // Function to toggle visibility of the sub HTML content
-        function toggleBugContent(event) {
-            const bugContent = event.target.nextElementSibling;
-            if (bugContent.style.display === "none" || bugContent.style.display === "") {
-                bugContent.style.display = "block";
-            } else {
-                bugContent.style.display = "none";
-            }
-        }
-
-        // Function to read the JSON file and display bugs with buttons
-=======
         // Function to read the JSON file and display bugs in a table
->>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
         async function loadBugs() {
             try {
                 const response = await fetch('./bugs.json');
@@ -121,33 +57,6 @@
                     // Create a new table row
                     const row = document.createElement('tr');
 
-<<<<<<< HEAD
-                    // Create a button element
-                    const bugButton = document.createElement('button');
-                    bugButton.textContent = `Bug ID: ${bug.bugID} - Identifier: ${bug.identifier} - Bug Hits: ${bug.bugHit}`;
-                    bugButton.addEventListener('click', toggleBugContent);
-
-                    // Create a div to contain the sub HTML (hidden by default)
-                    const bugContent = document.createElement('div');
-                    bugContent.className = 'bug-content';
-
-                    // Create a link element inside the hidden content
-                    const bugLink = document.createElement('a');
-                    bugLink.href = formatIdentifier(bug.identifier);
-                    bugLink.className = 'bug-link';
-                    bugLink.textContent = `View Bug Details: ${bug.identifier}`;
-                    bugLink.target = "_blank"; // Opens the link in a new tab
-
-                    // Append the link to the hidden content div
-                    bugContent.appendChild(bugLink);
-
-                    // Append the button and hidden content to the list item
-                    listItem.appendChild(bugButton);
-                    listItem.appendChild(bugContent);
-
-                    // Append the list item to the bug list container
-                    bugListContainer.appendChild(listItem);
-=======
                     // Bug ID
                     const bugIDCell = document.createElement('td');
                     bugIDCell.textContent = bug.bugID;
@@ -174,7 +83,6 @@
 
                     // Append the row to the table body
                     bugTableBody.appendChild(row);
->>>>>>> e97c7e066ca8c75ca1d9baaed7c1abd10fc7fe26
                 });
             } catch (error) {
                 console.error('Error loading bugs:', error);
