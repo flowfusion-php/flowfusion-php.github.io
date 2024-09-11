@@ -1,0 +1,395 @@
+=====crash_site:/php-src/sapi/phpdbg/phpdbg_bp.c:1485=====
+=====keywords:['core dumped']=====
+=====bughit:2=====
+
+=====output=====
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php]
+prompt> [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php:4]
+prompt> [Breakpoint #1 added at foo]
+prompt> int(2)
+123
+[Breakpoint #1 in foo() at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php:78, hits: 1]
+>00078: 	echo 4;
+ 00079: }
+ 00080: $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+prompt> Clearing Breakpoints
+File              1
+Functions         1
+Methods           0
+Oplines           0
+File oplines      0
+Function oplines  0
+Method oplines    0
+Conditionals      0
+prompt> 4string(11) "random_var:"
+int(1)
+int(1)
+int(1)
+Calling function: xmlwriter_full_end_element with arguments: 1
+Error calling function xmlwriter_full_end_element: xmlwriter_full_end_element(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: array_fill with arguments: 1, 1, 1
+Calling function: extension_loaded with arguments: 1
+Calling function: xmlwriter_set_indent with arguments: 1, 1
+Error calling function xmlwriter_set_indent: xmlwriter_set_indent(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: round with arguments: 1, 1, 1
+Calling function: convert_uudecode with arguments: 1
+
+Warning: convert_uudecode(): Argument #1 ($data) is not a valid uuencoded string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: get_class_methods with arguments: 1
+Error calling function get_class_methods: get_class_methods(): Argument #1 ($object_or_class) must be an object or a valid class name, int given
+Calling function: xmlwriter_full_end_element with arguments: 1
+Error calling function xmlwriter_full_end_element: xmlwriter_full_end_element(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: phpdbg_break_function with arguments: 1
+[Breakpoint #0 added at 1]
+Calling function: array_replace_recursive with arguments: 1, 1
+Error calling function array_replace_recursive: array_replace_recursive(): Argument #1 ($array) must be of type array, int given
+Calling function: iterator_to_array with arguments: 1, 1
+Error calling function iterator_to_array: iterator_to_array(): Argument #1 ($iterator) must be of type Traversable|array, int given
+Calling function: var_export with arguments: 1, 1
+Calling function: is_infinite with arguments: 1
+Calling function: is_link with arguments: 1
+Calling function: class_exists with arguments: 1, 1
+Calling function: hash_init with arguments: 1, 1, 1, 1
+Error calling function hash_init: hash_init(): Argument #4 ($options) must be of type array, int given
+Calling function: getmxrr with arguments: 1, 1, 1
+
+Warning: getmxrr(): Argument #2 ($hosts) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: getmxrr(): Argument #3 ($weights) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: strncmp with arguments: 1, 1, 1
+Calling function: str_ends_with with arguments: 1, 1
+Calling function: date_interval_create_from_date_string with arguments: 1
+
+Warning: date_interval_create_from_date_string(): Unknown or bad format (1) at position 0 (1): Unexpected character in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: iterator_count with arguments: 1
+Error calling function iterator_count: iterator_count(): Argument #1 ($iterator) must be of type Traversable|array, int given
+Calling function: natcasesort with arguments: 1
+
+Warning: natcasesort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Error calling function natcasesort: natcasesort(): Argument #1 ($array) must be of type array, int given
+Calling function: is_readable with arguments: 1
+Calling function: stream_select with arguments: 1, 1, 1, 1, 1
+
+Warning: stream_select(): Argument #1 ($read) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: stream_select(): Argument #2 ($write) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: stream_select(): Argument #3 ($except) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Error calling function stream_select: stream_select(): Argument #1 ($read) must be of type ?array, int given
+Calling function: atan with arguments: 1
+Calling function: array_reverse with arguments: 1, 1
+Error calling function array_reverse: array_reverse(): Argument #1 ($array) must be of type array, int given
+Calling function: array_intersect with arguments: 1, 1
+Error calling function array_intersect: array_intersect(): Argument #1 ($array) must be of type array, int given
+[Script ended normally]
+
+Warning: Invalid "opcache.jit" setting. Should be "disable", "on", "off", "tracing", "function" or 4-digit number in Unknown on line 0
+prompt> ------------------------------------------------
+File Breakpoints:
+phpdbg: /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:1485: void phpdbg_print_breakpoints(zend_ulong): Assertion `!(((__ht)->u.flags & (1<<2)) != 0)' failed.
+Aborted (core dumped)
+
+Termsig=6
+
+=====reproducing php(reduced)=====
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+include 'interface_optional_arg_003.inc';
+class C implements I {
+  function f($a = 2) {
+    var_dump($a);
+  }
+}
+$c = new C;
+$c->f();
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+=====
+
+=====reproducing phpt=====
+--TEST--
+default argument value in and in implementing class with interface in included file+Test clearing breakpoints
+--INI--
+opcache.enable_cli=0
+short_open_tag=1
+session.gc_maxlifetime=300
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1050
+--FILE--
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+include 'interface_optional_arg_003.inc';
+class C implements I {
+  function f($a = 2) {
+    var_dump($a);
+  }
+}
+$c = new C;
+$c->f();
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+--PHPDBG--
+b 4
+b foo
+r
+clear
+c
+i b
+q
+--EXPECTF--
+int(2)
+[Successful compilation of %s]
+prompt> [Breakpoint #0 added at %s:4]
+prompt> [Breakpoint #1 added at foo]
+prompt> 1
+[Breakpoint #0 at %s:4, hits: 1]
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> Clearing Breakpoints
+File              1
+Functions         1
+Methods           0
+Oplines           0
+File oplines      0
+Function oplines  0
+Method oplines    0
+Conditionals      0
+prompt> 234
+[Script ended normally]
+prompt> prompt> 
+=====
+
+=====reproducing script=====
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+include 'interface_optional_arg_003.inc';
+class C implements I {
+  function f($a = 2) {
+    var_dump($a);
+  }
+}
+$c = new C;
+$c->f();
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+=====
+
