@@ -1,3 +1,7 @@
-Deprecated: strlen(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/files/phar_test.inc on line 42
+enum(Size::Small)
+enum(Size::Medium)
+enum(Size::Large)
+
+Warning: Undefined variable $cm in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused10.php on line 79
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in

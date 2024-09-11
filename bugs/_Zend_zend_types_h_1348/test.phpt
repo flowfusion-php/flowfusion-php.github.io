@@ -1,12 +1,5 @@
 --TEST--
-GH-11735: Use-after-free when unregistering user stream wrapper from user stream wrapper+Lazy objects: Foreach initializes object
---INI--
-default_charset=cp932
-date.timezone=America/Montreal
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1052
+Test bin2hex() function : basic functionality+Lazy objects: Foreach initializes object
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,23 +64,33 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class FooWrapper {
-    public $context;
-    public function stream_open($path, $mode, $options, &$opened_path) {
-        stream_wrapper_unregister('foo');
-        return true;
-    }
+echo "*** Testing bin2hex() : basic functionality ***\n";
+// array with different values for $string
+$strings =  array (
+          //double quoted strings
+/*1*/	  "Here is a simple string",
+          "\t This String contains \t\t some control characters\r\n",
+          "\x90\x91\x00\x93\x94\x90\x91\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f",
+           //single quoted strings
+/*4*/	  'Here is a simple string',
+          '\t This String contains \t\t some control characters\r\n',
+          '\x90\x91\x00\x93\x94\x90\x91\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f',
+);
+// loop through with each element of the $strings array to test bin2hex() function
+$count = 1;
+foreach($strings as $string) {
+  echo "-- Iteration $count --\n";
+  var_dump(bin2hex($string));
+  $count ++;
 }
-stream_wrapper_register('foo', 'FooWrapper');
-var_dump(fopen('foo://bar', 'r'));
-$fusion = $context;
+$fusion = $string;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $fusion) { $this->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -95,7 +98,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $this->b = 2;
+        $fusion->b = 2;
         $this->d = 4;
     }
 }
@@ -139,8 +142,20 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-resource(%d) of type (stream)
+--EXPECT--
+*** Testing bin2hex() : basic functionality ***
+-- Iteration 1 --
+string(46) "4865726520697320612073696d706c6520737472696e67"
+-- Iteration 2 --
+string(102) "09205468697320537472696e6720636f6e7461696e7320090920736f6d6520636f6e74726f6c20636861726163746572730d0a"
+-- Iteration 3 --
+string(36) "9091009394909195969798999a9b9c9d9e9f"
+-- Iteration 4 --
+string(46) "4865726520697320612073696d706c6520737472696e67"
+-- Iteration 5 --
+string(112) "5c74205468697320537472696e6720636f6e7461696e73205c745c7420736f6d6520636f6e74726f6c20636861726163746572735c725c6e"
+-- Iteration 6 --
+string(144) "5c7839305c7839315c7830305c7839335c7839345c7839305c7839315c7839355c7839365c7839375c7839385c7839395c7839615c7839625c7839635c7839645c7839655c783966"
 # Ghost:
 string(11) "initializer"
 string(14) "C::__construct"

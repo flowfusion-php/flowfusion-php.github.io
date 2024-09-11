@@ -1,0 +1,46 @@
+# Ghost:
+array(1) {
+  ["c"]=>
+  int(0)
+}
+string(11) "initializer"
+initializer exception
+lazy ghost object(C)#3 (1) {
+  ["b"]=>
+  uninitialized(int)
+  ["c"]=>
+  int(0)
+}
+Is lazy: 1
+
+Warning: Undefined variable $table in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused90.php on line 82
+NULL
+# Proxy:
+array(1) {
+  ["c"]=>
+  int(0)
+}
+string(11) "initializer"
+initializer exception
+lazy proxy object(C)#4 (3) {
+  ["a"]=>
+  int(3)
+  ["b"]=>
+  int(4)
+  ["c"]=>
+  int(5)
+}
+Is lazy: 1
+
+Warning: Undefined variable $table in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused90.php on line 82
+NULL
+*** Testing key() : basic functionality ***
+
+-- Initial Position: --
+
+Deprecated: key(): Calling key() on an object is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused90.php on line 114
+string(11) "initializer"
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_lazy_objects.c:627: HashTable *zend_lazy_object_get_properties(zend_object *): Assertion `!object->properties || object->properties == &zend_empty_array' failed.
+Aborted (core dumped)
+
+Termsig=6

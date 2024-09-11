@@ -1,0 +1,136 @@
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+$a = array(1, 6, 2, -20, 15, 1200, -2500);
+$b = array(0, 7, 2, -20, 11, 1100, -2500);
+$c = array(0, 6, 2, -20, 19, 1000, -2500);
+$d = array(3, 8,-2, -20, 14,  900, -2600);
+$a_f = array_flip($a);
+$b_f = array_flip($b);
+$c_f = array_flip($c);
+$d_f = array_flip($d);
+$i = 1;
+/* give nicer values */
+foreach ($a_f as $k=> &$a_f_el) { $a_f_el =$k*2;}
+foreach ($b_f as $k=> &$b_f_el) { $b_f_el =$k*2;}
+foreach ($c_f as $k=> &$c_f_el) { $c_f_el =$k*2;}
+foreach ($d_f as $k=> &$d_f_el) { $d_f_el =$k*2;}
+echo "------ Test $i --------\n";$i++;// 1
+var_dump(array_diff_key($a_f, $b_f));// keys -> 1, 6, 15, 1200
+var_dump(array_diff_ukey($a_f, $b_f, "comp_func"));// 1, 6, 15, 1200
+echo "------ Test $i --------\n";$i++;// 2
+var_dump(array_diff_key($a_f, $c_f));// keys -> 1, 15, 1200
+var_dump(array_diff_ukey($a_f, $c_f, "comp_func"));// 1, 15, 1200
+echo "------ Test $i --------\n";$i++;// 3
+var_dump(array_diff_key($a_f, $d_f));// 1, 6, 2, 15, 1200, -2500
+var_dump(array_diff_ukey($a_f, $d_f, "comp_func"));// 1, 6, 2, 15, 1200, -2500
+echo "------ Test $i --------\n";$i++;// 4
+var_dump(array_diff_key($a_f, $b_f, $c_f));// 1, 15, 1200
+var_dump(array_diff_ukey($a_f, $b_f, $c_f, "comp_func"));// 1, 15, 1200
+echo "------ Test $i --------\n";$i++;// 5
+var_dump(array_diff_key($a_f, $b_f, $d_f));// 1, 6, 15, 1200
+var_dump(array_diff_ukey($a_f, $b_f, $d_f, "comp_func"));// 1, 6, 15, 1200
+echo "------ Test $i --------\n";$i++;// 6
+var_dump(array_diff_key($a_f, $b_f, $c_f, $d_f));// 1, 15, 1200
+var_dump(array_diff_ukey($a_f, $b_f, $c_f, $d_f, "comp_func"));//1, 15, 1200
+echo "------ Test $i --------\n";$i++;// 7
+var_dump(array_diff_key($b_f, $c_f));// 7, 11, 1100
+var_dump(array_diff_ukey($b_f, $c_f, "comp_func"));//7, 11, 1100
+echo "------ Test $i --------\n";$i++;// 8
+var_dump(array_diff_key($b_f, $d_f));//0, 7, 2, 11, 1100, -2500
+var_dump(array_diff_ukey($b_f, $d_f, "comp_func"));//0, 7, 2, 11, 1100, -2500
+echo "------ Test $i --------\n";$i++;// 9
+var_dump(array_diff_key($b_f, $c_f, $d_f));// 7, 11, 1100
+var_dump(array_diff_ukey($b_f, $c_f,  $d_f, "comp_func"));// 7, 11, 1000
+function comp_func($a, $b) {
+        if ($a === $b) return 0;
+        return ($a > $b)? 1:-1;
+}
+$fusion = $i;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+use Random\Engine;
+use Random\Engine\Test\TestCountingEngine32;
+use Random\Engine\Test\TestShaEngine;
+require __DIR__ . "/../engines.inc";
+$engines = [];
+$engines[] = new TestCountingEngine32();
+$engines[] = new TestShaEngine();
+$fusion = getenv("SKIP_SLOW_TESTS") ? 3_000 : 10_000;
+foreach ($engines as $engine) {
+    echo $engine::class, PHP_EOL;
+    for ($i = 0; $i < 10_000; $i++) {
+        $engine->generate();
+    }
+    $engine2 = unserialize(serialize($engine));
+    for ($i = 0; $i < $iterations; $i++) {
+        if ($engine->generate() !== $engine2->generate()) {
+            die("failure: state differs at {$i}");
+        }
+    }
+}
+die('success');
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>

@@ -1,13 +1,15 @@
 --TEST--
-Phar object: iterating via SplFileObject+Bug #65006: spl_autoload_register fails with multiple callables using self, same method
+Enum supports static methods+Phar::setStub()/getStub() from file
 --INI--
 phar.require_hash=0
-opcache.jit_buffer_size=64M
-default_charset=cp874
+phar.readonly=0
+allow_url_fopen=1
+opcache.memory_consumption=64
+session.sid_length=32
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0251
+opcache.jit=1001
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,82 +74,50 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$pharconfig = 1;
-require_once 'files/phar_oo_test.inc';
-$phar = new Phar($fname);
-$phar->setInfoClass('SplFileObject');
-$f = $phar['a.csv'];
-echo "===1===\n";
-foreach($f as $k => $v)
-{
-    echo "$k=>$v\n";
-}
-$f->setFlags(SplFileObject::DROP_NEW_LINE);
-echo "===2===\n";
-foreach($f as $k => $v)
-{
-    echo "$k=>$v\n";
-}
-class MyCSVFile extends SplFileObject
-{
-    function current(): array|false
-    {
-        return parent::fgetcsv(',', '"');
+enum Size {
+    case Small;
+    case Medium;
+    case Large;
+    public static function fromLength(int $cm) {
+        return match(true) {
+            $cm < 50 => static::Small,
+            $cm < 100 => static::Medium,
+            default => static::Large,
+        };
     }
 }
-$phar->setInfoClass('MyCSVFile');
-/** @var MyCSVFile $v */
-$v = $phar['a.csv'];
-echo "===3===\n";
-while(!$v->eof())
-{
-    echo $v->key() . "=>" . join('|', $v->fgetcsv()) . "\n";
-}
-echo "===4===\n";
-$v->rewind();
-while(!$v->eof())
-{
-    $l = $v->fgetcsv();
-    echo $v->key() . "=>" . join('|', $l) . "\n";
-}
-echo "===5===\n";
-foreach($v as $k => $d)
-{
-    echo "$k=>" . join('|', $d) . "\n";
-}
-class MyCSVFile2 extends SplFileObject
-{
-    function getCurrentLine(): string
-    {
-        echo __METHOD__ . "\n";
-        return implode('|', parent::fgetcsv(',', '"'));
-    }
-}
-$phar->setInfoClass('MyCSVFile2');
-/** @var MyCSVFile2 $v */
-$v = $phar['a.csv'];
-echo "===6===\n";
-foreach($v as $k => $d)
-{
-    echo "$k=>" . $d . "\n";
-}
-$fusion = $l;
+var_dump(Size::fromLength(23));
+var_dump(Size::fromLength(63));
+var_dump(Size::fromLength(123));
+$fusion = $cm;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class first {
-    public static function init() {
-        spl_autoload_register(array('self','load'));
-    }
-    public static function load($class) {}
-}
-class second {
-    public static function init() {
-        spl_autoload_register(array('self','load'));
-    }
-    public static function load($fusion){}
-}
-first::init();
-second::init();
-var_dump(spl_autoload_functions());
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
+$file = $stub;
+$fusion = array();
+$files['a'] = 'a';
+$files['b'] = 'b';
+$files['c'] = 'c';
+include 'files/phar_test.inc';
+$phar = new Phar($fname);
+var_dump($stub);
+var_dump($phar->getStub());
+var_dump($phar->getStub() == $stub);
+$stub = '<?php echo "second stub\n"; __HALT_COMPILER(); ?>';
+$sexp = $stub . "\r\n";
+$stub = fopen('data://,'.$stub, 'r');
+$phar->setStub($stub);
+var_dump($phar->getStub());
+var_dump($phar->getStub() == $stub);
+var_dump($phar->getStub() == $sexp);
+$phar->stopBuffering();
+var_dump($phar->getStub());
+var_dump($phar->getStub() == $stub);
+var_dump($phar->getStub() == $sexp);
+$phar = new Phar($fname);
+var_dump($phar->getStub() == $stub);
+var_dump($phar->getStub() == $sexp);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -157,55 +127,25 @@ var_fusion($v1,$v2,$v3);
 phar
 --CLEAN--
 <?php
-unlink(__DIR__ . '/files/phar_oo_008.phar.php');
-__halt_compiler();
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php');
+__HALT_COMPILER();
 ?>
 --EXPECTF--
-===1===
-0=>1,2,3
+enum(Size::Small)
+enum(Size::Medium)
+enum(Size::Large)
+string(48) "<?php echo "first stub\n"; __HALT_COMPILER(); ?>"
+string(48) "<?php echo "first stub\n"; __HALT_COMPILER(); ?>"
+bool(true)
 
-1=>2,a,b
-
-2=>3,"c","'e'"
-===2===
-0=>1,2,3
-1=>2,a,b
-2=>3,"c","'e'"
-===3===
-0=>1|2|3
-0=>2|a|b
-1=>3|c|'e'
-===4===
-0=>1|2|3
-1=>2|a|b
-2=>3|c|'e'
-===5===
-0=>1|2|3
-1=>2|a|b
-2=>3|c|'e'
-===6===
-MyCSVFile2::getCurrentLine
-1=>1|2|3
-MyCSVFile2::getCurrentLine
-3=>2|a|b
-MyCSVFile2::getCurrentLine
-5=>3|c|'e'
-Deprecated: Use of "self" in callables is deprecated in %s on line %d
-
-Deprecated: Use of "self" in callables is deprecated in %s on line %d
-array(2) {
-  [0]=>
-  array(2) {
-    [0]=>
-    string(5) "first"
-    [1]=>
-    string(4) "load"
-  }
-  [1]=>
-  array(2) {
-    [0]=>
-    string(6) "second"
-    [1]=>
-    string(4) "load"
-  }
-}
+Deprecated: Calling Phar::setStub(resource $stub, int $length) is deprecated in %s on line %d
+string(51) "<?php echo "second stub\n"; __HALT_COMPILER(); ?>
+"
+bool(false)
+bool(true)
+string(51) "<?php echo "second stub\n"; __HALT_COMPILER(); ?>
+"
+bool(false)
+bool(true)
+bool(false)
+bool(true)

@@ -1,0 +1,69 @@
+offsetSet(2)
+int(1)
+offsetSet(11)
+int(1)
+offsetSet(1e50)
+int(1)
+int(0)
+int(-1)
+Cannot decrement a reference held by property ArrayAccess@anonymous::$foo of type int past its minimal value
+integer
+Cannot decrement a reference held by property ArrayAccess@anonymous::$foo of type int past its minimal value
+integer
+Cannot increment a reference held by property ArrayAccess@anonymous::$foo of type int past its maximal value
+integer
+Cannot increment a reference held by property ArrayAccess@anonymous::$foo of type int past its maximal value
+integer
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+
+Warning: {closure:/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php:105}(): Argument #3 ($userdata) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 103
+Donestring(11) "random_var:"
+array(1) {
+  [0]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php"
+}
+object(ArrayAccess@anonymous)#1 (1) {
+  ["foo"]=>
+  int(9223372036854775807)
+}
+object(TypeError)#3 (7) {
+  ["message":protected]=>
+  string(108) "Cannot increment a reference held by property ArrayAccess@anonymous::$foo of type int past its maximal value"
+  ["string":"Error":private]=>
+  string(0) ""
+  ["code":protected]=>
+  int(0)
+  ["file":protected]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php"
+  ["line":protected]=>
+  int(96)
+  ["trace":"Error":private]=>
+  array(0) {
+  }
+  ["previous":"Error":private]=>
+  NULL
+}
+Calling function: xml_set_notation_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 38
+Array, Array
+Error calling function xml_set_notation_decl_handler: xml_set_notation_decl_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: stream_socket_get_name with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 38
+Error calling function stream_socket_get_name: Object of class ArrayAccess@anonymous could not be converted to string
+Calling function: stream_bucket_append with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused506.php on line 38
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_exceptions.c:630: void zim_Exception_getTraceAsString(zend_execute_data *, zval *): Assertion `zval_get_type(&(*(trace))) == 7' failed.
+Aborted (core dumped)
+
+Termsig=6

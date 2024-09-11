@@ -1,0 +1,163 @@
+AssertionError: assert(0 && \exit())
+
+Warning: Undefined variable $strVals in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 75
+
+Warning: foreach() argument must be of type array|object, null given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 75
+string(11) "random_var:"
+array(0) {
+}
+array(0) {
+}
+object(AssertionError)#1 (7) {
+  ["message":protected]=>
+  string(20) "assert(0 && \exit())"
+  ["string":"Error":private]=>
+  string(0) ""
+  ["code":protected]=>
+  int(1)
+  ["file":protected]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php"
+  ["line":protected]=>
+  int(65)
+  ["trace":"Error":private]=>
+  array(1) {
+    [0]=>
+    array(4) {
+      ["file"]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php"
+      ["line"]=>
+      int(65)
+      ["function"]=>
+      string(6) "assert"
+      ["args"]=>
+      array(2) {
+        [0]=>
+        bool(false)
+        [1]=>
+        string(20) "assert(0 && \exit())"
+      }
+    }
+  }
+  ["previous":"Error":private]=>
+  NULL
+}
+Calling function: array_intersect_key with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+Calling function: lchgrp with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+Error calling function lchgrp: lchgrp(): Argument #1 ($filename) must be of type string, array given
+Calling function: stream_get_contents with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array
+Error calling function stream_get_contents: stream_get_contents(): Argument #1 ($stream) must be of type resource, array given
+Calling function: stream_context_set_options with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+Error calling function stream_context_set_options: stream_context_set_options(): Argument #1 ($context) must be of type resource, array given
+Calling function: mt_rand with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+Error calling function mt_rand: mt_rand(): Argument #1 ($min) must be of type int, array given
+Calling function: unpack with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array
+Error calling function unpack: unpack(): Argument #1 ($format) must be of type string, array given
+Calling function: date_sun_info with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}
+Error calling function date_sun_info: date_sun_info(): Argument #1 ($timestamp) must be of type int, AssertionError given
+Calling function: finfo_set_flags with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array
+Error calling function finfo_set_flags: finfo_set_flags(): Argument #1 ($finfo) must be of type finfo, AssertionError given
+Calling function: json_last_error_msg with arguments: 
+Calling function: dirname with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+Error calling function dirname: dirname(): Argument #1 ($path) must be of type string, array given
+Calling function: usleep with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array
+Error calling function usleep: usleep(): Argument #1 ($microseconds) must be of type int, array given
+Calling function: stream_set_blocking with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}
+Error calling function stream_set_blocking: stream_set_blocking(): Argument #1 ($stream) must be of type resource, array given
+Calling function: uksort with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, Array
+
+Warning: uksort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 41
+Error calling function uksort: uksort(): Argument #2 ($callback) must be a valid callback, array callback must have exactly two members
+Calling function: libxml_get_external_entity_loader with arguments: 
+Calling function: xml_parser_set_option with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+Array, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array
+Error calling function xml_parser_set_option: xml_parser_set_option(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: min with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php on line 38
+AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, Array
+Calling function: xml_get_current_column_number with arguments: AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}
+Error calling function xml_get_current_column_number: xml_get_current_column_number(): Argument #1 ($parser) must be of type XMLParser, AssertionError given
+Calling function: filter_var_array with arguments: AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}, AssertionError: assert(0 && \exit()) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php:65
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused360.php(65): assert(false, 'assert(0 && \\ex...')
+#1 {main}
+Error calling function filter_var_array: filter_var_array(): Argument #1 ($array) must be of type array, AssertionError given
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var->var >= op_array->last_var || (ssa_var_info[__var].type & (1 << 10)) == (__type & (1 << 10))' failed.
+Aborted (core dumped)
+
+Termsig=6
