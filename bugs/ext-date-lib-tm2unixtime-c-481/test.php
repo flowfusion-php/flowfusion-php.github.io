@@ -61,27 +61,29 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start("str_rot13");
-echo "foo\n";
-try {
-    ob_end_flush();
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $e;
+echo "*** Testing gmdate() : usage variation ***\n";
+// Initialise all required variables
+date_default_timezone_set('UTC');
+$timestamp = mktime(20, 45, PHP_INT_MIN, 12, 13, 1901);
+echo "\n-- Testing gmdate() function with minimum range of timestamp --\n";
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+$timestamp = mktime(20, 45, 50, 12, 13, 1901);
+echo "\n-- Testing gmdate() function with less than the range of timestamp --\n";
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+echo "\n-- Testing gmdate() function with maximum range of timestamp --\n";
+$timestamp = mktime(03, 14, 07, 1, 19, 2038);
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+echo "\n-- Testing gmdate() function with greater than the range of timestamp --\n";
+$timestamp = mktime(03, 14, 10, 1, 19, 2038);
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doubles = array(
-        -9223372036854775808,
-        -9223372036854775809,
-        -9223372036854775818,
-        -9223372036854775908,
-        -9223372036854776808,
-        );
-foreach ($doubles as $d) {
-        $fusion = (int)$d;
-        var_dump($l);
+trait Foo {
+    const A = 42;
 }
-echo "Done\n";
+class Bar {
+    use Foo;
+}
+echo Foo::A, PHP_EOL;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

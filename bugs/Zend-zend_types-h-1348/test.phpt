@@ -1,8 +1,5 @@
 --TEST--
-GH-8661: Nullsafe in coalesce triggers undefined variable error+Lazy objects: Foreach initializes object
---INI--
-implicit_flush=1
-opcache.enable=1
+Test array_multisort() function : case-insensitive+Lazy objects: Foreach initializes object
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,15 +64,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump($a?->foo ?? null);
-$fusion = $a;
+echo "*** Testing array_multisort() : case-insensitive\n";
+$a = array(
+    'Second',
+    'First.1',
+    'First.2',
+    'First.3',
+    'Twentieth',
+    'Tenth',
+    'Third',
+);
+$b = array(
+    '2 a',
+    '1 bb 1',
+    '1 bB 2',
+    '1 BB 3',
+    '20 c',
+    '10 d',
+    '3 e',
+);
+array_multisort($b, SORT_STRING | SORT_FLAG_CASE, $a);
+var_dump($a, $b);
+$fusion = $b;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -83,7 +100,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $this->b = 2;
+        $fusion->b = 2;
         $this->d = 4;
     }
 }
@@ -128,7 +145,39 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-NULL
+*** Testing array_multisort() : case-insensitive
+array(7) {
+  [0]=>
+  string(7) "First.1"
+  [1]=>
+  string(7) "First.2"
+  [2]=>
+  string(7) "First.3"
+  [3]=>
+  string(5) "Tenth"
+  [4]=>
+  string(6) "Second"
+  [5]=>
+  string(9) "Twentieth"
+  [6]=>
+  string(5) "Third"
+}
+array(7) {
+  [0]=>
+  string(6) "1 bb 1"
+  [1]=>
+  string(6) "1 bB 2"
+  [2]=>
+  string(6) "1 BB 3"
+  [3]=>
+  string(4) "10 d"
+  [4]=>
+  string(3) "2 a"
+  [5]=>
+  string(4) "20 c"
+  [6]=>
+  string(3) "3 e"
+}
 # Ghost:
 string(11) "initializer"
 string(14) "C::__construct"

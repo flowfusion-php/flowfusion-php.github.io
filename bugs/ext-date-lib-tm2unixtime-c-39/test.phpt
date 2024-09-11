@@ -1,16 +1,10 @@
 --TEST--
-Test sinh function : 64bit long tests+output buffering - nothing
+Test array_unshift() function : basic functionality - array with default keys for 'array' argument+comparing different variables (smaller or equal than)
 --INI--
-session.cookie_secure=0
-post_max_size=1
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1204
+session.use_cookies=1
+opcache.enable_cli=0
 --SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -75,55 +69,431 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(sinh($longVal));
-}
+/*
+ * Testing array_unshift() by giving array with default keys for $array argument
+*/
+echo "*** Testing array_unshift() : basic functionality with default key array ***\n";
+// Initialise the array
+$array = array(1, 2);
+// Calling array_unshift() with default argument
+$temp_array = $array;
+// returns element count in the resulting array after arguments are pushed to
+// beginning of the given array
+var_dump( array_unshift($temp_array, 10) );
+// dump the resulting array
+var_dump($temp_array);
+// Calling array_unshift() with optional arguments
+$temp_array = $array;
+// returns element count in the resulting array after arguments are pushed to
+// beginning of the given array
+var_dump( array_unshift($temp_array, 222, "hello", 12.33) );
+// dump the resulting array
+var_dump($temp_array);
+echo "Done";
+$fusion = $array;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "foo\n";
+class test {
+}
+$a = array(
+    array(1,2,3),
+    "",
+    1,
+    2.5,
+    0,
+    "string",
+    "123",
+    "2.5",
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+);
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace("\n", "", $fusion);
+}
+foreach($a as $var) {
+    for ($i = 0; $i < $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var <= $a[$i]) ? " <= " : " > ";
+        my_dump($a[$i]);
+        echo "\n";
+    }
+}
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
---- testing: 9223372036854775807 ---
-float(INF)
---- testing: -9223372036854775808 ---
-float(-INF)
---- testing: 2147483647 ---
-float(INF)
---- testing: -2147483648 ---
-float(-INF)
---- testing: 9223372034707292160 ---
-float(INF)
---- testing: -9223372034707292160 ---
-float(-INF)
---- testing: 2147483648 ---
-float(INF)
---- testing: -2147483649 ---
-float(-INF)
---- testing: 4294967294 ---
-float(INF)
---- testing: 4294967295 ---
-float(INF)
---- testing: 4294967293 ---
-float(INF)
---- testing: 9223372036854775806 ---
-float(INF)
---- testing: 9.2233720368548E+18 ---
-float(INF)
---- testing: -9223372036854775807 ---
-float(-INF)
---- testing: -9.2233720368548E+18 ---
-float(-INF)
-foo
+--EXPECTF--
+*** Testing array_unshift() : basic functionality with default key array ***
+int(3)
+array(3) {
+  [0]=>
+  int(10)
+  [1]=>
+  int(1)
+  [2]=>
+  int(2)
+}
+int(5)
+array(5) {
+  [0]=>
+  int(222)
+  [1]=>
+  string(5) "hello"
+  [2]=>
+  float(12.33)
+  [3]=>
+  int(1)
+  [4]=>
+  int(2)
+}
+Done
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > string(0) ""
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > int(1)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > float(2.5)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > int(0)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > string(6) "string"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > string(3) "123"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > string(3) "2.5"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > NULL
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} <= bool(true)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > bool(false)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} <= object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} <= object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} <= object(test)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > array(0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > int(-9223372036854775808)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} > string(20) "-9223372036854775808"
+string(0) "" <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(0) "" <= string(0) ""
+string(0) "" <= int(1)
+string(0) "" <= float(2.5)
+string(0) "" <= int(0)
+string(0) "" <= string(6) "string"
+string(0) "" <= string(3) "123"
+string(0) "" <= string(3) "2.5"
+string(0) "" <= NULL
+string(0) "" <= bool(true)
+string(0) "" <= bool(false)
+string(0) "" <= object(stdClass)#%d (0) {}
+string(0) "" <= object(stdClass)#%d (0) {}
+string(0) "" <= object(test)#%d (0) {}
+string(0) "" <= array(0) {}
+string(0) "" <= int(-9223372036854775808)
+string(0) "" <= string(20) "-9223372036854775808"
+int(1) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(1) > string(0) ""
+int(1) <= int(1)
+int(1) <= float(2.5)
+int(1) > int(0)
+int(1) <= string(6) "string"
+int(1) <= string(3) "123"
+int(1) <= string(3) "2.5"
+int(1) > NULL
+int(1) <= bool(true)
+int(1) > bool(false)
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class test could not be converted to int in %s on line %d
+ <= object(test)#%d (0) {}
+int(1) <= array(0) {}
+int(1) > int(-9223372036854775808)
+int(1) > string(20) "-9223372036854775808"
+float(2.5) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+float(2.5) > string(0) ""
+float(2.5) > int(1)
+float(2.5) <= float(2.5)
+float(2.5) > int(0)
+float(2.5) <= string(6) "string"
+float(2.5) <= string(3) "123"
+float(2.5) <= string(3) "2.5"
+float(2.5) > NULL
+float(2.5) <= bool(true)
+float(2.5) > bool(false)
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ > object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ > object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class test could not be converted to float in %s on line %d
+ > object(test)#%d (0) {}
+float(2.5) <= array(0) {}
+float(2.5) > int(-9223372036854775808)
+float(2.5) > string(20) "-9223372036854775808"
+int(0) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(0) > string(0) ""
+int(0) <= int(1)
+int(0) <= float(2.5)
+int(0) <= int(0)
+int(0) <= string(6) "string"
+int(0) <= string(3) "123"
+int(0) <= string(3) "2.5"
+int(0) <= NULL
+int(0) <= bool(true)
+int(0) <= bool(false)
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class test could not be converted to int in %s on line %d
+ <= object(test)#%d (0) {}
+int(0) <= array(0) {}
+int(0) > int(-9223372036854775808)
+int(0) > string(20) "-9223372036854775808"
+string(6) "string" <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(6) "string" > string(0) ""
+string(6) "string" > int(1)
+string(6) "string" > float(2.5)
+string(6) "string" > int(0)
+string(6) "string" <= string(6) "string"
+string(6) "string" > string(3) "123"
+string(6) "string" > string(3) "2.5"
+string(6) "string" > NULL
+string(6) "string" <= bool(true)
+string(6) "string" > bool(false)
+string(6) "string" <= object(stdClass)#%d (0) {}
+string(6) "string" <= object(stdClass)#%d (0) {}
+string(6) "string" <= object(test)#%d (0) {}
+string(6) "string" <= array(0) {}
+string(6) "string" > int(-9223372036854775808)
+string(6) "string" > string(20) "-9223372036854775808"
+string(3) "123" <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "123" > string(0) ""
+string(3) "123" > int(1)
+string(3) "123" > float(2.5)
+string(3) "123" > int(0)
+string(3) "123" <= string(6) "string"
+string(3) "123" <= string(3) "123"
+string(3) "123" > string(3) "2.5"
+string(3) "123" > NULL
+string(3) "123" <= bool(true)
+string(3) "123" > bool(false)
+string(3) "123" <= object(stdClass)#%d (0) {}
+string(3) "123" <= object(stdClass)#%d (0) {}
+string(3) "123" <= object(test)#%d (0) {}
+string(3) "123" <= array(0) {}
+string(3) "123" > int(-9223372036854775808)
+string(3) "123" > string(20) "-9223372036854775808"
+string(3) "2.5" <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "2.5" > string(0) ""
+string(3) "2.5" > int(1)
+string(3) "2.5" <= float(2.5)
+string(3) "2.5" > int(0)
+string(3) "2.5" <= string(6) "string"
+string(3) "2.5" <= string(3) "123"
+string(3) "2.5" <= string(3) "2.5"
+string(3) "2.5" > NULL
+string(3) "2.5" <= bool(true)
+string(3) "2.5" > bool(false)
+string(3) "2.5" <= object(stdClass)#%d (0) {}
+string(3) "2.5" <= object(stdClass)#%d (0) {}
+string(3) "2.5" <= object(test)#%d (0) {}
+string(3) "2.5" <= array(0) {}
+string(3) "2.5" > int(-9223372036854775808)
+string(3) "2.5" > string(20) "-9223372036854775808"
+NULL <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+NULL <= string(0) ""
+NULL <= int(1)
+NULL <= float(2.5)
+NULL <= int(0)
+NULL <= string(6) "string"
+NULL <= string(3) "123"
+NULL <= string(3) "2.5"
+NULL <= NULL
+NULL <= bool(true)
+NULL <= bool(false)
+NULL <= object(stdClass)#%d (0) {}
+NULL <= object(stdClass)#%d (0) {}
+NULL <= object(test)#%d (0) {}
+NULL <= array(0) {}
+NULL <= int(-9223372036854775808)
+NULL <= string(20) "-9223372036854775808"
+bool(true) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(true) > string(0) ""
+bool(true) <= int(1)
+bool(true) <= float(2.5)
+bool(true) > int(0)
+bool(true) <= string(6) "string"
+bool(true) <= string(3) "123"
+bool(true) <= string(3) "2.5"
+bool(true) > NULL
+bool(true) <= bool(true)
+bool(true) > bool(false)
+bool(true) <= object(stdClass)#%d (0) {}
+bool(true) <= object(stdClass)#%d (0) {}
+bool(true) <= object(test)#%d (0) {}
+bool(true) > array(0) {}
+bool(true) <= int(-9223372036854775808)
+bool(true) <= string(20) "-9223372036854775808"
+bool(false) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(false) <= string(0) ""
+bool(false) <= int(1)
+bool(false) <= float(2.5)
+bool(false) <= int(0)
+bool(false) <= string(6) "string"
+bool(false) <= string(3) "123"
+bool(false) <= string(3) "2.5"
+bool(false) <= NULL
+bool(false) <= bool(true)
+bool(false) <= bool(false)
+bool(false) <= object(stdClass)#%d (0) {}
+bool(false) <= object(stdClass)#%d (0) {}
+bool(false) <= object(test)#%d (0) {}
+bool(false) <= array(0) {}
+bool(false) <= int(-9223372036854775808)
+bool(false) <= string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} > array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} > string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ <= float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ > int(0)
+object(stdClass)#%d (0) {} > string(6) "string"
+object(stdClass)#%d (0) {} > string(3) "123"
+object(stdClass)#%d (0) {} > string(3) "2.5"
+object(stdClass)#%d (0) {} > NULL
+object(stdClass)#%d (0) {} <= bool(true)
+object(stdClass)#%d (0) {} > bool(false)
+object(stdClass)#%d (0) {} <= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} <= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} > object(test)#%d (0) {}
+object(stdClass)#%d (0) {} > array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ > int(-9223372036854775808)
+object(stdClass)#%d (0) {} > string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} > array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} > string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ <= float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ > int(0)
+object(stdClass)#%d (0) {} > string(6) "string"
+object(stdClass)#%d (0) {} > string(3) "123"
+object(stdClass)#%d (0) {} > string(3) "2.5"
+object(stdClass)#%d (0) {} > NULL
+object(stdClass)#%d (0) {} <= bool(true)
+object(stdClass)#%d (0) {} > bool(false)
+object(stdClass)#%d (0) {} <= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} <= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} > object(test)#%d (0) {}
+object(stdClass)#%d (0) {} > array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ > int(-9223372036854775808)
+object(stdClass)#%d (0) {} > string(20) "-9223372036854775808"
+object(test)#%d (0) {} > array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(test)#%d (0) {} > string(0) ""
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ <= int(1)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to float in %s on line %d
+ <= float(2.5)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ > int(0)
+object(test)#%d (0) {} > string(6) "string"
+object(test)#%d (0) {} > string(3) "123"
+object(test)#%d (0) {} > string(3) "2.5"
+object(test)#%d (0) {} > NULL
+object(test)#%d (0) {} <= bool(true)
+object(test)#%d (0) {} > bool(false)
+object(test)#%d (0) {} > object(stdClass)#%d (0) {}
+object(test)#%d (0) {} > object(stdClass)#%d (0) {}
+object(test)#%d (0) {} <= object(test)#%d (0) {}
+object(test)#%d (0) {} > array(0) {}
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ > int(-9223372036854775808)
+object(test)#%d (0) {} > string(20) "-9223372036854775808"
+array(0) {} <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(0) {} > string(0) ""
+array(0) {} > int(1)
+array(0) {} > float(2.5)
+array(0) {} > int(0)
+array(0) {} > string(6) "string"
+array(0) {} > string(3) "123"
+array(0) {} > string(3) "2.5"
+array(0) {} <= NULL
+array(0) {} <= bool(true)
+array(0) {} <= bool(false)
+array(0) {} <= object(stdClass)#%d (0) {}
+array(0) {} <= object(stdClass)#%d (0) {}
+array(0) {} <= object(test)#%d (0) {}
+array(0) {} <= array(0) {}
+array(0) {} > int(-9223372036854775808)
+array(0) {} > string(20) "-9223372036854775808"
+int(-9223372036854775808) <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(-9223372036854775808) > string(0) ""
+int(-9223372036854775808) <= int(1)
+int(-9223372036854775808) <= float(2.5)
+int(-9223372036854775808) <= int(0)
+int(-9223372036854775808) <= string(6) "string"
+int(-9223372036854775808) <= string(3) "123"
+int(-9223372036854775808) <= string(3) "2.5"
+int(-9223372036854775808) > NULL
+int(-9223372036854775808) <= bool(true)
+int(-9223372036854775808) > bool(false)
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ <= object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class test could not be converted to int in %s on line %d
+ <= object(test)#%d (0) {}
+int(-9223372036854775808) <= array(0) {}
+int(-9223372036854775808) <= int(-9223372036854775808)
+int(-9223372036854775808) <= string(20) "-9223372036854775808"
+string(20) "-9223372036854775808" <= array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(20) "-9223372036854775808" > string(0) ""
+string(20) "-9223372036854775808" <= int(1)
+string(20) "-9223372036854775808" <= float(2.5)
+string(20) "-9223372036854775808" <= int(0)
+string(20) "-9223372036854775808" <= string(6) "string"
+string(20) "-9223372036854775808" <= string(3) "123"
+string(20) "-9223372036854775808" <= string(3) "2.5"
+string(20) "-9223372036854775808" > NULL
+string(20) "-9223372036854775808" <= bool(true)
+string(20) "-9223372036854775808" > bool(false)
+string(20) "-9223372036854775808" <= object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" <= object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" <= object(test)#%d (0) {}
+string(20) "-9223372036854775808" <= array(0) {}
+string(20) "-9223372036854775808" <= int(-9223372036854775808)
+string(20) "-9223372036854775808" <= string(20) "-9223372036854775808"
+Done

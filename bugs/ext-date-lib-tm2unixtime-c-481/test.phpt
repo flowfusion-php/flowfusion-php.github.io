@@ -1,10 +1,16 @@
 --TEST--
-output buffering - failure+testing integer underflow (64bit)
+Test gmdate() function : usage variation - Valid and invalid range of timestamp 64 bits.+Trying to access a constant on trait via the name of trait causes a Fatal error
 --INI--
-session.gc_maxlifetime=300
-post_max_size=1M
+opcache.jit=1235
+session.save_handler=files
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0154
 --SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
+<?php
+if (PHP_INT_SIZE == 4) die('skip 64 bit only');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -69,38 +75,49 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start("str_rot13");
-echo "foo\n";
-try {
-    ob_end_flush();
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $e;
+echo "*** Testing gmdate() : usage variation ***\n";
+// Initialise all required variables
+date_default_timezone_set('UTC');
+$timestamp = mktime(20, 45, PHP_INT_MIN, 12, 13, 1901);
+echo "\n-- Testing gmdate() function with minimum range of timestamp --\n";
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+$timestamp = mktime(20, 45, 50, 12, 13, 1901);
+echo "\n-- Testing gmdate() function with less than the range of timestamp --\n";
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+echo "\n-- Testing gmdate() function with maximum range of timestamp --\n";
+$timestamp = mktime(03, 14, 07, 1, 19, 2038);
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
+echo "\n-- Testing gmdate() function with greater than the range of timestamp --\n";
+$timestamp = mktime(03, 14, 10, 1, 19, 2038);
+var_dump( gmdate(DATE_ISO8601, $timestamp) );
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doubles = array(
-        -9223372036854775808,
-        -9223372036854775809,
-        -9223372036854775818,
-        -9223372036854775908,
-        -9223372036854776808,
-        );
-foreach ($doubles as $d) {
-        $fusion = (int)$d;
-        var_dump($l);
+trait Foo {
+    const A = 42;
 }
-echo "Done\n";
+class Bar {
+    use Foo;
+}
+echo Foo::A, PHP_EOL;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-foo
-str_rot13() expects exactly 1 argument, 2 given
-int(-9223372036854775808)
-int(-9223372036854775808)
-int(-9223372036854775808)
-int(-9223372036854775808)
-int(-9223372036854775808)
-Done
+--EXPECTF--
+*** Testing gmdate() : usage variation ***
+
+-- Testing gmdate() function with minimum range of timestamp --
+string(24) "1901-12-13T20:45:54+0000"
+
+-- Testing gmdate() function with less than the range of timestamp --
+string(24) "1901-12-13T20:45:50+0000"
+
+-- Testing gmdate() function with maximum range of timestamp --
+string(24) "2038-01-19T03:14:07+0000"
+
+-- Testing gmdate() function with greater than the range of timestamp --
+string(24) "2038-01-19T03:14:10+0000"
+Fatal error: Uncaught Error: Cannot access trait constant Foo::A directly in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %s on line %d

@@ -1,8 +1,16 @@
 --TEST--
-Bug #47745 (FILTER_VALIDATE_INT doesn't allow minimum integer)+Test ctype_space() function : usage variations - different strings
+Test N-- operator : 64bit long tests+Test session_set_save_handler() function: Incorrect bool returns
 --INI--
-expose_php=0
-max_execution_time=1
+opcache.enable_cli=1
+opcache.validate_timestamps=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0202
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,139 +75,79 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = (string)(-PHP_INT_MAX-1);
-var_dump(intval($s));
-var_dump(filter_var($s, FILTER_VALIDATE_INT));
-$fusion = $s;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Pass strings containing different character types to ctype_space() to test
- * which are considered valid whitespace character only strings
- */
-echo "*** Testing ctype_space() : usage variations ***\n";
-$orig = setlocale(LC_CTYPE, "C");
-$values = array(
-/*1*/  "This string contains just letters and spaces", // Simple string
-       "but this one contains some numbers too 123+456 = 678", // Mixed string
-       "",
-       " ",
-/*5*/  "a",
-       "ABCXYZ",
-       "abcxyz",
-       "ABCXYZ123DEF456",
-       "abczyz123DEF456",
-/*10*/ "\r\n",
-       "123",
-       "03F", // hexadecimal 'digits'
-       ")speci@! ch@r$(",
-       '@!$*',
-/*15*/ 'ABC',
-       'abc',
-       'ABC123',
-       'abc123',
-       "abc123\n",
-/*20*/ 'abc 123',
-       '',
-       ' ',
-       base64_decode("w4DDoMOHw6fDiMOo"), // non-ascii characters
-       "\"\n",
-/*25*/ " \t\r\n",
-/*26*/ "\v\f",
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$iterator = 1;
-foreach($values as $fusion) {
-      echo "\n-- Iteration $iterator --\n";
-      var_dump( ctype_space($value) );
-      $iterator++;
-};
-setlocale(LC_CTYPE, $orig);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   $longVal--;
+   var_dump($longVal);
+}
+$fusion = $longVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$validCallback = function () { return true; };
+$fusion = function () { return; };
+$oneCallback = function () { return 1; };
+ob_start();
+try {
+    $ret = session_set_save_handler($nullCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
+    session_start();
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+try {
+    $ret = session_set_save_handler($oneCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
+    session_start();
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+ob_end_flush();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-filter
-ctype
+session
 --EXPECTF--
-int(-%d)
-int(-%d)
-*** Testing ctype_space() : usage variations ***
+--- testing: 9223372036854775807 ---
+int(9223372036854775806)
+--- testing: -9223372036854775808 ---
+float(-9.223372036854776E+18)
+--- testing: 2147483647 ---
+int(2147483646)
+--- testing: -2147483648 ---
+int(-2147483649)
+--- testing: 9223372034707292160 ---
+int(9223372034707292159)
+--- testing: -9223372034707292160 ---
+int(-9223372034707292161)
+--- testing: 2147483648 ---
+int(2147483647)
+--- testing: -2147483649 ---
+int(-2147483650)
+--- testing: 4294967294 ---
+int(4294967293)
+--- testing: 4294967295 ---
+int(4294967294)
+--- testing: 4294967293 ---
+int(4294967292)
+--- testing: 9223372036854775806 ---
+int(9223372036854775805)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
+int(-9223372036854775808)
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Session callback must have a return value of type bool, null returned
 
--- Iteration 1 --
-bool(false)
-
--- Iteration 2 --
-bool(false)
-
--- Iteration 3 --
-bool(false)
-
--- Iteration 4 --
-bool(true)
-
--- Iteration 5 --
-bool(false)
-
--- Iteration 6 --
-bool(false)
-
--- Iteration 7 --
-bool(false)
-
--- Iteration 8 --
-bool(false)
-
--- Iteration 9 --
-bool(false)
-
--- Iteration 10 --
-bool(true)
-
--- Iteration 11 --
-bool(false)
-
--- Iteration 12 --
-bool(false)
-
--- Iteration 13 --
-bool(false)
-
--- Iteration 14 --
-bool(false)
-
--- Iteration 15 --
-bool(false)
-
--- Iteration 16 --
-bool(false)
-
--- Iteration 17 --
-bool(false)
-
--- Iteration 18 --
-bool(false)
-
--- Iteration 19 --
-bool(false)
-
--- Iteration 20 --
-bool(false)
-
--- Iteration 21 --
-bool(false)
-
--- Iteration 22 --
-bool(true)
-
--- Iteration 23 --
-bool(false)
-
--- Iteration 24 --
-bool(false)
-
--- Iteration 25 --
-bool(true)
-
--- Iteration 26 --
-bool(true)
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Session callback must have a return value of type bool, int returned

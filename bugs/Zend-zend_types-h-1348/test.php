@@ -61,15 +61,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump($a?->foo ?? null);
-$fusion = $a;
+echo "*** Testing array_multisort() : case-insensitive\n";
+$a = array(
+    'Second',
+    'First.1',
+    'First.2',
+    'First.3',
+    'Twentieth',
+    'Tenth',
+    'Third',
+);
+$b = array(
+    '2 a',
+    '1 bb 1',
+    '1 bB 2',
+    '1 BB 3',
+    '20 c',
+    '10 d',
+    '3 e',
+);
+array_multisort($b, SORT_STRING | SORT_FLAG_CASE, $a);
+var_dump($a, $b);
+$fusion = $b;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -77,7 +97,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $this->b = 2;
+        $fusion->b = 2;
         $this->d = 4;
     }
 }

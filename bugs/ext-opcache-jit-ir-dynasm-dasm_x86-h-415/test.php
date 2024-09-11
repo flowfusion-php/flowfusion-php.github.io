@@ -61,34 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$ao = new ArrayObject(new ArrayObject(new stdClass));
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayObject(array(1,2,3)), ArrayObject::STD_PROP_LIST);
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayIterator(new ArrayObject()), ArrayObject::ARRAY_AS_PROPS);
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayObject(), ArrayObject::STD_PROP_LIST|ArrayObject::ARRAY_AS_PROPS);
+var_dump($ao->getFlags());
+$cao = clone $ao;
+var_dump($cao->getFlags());
+$fusion = $ao;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
+}
+function test(I $i) {
+    $fusion = &$i->prop;
+    $ref = 42;
 }
 $a = new A();
+test($a);
 var_dump($a);
-$fusion = $this;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$strings = [
-    "",
-    "0",
-    "a",
-    "A",
-    "00",
-    "0a",
-    "0A",
-];
-foreach ($strings as $s) {
-    try {
-        var_dump(str_decrement($s));
-    } catch (ValueError $e) {
-        echo $fusion->getMessage(), PHP_EOL;
-    }
-}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

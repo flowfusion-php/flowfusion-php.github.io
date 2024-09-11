@@ -1,12 +1,12 @@
 --TEST--
-Backed prop satisfies interface get hook by-reference+str_decrement(): Out of Range ValueErrors for strings that cannot be decremented
+SPL: ArrayObject::getFlags() basic usage+By-value get may be implemented as by-reference
 --INI--
+session.upload_progress.enabled=1
 expose_php=On
-opcache.jit=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1002
+opcache.jit=1001
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,48 +71,46 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$ao = new ArrayObject(new ArrayObject(new stdClass));
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayObject(array(1,2,3)), ArrayObject::STD_PROP_LIST);
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayIterator(new ArrayObject()), ArrayObject::ARRAY_AS_PROPS);
+var_dump($ao->getFlags());
+$ao = new ArrayObject(new ArrayObject(), ArrayObject::STD_PROP_LIST|ArrayObject::ARRAY_AS_PROPS);
+var_dump($ao->getFlags());
+$cao = clone $ao;
+var_dump($cao->getFlags());
+$fusion = $ao;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
+}
+function test(I $i) {
+    $fusion = &$i->prop;
+    $ref = 42;
 }
 $a = new A();
+test($a);
 var_dump($a);
-$fusion = $this;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$strings = [
-    "",
-    "0",
-    "a",
-    "A",
-    "00",
-    "0a",
-    "0A",
-];
-foreach ($strings as $s) {
-    try {
-        var_dump(str_decrement($s));
-    } catch (ValueError $e) {
-        echo $fusion->getMessage(), PHP_EOL;
-    }
-}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+int(0)
+int(1)
+int(2)
+int(3)
+int(3)
 object(A)#1 (1) {
-  ["prop"]=>
+  ["_prop":"A":private]=>
   int(42)
 }
-str_decrement(): Argument #1 ($string) must not be empty
-str_decrement(): Argument #1 ($string) "0" is out of decrement range
-str_decrement(): Argument #1 ($string) "a" is out of decrement range
-str_decrement(): Argument #1 ($string) "A" is out of decrement range
-str_decrement(): Argument #1 ($string) "00" is out of decrement range
-str_decrement(): Argument #1 ($string) "0a" is out of decrement range
-str_decrement(): Argument #1 ($string) "0A" is out of decrement range

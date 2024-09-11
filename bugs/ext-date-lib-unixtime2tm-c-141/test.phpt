@@ -1,11 +1,14 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+Bug #66783 (UAF when appending DOMDocument to element)
+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+proc_open without bypass_shell subprocess parameter passing
 --INI--
 date.timezone = UTC
-date.timezone=America/Los_Angeles
-session.auto_start=1
+max_execution_time=2
+date.timezone=Europe/London
 --SKIPIF--
 <?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
+<?php
+if (!function_exists("proc_open")) echo "skip proc_open() is not available";
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -75,22 +78,32 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doc = new DomDocument;
-$doc->loadXML('<root></root>');
-$e = $doc->createElement('e');
-try {
-    $e->appendChild($doc);
-} catch (DOMException $ex) {
-    echo $ex->getMessage(), PHP_EOL;
+$php = getenv('TEST_PHP_EXECUTABLE_ESCAPED');
+$f = __DIR__ . DIRECTORY_SEPARATOR . "proc_only_mb1.php";
+$f_escaped = escapeshellarg($f);
+file_put_contents($f,'<?php var_dump($argv); ?>');
+$ds = array(
+        0 => array("pipe", "r"),
+        1 => array("pipe", "w"),
+        2 => array("pipe", "w")
+        );
+$p = proc_open(
+        "$php -n $f_escaped ãã¹ããã«ããã¤ãã»ãã¹ fÃ¼Ãe ÐºÐ°ÑÐ°Ð¼Ð±Ð°",
+        $ds,
+        $pipes
+        );
+$out = "";
+while (!feof($pipes[1])) {
+    $out .= fread($pipes[1], 1024);
 }
+proc_close($p);
+echo $out;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-dom
---EXPECT--
+--EXPECTF--
 -292277022657-01-27T08:29:52+00:00
 Sun, 27 Jan -292277022657 08:29:52 +0000
 -292277022657-01-27T08:29:52+00:00
@@ -126,4 +139,13 @@ Sun, 04 Dec 292277026596 15:30:07 +0000
 96
 292277026596
 9223372036854775807
-Hierarchy Request Error
+array(4) {
+  [0]=>
+  string(%d) "%sproc_only_mb1.php"
+  [1]=>
+  string(36) "ãã¹ããã«ããã¤ãã»ãã¹"
+  [2]=>
+  string(6) "fÃ¼Ãe"
+  [3]=>
+  string(14) "ÐºÐ°ÑÐ°Ð¼Ð±Ð°"
+}

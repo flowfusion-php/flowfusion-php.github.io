@@ -61,52 +61,39 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = (string)(-PHP_INT_MAX-1);
-var_dump(intval($s));
-var_dump(filter_var($s, FILTER_VALIDATE_INT));
-$fusion = $s;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Pass strings containing different character types to ctype_space() to test
- * which are considered valid whitespace character only strings
- */
-echo "*** Testing ctype_space() : usage variations ***\n";
-$orig = setlocale(LC_CTYPE, "C");
-$values = array(
-/*1*/  "This string contains just letters and spaces", // Simple string
-       "but this one contains some numbers too 123+456 = 678", // Mixed string
-       "",
-       " ",
-/*5*/  "a",
-       "ABCXYZ",
-       "abcxyz",
-       "ABCXYZ123DEF456",
-       "abczyz123DEF456",
-/*10*/ "\r\n",
-       "123",
-       "03F", // hexadecimal 'digits'
-       ")speci@! ch@r$(",
-       '@!$*',
-/*15*/ 'ABC',
-       'abc',
-       'ABC123',
-       'abc123',
-       "abc123\n",
-/*20*/ 'abc 123',
-       '',
-       ' ',
-       base64_decode("w4DDoMOHw6fDiMOo"), // non-ascii characters
-       "\"\n",
-/*25*/ " \t\r\n",
-/*26*/ "\v\f",
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$iterator = 1;
-foreach($values as $fusion) {
-      echo "\n-- Iteration $iterator --\n";
-      var_dump( ctype_space($value) );
-      $iterator++;
-};
-setlocale(LC_CTYPE, $orig);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   $longVal--;
+   var_dump($longVal);
+}
+$fusion = $longVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$validCallback = function () { return true; };
+$fusion = function () { return; };
+$oneCallback = function () { return 1; };
+ob_start();
+try {
+    $ret = session_set_save_handler($nullCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
+    session_start();
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+try {
+    $ret = session_set_save_handler($oneCallback, $validCallback, $validCallback, $validCallback, $validCallback, $validCallback);
+    session_start();
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
+ob_end_flush();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

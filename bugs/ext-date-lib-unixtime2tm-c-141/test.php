@@ -66,14 +66,26 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$doc = new DomDocument;
-$doc->loadXML('<root></root>');
-$e = $doc->createElement('e');
-try {
-    $e->appendChild($doc);
-} catch (DOMException $ex) {
-    echo $ex->getMessage(), PHP_EOL;
+$php = getenv('TEST_PHP_EXECUTABLE_ESCAPED');
+$f = __DIR__ . DIRECTORY_SEPARATOR . "proc_only_mb1.php";
+$f_escaped = escapeshellarg($f);
+file_put_contents($f,'<?php var_dump($argv); ?>');
+$ds = array(
+        0 => array("pipe", "r"),
+        1 => array("pipe", "w"),
+        2 => array("pipe", "w")
+        );
+$p = proc_open(
+        "$php -n $f_escaped ãã¹ããã«ããã¤ãã»ãã¹ fÃ¼Ãe ÐºÐ°ÑÐ°Ð¼Ð±Ð°",
+        $ds,
+        $pipes
+        );
+$out = "";
+while (!feof($pipes[1])) {
+    $out .= fread($pipes[1], 1024);
 }
+proc_close($p);
+echo $out;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

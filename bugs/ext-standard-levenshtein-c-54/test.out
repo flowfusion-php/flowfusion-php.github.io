@@ -1,278 +1,50 @@
+--- testing: 9223372036854775807 ---
+int(9223372036854775806)
+--- testing: -9223372036854775808 ---
+float(-9.223372036854776E+18)
+--- testing: 2147483647 ---
+int(2147483646)
+--- testing: -2147483648 ---
+int(-2147483649)
+--- testing: 9223372034707292160 ---
+int(9223372034707292159)
+--- testing: -9223372034707292160 ---
+int(-9223372034707292161)
+--- testing: 2147483648 ---
+int(2147483647)
+--- testing: -2147483649 ---
+int(-2147483650)
+--- testing: 4294967294 ---
+int(4294967293)
+--- testing: 4294967295 ---
+int(4294967294)
+--- testing: 4294967293 ---
+int(4294967292)
+--- testing: 9223372036854775806 ---
+int(9223372036854775805)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
 int(-9223372036854775808)
-int(-9223372036854775808)
-*** Testing ctype_space() : usage variations ***
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
 
--- Iteration 1 --
+Warning: Undefined variable $nullCallback in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused972.php on line 85
 
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused972.php on line 85
+session_set_save_handler(): Argument #1 ($open) must be a valid callback, no array or string given
 
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused972.php on line 91
 
--- Iteration 2 --
+Warning: session_set_save_handler(): Session save handler cannot be changed after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused972.php on line 91
 
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 3 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 4 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 5 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 6 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 7 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 8 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 9 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 10 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 11 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 12 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 13 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 14 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 15 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 16 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 17 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 18 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 19 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 20 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 21 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 22 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 23 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 24 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 25 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
-
--- Iteration 26 --
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-
-Deprecated: ctype_space(): Argument of type null will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 106
-bool(false)
+Warning: session_start(): Session cannot be started after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused972.php on line 92
 string(11) "random_var:"
-string(20) "-9223372036854775808"
-array(26) {
-  [0]=>
-  string(44) "This string contains just letters and spaces"
-  [1]=>
-  string(52) "but this one contains some numbers too 123+456 = 678"
-  [2]=>
-  string(0) ""
-  [3]=>
-  string(1) " "
-  [4]=>
-  string(1) "a"
-  [5]=>
-  string(6) "ABCXYZ"
-  [6]=>
-  string(6) "abcxyz"
-  [7]=>
-  string(15) "ABCXYZ123DEF456"
-  [8]=>
-  string(15) "abczyz123DEF456"
-  [9]=>
-  string(2) "
-"
-  [10]=>
-  string(3) "123"
-  [11]=>
-  string(3) "03F"
-  [12]=>
-  string(15) ")speci@! ch@r$("
-  [13]=>
-  string(4) "@!$*"
-  [14]=>
-  string(3) "ABC"
-  [15]=>
-  string(3) "abc"
-  [16]=>
-  string(6) "ABC123"
-  [17]=>
-  string(6) "abc123"
-  [18]=>
-  string(7) "abc123
-"
-  [19]=>
-  string(7) "abc 123"
-  [20]=>
-  string(0) ""
-  [21]=>
-  string(1) " "
-  [22]=>
-  string(12) "ÀàÇçÈè"
-  [23]=>
-  string(2) ""
-"
-  [24]=>
-  string(4) " 	
-"
-  [25]=>
-  string(2) ""
+float(-9.223372036854776E+18)
+array(0) {
 }
-string(20) "-9223372036854775808"
-Calling function: stream_get_meta_data with arguments: -9223372036854775808
-Error calling function stream_get_meta_data: stream_get_meta_data(): Argument #1 ($stream) must be of type resource, string given
-Calling function: getprotobynumber with arguments: -9223372036854775808
-Calling function: image_type_to_extension with arguments: -9223372036854775808, -9223372036854775808
-Calling function: proc_close with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
-Array
-Error calling function proc_close: proc_close(): Argument #1 ($process) must be of type resource, array given
-Calling function: hash_hmac_algos with arguments: 
-Calling function: filter_input with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
-Array, -9223372036854775808, Array, -9223372036854775808
-Error calling function filter_input: filter_input(): Argument #1 ($type) must be of type int, array given
-Calling function: vsprintf with arguments: -9223372036854775808, -9223372036854775808
-Error calling function vsprintf: vsprintf(): Argument #2 ($values) must be of type array, string given
-Calling function: session_reset with arguments: 
-Calling function: timezone_location_get with arguments: -9223372036854775808
-Error calling function timezone_location_get: timezone_location_get(): Argument #1 ($object) must be of type DateTimeZone, string given
-Calling function: iconv_get_encoding with arguments: -9223372036854775808
-Calling function: xmlwriter_write_dtd_entity with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused140.php on line 38
--9223372036854775808, Array, -9223372036854775808, Array, -9223372036854775808, Array, -9223372036854775808
-Error calling function xmlwriter_write_dtd_entity: xmlwriter_write_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, string given
-Calling function: levenshtein with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
+array(0) {
+}
+Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in
