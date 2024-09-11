@@ -1,12 +1,15 @@
 --TEST--
-Interface may contain only get with no implementation+filter_var() and FILTER_VALIDATE_MAC
+Backed prop satisfies interface get hook by-reference+rfc1867 array upload
 --INI--
-serialize_precision=14
-auto_globals_jit=0
+file_uploads=1
+upload_max_filesize=1024
+max_file_uploads=10
+opcache.enable_cli=1
+opcache.jit_buffer_size=1M
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0102
+opcache.jit=1004
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -75,55 +78,84 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop { get {} }
-}
-$fusion = $prop;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = Array(
-    array("01-23-45-67-89-ab", 0),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
-    array("01-23-45-67-89-AB", 0),
-    array("01-23-45-67-89-aB", 0),
-    array("01:23:45:67:89:ab", 0),
-    array("01:23:45:67:89:AB", 0),
-    array("01:23:45:67:89:aB", 0),
-    array("01:23:45-67:89:aB", 0),
-    array("xx:23:45:67:89:aB", 0),
-    array("0123.4567.89ab", 0),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
-);
-foreach ($values as $value) {
-    try {
-        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
-    } catch (ValueError $exception) {
-        echo $exception->getMessage() . "\n";
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-echo "Done\n";
+$a = new A();
+var_dump($a);
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump($fusion);
+var_dump($_POST);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-filter
 --EXPECTF--
-
-string(17) "01-23-45-67-89-ab"
-string(17) "01-23-45-67-89-ab"
-bool(false)
-bool(false)
-string(17) "01-23-45-67-89-AB"
-string(17) "01-23-45-67-89-aB"
-string(17) "01:23:45:67:89:ab"
-string(17) "01:23:45:67:89:AB"
-string(17) "01:23:45:67:89:aB"
-bool(false)
-bool(false)
-string(14) "0123.4567.89ab"
-filter_var(): "separator" option must be one character long
-filter_var(): "separator" option must be one character long
-Done
+object(A)#1 (1) {
+  ["prop"]=>
+  int(42)
+}
+array(1) {
+  ["file"]=>
+  array(6) {
+    ["name"]=>
+    array(3) {
+      [0]=>
+      string(9) "file1.txt"
+      [2]=>
+      string(9) "file2.txt"
+      [3]=>
+      string(9) "file3.txt"
+    }
+    ["full_path"]=>
+    array(3) {
+      [0]=>
+      string(9) "file1.txt"
+      [2]=>
+      string(9) "file2.txt"
+      [3]=>
+      string(9) "file3.txt"
+    }
+    ["type"]=>
+    array(3) {
+      [0]=>
+      string(16) "text/plain-file1"
+      [2]=>
+      string(16) "text/plain-file2"
+      [3]=>
+      string(16) "text/plain-file3"
+    }
+    ["tmp_name"]=>
+    array(3) {
+      [0]=>
+      string(%d) "%s"
+      [2]=>
+      string(%d) "%s"
+      [3]=>
+      string(%d) "%s"
+    }
+    ["error"]=>
+    array(3) {
+      [0]=>
+      int(0)
+      [2]=>
+      int(0)
+      [3]=>
+      int(0)
+    }
+    ["size"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [2]=>
+      int(1)
+      [3]=>
+      int(1)
+    }
+  }
+}
+array(0) {
+}

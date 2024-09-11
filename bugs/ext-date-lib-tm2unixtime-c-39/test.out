@@ -1,128 +1,90 @@
-*** Testing open_basedir configuration [file] ***
-bool(true)
+int(9223372036854775807)
+int(-9223372036854775808)
+int(-9223372036854775808)
+int(0)
+int(-9223372036854775808)
+int(-9223372036854775808)
+int(-9223372036854775808)
+Done
 
-Warning: mkdir(): File exists in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 64
-bool(false)
+Warning: DOMDocument::relaxNGValidate(): I/O warning : failed to load external entity "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/foo.rng" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 90
 
-Warning: mkdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 65
-bool(false)
+Warning: DOMDocument::relaxNGValidate(): xmlRelaxNGParse: could not load /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/foo.rng in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 90
 
-Warning: mkdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 66
-bool(false)
-
-Warning: file_put_contents(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 67
-
-Warning: file_put_contents(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 67
-
-Warning: file_put_contents(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 68
-
-Warning: file_put_contents(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 68
-
-Warning: chdir(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 99
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(../bad) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 78
-
-Warning: file(../bad): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 78
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(../bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 79
-
-Warning: file(../bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 79
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(..) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 80
-
-Warning: file(..): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 80
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(../) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 81
-
-Warning: file(../): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 81
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 82
-
-Warning: file(/): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 82
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(../bad/.) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 83
-
-Warning: file(../bad/.): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 83
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 85
-
-Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 85
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/../bad/bad.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 86
-
-Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/bad/../bad/bad.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/open_basedir.inc on line 86
-bool(false)
+Warning: DOMDocument::relaxNGValidate(): Invalid RelaxNG in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 90
+float(-9.223372036854776E+18)
+string(11) "random_var:"
+int(-9223372036854775808)
 array(0) {
 }
+float(-9.223372036854776E+18)
+Calling function: readdir with arguments: -9223372036854775808
+Error calling function readdir: readdir(): Argument #1 ($dir_handle) must be of type resource or null, int given
+Calling function: str_getcsv with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
 
-Warning: file(): open_basedir restriction in effect. File(../ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 69
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+-9223372036854775808, Array, -9223372036854775808, Array
+Error calling function str_getcsv: str_getcsv(): Argument #2 ($separator) must be of type string, array given
+Calling function: fwrite with arguments: -9223372036854775808, -9.2233720368548E+18, -9223372036854775808
+Error calling function fwrite: fwrite(): Argument #1 ($stream) must be of type resource, int given
+Calling function: mt_getrandmax with arguments: 
+Calling function: func_get_args with arguments: 
+Error calling function func_get_args: Cannot call func_get_args() dynamically
+Calling function: ltrim with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+Array, -9.2233720368548E+18
+Error calling function ltrim: ltrim(): Argument #1 ($string) must be of type string, array given
+Calling function: localeconv with arguments: 
+Calling function: round with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+-9.2233720368548E+18, Array, -9.2233720368548E+18
+Error calling function round: round(): Argument #2 ($precision) must be of type int, array given
+Calling function: header_remove with arguments: -9.2233720368548E+18
 
-Warning: file(../ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 69
-bool(false)
+Warning: Cannot modify header information - headers already sent by (output started at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php:75) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 41
+Calling function: fgets with arguments: -9223372036854775808, -9223372036854775808
+Error calling function fgets: fgets(): Argument #1 ($stream) must be of type resource, int given
+Calling function: array_intersect_uassoc with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+-9223372036854775808, Array
+Error calling function array_intersect_uassoc: array_intersect_uassoc(): Argument #2 must be a valid callback, array callback must have exactly two members
+Calling function: simplexml_load_string with arguments: -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808
+Error calling function simplexml_load_string: simplexml_load_string(): Argument #2 ($class_name) must be a class name derived from SimpleXMLElement or null, -9.2233720368548E+18 given
+Calling function: date_add with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+Array, -9223372036854775808
+Error calling function date_add: date_add(): Argument #1 ($object) must be of type DateTime, array given
+Calling function: stream_set_write_buffer with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
 
-Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 70
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+Array, Array
+Error calling function stream_set_write_buffer: stream_set_write_buffer(): Argument #1 ($stream) must be of type resource, array given
+Calling function: session_write_close with arguments: 
+Calling function: unserialize with arguments: -9.2233720368548E+18, -9223372036854775808
+Error calling function unserialize: unserialize(): Argument #2 ($options) must be of type array, int given
+Calling function: addcslashes with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+-9.2233720368548E+18, Array
+Error calling function addcslashes: addcslashes(): Argument #2 ($characters) must be of type string, array given
+Calling function: stream_context_create with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function stream_context_create: stream_context_create(): Argument #1 ($options) must be of type ?array, float given
+Calling function: array_chunk with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
+Error calling function array_chunk: array_chunk(): Argument #1 ($array) must be of type array, int given
+Calling function: getrusage with arguments: -9223372036854775808
+Calling function: filesize with arguments: -9223372036854775808
+Calling function: output_reset_rewrite_vars with arguments: 
+Calling function: unregister_tick_function with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+Array
+Error calling function unregister_tick_function: unregister_tick_function(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members
+Calling function: preg_grep with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
 
-Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 70
-bool(false)
-
-Warning: file(): open_basedir restriction in effect. File(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/../ok/ok.txt) is not within the allowed path(s): (.) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 71
-
-Warning: file(/home/phpfuzz/WorkSpace/flowfusion/php-src/test/ok/../ok/ok.txt): Failed to open stream: Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 71
-bool(false)
-*** Finished testing open_basedir configuration [file] ***
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset 9223372036854775807 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset -9223372036854775808 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset 2147483647 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset -2147483648 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset 9223372034707292160 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-
-Warning: Uninitialized string offset -9223372034707292160 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-
-Warning: Attempt to read property "nodeName" on string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused698.php on line 86
-NULL
-string(11) "random_var:"
-string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
-int(-9223372034707292160)
-string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
-Calling function: xmlwriter_write_dtd_entity with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src
-Error calling function xmlwriter_write_dtd_entity: xmlwriter_write_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, string given
-Calling function: unpack with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, -9223372034707292160, /home/phpfuzz/WorkSpace/flowfusion/php-src
-Error calling function unpack: unpack(): Argument #3 ($offset) must be of type int, string given
-Calling function: finfo_set_flags with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src, /home/phpfuzz/WorkSpace/flowfusion/php-src
-Error calling function finfo_set_flags: finfo_set_flags(): Argument #1 ($finfo) must be of type finfo, string given
-Calling function: array_key_last with arguments: -9223372034707292160
-Error calling function array_key_last: array_key_last(): Argument #1 ($array) must be of type array, int given
-Calling function: mktime with arguments: -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160, -9223372034707292160
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372034707292160 - 153722867245121536 cannot be represented in type 'long long'
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused299.php on line 38
+Array, -9.2233720368548E+18, Array
+Error calling function preg_grep: preg_grep(): Argument #1 ($pattern) must be of type string, array given
+Calling function: gmmktime with arguments: -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in

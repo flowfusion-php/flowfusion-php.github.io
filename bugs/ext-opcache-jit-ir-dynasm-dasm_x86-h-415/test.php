@@ -65,34 +65,16 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop { get {} }
-}
-$fusion = $prop;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = Array(
-    array("01-23-45-67-89-ab", 0),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
-    array("01-23-45-67-89-AB", 0),
-    array("01-23-45-67-89-aB", 0),
-    array("01:23:45:67:89:ab", 0),
-    array("01:23:45:67:89:AB", 0),
-    array("01:23:45:67:89:aB", 0),
-    array("01:23:45-67:89:aB", 0),
-    array("xx:23:45:67:89:aB", 0),
-    array("0123.4567.89ab", 0),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
-    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
-);
-foreach ($values as $value) {
-    try {
-        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
-    } catch (ValueError $exception) {
-        echo $exception->getMessage() . "\n";
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-echo "Done\n";
+$a = new A();
+var_dump($a);
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump($fusion);
+var_dump($_POST);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

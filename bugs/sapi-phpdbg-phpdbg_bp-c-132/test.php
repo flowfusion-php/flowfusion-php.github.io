@@ -61,31 +61,30 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$i = 1;
-echo $i++;
-echo $i++;
-echo $i++;
-echo $i++;
-$fusion = $i;
+$int_variation = array( "%d", "%-d", "%+d", "%7.2d", "%-7.2d", "%07.2d", "%-07.2d", "%'#7.2d" );
+$int_numbers = array( 0, 1, -1, 2.7, -2.7, 23333333, -23333333, "1234" );
+/* creating dumping file */
+$data_file = __DIR__ . '/fprintf_variation_008_64bit.txt';
+if (!($fp = fopen($data_file, 'wt')))
+   return;
+/* hexadecimal type variations */
+fprintf($fp, "\n*** Testing fprintf() for hexadecimals ***\n");
+foreach( $int_numbers as $hexa_num ) {
+ fprintf( $fp, "\n");
+ fprintf( $fp, "%x", $hexa_num );
+}
+fclose($fp);
+print_r(file_get_contents($data_file));
+echo "\nDone";
+unlink($data_file);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo {
-  private $bar;
-  function __construct($bar) {
-    $this->bar = $bar;
-  }
-  function __destruct() {
-    echo __METHOD__,"\n";
-    unset($this->bar);
-  }
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
 }
-class Bar {
-  function __destruct() {
-    echo __METHOD__,"\n";
-    unset($this->bar);
-  }
-}
-$y = new Bar();
-$fusion = new Foo($y);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

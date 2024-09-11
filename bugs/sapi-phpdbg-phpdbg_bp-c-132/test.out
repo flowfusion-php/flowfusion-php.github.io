@@ -1,78 +1,291 @@
-[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php]
-prompt> [Pending breakpoint #0 added at breakpoints_002.php:4]
-prompt> 1234string(11) "random_var:"
-int(5)
-array(0) {
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php]
+prompt> [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php:4]
+prompt> [Breakpoint #1 added at foo]
+prompt> 
+*** Testing fprintf() for hexadecimals ***
+
+0
+1
+ffffffffffffffff
+2
+fffffffffffffffe
+16409d5
+fffffffffe9bf62b
+4d2
+Done123
+[Breakpoint #1 in foo() at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php:86, hits: 1]
+>00086: 	echo 4;
+ 00087: }
+ 00088: $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+prompt> 4string(11) "random_var:"
+array(8) {
+  [0]=>
+  int(0)
+  [1]=>
+  int(1)
+  [2]=>
+  int(-1)
+  [3]=>
+  float(2.7)
+  [4]=>
+  float(-2.7)
+  [5]=>
+  int(23333333)
+  [6]=>
+  int(-23333333)
+  [7]=>
+  string(4) "1234"
 }
-object(Foo)#2 (1) {
-  ["bar":"Foo":private]=>
-  object(Bar)#1 (0) {
+string(4) "1234"
+array(13) {
+  ["_GET"]=>
+  array(0) {
+  }
+  ["_POST"]=>
+  array(0) {
+  }
+  ["_COOKIE"]=>
+  array(0) {
+  }
+  ["_FILES"]=>
+  array(0) {
+  }
+  ["argv"]=>
+  array(1) {
+    [0]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php"
+  }
+  ["argc"]=>
+  int(1)
+  ["int_variation"]=>
+  array(8) {
+    [0]=>
+    string(2) "%d"
+    [1]=>
+    string(3) "%-d"
+    [2]=>
+    string(3) "%+d"
+    [3]=>
+    string(5) "%7.2d"
+    [4]=>
+    string(6) "%-7.2d"
+    [5]=>
+    string(6) "%07.2d"
+    [6]=>
+    string(7) "%-07.2d"
+    [7]=>
+    string(7) "%'#7.2d"
+  }
+  ["int_numbers"]=>
+  array(8) {
+    [0]=>
+    int(0)
+    [1]=>
+    int(1)
+    [2]=>
+    int(-1)
+    [3]=>
+    float(2.7)
+    [4]=>
+    float(-2.7)
+    [5]=>
+    int(23333333)
+    [6]=>
+    int(-23333333)
+    [7]=>
+    string(4) "1234"
+  }
+  ["data_file"]=>
+  string(86) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fprintf_variation_008_64bit.txt"
+  ["fp"]=>
+  resource(6) of type (Unknown)
+  ["hexa_num"]=>
+  string(4) "1234"
+  ["v1"]=>
+  array(8) {
+    [0]=>
+    int(0)
+    [1]=>
+    int(1)
+    [2]=>
+    int(-1)
+    [3]=>
+    float(2.7)
+    [4]=>
+    float(-2.7)
+    [5]=>
+    int(23333333)
+    [6]=>
+    int(-23333333)
+    [7]=>
+    string(4) "1234"
+  }
+  ["definedVars"]=>
+  array(11) {
+    ["_GET"]=>
+    array(0) {
+    }
+    ["_POST"]=>
+    array(0) {
+    }
+    ["_COOKIE"]=>
+    array(0) {
+    }
+    ["_FILES"]=>
+    array(0) {
+    }
+    ["argv"]=>
+    array(1) {
+      [0]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php"
+    }
+    ["argc"]=>
+    int(1)
+    ["int_variation"]=>
+    array(8) {
+      [0]=>
+      string(2) "%d"
+      [1]=>
+      string(3) "%-d"
+      [2]=>
+      string(3) "%+d"
+      [3]=>
+      string(5) "%7.2d"
+      [4]=>
+      string(6) "%-7.2d"
+      [5]=>
+      string(6) "%07.2d"
+      [6]=>
+      string(7) "%-07.2d"
+      [7]=>
+      string(7) "%'#7.2d"
+    }
+    ["int_numbers"]=>
+    array(8) {
+      [0]=>
+      int(0)
+      [1]=>
+      int(1)
+      [2]=>
+      int(-1)
+      [3]=>
+      float(2.7)
+      [4]=>
+      float(-2.7)
+      [5]=>
+      int(23333333)
+      [6]=>
+      int(-23333333)
+      [7]=>
+      string(4) "1234"
+    }
+    ["data_file"]=>
+    string(86) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fprintf_variation_008_64bit.txt"
+    ["fp"]=>
+    resource(6) of type (Unknown)
+    ["hexa_num"]=>
+    string(4) "1234"
   }
 }
-Calling function: count_chars with arguments: 5, 5
-Error calling function count_chars: count_chars(): Argument #2 ($mode) must be between 0 and 4 (inclusive)
-Calling function: set_error_handler with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-5, Array
-Error calling function set_error_handler: set_error_handler(): Argument #1 ($callback) must be a valid callback or null, no array or string given
-Calling function: iconv_strlen with arguments: Error calling function iconv_strlen: Object of class Foo could not be converted to string
-Calling function: session_get_cookie_params with arguments: 
-Calling function: is_resource with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Array
-Calling function: hash_final with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Error calling function hash_final: Object of class Foo could not be converted to string
-Calling function: round with arguments: Error calling function round: Object of class Foo could not be converted to string
-Calling function: strtotime with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Error calling function strtotime: Object of class Foo could not be converted to string
-Calling function: php_sapi_name with arguments: 
-Calling function: fileatime with arguments: 5
-
-Warning: fileatime(): stat failed for 5 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 41
-Calling function: asort with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-5, Array
-
-Warning: asort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 41
-Error calling function asort: asort(): Argument #1 ($array) must be of type array, int given
-Calling function: getmyinode with arguments: 
 Calling function: phpdbg_clear with arguments: 
-Calling function: time with arguments: 
-Calling function: date_sun_info with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
+Calling function: range with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Error calling function date_sun_info: Object of class Foo could not be converted to string
-Calling function: getopt with arguments: Error calling function getopt: Object of class Foo could not be converted to string
-Calling function: ctype_digit with arguments: Error calling function ctype_digit: Object of class Foo could not be converted to string
-Calling function: xmlwriter_start_attribute_ns with arguments: Error calling function xmlwriter_start_attribute_ns: Object of class Foo could not be converted to string
-Calling function: stream_bucket_prepend with arguments: 5, 5
-Error calling function stream_bucket_prepend: stream_bucket_prepend(): Argument #1 ($brigade) must be of type resource, int given
-Calling function: is_float with arguments: 5
-Calling function: date_offset_get with arguments: 5
-Error calling function date_offset_get: date_offset_get(): Argument #1 ($object) must be of type DateTimeInterface, int given
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array, 1234, Array
+Error calling function range: range(): Argument #1 ($start) must be of type string|int|float, array given
+Calling function: is_countable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Calling function: realpath_cache_get with arguments: 
+Calling function: is_object with arguments: 1234
 Calling function: filter_var with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+1234, Array, 1234
+Error calling function filter_var: filter_var(): Argument #2 ($filter) must be of type int, array given
+Calling function: fileperms with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function fileperms: fileperms(): Argument #1 ($filename) must be of type string, array given
+Calling function: password_get_info with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function password_get_info: password_get_info(): Argument #1 ($hash) must be of type string, array given
+Calling function: hexdec with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function hexdec: hexdec(): Argument #1 ($hex_string) must be of type string, array given
+Calling function: image_type_to_mime_type with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function image_type_to_mime_type: image_type_to_mime_type(): Argument #1 ($image_type) must be of type int, array given
+Calling function: stream_get_transports with arguments: 
+Calling function: pathinfo with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Array, 5, Array
-
-Warning: filter_var(): Unknown filter with ID 5 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 41
-Calling function: iterator_to_array with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
 Array, Array
-Error calling function iterator_to_array: iterator_to_array(): Argument #2 ($preserve_keys) must be of type bool, array given
-Calling function: filter_has_var with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 38
-Error calling function filter_has_var: Object of class Foo could not be converted to string
-Calling function: str_ireplace with arguments: Error calling function str_ireplace: Object of class Foo could not be converted to string
-Calling function: phpdbg_prompt with arguments: Error calling function phpdbg_prompt: Object of class Foo could not be converted to string
-Calling function: fnmatch with arguments: Error calling function fnmatch: Object of class Foo could not be converted to string
-/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16: runtime error: member access within misaligned address 0x000000000026 for type 'phpdbg_breakbase_t' (aka 'struct _phpdbg_breakbase_t'), which requires 8 byte alignment
-0x000000000026: note: pointer points here
+Error calling function pathinfo: pathinfo(): Argument #1 ($path) must be of type string, array given
+Calling function: cosh with arguments: 1234
+Calling function: mt_srand with arguments: 1234, 1234
+Calling function: xmlwriter_end_dtd_entity with arguments: 1234
+Error calling function xmlwriter_end_dtd_entity: xmlwriter_end_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, string given
+Calling function: xml_get_current_byte_index with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function xml_get_current_byte_index: xml_get_current_byte_index(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: stream_get_line with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array, 1234, Array
+Error calling function stream_get_line: stream_get_line(): Argument #1 ($stream) must be of type resource, array given
+Calling function: openlog with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array, Array, Array
+Error calling function openlog: openlog(): Argument #1 ($prefix) must be of type string, array given
+Calling function: utf8_decode with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+
+Deprecated: Function utf8_decode() is deprecated since 8.2, visit the php.net documentation for various alternatives in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 41
+Error calling function utf8_decode: utf8_decode(): Argument #1 ($string) must be of type string, array given
+Calling function: closedir with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function closedir: closedir(): Argument #1 ($dir_handle) must be of type resource or null, array given
+Calling function: array_any with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array, Array
+Error calling function array_any: array_any(): Argument #2 ($callback) must be a valid callback, array callback must have exactly two members
+Calling function: in_array with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+1234, Array, 1234
+Calling function: wordwrap with arguments: 1234, 1234, 1234, 1234
+Calling function: stream_context_create with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+1234, Array
+Error calling function stream_context_create: stream_context_create(): Argument #1 ($options) must be of type ?array, string given
+Calling function: version_compare with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array, Array, Array
+Error calling function version_compare: version_compare(): Argument #1 ($version1) must be of type string, array given
+Calling function: floor with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused258.php on line 38
+Array
+Error calling function floor: floor(): Argument #1 ($num) must be of type int|float, array given
+Calling function: session_get_cookie_params with arguments: 
+/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16: runtime error: member access within misaligned address 0x00000000005b for type 'phpdbg_breakbase_t' (aka 'struct _phpdbg_breakbase_t'), which requires 8 byte alignment
+0x00000000005b: note: pointer points here
 <memory cannot be printed>
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:16 in

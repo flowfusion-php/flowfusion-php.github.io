@@ -61,30 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once "open_basedir.inc";
-$initdir = getcwd();
-test_open_basedir_before("file");
-test_open_basedir_error("file");
-var_dump(file("ok.txt"));
-var_dump(file("../ok/ok.txt"));
-var_dump(file($initdir."/test/ok/ok.txt"));
-var_dump(file($initdir."/test/ok/../ok/ok.txt"));
-test_open_basedir_after("file");
-$fusion = $initdir;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    0, MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-);
-$dom = new DOMDocument;
-$dom->loadXML('<root><a/><b/><c/></root>');
-$children = $dom->documentElement->childNodes;
-foreach ($longVals as $value) {
-    var_dump($fusion[$value]?->nodeName);
+$doubles = array(
+        PHP_INT_MAX,
+        PHP_INT_MAX + 1,
+        PHP_INT_MAX + 1000,
+        PHP_INT_MAX * 2 + 4,
+        -PHP_INT_MAX -1,
+        -PHP_INT_MAX -2,
+        -PHP_INT_MAX -1000,
+        );
+foreach ($doubles as $d) {
+        $l = (int)$d;
+        var_dump($l);
 }
+echo "Done\n";
+$fusion = $d;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$rng = __DIR__.'/foo.rng';
+$xml = <<< XML
+<?xml version="1.0"?>
+<apple>
+  <pear>Pear</pear>
+  <pear>Pear</pear>
+</apple>
+XML;
+$doc = new DOMDocument();
+$doc->loadXML($xml);
+$result = $doc->relaxNGValidate($rng);
+var_dump($fusion);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
