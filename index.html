@@ -52,7 +52,13 @@
     <script>
         // Function to format the identifier to a corresponding HTML file path
         function formatIdentifier(identifier) {
+<<<<<<< HEAD
             let formatted = identifier.replace("/php-src/", "");
+=======
+            // Remove the "/php-src" part
+            let formatted = identifier.replace("/php-src/", "");
+            // Replace remaining characters to fit the file pattern
+>>>>>>> deff539ae5a3f06f89a1b983959e0c131543a1b9
             formatted = formatted.replace(/[\/:.]/g, "-");
             return formatted + "/index.html";
         }

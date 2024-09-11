@@ -1,12 +1,9 @@
 --TEST--
-__DIR__ constant used with eval()+Test mktime() function : basic functionality
---INI--
-opcache.max_accelerated_files=10
-session.use_cookies=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0004
+Bug #63916 PDO::PARAM_INT casts to 32bit int internally even on 64bit builds in pdo_sqlite+Bug #75420.4 (Indirect modification of magic method argument)
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE < 8) die('skip');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,34 +68,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-eval('echo __DIR__ . "\n";');
+$num = 100004313234244; // exceeds 32 bits
+$conn = new PDO('sqlite::memory:');
+$conn->query('CREATE TABLE users (id INTEGER NOT NULL, num INTEGER NOT NULL, PRIMARY KEY(id))');
+$stmt = $conn->prepare('insert into users (id, num) values (:id, :num)');
+$stmt->bindValue(':id', 1, PDO::PARAM_INT);
+$stmt->bindValue(':num', $num, PDO::PARAM_INT);
+$stmt->execute();
+$stmt = $conn->query('SELECT num FROM users');
+$result = $stmt->fetchAll(PDO::FETCH_COLUMN);
+var_dump($num,$result[0]);
+$fusion = $conn;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-//Set the default time zone
-date_default_timezone_set("Europe/London");
-echo "*** Testing DateTime::modify() : basic functionality ***\n";
-$hour = PHP_INT_MAX;
-$minute = 30;
-$sec = 45;
-$month = 7;
-$day = 2;
-$year = 1963;
-var_dump( mktime($hour) );
-var_dump( mktime($hour, $minute) );
-var_dump( mktime($hour, $minute, $sec) );
-var_dump( mktime($hour, $minute, $sec, $month) );
-var_dump( mktime($hour, $minute, $sec, $month, $day) );
-var_dump( mktime($hour, $minute, $sec, $month, $day, $year) );
+class Test {
+    public function __isset($x) { $GLOBALS["name"] = 24; return true; }
+    public function __get($x) { var_dump($fusion); return 42; }
+}
+$obj = new Test;
+$name = "foo";
+$name = str_repeat($name, 2);
+var_dump(empty($obj->$name));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-%stests%sconstants
-*** Testing DateTime::modify() : basic functionality ***
-int(%i)
-int(%i)
-int(%i)
-int(%i)
-int(%i)
-int(%i)
+--EXTENSIONS--
+pdo_sqlite
+--EXPECT--
+int(100004313234244)
+int(100004313234244)
+string(6) "foofoo"
+bool(false)

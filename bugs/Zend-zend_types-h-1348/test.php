@@ -61,33 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing bin2hex() : basic functionality ***\n";
-// array with different values for $string
-$strings =  array (
-          //double quoted strings
-/*1*/	  "Here is a simple string",
-          "\t This String contains \t\t some control characters\r\n",
-          "\x90\x91\x00\x93\x94\x90\x91\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f",
-           //single quoted strings
-/*4*/	  'Here is a simple string',
-          '\t This String contains \t\t some control characters\r\n',
-          '\x90\x91\x00\x93\x94\x90\x91\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f',
-);
-// loop through with each element of the $strings array to test bin2hex() function
-$count = 1;
-foreach($strings as $string) {
-  echo "-- Iteration $count --\n";
-  var_dump(bin2hex($string));
-  $count ++;
+try {
+        function x() { throw new Exception("ERROR"); }
+                x(x());
+} catch(Exception $e) {
+        echo($e -> getMessage());
 }
-$fusion = $string;
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $this->b = $value; }
+        set(int $value) { $fusion->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -95,7 +82,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $fusion->b = 2;
+        $this->b = 2;
         $this->d = 4;
     }
 }

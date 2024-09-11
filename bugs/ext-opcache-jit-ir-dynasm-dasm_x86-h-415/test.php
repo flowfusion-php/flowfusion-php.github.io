@@ -65,17 +65,34 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    public $prop { get {} }
+}
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = Array(
+    array("01-23-45-67-89-ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
+    array("01-23-45-67-89-AB", 0),
+    array("01-23-45-67-89-aB", 0),
+    array("01:23:45:67:89:ab", 0),
+    array("01:23:45:67:89:AB", 0),
+    array("01:23:45:67:89:aB", 0),
+    array("01:23:45-67:89:aB", 0),
+    array("xx:23:45:67:89:aB", 0),
+    array("0123.4567.89ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
+);
+foreach ($values as $value) {
+    try {
+        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
+    } catch (ValueError $exception) {
+        echo $exception->getMessage() . "\n";
     }
 }
-$a = new A();
-var_dump($a);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(ini_set("open_basedir", "/usr/local/bin"));
-var_dump(ini_get("open_basedir"));
-var_dump(ini_set("open_basedir", "/usr"));
-var_dump(ini_get("open_basedir"));
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -57,7 +57,7 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>=====bughit:33=====</pre>
+            <pre>=====bughit:34=====</pre>
         </div>
 
         <div class="output">
@@ -65,28 +65,28 @@
             <pre>
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==2651145==ERROR: AddressSanitizer: SEGV on unknown address 0x7ffa50395ed0 (pc 0x7ffa90d26cf7 bp 0x7ffffc14b870 sp 0x7ffffc14ae60 T0)
-==2651145==The signal is caused by a WRITE memory access.
+==3310863==ERROR: AddressSanitizer: SEGV on unknown address 0x7f051a198d50 (pc 0x7f055ab26cf7 bp 0x7fff48a5e610 sp 0x7fff48a5dc00 T0)
+==3310863==The signal is caused by a WRITE memory access.
 LLVMSymbolizer: error reading file: No such file or directory
-    #0 0x7ffa90d26cf7 in dasm_encode /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10
-    #1 0x7ffa90d5204c in ir_emit_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_x86.dasc:10804:8
-    #2 0x7ffa916e85e0 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2837:10
-    #3 0x7ffa915bed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
-    #4 0x7ffa912b911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
-    #5 0x7ffa9121dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
-    #6 0x7ffa9124fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
-    #7 0x7ffa90be28ab in zend_persist_property_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:825:7
-    #8 0x7ffa90baad34 in zend_persist_class_entry /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:975:21
-    #9 0x7ffa90c5a379 in zend_accel_inheritance_cache_add /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2431:23
-    #10 0x561ece185109 in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3661:12
-    #11 0x561ecd7dd7a1 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1332:7
-    #12 0x561ecd7de354 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1366:9
-    #13 0x561ecde5dffd in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5724:2
-    #14 0x7ffa5039576f  (/dev/zero (deleted)+0x800176f)
+    #0 0x7f055ab26cf7 in dasm_encode /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10
+    #1 0x7f055ab5204c in ir_emit_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_x86.dasc:10804:8
+    #2 0x7f055b4e85e0 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2837:10
+    #3 0x7f055b3bed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
+    #4 0x7f055b0b911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
+    #5 0x7f055b01dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
+    #6 0x7f055b04fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
+    #7 0x7f055a9e28ab in zend_persist_property_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:825:7
+    #8 0x7f055a9aad34 in zend_persist_class_entry /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:975:21
+    #9 0x7f055aa5a379 in zend_accel_inheritance_cache_add /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2431:23
+    #10 0x5609e0385109 in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3661:12
+    #11 0x5609df9dd7a1 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1332:7
+    #12 0x5609df9de354 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1366:9
+    #13 0x5609e005dffd in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5724:2
+    #14 0x7f051a1975af  (/dev/zero (deleted)+0x80035af)
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10 in dasm_encode
-==2651145==ABORTING
+==3310863==ABORTING
             </pre>
         </div>
 
@@ -160,17 +160,34 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    public $prop { get {} }
+}
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = Array(
+    array("01-23-45-67-89-ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
+    array("01-23-45-67-89-AB", 0),
+    array("01-23-45-67-89-aB", 0),
+    array("01:23:45:67:89:ab", 0),
+    array("01:23:45:67:89:AB", 0),
+    array("01:23:45:67:89:aB", 0),
+    array("01:23:45-67:89:aB", 0),
+    array("xx:23:45:67:89:aB", 0),
+    array("0123.4567.89ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
+);
+foreach ($values as $value) {
+    try {
+        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
+    } catch (ValueError $exception) {
+        echo $exception->getMessage() . "\n";
     }
 }
-$a = new A();
-var_dump($a);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(ini_set("open_basedir", "/usr/local/bin"));
-var_dump(ini_get("open_basedir"));
-var_dump(ini_set("open_basedir", "/usr"));
-var_dump(ini_get("open_basedir"));
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -184,24 +201,14 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Plain prop satisfies interface get hook by-reference+openbase_dir runtime hardening
+Interface may contain only get with no implementation+filter_var() and FILTER_VALIDATE_MAC
 --INI--
-open_basedir=/usr/local
-opcache.jit_buffer_size=0
-opcache.optimization_level=0
+serialize_precision=14
+auto_globals_jit=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0101
---SKIPIF--
-<?php
-if(PHP_OS_FAMILY === "Windows") {
-    die('skip.. only for unix');
-}
-if (!is_dir("/usr/local/bin")) {
-    die('skip.. no /usr/local/bin on this machine');
-}
-?>
+opcache.jit=0102
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -270,31 +277,58 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    public $prop { get {} }
+}
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = Array(
+    array("01-23-45-67-89-ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
+    array("01-23-45-67-89-AB", 0),
+    array("01-23-45-67-89-aB", 0),
+    array("01:23:45:67:89:ab", 0),
+    array("01:23:45:67:89:AB", 0),
+    array("01:23:45:67:89:aB", 0),
+    array("01:23:45-67:89:aB", 0),
+    array("xx:23:45:67:89:aB", 0),
+    array("0123.4567.89ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
+);
+foreach ($values as $value) {
+    try {
+        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
+    } catch (ValueError $exception) {
+        echo $exception->getMessage() . "\n";
     }
 }
-$a = new A();
-var_dump($a);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(ini_set("open_basedir", "/usr/local/bin"));
-var_dump(ini_get("open_basedir"));
-var_dump(ini_set("open_basedir", "/usr"));
-var_dump(ini_get("open_basedir"));
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-object(A)#1 (1) {
-  ["prop"]=>
-  int(42)
-}
-string(10) "/usr/local"
-string(14) "/usr/local/bin"
+--EXTENSIONS--
+filter
+--EXPECTF--
+
+string(17) "01-23-45-67-89-ab"
+string(17) "01-23-45-67-89-ab"
 bool(false)
-string(14) "/usr/local/bin"
+bool(false)
+string(17) "01-23-45-67-89-AB"
+string(17) "01-23-45-67-89-aB"
+string(17) "01:23:45:67:89:ab"
+string(17) "01:23:45:67:89:AB"
+string(17) "01:23:45:67:89:aB"
+bool(false)
+bool(false)
+string(14) "0123.4567.89ab"
+filter_var(): "separator" option must be one character long
+filter_var(): "separator" option must be one character long
+Done
 
             </pre>
         </div>
@@ -302,90 +336,68 @@ string(14) "/usr/local/bin"
         <div class="script">
             <div class="section-title">Reproducing Script:</div>
             <pre>
-<?php
-function fuzz_internal_interface($vars) {
-    $result = array();
-    // Get all loaded extensions
-    $extensions = get_loaded_extensions();
-    // Initialize an array to hold all internal and extension functions
-    $allInternalFunctions = array();
-    // Get all defined functions
-    $definedFunctions = get_defined_functions();
-    $internalFunctions = $definedFunctions['internal'];
-    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
-    // Iterate over each extension to get its functions
-    foreach ($extensions as $extension) {
-        $functions = get_extension_funcs($extension);
-        if ($functions !== false) {
-            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
-        }
-    }
-    // Filter out POSIX-related functions
-    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
-        return strpos($func, 'posix_') !== 0;
-    });
-    foreach ($vars as $i => $v1) {
-        foreach ($vars as $j => $v2) {
-            try {
-                // Pick a random internal function
-                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
-                // Get reflection of the function to determine the number of parameters
-                $reflection = new ReflectionFunction($randomFunction);
-                $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
-                $args = [];
-                for ($k = 0; $k < $numParams; $k++) {
-                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
-                }
-                // Print out the function being called and arguments
-                echo "Calling function: $randomFunction with arguments: ";
-                echo implode(', ', $args) . "
-";
-                // Call the function with prepared arguments
-                $result[$randomFunction][] = $reflection->invokeArgs($args);
-            } catch (\Throwable $e) {
-                // Handle any exceptions or errors
-                echo "Error calling function $randomFunction: " . $e->getMessage() . "
-";
-            }
-        }
-    }
-    return $result;
-}
-function var_fusion($var1, $var2, $var3) {
-    $result = array();
-    $vars = [$var1, $var2, $var3];
-    try {
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-    } catch (ReflectionException $e) {
-        echo("Error: " . $e->getMessage());
-    }
-    return $result;
-}
-    
-interface I {
-    public $prop { get; }
-}
-class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
-    }
-}
-$a = new A();
-var_dump($a);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(ini_set("open_basedir", "/usr/local/bin"));
-var_dump(ini_get("open_basedir"));
-var_dump(ini_set("open_basedir", "/usr"));
-var_dump(ini_get("open_basedir"));
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
-?>
+#!/bin/sh
 
+export TEST_PHP_SRCDIR='/home/phpfuzz/WorkSpace/flowfusion/php-src'
+export CC='clang-15'
+export TEST_PHP_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'
+export SHELL='/bin/sh'
+export TERM_PROGRAM_VERSION='3.2a'
+export TMUX='/tmp/tmux-1000/default,76,0'
+export HOSTNAME='4c1800347231'
+export PWD='/home/phpfuzz/WorkSpace/flowfusion/php-src'
+export MAKEOVERRIDES='${-*-command-variables-*-}'
+export HOME='/home/phpfuzz'
+export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'
+export MFLAGS=''
+export LESSCLOSE='/usr/bin/lesspipe %s %s'
+export MAKEFLAGS=' -- TEST_PHP_ARGS=-j16'
+export TERM='screen'
+export LESSOPEN='| /usr/bin/lesspipe %s'
+export TMUX_PANE='%0'
+export SHLVL='3'
+export MAKELEVEL='1'
+export LC_CTYPE='C.UTF-8'
+export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+export OLDPWD='/home/phpfuzz/WorkSpace'
+export TEST_PHP_ARGS='-j16'
+export TERM_PROGRAM='tmux'
+export _='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'
+export TEMP='/tmp'
+export SKIP_ONLINE_TESTS='1'
+export TEST_PHP_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'\'''
+export TEST_PHP_CGI_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'\'''
+export TEST_PHPDBG_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'\'''
+export REDIRECT_STATUS='1'
+export QUERY_STRING=''
+export PATH_TRANSLATED='/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php'
+export SCRIPT_FILENAME='/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php'
+export REQUEST_METHOD='GET'
+export CONTENT_TYPE=''
+export CONTENT_LENGTH=''
+export TZ=''
+export TEST_PHP_EXTRA_ARGS=' -n -c '\''/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'\''  -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102"'
+export HTTP_COOKIE=''
+
+case "$1" in
+"gdb")
+    gdb --args '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php"  2>&1
+    ;;
+"lldb")
+    lldb -- '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php"  2>&1
+    ;;
+"valgrind")
+    USE_ZEND_ALLOC=0 valgrind $2 '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php"  2>&1
+    ;;
+"rr")
+    rr record $2 '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php"  2>&1
+    ;;
+*)
+    '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=14" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "auto_globals_jit=0" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit_buffer_size=1024M" -d "opcache.jit=0102" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused870.php"  2>&1
+    ;;
+esac
             </pre>
         </div>
 

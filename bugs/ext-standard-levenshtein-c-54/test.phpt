@@ -1,5 +1,5 @@
 --TEST--
-Bug GH-9891 (DateTime modify with unixtimestamp (@) must work like setTimestamp)+Test !== operator : max int 64bit range
+Test ceil function : 64bit long tests+ZE2 class constants and scope
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -68,79 +68,74 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$m = new DateTime('2022-12-20 14:30:25', new DateTimeZone('Europe/Paris'));
-$m->modify('@1234567890');
-var_dump($m->getTimeStamp());
-echo "=======\n";
-$a = new DateTime('2022-11-01 13:30:00', new DateTimezone('America/Lima'));
-$b = clone $a;
-echo '$a: ', $a->format(DateTime::ATOM), "\n";
-echo '$b: ', $b->format(DateTime::ATOM), "\n";
-echo '$a: @', $a->getTimestamp(), "\n";
-echo '$b: setTimestamp(', $b->getTimestamp(), ")\n";
-$a->modify('@' . $a->getTimestamp());
-$b->setTimestamp($b->getTimestamp());
-echo '$a: ', $a->format(DateTime::ATOM), "\n";
-echo '$b: ', $b->format(DateTime::ATOM), "\n";
-$fusion = $a;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$invalidNotIdentical = array (
-MAX_32Bit, array(MAX_32Bit),
-MIN_32Bit, array(MIN_32Bit),
-MAX_64Bit, array(MAX_64Bit),
-MIN_64Bit, array(MIN_64Bit),
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$validNotIdentical = array (
-MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
-MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
-);
-$failed = false;
-// test for valid values
-for ($i = 0; $i < count($validNotIdentical); $i +=2) {
-   $typeToTestVal = $validNotIdentical[$i];
-   $compares = $validNotIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal !== $compareVal) {
-         //Do Nothing
-      }
-      else {
-         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
-         $failed = true;
-      }
-   }
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(ceil($longVal));
 }
-// test for invalid values
-for ($i = 0; $i < count($invalidNotIdentical); $i +=2) {
-   $typeToTestVal = $invalidNotIdentical[$i];
-   $compares = $invalidNotIdentical[$i + 1];
-   foreach($compares as $fusion) {
-      if ($typeToTestVal !== $compareVal) {
-         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
-         $failed = true;
-      }
-   }
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class ErrorCodes {
+    const FATAL = "Fatal error\n";
+    const WARNING = "Warning\n";
+    const INFO = "Informational message\n";
+    static function print_fatal_error_codes() {
+        echo "self::FATAL = " . self::FATAL;
+    }
 }
-if ($failed == false) {
-   echo "Test Passed\n";
+class ErrorCodesDerived extends ErrorCodes {
+    const FATAL = "Worst error\n";
+    static function print_fatal_error_codes() {
+        echo "self::FATAL = " . self::FATAL;
+        echo "parent::FATAL = " . parent::FATAL;
+    }
 }
+/* Call the static function and move into the ErrorCodes scope */
+ErrorCodes::print_fatal_error_codes();
+ErrorCodesDerived::print_fatal_error_codes();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-int(1234567890)
-=======
-$a: 2022-11-01T13:30:00-05:00
-$b: 2022-11-01T13:30:00-05:00
-$a: @1667327400
-$b: setTimestamp(1667327400)
-$a: 2022-11-01T18:30:00+00:00
-$b: 2022-11-01T13:30:00-05:00
-Test Passed
+--- testing: 9223372036854775807 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775808 ---
+float(-9.223372036854776E+18)
+--- testing: 2147483647 ---
+float(2147483647)
+--- testing: -2147483648 ---
+float(-2147483648)
+--- testing: 9223372034707292160 ---
+float(9.223372034707292E+18)
+--- testing: -9223372034707292160 ---
+float(-9.223372034707292E+18)
+--- testing: 2147483648 ---
+float(2147483648)
+--- testing: -2147483649 ---
+float(-2147483649)
+--- testing: 4294967294 ---
+float(4294967294)
+--- testing: 4294967295 ---
+float(4294967295)
+--- testing: 4294967293 ---
+float(4294967293)
+--- testing: 9223372036854775806 ---
+float(9.223372036854776E+18)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
+float(-9.223372036854776E+18)
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
+self::FATAL = Fatal error
+self::FATAL = Worst error
+parent::FATAL = Fatal error

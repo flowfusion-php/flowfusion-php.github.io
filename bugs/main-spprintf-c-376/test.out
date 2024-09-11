@@ -1,0 +1,15 @@
+Dom\HTMLDocument::createFromString(): Argument #3 ($overrideEncoding) must be a valid document encoding
+string(20) "
+    Héllo, world!
+"
+string(7) "gb18030"
+string(1) "
+"
+string(12) "windows-1252"
+*** Testing reset() : usage variations ***
+
+-- Initial position of internal pointer --
+
+Deprecated: current(): Calling current() on an object is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused793.php on line 86
+/home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:376:14: runtime error: member access within null pointer of type 'zend_string' (aka 'struct _zend_string')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:376:14 in

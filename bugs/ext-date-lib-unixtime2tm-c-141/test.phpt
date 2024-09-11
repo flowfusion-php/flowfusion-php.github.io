@@ -1,9 +1,19 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+ReflectionClass::hasConstant()
+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+Bug GH-8461 004 (JIT does not account for class re-compile)
 --INI--
 date.timezone = UTC
-expose_php=On
-date.timezone=America/New_York
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit=1255
+opcache.file_update_protection=0
+opcache.revalidate_freq=0
+opcache.protect_memory=1
+session.sid_length=32
+date.timezone=America/Mendoza
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1121
 --SKIPIF--
 <?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
@@ -75,28 +85,46 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    const myConst = 1;
+// Checks that JITed code does not crash in --repeat 2 after the UniqueList
+// class changes.
+if (!isset(opcache_get_status()['scripts'][__DIR__ . '/gh8461-004.inc'])) {
+    $initialRequest = true;
+    require __DIR__ . '/gh8461-004.inc';
+} else {
+    $initialRequest = false;
+    $y = 0;
+    class UniqueList
+    {
+        public const A = 1;
+        public const B = 1;
+        private $foo;
+        public function __construct($b)
+        {
+            global $y;
+            $y++;
+            $this->foo = self::A + $b;
+        }
+    }
 }
-class D extends C {
+class UniqueListLast extends UniqueList
+{
+    public function __construct()
+    {
+        parent::__construct(self::B);
+    }
 }
-$rc = new ReflectionClass("C");
-echo "Check existing constant: ";
-var_dump($rc->hasConstant("myConst"));
-echo "Check existing constant, different case: ";
-var_dump($rc->hasConstant("MyCoNsT"));
-echo "Check absent constant: ";
-var_dump($rc->hasConstant("doesNotExist"));
-$rd = new ReflectionClass("D");
-echo "Check inherited constant: ";
-var_dump($rd->hasConstant("myConst"));
-echo "Check absent constant: ";
-var_dump($rd->hasConstant("doesNotExist"));
+for ($i = 0; $i < 10; $i++) {
+    new UniqueListLast();
+}
+var_dump($initialRequest ? $x : $y);
+print "OK";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+opcache
 --EXPECT--
 -292277022657-01-27T08:29:52+00:00
 Sun, 27 Jan -292277022657 08:29:52 +0000
@@ -133,8 +161,5 @@ Sun, 04 Dec 292277026596 15:30:07 +0000
 96
 292277026596
 9223372036854775807
-Check existing constant: bool(true)
-Check existing constant, different case: bool(false)
-Check absent constant: bool(false)
-Check inherited constant: bool(true)
-Check absent constant: bool(false)
+int(10)
+OK

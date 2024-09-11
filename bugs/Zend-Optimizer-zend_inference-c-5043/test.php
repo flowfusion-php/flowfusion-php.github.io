@@ -61,103 +61,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-//create the include directory structure
-$thisTestDir =  basename(__FILE__, ".php") . ".dir";
-mkdir($thisTestDir);
-chdir($thisTestDir);
-$workingDir = "workdir";
-$filename = basename(__FILE__, ".php") . ".tmp";
-$scriptDir = __DIR__;
-$baseDir = getcwd();
-$secondFile = $baseDir."/dir2/".$filename;
-$firstFile = "../dir1/".$filename;
-$scriptFile = $scriptDir.'/'.$filename;
-$newdirs = array("dir1", "dir2", "dir3");
-$pathSep = ":";
-$newIncludePath = "";
-if(substr(PHP_OS, 0, 3) == 'WIN' ) {
-   $pathSep = ";";
-}
-foreach($newdirs as $newdir) {
-   mkdir($newdir);
-   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
-}
-mkdir($workingDir);
-chdir($workingDir);
-//define the files to go into these directories, create one in dir2
-echo "\n--- testing include path ---\n";
-set_include_path($newIncludePath);
-$modes = array("r", "r+", "rt");
-foreach($modes as $mode) {
-    test_fopen($mode);
-}
-// remove the directory structure
-chdir($baseDir);
-rmdir($workingDir);
-foreach($newdirs as $newdir) {
-   rmdir($newdir);
-}
-chdir("..");
-rmdir($thisTestDir);
-function test_fopen($mode) {
-   global $scriptFile, $secondFile, $firstFile, $filename;
-   // create a file in the middle directory
-   $h = fopen($secondFile, "w");
-   fwrite($h, "in dir2");
-   fclose($h);
-   echo "\n** testing with mode=$mode **\n";
-   // should read dir2 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   //create a file in dir1
-   $h = fopen($firstFile, "w");
-   fwrite($h, "in dir1");
-   fclose($h);
-   //should now read dir1 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   // create a file in working directory
-   $h = fopen($filename, "w");
-   fwrite($h, "in working dir");
-   fclose($h);
-   //should still read dir1 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   unlink($firstFile);
-   unlink($secondFile);
-   //should read the file in working dir
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   // create a file in the script directory
-   $h = fopen($scriptFile, "w");
-   fwrite($h, "in script dir");
-   fclose($h);
-   //should read the file in script dir
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   //cleanup
-   unlink($filename);
-   unlink($scriptFile);
-}
-$fusion = $newdirs;
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a.php'] = '<?php echo "This is a\n"; ?>';
+$files['b.php'] = '<?php echo "This is b\n"; ?>';
+$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
+include 'files/phar_test.inc';
+$fp = fopen($pname . '/b/new.php', 'wb');
+fwrite($fp, 'extra');
+fclose($fp);
+include $pname . '/b/c.php';
+include $pname . '/b/new.php';
+$fusion = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusionrray = ['a', 'b', 'c', 'd'];
-foreach ($array as &$a) {
-}
-var_dump($array);
-var_dump(array_values($array));
-var_dump($a);
-var_dump(array_reverse($array));
+$foo = new class {
+    public int $fusion = 15;
+    public function &method() {
+        return $this->bar;
+    }
+};
+var_dump($foo->method());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

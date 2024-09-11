@@ -1,4 +1,60 @@
-/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused
-*** Testing DateTime::modify() : basic functionality ***
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 384307168202302302 * 43200 cannot be represented in type 'long long'
+int(100004313234244)
+int(100004313234244)
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 78
+NULL
+bool(false)
+string(11) "random_var:"
+int(100004313234244)
+int(1)
+int(100004313234244)
+Calling function: password_verify with arguments: 100004313234244, 100004313234244
+Calling function: strnatcmp with arguments: 100004313234244, 1
+Calling function: error_get_last with arguments: 
+Calling function: timezone_location_get with arguments: 1
+Error calling function timezone_location_get: timezone_location_get(): Argument #1 ($object) must be of type DateTimeZone, int given
+Calling function: xml_get_current_byte_index with arguments: 1
+Error calling function xml_get_current_byte_index: xml_get_current_byte_index(): Argument #1 ($parser) must be of type XMLParser, int given
+Calling function: str_getcsv with arguments: 1, 100004313234244, 1, 100004313234244
+Error calling function str_getcsv: str_getcsv(): Argument #2 ($separator) must be a single character
+Calling function: bindec with arguments: 100004313234244
+
+Deprecated: Invalid characters passed for attempted conversion, these have been ignored in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 41
+Calling function: output_reset_rewrite_vars with arguments: 
+Calling function: finfo_close with arguments: 100004313234244
+Error calling function finfo_close: finfo_close(): Argument #1 ($finfo) must be of type finfo, int given
+Calling function: settype with arguments: 100004313234244, 100004313234244
+
+Warning: settype(): Argument #1 ($var) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 41
+Error calling function settype: settype(): Argument #2 ($type) must be a valid type
+Calling function: realpath_cache_size with arguments: 
+Calling function: array_uintersect_uassoc with arguments: 100004313234244, 100004313234244
+Error calling function array_uintersect_uassoc: array_uintersect_uassoc() expects at least 3 arguments, 2 given
+Calling function: sys_getloadavg with arguments: 
+Calling function: date_date_set with arguments: 1, 1, 1, 1
+Error calling function date_date_set: date_date_set(): Argument #1 ($object) must be of type DateTime, int given
+Calling function: uasort with arguments: 1, 100004313234244
+
+Warning: uasort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 41
+Error calling function uasort: uasort(): Argument #1 ($array) must be of type array, int given
+Calling function: date_sunrise with arguments: 100004313234244, 100004313234244, 100004313234244, 100004313234244, 100004313234244, 100004313234244
+
+Deprecated: Function date_sunrise() is deprecated since 8.1, use date_sun_info() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 41
+Error calling function date_sunrise: date_sunrise(): Argument #2 ($returnFormat) must be one of SUNFUNCS_RET_TIMESTAMP, SUNFUNCS_RET_STRING, or SUNFUNCS_RET_DOUBLE
+Calling function: session_start with arguments: 100004313234244
+Error calling function session_start: session_start(): Argument #1 ($options) must be of type array, int given
+Calling function: libxml_clear_errors with arguments: 
+Calling function: net_get_interfaces with arguments: 
+Calling function: array_intersect_uassoc with arguments: 100004313234244, 1
+Error calling function array_intersect_uassoc: array_intersect_uassoc(): Argument #2 must be a valid callback, no array or string given
+Calling function: file_get_contents with arguments: 100004313234244, 100004313234244, 100004313234244, 100004313234244, 100004313234244
+Error calling function file_get_contents: file_get_contents(): Argument #3 ($context) must be of type resource or null, int given
+Calling function: usort with arguments: 1, 100004313234244
+
+Warning: usort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused996.php on line 41
+Error calling function usort: usort(): Argument #1 ($array) must be of type array, int given
+Calling function: hash_final with arguments: 1, 1
+Error calling function hash_final: hash_final(): Argument #1 ($context) must be of type HashContext, int given
+Calling function: mktime with arguments: 1, 100004313234244, 1, 100004313234244, 1, 100004313234244
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 39569713604550082 * 43200 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

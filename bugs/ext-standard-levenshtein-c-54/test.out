@@ -1,36 +1,86 @@
-int(1234567890)
-=======
-$a: 2022-11-01T13:30:00-05:00
-$b: 2022-11-01T13:30:00-05:00
-$a: @1667327400
-$b: setTimestamp(1667327400)
-$a: 2022-11-01T18:30:00+00:00
-$b: 2022-11-01T13:30:00-05:00
-FAILED: '2147483647' !== '-9.2233720368548E+18'
-FAILED: '-2147483648' !== '-9.2233720368548E+18'
-FAILED: '9223372036854775807' !== '-9.2233720368548E+18'
-FAILED: '-9223372036854775808' !== '-9.2233720368548E+18'
+--- testing: 9223372036854775807 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775808 ---
+float(-9.223372036854776E+18)
+--- testing: 2147483647 ---
+float(2147483647)
+--- testing: -2147483648 ---
+float(-2147483648)
+--- testing: 9223372034707292160 ---
+float(9.223372034707292E+18)
+--- testing: -9223372034707292160 ---
+float(-9.223372034707292E+18)
+--- testing: 2147483648 ---
+float(2147483648)
+--- testing: -2147483649 ---
+float(-2147483649)
+--- testing: 4294967294 ---
+float(4294967294)
+--- testing: 4294967295 ---
+float(4294967295)
+--- testing: 4294967293 ---
+float(4294967293)
+--- testing: 9223372036854775806 ---
+float(9.223372036854776E+18)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
+float(-9.223372036854776E+18)
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
+self::FATAL = Fatal error
+self::FATAL = Worst error
+parent::FATAL = Fatal error
 string(11) "random_var:"
-object(DateTime)#2 (3) {
-  ["date"]=>
-  string(26) "2022-11-01 18:30:00.000000"
-  ["timezone_type"]=>
-  int(1)
-  ["timezone"]=>
-  string(6) "+00:00"
+array(1) {
+  [0]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php"
 }
-int(-9223372036854775808)
-int(-9223372036854775808)
-Calling function: is_subclass_of with arguments: Error calling function is_subclass_of: Object of class DateTime could not be converted to string
-Calling function: shuffle with arguments: Error calling function shuffle: Object of class DateTime could not be converted to string
-Calling function: base64_encode with arguments: Error calling function base64_encode: Object of class DateTime could not be converted to string
-Calling function: hash with arguments: Error calling function hash: Object of class DateTime could not be converted to string
-Calling function: gmstrftime with arguments: -9223372036854775808, -9223372036854775808
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+Calling function: strncmp with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
 
-Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused481.php on line 41
-Calling function: error_log with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
--9223372036854775808
-Calling function: date_diff with arguments: Error calling function date_diff: Object of class DateTime could not be converted to string
-Calling function: levenshtein with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+Array, Array, Array
+Error calling function strncmp: strncmp(): Argument #1 ($string1) must be of type string, array given
+Calling function: ob_get_contents with arguments: 
+Calling function: filegroup with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+Array
+Error calling function filegroup: filegroup(): Argument #1 ($filename) must be of type string, array given
+Calling function: forward_static_call with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+-9.2233720368548E+18, Array
+Error calling function forward_static_call: forward_static_call(): Argument #1 ($callback) must be a valid callback, no array or string given
+Calling function: stripslashes with arguments: -9.2233720368548E+18
+Calling function: iptcembed with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: iptcembed(): Unable to open -9.2233720368548E+18 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 41
+Calling function: chop with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+-9.2233720368548E+18, Array
+Error calling function chop: chop(): Argument #2 ($characters) must be of type string, array given
+Calling function: array_udiff_uassoc with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function array_udiff_uassoc: array_udiff_uassoc() expects at least 3 arguments, 2 given
+Calling function: ctype_space with arguments: -9.2233720368548E+18
+
+Deprecated: ctype_space(): Argument of type float will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 41
+Calling function: http_response_code with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+Array
+Error calling function http_response_code: http_response_code(): Argument #1 ($response_code) must be of type int, array given
+Calling function: array_uintersect with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+Array, -9.2233720368548E+18
+Error calling function array_uintersect: array_uintersect(): Argument #2 must be a valid callback, no array or string given
+Calling function: xml_set_start_namespace_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused782.php on line 38
+Array, -9.2233720368548E+18
+Error calling function xml_set_start_namespace_decl_handler: xml_set_start_namespace_decl_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: is_writeable with arguments: -9.2233720368548E+18
+Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in

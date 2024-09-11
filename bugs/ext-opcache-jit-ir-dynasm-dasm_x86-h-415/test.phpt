@@ -1,22 +1,12 @@
 --TEST--
-Plain prop satisfies interface get hook by-reference+openbase_dir runtime hardening
+Interface may contain only get with no implementation+filter_var() and FILTER_VALIDATE_MAC
 --INI--
-open_basedir=/usr/local
-opcache.jit_buffer_size=0
-opcache.optimization_level=0
+serialize_precision=14
+auto_globals_jit=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0101
---SKIPIF--
-<?php
-if(PHP_OS_FAMILY === "Windows") {
-    die('skip.. only for unix');
-}
-if (!is_dir("/usr/local/bin")) {
-    die('skip.. no /usr/local/bin on this machine');
-}
-?>
+opcache.jit=0102
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -85,28 +75,55 @@ interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    public $prop { get {} }
+}
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = Array(
+    array("01-23-45-67-89-ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "-"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "."))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ":"))),
+    array("01-23-45-67-89-AB", 0),
+    array("01-23-45-67-89-aB", 0),
+    array("01:23:45:67:89:ab", 0),
+    array("01:23:45:67:89:AB", 0),
+    array("01:23:45:67:89:aB", 0),
+    array("01:23:45-67:89:aB", 0),
+    array("xx:23:45:67:89:aB", 0),
+    array("0123.4567.89ab", 0),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => "--"))),
+    array("01-23-45-67-89-ab", array("options" => array("separator" => ""))),
+);
+foreach ($values as $value) {
+    try {
+        var_dump(filter_var($value[0], FILTER_VALIDATE_MAC, $value[1]));
+    } catch (ValueError $exception) {
+        echo $exception->getMessage() . "\n";
     }
 }
-$a = new A();
-var_dump($a);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(ini_set("open_basedir", "/usr/local/bin"));
-var_dump(ini_get("open_basedir"));
-var_dump(ini_set("open_basedir", "/usr"));
-var_dump(ini_get("open_basedir"));
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-object(A)#1 (1) {
-  ["prop"]=>
-  int(42)
-}
-string(10) "/usr/local"
-string(14) "/usr/local/bin"
+--EXTENSIONS--
+filter
+--EXPECTF--
+
+string(17) "01-23-45-67-89-ab"
+string(17) "01-23-45-67-89-ab"
 bool(false)
-string(14) "/usr/local/bin"
+bool(false)
+string(17) "01-23-45-67-89-AB"
+string(17) "01-23-45-67-89-aB"
+string(17) "01:23:45:67:89:ab"
+string(17) "01:23:45:67:89:AB"
+string(17) "01:23:45:67:89:aB"
+bool(false)
+bool(false)
+string(14) "0123.4567.89ab"
+filter_var(): "separator" option must be one character long
+filter_var(): "separator" option must be one character long
+Done

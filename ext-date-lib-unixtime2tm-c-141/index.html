@@ -57,13 +57,13 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>=====bughit:25=====</pre>
+            <pre>=====bughit:26=====</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -17762 cannot be represented in type 'long long'
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -16516 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32 in
             </pre>
         </div>
@@ -139,23 +139,39 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    const myConst = 1;
+// Checks that JITed code does not crash in --repeat 2 after the UniqueList
+// class changes.
+if (!isset(opcache_get_status()['scripts'][__DIR__ . '/gh8461-004.inc'])) {
+    $initialRequest = true;
+    require __DIR__ . '/gh8461-004.inc';
+} else {
+    $initialRequest = false;
+    $y = 0;
+    class UniqueList
+    {
+        public const A = 1;
+        public const B = 1;
+        private $foo;
+        public function __construct($b)
+        {
+            global $y;
+            $y++;
+            $this->foo = self::A + $b;
+        }
+    }
 }
-class D extends C {
+class UniqueListLast extends UniqueList
+{
+    public function __construct()
+    {
+        parent::__construct(self::B);
+    }
 }
-$rc = new ReflectionClass("C");
-echo "Check existing constant: ";
-var_dump($rc->hasConstant("myConst"));
-echo "Check existing constant, different case: ";
-var_dump($rc->hasConstant("MyCoNsT"));
-echo "Check absent constant: ";
-var_dump($rc->hasConstant("doesNotExist"));
-$rd = new ReflectionClass("D");
-echo "Check inherited constant: ";
-var_dump($rd->hasConstant("myConst"));
-echo "Check absent constant: ";
-var_dump($rd->hasConstant("doesNotExist"));
+for ($i = 0; $i < 10; $i++) {
+    new UniqueListLast();
+}
+var_dump($initialRequest ? $x : $y);
+print "OK";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -169,11 +185,21 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+ReflectionClass::hasConstant()
+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+Bug GH-8461 004 (JIT does not account for class re-compile)
 --INI--
 date.timezone = UTC
-expose_php=On
-date.timezone=America/New_York
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit=1255
+opcache.file_update_protection=0
+opcache.revalidate_freq=0
+opcache.protect_memory=1
+session.sid_length=32
+date.timezone=America/Mendoza
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1121
 --SKIPIF--
 <?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
@@ -245,28 +271,46 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    const myConst = 1;
+// Checks that JITed code does not crash in --repeat 2 after the UniqueList
+// class changes.
+if (!isset(opcache_get_status()['scripts'][__DIR__ . '/gh8461-004.inc'])) {
+    $initialRequest = true;
+    require __DIR__ . '/gh8461-004.inc';
+} else {
+    $initialRequest = false;
+    $y = 0;
+    class UniqueList
+    {
+        public const A = 1;
+        public const B = 1;
+        private $foo;
+        public function __construct($b)
+        {
+            global $y;
+            $y++;
+            $this->foo = self::A + $b;
+        }
+    }
 }
-class D extends C {
+class UniqueListLast extends UniqueList
+{
+    public function __construct()
+    {
+        parent::__construct(self::B);
+    }
 }
-$rc = new ReflectionClass("C");
-echo "Check existing constant: ";
-var_dump($rc->hasConstant("myConst"));
-echo "Check existing constant, different case: ";
-var_dump($rc->hasConstant("MyCoNsT"));
-echo "Check absent constant: ";
-var_dump($rc->hasConstant("doesNotExist"));
-$rd = new ReflectionClass("D");
-echo "Check inherited constant: ";
-var_dump($rd->hasConstant("myConst"));
-echo "Check absent constant: ";
-var_dump($rd->hasConstant("doesNotExist"));
+for ($i = 0; $i < 10; $i++) {
+    new UniqueListLast();
+}
+var_dump($initialRequest ? $x : $y);
+print "OK";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+opcache
 --EXPECT--
 -292277022657-01-27T08:29:52+00:00
 Sun, 27 Jan -292277022657 08:29:52 +0000
@@ -303,11 +347,8 @@ Sun, 04 Dec 292277026596 15:30:07 +0000
 96
 292277026596
 9223372036854775807
-Check existing constant: bool(true)
-Check existing constant, different case: bool(false)
-Check absent constant: bool(false)
-Check inherited constant: bool(true)
-Check absent constant: bool(false)
+int(10)
+OK
 
             </pre>
         </div>
@@ -315,97 +356,68 @@ Check absent constant: bool(false)
         <div class="script">
             <div class="section-title">Reproducing Script:</div>
             <pre>
-<?php
-function fuzz_internal_interface($vars) {
-    $result = array();
-    // Get all loaded extensions
-    $extensions = get_loaded_extensions();
-    // Initialize an array to hold all internal and extension functions
-    $allInternalFunctions = array();
-    // Get all defined functions
-    $definedFunctions = get_defined_functions();
-    $internalFunctions = $definedFunctions['internal'];
-    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
-    // Iterate over each extension to get its functions
-    foreach ($extensions as $extension) {
-        $functions = get_extension_funcs($extension);
-        if ($functions !== false) {
-            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
-        }
-    }
-    // Filter out POSIX-related functions
-    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
-        return strpos($func, 'posix_') !== 0;
-    });
-    foreach ($vars as $i => $v1) {
-        foreach ($vars as $j => $v2) {
-            try {
-                // Pick a random internal function
-                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
-                // Get reflection of the function to determine the number of parameters
-                $reflection = new ReflectionFunction($randomFunction);
-                $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
-                $args = [];
-                for ($k = 0; $k < $numParams; $k++) {
-                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
-                }
-                // Print out the function being called and arguments
-                echo "Calling function: $randomFunction with arguments: ";
-                echo implode(', ', $args) . "
-";
-                // Call the function with prepared arguments
-                $result[$randomFunction][] = $reflection->invokeArgs($args);
-            } catch (\Throwable $e) {
-                // Handle any exceptions or errors
-                echo "Error calling function $randomFunction: " . $e->getMessage() . "
-";
-            }
-        }
-    }
-    return $result;
-}
-function var_fusion($var1, $var2, $var3) {
-    $result = array();
-    $vars = [$var1, $var2, $var3];
-    try {
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-    } catch (ReflectionException $e) {
-        echo("Error: " . $e->getMessage());
-    }
-    return $result;
-}
-    
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    const myConst = 1;
-}
-class D extends C {
-}
-$rc = new ReflectionClass("C");
-echo "Check existing constant: ";
-var_dump($rc->hasConstant("myConst"));
-echo "Check existing constant, different case: ";
-var_dump($rc->hasConstant("MyCoNsT"));
-echo "Check absent constant: ";
-var_dump($rc->hasConstant("doesNotExist"));
-$rd = new ReflectionClass("D");
-echo "Check inherited constant: ";
-var_dump($rd->hasConstant("myConst"));
-echo "Check absent constant: ";
-var_dump($rd->hasConstant("doesNotExist"));
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
-?>
+#!/bin/sh
 
+export TEST_PHP_SRCDIR='/home/phpfuzz/WorkSpace/flowfusion/php-src'
+export CC='clang-15'
+export TEST_PHP_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'
+export SHELL='/bin/sh'
+export TERM_PROGRAM_VERSION='3.2a'
+export TMUX='/tmp/tmux-1000/default,76,0'
+export HOSTNAME='4c1800347231'
+export PWD='/home/phpfuzz/WorkSpace/flowfusion/php-src'
+export MAKEOVERRIDES='${-*-command-variables-*-}'
+export HOME='/home/phpfuzz'
+export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'
+export MFLAGS=''
+export LESSCLOSE='/usr/bin/lesspipe %s %s'
+export MAKEFLAGS=' -- TEST_PHP_ARGS=-j16'
+export TERM='screen'
+export LESSOPEN='| /usr/bin/lesspipe %s'
+export TMUX_PANE='%0'
+export SHLVL='3'
+export MAKELEVEL='1'
+export LC_CTYPE='C.UTF-8'
+export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+export OLDPWD='/home/phpfuzz/WorkSpace'
+export TEST_PHP_ARGS='-j16'
+export TERM_PROGRAM='tmux'
+export _='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'
+export TEMP='/tmp'
+export SKIP_ONLINE_TESTS='1'
+export TEST_PHP_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'\'''
+export TEST_PHP_CGI_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'\'''
+export TEST_PHPDBG_EXECUTABLE='/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=''\''/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'\'''
+export REDIRECT_STATUS='1'
+export QUERY_STRING=''
+export PATH_TRANSLATED='/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php'
+export SCRIPT_FILENAME='/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php'
+export REQUEST_METHOD='GET'
+export CONTENT_TYPE=''
+export CONTENT_LENGTH=''
+export TZ=''
+export TEST_PHP_EXTRA_ARGS=' -n -c '\''/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'\''  -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M"'
+export HTTP_COOKIE=''
+
+case "$1" in
+"gdb")
+    gdb --args '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php"  2>&1
+    ;;
+"lldb")
+    lldb -- '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php"  2>&1
+    ;;
+"valgrind")
+    USE_ZEND_ALLOC=0 valgrind $2 '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php"  2>&1
+    ;;
+"rr")
+    rr record $2 '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php"  2>&1
+    ;;
+*)
+    '/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'  -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'   -d "opcache.cache_id=worker10" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "date.timezone=America/Mendoza" -d "opcache.enable=1" -d "opcache.enable_cli=1" -d "opcache.jit=1121" -d "session.sid_length=32" -d "opcache.jit_buffer_size=1024M" -f "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused902.php"  2>&1
+    ;;
+esac
             </pre>
         </div>
 

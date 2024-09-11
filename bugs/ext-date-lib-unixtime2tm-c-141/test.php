@@ -66,23 +66,39 @@ echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 6776797623353279
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    const myConst = 1;
+// Checks that JITed code does not crash in --repeat 2 after the UniqueList
+// class changes.
+if (!isset(opcache_get_status()['scripts'][__DIR__ . '/gh8461-004.inc'])) {
+    $initialRequest = true;
+    require __DIR__ . '/gh8461-004.inc';
+} else {
+    $initialRequest = false;
+    $y = 0;
+    class UniqueList
+    {
+        public const A = 1;
+        public const B = 1;
+        private $foo;
+        public function __construct($b)
+        {
+            global $y;
+            $y++;
+            $this->foo = self::A + $b;
+        }
+    }
 }
-class D extends C {
+class UniqueListLast extends UniqueList
+{
+    public function __construct()
+    {
+        parent::__construct(self::B);
+    }
 }
-$rc = new ReflectionClass("C");
-echo "Check existing constant: ";
-var_dump($rc->hasConstant("myConst"));
-echo "Check existing constant, different case: ";
-var_dump($rc->hasConstant("MyCoNsT"));
-echo "Check absent constant: ";
-var_dump($rc->hasConstant("doesNotExist"));
-$rd = new ReflectionClass("D");
-echo "Check inherited constant: ";
-var_dump($rd->hasConstant("myConst"));
-echo "Check absent constant: ";
-var_dump($rd->hasConstant("doesNotExist"));
+for ($i = 0; $i < 10; $i++) {
+    new UniqueListLast();
+}
+var_dump($initialRequest ? $x : $y);
+print "OK";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

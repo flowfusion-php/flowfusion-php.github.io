@@ -1,9 +1,8 @@
 --TEST--
-Test extract() function (variation 6)+Test log1p function : 64bit long tests
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+Increment/decrement a typed property with int|float type+Test array_walk() function : basic functionality - regular array
+--INI--
+session.gc_maxlifetime=0
+session.cookie_secure=0
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,73 +67,176 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/* EXTR_REFS as second Argument */
-$a = array ('foo' => 'aaa');
-var_dump ( extract($a, EXTR_REFS));
-var_dump($foo);
-$b = $a;
-$b['foo'] = 'bbb';
-var_dump ( extract($a, EXTR_REFS));
-var_dump($foo);
-var_dump($a);
-echo "Done\n";
-$fusion = $foo;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $fusion ---\n";
-   var_dump(log1p($longVal));
+class Test {
+    public int|float $prop;
+    public int|bool $prop2;
 }
+/* Incrementing a int|float property past int min/max is legal */
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+var_dump(is_double($test->prop));
+$test = new Test;
+$test->prop = PHP_INT_MAX;
+$r =& $test->prop;
+$x = $test->prop++;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MAX;
+$x = ++$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = $test->prop--;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+$test->prop = PHP_INT_MIN;
+$x = --$test->prop;
+$r =& $test->prop;
+var_dump(is_double($test->prop));
+/* Incrementing a non-int|float property past int min/max is an error,
+ * even if the result of the overflow (a float) would technically be allowed
+ * under a type coercion. */
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = $test->prop2++;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MAX;
+    $r =& $test->prop2;
+    $x = ++$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = $test->prop2--;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->prop2 = PHP_INT_MIN;
+    $r =& $test->prop2;
+    $x = --$test->prop2;
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+$fusion = $e;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing array_walk() : basic functionality ***\n";
+// regular array
+$fruits = array("lemon", "orange", "banana", "apple");
+function test_print($item, $key)
+{
+   // dump the arguments to check that they are passed
+   // with proper type
+   var_dump($item); // value
+   var_dump($key);  // key
+   echo "\n"; // new line to separate the output between each element
+}
+function with_userdata($item, $key, $user_data)
+{
+   // dump the arguments to check that they are passed
+   // with proper type
+   var_dump($item); // value
+   var_dump($fusion);  // key
+   var_dump($user_data); // user supplied data
+   echo "\n"; // new line to separate the output between each element
+}
+echo "-- Using array_walk() with default parameters to show array contents --\n";
+var_dump( array_walk($fruits, 'test_print'));
+echo "-- Using array_walk() with all parameters --\n";
+var_dump( array_walk($fruits, 'with_userdata', "Added"));
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+*** Testing array_walk() : basic functionality ***
+-- Using array_walk() with default parameters to show array contents --
+string(5) "lemon"
+int(0)
+
+string(6) "orange"
 int(1)
-string(3) "aaa"
+
+string(6) "banana"
+int(2)
+
+string(5) "apple"
+int(3)
+
+bool(true)
+-- Using array_walk() with all parameters --
+string(5) "lemon"
+int(0)
+string(5) "Added"
+
+string(6) "orange"
 int(1)
-string(3) "bbb"
-array(1) {
-  ["foo"]=>
-  &string(3) "bbb"
-}
+string(5) "Added"
+
+string(6) "banana"
+int(2)
+string(5) "Added"
+
+string(5) "apple"
+int(3)
+string(5) "Added"
+
+bool(true)
 Done
---- testing: 9223372036854775807 ---
-float(43.66827237527655)
---- testing: -9223372036854775808 ---
-float(NAN)
---- testing: 2147483647 ---
-float(21.487562597358306)
---- testing: -2147483648 ---
-float(NAN)
---- testing: 9223372034707292160 ---
-float(43.66827237504372)
---- testing: -9223372034707292160 ---
-float(NAN)
---- testing: 2147483648 ---
-float(21.487562597823967)
---- testing: -2147483649 ---
-float(NAN)
---- testing: 4294967294 ---
-float(22.18070977768542)
---- testing: 4294967295 ---
-float(22.18070977791825)
---- testing: 4294967293 ---
-float(22.180709777452588)
---- testing: 9223372036854775806 ---
-float(43.66827237527655)
---- testing: 9.2233720368548E+18 ---
-float(43.66827237527655)
---- testing: -9223372036854775807 ---
-float(NAN)
---- testing: -9.2233720368548E+18 ---
-float(NAN)

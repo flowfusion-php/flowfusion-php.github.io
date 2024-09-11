@@ -1,0 +1,132 @@
+float(NAN)
+float(NAN)
+float(NAN)
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, 5.5);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, 5.5);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, NAN);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(NAN, 5.5);
+range(): Argument #1 ($start) must be a finite number, NAN provided
+range(5.5, NAN);
+range(): Argument #2 ($end) must be a finite number, NAN provided
+range(5.5, NAN);
+range(): Argument #2 ($end) must be a finite number, NAN provided
+range(5.5, NAN);
+range(): Argument #2 ($end) must be a finite number, NAN provided
+range(5.5, 5.5);
+array(1) {
+  [0]=>
+  float(5.5)
+}
+bool(true)
+bool(true)
+bool(true)
+
+Warning: simplexml_load_string(): I/O warning : failed to load external entity "NAN/libxml_disable_entity_loader_payload.txt" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 109
+bool(true)
+Done
+string(11) "random_var:"
+array(4) {
+  [0]=>
+  float(NAN)
+  [1]=>
+  float(NAN)
+  [2]=>
+  float(NAN)
+  [3]=>
+  float(5.5)
+}
+float(NAN)
+float(5.5)
+Calling function: substr_replace with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array, Array, Array, Array
+Calling function: extract with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array, NAN, Array
+Error calling function extract: extract(): Argument #2 ($flags) must be of type int, float given
+Calling function: stream_get_wrappers with arguments: 
+Calling function: htmlspecialchars with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+NAN, Array, NAN, Array
+Error calling function htmlspecialchars: htmlspecialchars(): Argument #2 ($flags) must be of type int, array given
+Calling function: json_encode with arguments: NAN, NAN, NAN
+Error calling function json_encode: json_encode(): Argument #2 ($flags) must be of type int, float given
+Calling function: pi with arguments: 
+Calling function: is_writable with arguments: 5.5
+Calling function: http_build_query with arguments: 5.5, NAN, 5.5, NAN
+Error calling function http_build_query: http_build_query(): Argument #1 ($data) must be of type array, float given
+Calling function: xmlwriter_start_attribute_ns with arguments: 5.5, 5.5, 5.5, 5.5
+Error calling function xmlwriter_start_attribute_ns: xmlwriter_start_attribute_ns(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: syslog with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array, Array
+Error calling function syslog: syslog(): Argument #1 ($priority) must be of type int, array given
+Calling function: get_declared_traits with arguments: 
+Calling function: stream_socket_pair with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array, 5.5, Array
+Error calling function stream_socket_pair: stream_socket_pair(): Argument #1 ($domain) must be of type int, array given
+Calling function: escapeshellcmd with arguments: NAN
+Calling function: xmlwriter_write_dtd_attlist with arguments: NAN, NAN, NAN
+Error calling function xmlwriter_write_dtd_attlist: xmlwriter_write_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: is_nan with arguments: NAN
+Calling function: is_iterable with arguments: 5.5
+Calling function: session_module_name with arguments: 5.5
+
+Warning: session_module_name(): Session save handler module cannot be changed after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 41
+Calling function: is_null with arguments: 5.5
+Calling function: opcache_is_script_cached with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array
+Error calling function opcache_is_script_cached: opcache_is_script_cached(): Argument #1 ($filename) must be of type string, array given
+Calling function: net_get_interfaces with arguments: 
+Calling function: natsort with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 38
+Array
+
+Warning: natsort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 41
+Calling function: ftell with arguments: NAN
+Error calling function ftell: ftell(): Argument #1 ($stream) must be of type resource, float given
+Calling function: json_validate with arguments: NAN, NAN, NAN
+Error calling function json_validate: json_validate(): Argument #2 ($depth) must be of type int, float given
+Calling function: strncmp with arguments: NAN, 5.5, NAN
+Error calling function strncmp: strncmp(): Argument #3 ($length) must be of type int, float given
+Calling function: date_parse with arguments: 5.5
+Calling function: date_sun_info with arguments: 5.5, NAN, 5.5
+
+Deprecated: Implicit conversion from float 5.5 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused122.php on line 41
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:284:15: runtime error: -nan is outside the range of representable values of type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:284:15 in
