@@ -1,9 +1,0 @@
-string(37) "Sun, 01 Jan 2922770265 00:00:00 -0500"
-OK
-*** Testing date_sunrise() : usage variation ***
-
---12 Aug 2008--
-bool(false)
-bool(false)
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17: runtime error: -nan is outside the range of representable values of type 'long long'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17 in
