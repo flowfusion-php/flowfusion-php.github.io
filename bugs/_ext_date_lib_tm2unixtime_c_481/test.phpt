@@ -1,9 +1,10 @@
 --TEST--
-Bug #24699 (Memory Leak with per-class constants)+Test / operator : 64bit long tests
+comparing different variables for equality+Test that an untyped property can't be overridden by a property of mixed type
+--INI--
+serialize_precision=10
+memory_limit=2M
 --SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,582 +69,395 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class TEST { const FOO = SEEK_CUR; };
-class TEST2 { const FOO = 1; };
-class TEST3 { const FOO = PHP_VERSION; };
-print TEST::FOO."\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+class test {
+}
+$a = array(
+    array(1,2,3),
+    "",
+    1,
+    2.5,
+    0,
+    "string",
+    "123",
+    "2.5",
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-    foreach($otherVals as $otherVal) {
-        echo "--- testing: $longVal / $otherVal ---\n";
-        try {
-            var_dump($longVal/$otherVal);
-        } catch (\Throwable $e) {
-            echo get_class($e) . ': ' . $e->getMessage() . \PHP_EOL;
-        }
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace("\n", "", $buf);
+}
+foreach($a as $var) {
+    for ($i = 0; $i < $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var == $a[$i]) ? " == " : " != ";
+        my_dump($a[$i]);
+        echo "\n";
     }
 }
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-       echo "--- testing: $otherVal / $longVal ---\n";
-      var_dump($otherVal/$longVal);
-   }
+echo "Done\n";
+$fusion = $i;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class Foo
+{
+    public $fusion;
+}
+class Bar extends Foo
+{
+    public mixed $property1;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-1
---- testing: 9223372036854775807 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 9223372036854775807 / 1 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 / -1 ---
-int(-9223372036854775807)
---- testing: 9223372036854775807 / 7 ---
-int(1317624576693539401)
---- testing: 9223372036854775807 / 9 ---
-float(1.0248191152060861E+18)
---- testing: 9223372036854775807 / 65 ---
-float(1.4189803133622733E+17)
---- testing: 9223372036854775807 / -44 ---
-float(-2.0962209174669946E+17)
---- testing: 9223372036854775807 / 2147483647 ---
-float(4294967298)
---- testing: 9223372036854775807 / 9223372036854775807 ---
+--EXPECTF--
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} == array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != string(0) ""
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != int(1)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != float(2.5)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != int(0)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != string(6) "string"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != string(3) "123"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != string(3) "2.5"
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != NULL
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} == bool(true)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != bool(false)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != object(stdClass)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != object(test)#%d (0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != array(0) {}
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != int(-9223372036854775808)
+array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)} != string(20) "-9223372036854775808"
+string(0) "" != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(0) "" == string(0) ""
+string(0) "" != int(1)
+string(0) "" != float(2.5)
+string(0) "" != int(0)
+string(0) "" != string(6) "string"
+string(0) "" != string(3) "123"
+string(0) "" != string(3) "2.5"
+string(0) "" == NULL
+string(0) "" != bool(true)
+string(0) "" == bool(false)
+string(0) "" != object(stdClass)#%d (0) {}
+string(0) "" != object(stdClass)#%d (0) {}
+string(0) "" != object(test)#%d (0) {}
+string(0) "" != array(0) {}
+string(0) "" != int(-9223372036854775808)
+string(0) "" != string(20) "-9223372036854775808"
+int(1) != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(1) != string(0) ""
+int(1) == int(1)
+int(1) != float(2.5)
+int(1) != int(0)
+int(1) != string(6) "string"
+int(1) != string(3) "123"
+int(1) != string(3) "2.5"
+int(1) != NULL
+int(1) == bool(true)
+int(1) != bool(false)
 int(1)
---- testing: -9223372036854775808 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -9223372036854775808 / 1 ---
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ == object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ == object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class test could not be converted to int in %s on line %d
+ == object(test)#%d (0) {}
+int(1) != array(0) {}
+int(1) != int(-9223372036854775808)
+int(1) != string(20) "-9223372036854775808"
+float(2.5) != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+float(2.5) != string(0) ""
+float(2.5) != int(1)
+float(2.5) == float(2.5)
+float(2.5) != int(0)
+float(2.5) != string(6) "string"
+float(2.5) != string(3) "123"
+float(2.5) == string(3) "2.5"
+float(2.5) != NULL
+float(2.5) == bool(true)
+float(2.5) != bool(false)
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ != object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ != object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class test could not be converted to float in %s on line %d
+ != object(test)#%d (0) {}
+float(2.5) != array(0) {}
+float(2.5) != int(-9223372036854775808)
+float(2.5) != string(20) "-9223372036854775808"
+int(0) != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(0) != string(0) ""
+int(0) != int(1)
+int(0) != float(2.5)
+int(0) == int(0)
+int(0) != string(6) "string"
+int(0) != string(3) "123"
+int(0) != string(3) "2.5"
+int(0) == NULL
+int(0) != bool(true)
+int(0) == bool(false)
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class test could not be converted to int in %s on line %d
+ != object(test)#%d (0) {}
+int(0) != array(0) {}
+int(0) != int(-9223372036854775808)
+int(0) != string(20) "-9223372036854775808"
+string(6) "string" != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(6) "string" != string(0) ""
+string(6) "string" != int(1)
+string(6) "string" != float(2.5)
+string(6) "string" != int(0)
+string(6) "string" == string(6) "string"
+string(6) "string" != string(3) "123"
+string(6) "string" != string(3) "2.5"
+string(6) "string" != NULL
+string(6) "string" == bool(true)
+string(6) "string" != bool(false)
+string(6) "string" != object(stdClass)#%d (0) {}
+string(6) "string" != object(stdClass)#%d (0) {}
+string(6) "string" != object(test)#%d (0) {}
+string(6) "string" != array(0) {}
+string(6) "string" != int(-9223372036854775808)
+string(6) "string" != string(20) "-9223372036854775808"
+string(3) "123" != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "123" != string(0) ""
+string(3) "123" != int(1)
+string(3) "123" != float(2.5)
+string(3) "123" != int(0)
+string(3) "123" != string(6) "string"
+string(3) "123" == string(3) "123"
+string(3) "123" != string(3) "2.5"
+string(3) "123" != NULL
+string(3) "123" == bool(true)
+string(3) "123" != bool(false)
+string(3) "123" != object(stdClass)#%d (0) {}
+string(3) "123" != object(stdClass)#%d (0) {}
+string(3) "123" != object(test)#%d (0) {}
+string(3) "123" != array(0) {}
+string(3) "123" != int(-9223372036854775808)
+string(3) "123" != string(20) "-9223372036854775808"
+string(3) "2.5" != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(3) "2.5" != string(0) ""
+string(3) "2.5" != int(1)
+string(3) "2.5" == float(2.5)
+string(3) "2.5" != int(0)
+string(3) "2.5" != string(6) "string"
+string(3) "2.5" != string(3) "123"
+string(3) "2.5" == string(3) "2.5"
+string(3) "2.5" != NULL
+string(3) "2.5" == bool(true)
+string(3) "2.5" != bool(false)
+string(3) "2.5" != object(stdClass)#%d (0) {}
+string(3) "2.5" != object(stdClass)#%d (0) {}
+string(3) "2.5" != object(test)#%d (0) {}
+string(3) "2.5" != array(0) {}
+string(3) "2.5" != int(-9223372036854775808)
+string(3) "2.5" != string(20) "-9223372036854775808"
+NULL != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+NULL == string(0) ""
+NULL != int(1)
+NULL != float(2.5)
+NULL == int(0)
+NULL != string(6) "string"
+NULL != string(3) "123"
+NULL != string(3) "2.5"
+NULL == NULL
+NULL != bool(true)
+NULL == bool(false)
+NULL != object(stdClass)#%d (0) {}
+NULL != object(stdClass)#%d (0) {}
+NULL != object(test)#%d (0) {}
+NULL == array(0) {}
+NULL != int(-9223372036854775808)
+NULL != string(20) "-9223372036854775808"
+bool(true) == array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(true) != string(0) ""
+bool(true) == int(1)
+bool(true) == float(2.5)
+bool(true) != int(0)
+bool(true) == string(6) "string"
+bool(true) == string(3) "123"
+bool(true) == string(3) "2.5"
+bool(true) != NULL
+bool(true) == bool(true)
+bool(true) != bool(false)
+bool(true) == object(stdClass)#%d (0) {}
+bool(true) == object(stdClass)#%d (0) {}
+bool(true) == object(test)#%d (0) {}
+bool(true) != array(0) {}
+bool(true) == int(-9223372036854775808)
+bool(true) == string(20) "-9223372036854775808"
+bool(false) != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+bool(false) == string(0) ""
+bool(false) != int(1)
+bool(false) != float(2.5)
+bool(false) == int(0)
+bool(false) != string(6) "string"
+bool(false) != string(3) "123"
+bool(false) != string(3) "2.5"
+bool(false) == NULL
+bool(false) != bool(true)
+bool(false) == bool(false)
+bool(false) != object(stdClass)#%d (0) {}
+bool(false) != object(stdClass)#%d (0) {}
+bool(false) != object(test)#%d (0) {}
+bool(false) == array(0) {}
+bool(false) != int(-9223372036854775808)
+bool(false) != string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} != string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ == int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ != float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != int(0)
+object(stdClass)#%d (0) {} != string(6) "string"
+object(stdClass)#%d (0) {} != string(3) "123"
+object(stdClass)#%d (0) {} != string(3) "2.5"
+object(stdClass)#%d (0) {} != NULL
+object(stdClass)#%d (0) {} == bool(true)
+object(stdClass)#%d (0) {} != bool(false)
+object(stdClass)#%d (0) {} == object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} == object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} != object(test)#%d (0) {}
+object(stdClass)#%d (0) {} != array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != int(-9223372036854775808)
+object(stdClass)#%d (0) {} != string(20) "-9223372036854775808"
+object(stdClass)#%d (0) {} != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(stdClass)#%d (0) {} != string(0) ""
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ == int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ != float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != int(0)
+object(stdClass)#%d (0) {} != string(6) "string"
+object(stdClass)#%d (0) {} != string(3) "123"
+object(stdClass)#%d (0) {} != string(3) "2.5"
+object(stdClass)#%d (0) {} != NULL
+object(stdClass)#%d (0) {} == bool(true)
+object(stdClass)#%d (0) {} != bool(false)
+object(stdClass)#%d (0) {} == object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} == object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} != object(test)#%d (0) {}
+object(stdClass)#%d (0) {} != array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != int(-9223372036854775808)
+object(stdClass)#%d (0) {} != string(20) "-9223372036854775808"
+object(test)#%d (0) {} != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+object(test)#%d (0) {} != string(0) ""
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ == int(1)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to float in %s on line %d
+ != float(2.5)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ != int(0)
+object(test)#%d (0) {} != string(6) "string"
+object(test)#%d (0) {} != string(3) "123"
+object(test)#%d (0) {} != string(3) "2.5"
+object(test)#%d (0) {} != NULL
+object(test)#%d (0) {} == bool(true)
+object(test)#%d (0) {} != bool(false)
+object(test)#%d (0) {} != object(stdClass)#%d (0) {}
+object(test)#%d (0) {} != object(stdClass)#%d (0) {}
+object(test)#%d (0) {} == object(test)#%d (0) {}
+object(test)#%d (0) {} != array(0) {}
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ != int(-9223372036854775808)
+object(test)#%d (0) {} != string(20) "-9223372036854775808"
+array(0) {} != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+array(0) {} != string(0) ""
+array(0) {} != int(1)
+array(0) {} != float(2.5)
+array(0) {} != int(0)
+array(0) {} != string(6) "string"
+array(0) {} != string(3) "123"
+array(0) {} != string(3) "2.5"
+array(0) {} == NULL
+array(0) {} != bool(true)
+array(0) {} == bool(false)
+array(0) {} != object(stdClass)#%d (0) {}
+array(0) {} != object(stdClass)#%d (0) {}
+array(0) {} != object(test)#%d (0) {}
+array(0) {} == array(0) {}
+array(0) {} != int(-9223372036854775808)
+array(0) {} != string(20) "-9223372036854775808"
+int(-9223372036854775808) != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+int(-9223372036854775808) != string(0) ""
+int(-9223372036854775808) != int(1)
+int(-9223372036854775808) != float(2.5)
+int(-9223372036854775808) != int(0)
+int(-9223372036854775808) != string(6) "string"
+int(-9223372036854775808) != string(3) "123"
+int(-9223372036854775808) != string(3) "2.5"
+int(-9223372036854775808) != NULL
+int(-9223372036854775808) == bool(true)
+int(-9223372036854775808) != bool(false)
 int(-9223372036854775808)
---- testing: -9223372036854775808 / -1 ---
-float(9.223372036854776E+18)
---- testing: -9223372036854775808 / 7 ---
-float(-1.3176245766935393E+18)
---- testing: -9223372036854775808 / 9 ---
-float(-1.0248191152060861E+18)
---- testing: -9223372036854775808 / 65 ---
-float(-1.4189803133622733E+17)
---- testing: -9223372036854775808 / -44 ---
-float(2.0962209174669946E+17)
---- testing: -9223372036854775808 / 2147483647 ---
-float(-4294967298)
---- testing: -9223372036854775808 / 9223372036854775807 ---
-float(-1)
---- testing: 2147483647 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 2147483647 / 1 ---
-int(2147483647)
---- testing: 2147483647 / -1 ---
-int(-2147483647)
---- testing: 2147483647 / 7 ---
-float(306783378.14285713)
---- testing: 2147483647 / 9 ---
-float(238609294.1111111)
---- testing: 2147483647 / 65 ---
-float(33038209.953846153)
---- testing: 2147483647 / -44 ---
-float(-48806446.52272727)
---- testing: 2147483647 / 2147483647 ---
-int(1)
---- testing: 2147483647 / 9223372036854775807 ---
-float(2.328306435454494E-10)
---- testing: -2147483648 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -2147483648 / 1 ---
-int(-2147483648)
---- testing: -2147483648 / -1 ---
-int(2147483648)
---- testing: -2147483648 / 7 ---
-float(-306783378.28571427)
---- testing: -2147483648 / 9 ---
-float(-238609294.2222222)
---- testing: -2147483648 / 65 ---
-float(-33038209.96923077)
---- testing: -2147483648 / -44 ---
-float(48806446.54545455)
---- testing: -2147483648 / 2147483647 ---
-float(-1.0000000004656613)
---- testing: -2147483648 / 9223372036854775807 ---
-float(-2.3283064365386963E-10)
---- testing: 9223372034707292160 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 9223372034707292160 / 1 ---
-int(9223372034707292160)
---- testing: 9223372034707292160 / -1 ---
-int(-9223372034707292160)
---- testing: 9223372034707292160 / 7 ---
-float(1.317624576386756E+18)
---- testing: 9223372034707292160 / 9 ---
-float(1.0248191149674769E+18)
---- testing: 9223372034707292160 / 65 ---
-float(1.418980313031891E+17)
---- testing: 9223372034707292160 / -44 ---
-float(-2.09622091697893E+17)
---- testing: 9223372034707292160 / 2147483647 ---
-float(4294967297)
---- testing: 9223372034707292160 / 9223372036854775807 ---
-float(0.9999999997671694)
---- testing: -9223372034707292160 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -9223372034707292160 / 1 ---
-int(-9223372034707292160)
---- testing: -9223372034707292160 / -1 ---
-int(9223372034707292160)
---- testing: -9223372034707292160 / 7 ---
-float(-1.317624576386756E+18)
---- testing: -9223372034707292160 / 9 ---
-float(-1.0248191149674769E+18)
---- testing: -9223372034707292160 / 65 ---
-float(-1.418980313031891E+17)
---- testing: -9223372034707292160 / -44 ---
-float(2.09622091697893E+17)
---- testing: -9223372034707292160 / 2147483647 ---
-float(-4294967297)
---- testing: -9223372034707292160 / 9223372036854775807 ---
-float(-0.9999999997671694)
---- testing: 2147483648 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 2147483648 / 1 ---
-int(2147483648)
---- testing: 2147483648 / -1 ---
-int(-2147483648)
---- testing: 2147483648 / 7 ---
-float(306783378.28571427)
---- testing: 2147483648 / 9 ---
-float(238609294.2222222)
---- testing: 2147483648 / 65 ---
-float(33038209.96923077)
---- testing: 2147483648 / -44 ---
-float(-48806446.54545455)
---- testing: 2147483648 / 2147483647 ---
-float(1.0000000004656613)
---- testing: 2147483648 / 9223372036854775807 ---
-float(2.3283064365386963E-10)
---- testing: -2147483649 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -2147483649 / 1 ---
-int(-2147483649)
---- testing: -2147483649 / -1 ---
-int(2147483649)
---- testing: -2147483649 / 7 ---
-float(-306783378.4285714)
---- testing: -2147483649 / 9 ---
-float(-238609294.33333334)
---- testing: -2147483649 / 65 ---
-float(-33038209.984615386)
---- testing: -2147483649 / -44 ---
-float(48806446.56818182)
---- testing: -2147483649 / 2147483647 ---
-float(-1.0000000009313226)
---- testing: -2147483649 / 9223372036854775807 ---
-float(-2.3283064376228985E-10)
---- testing: 4294967294 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 4294967294 / 1 ---
-int(4294967294)
---- testing: 4294967294 / -1 ---
-int(-4294967294)
---- testing: 4294967294 / 7 ---
-float(613566756.2857143)
---- testing: 4294967294 / 9 ---
-float(477218588.2222222)
---- testing: 4294967294 / 65 ---
-float(66076419.907692306)
---- testing: 4294967294 / -44 ---
-float(-97612893.04545455)
---- testing: 4294967294 / 2147483647 ---
-int(2)
---- testing: 4294967294 / 9223372036854775807 ---
-float(4.656612870908988E-10)
---- testing: 4294967295 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 4294967295 / 1 ---
-int(4294967295)
---- testing: 4294967295 / -1 ---
-int(-4294967295)
---- testing: 4294967295 / 7 ---
-float(613566756.4285715)
---- testing: 4294967295 / 9 ---
-float(477218588.3333333)
---- testing: 4294967295 / 65 ---
-float(66076419.92307692)
---- testing: 4294967295 / -44 ---
-float(-97612893.06818181)
---- testing: 4294967295 / 2147483647 ---
-float(2.0000000004656613)
---- testing: 4294967295 / 9223372036854775807 ---
-float(4.6566128719931904E-10)
---- testing: 4294967293 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 4294967293 / 1 ---
-int(4294967293)
---- testing: 4294967293 / -1 ---
-int(-4294967293)
---- testing: 4294967293 / 7 ---
-float(613566756.1428572)
---- testing: 4294967293 / 9 ---
-float(477218588.1111111)
---- testing: 4294967293 / 65 ---
-float(66076419.89230769)
---- testing: 4294967293 / -44 ---
-float(-97612893.02272727)
---- testing: 4294967293 / 2147483647 ---
-float(1.9999999995343387)
---- testing: 4294967293 / 9223372036854775807 ---
-float(4.656612869824786E-10)
---- testing: 9223372036854775806 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 9223372036854775806 / 1 ---
-int(9223372036854775806)
---- testing: 9223372036854775806 / -1 ---
-int(-9223372036854775806)
---- testing: 9223372036854775806 / 7 ---
-float(1.3176245766935393E+18)
---- testing: 9223372036854775806 / 9 ---
-float(1.0248191152060861E+18)
---- testing: 9223372036854775806 / 65 ---
-float(1.4189803133622733E+17)
---- testing: 9223372036854775806 / -44 ---
-float(-2.0962209174669946E+17)
---- testing: 9223372036854775806 / 2147483647 ---
-int(4294967298)
---- testing: 9223372036854775806 / 9223372036854775807 ---
-float(1)
---- testing: 9.2233720368548E+18 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: 9.2233720368548E+18 / 1 ---
-float(9.223372036854776E+18)
---- testing: 9.2233720368548E+18 / -1 ---
-float(-9.223372036854776E+18)
---- testing: 9.2233720368548E+18 / 7 ---
-float(1.3176245766935393E+18)
---- testing: 9.2233720368548E+18 / 9 ---
-float(1.0248191152060861E+18)
---- testing: 9.2233720368548E+18 / 65 ---
-float(1.4189803133622733E+17)
---- testing: 9.2233720368548E+18 / -44 ---
-float(-2.0962209174669946E+17)
---- testing: 9.2233720368548E+18 / 2147483647 ---
-float(4294967298)
---- testing: 9.2233720368548E+18 / 9223372036854775807 ---
-float(1)
---- testing: -9223372036854775807 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -9223372036854775807 / 1 ---
-int(-9223372036854775807)
---- testing: -9223372036854775807 / -1 ---
-int(9223372036854775807)
---- testing: -9223372036854775807 / 7 ---
-int(-1317624576693539401)
---- testing: -9223372036854775807 / 9 ---
-float(-1.0248191152060861E+18)
---- testing: -9223372036854775807 / 65 ---
-float(-1.4189803133622733E+17)
---- testing: -9223372036854775807 / -44 ---
-float(2.0962209174669946E+17)
---- testing: -9223372036854775807 / 2147483647 ---
-float(-4294967298)
---- testing: -9223372036854775807 / 9223372036854775807 ---
-int(-1)
---- testing: -9.2233720368548E+18 / 0 ---
-DivisionByZeroError: Division by zero
---- testing: -9.2233720368548E+18 / 1 ---
-float(-9.223372036854776E+18)
---- testing: -9.2233720368548E+18 / -1 ---
-float(9.223372036854776E+18)
---- testing: -9.2233720368548E+18 / 7 ---
-float(-1.3176245766935393E+18)
---- testing: -9.2233720368548E+18 / 9 ---
-float(-1.0248191152060861E+18)
---- testing: -9.2233720368548E+18 / 65 ---
-float(-1.4189803133622733E+17)
---- testing: -9.2233720368548E+18 / -44 ---
-float(2.0962209174669946E+17)
---- testing: -9.2233720368548E+18 / 2147483647 ---
-float(-4294967298)
---- testing: -9.2233720368548E+18 / 9223372036854775807 ---
-float(-1)
---- testing: 0 / 9223372036854775807 ---
-int(0)
---- testing: 0 / -9223372036854775808 ---
-int(0)
---- testing: 0 / 2147483647 ---
-int(0)
---- testing: 0 / -2147483648 ---
-int(0)
---- testing: 0 / 9223372034707292160 ---
-int(0)
---- testing: 0 / -9223372034707292160 ---
-int(0)
---- testing: 0 / 2147483648 ---
-int(0)
---- testing: 0 / -2147483649 ---
-int(0)
---- testing: 0 / 4294967294 ---
-int(0)
---- testing: 0 / 4294967295 ---
-int(0)
---- testing: 0 / 4294967293 ---
-int(0)
---- testing: 0 / 9223372036854775806 ---
-int(0)
---- testing: 0 / 9.2233720368548E+18 ---
-float(0)
---- testing: 0 / -9223372036854775807 ---
-int(0)
---- testing: 0 / -9.2233720368548E+18 ---
-float(-0)
---- testing: 1 / 9223372036854775807 ---
-float(1.0842021724855044E-19)
---- testing: 1 / -9223372036854775808 ---
-float(-1.0842021724855044E-19)
---- testing: 1 / 2147483647 ---
-float(4.656612875245797E-10)
---- testing: 1 / -2147483648 ---
-float(-4.656612873077393E-10)
---- testing: 1 / 9223372034707292160 ---
-float(1.08420217273794E-19)
---- testing: 1 / -9223372034707292160 ---
-float(-1.08420217273794E-19)
---- testing: 1 / 2147483648 ---
-float(4.656612873077393E-10)
---- testing: 1 / -2147483649 ---
-float(-4.656612870908988E-10)
---- testing: 1 / 4294967294 ---
-float(2.3283064376228985E-10)
---- testing: 1 / 4294967295 ---
-float(2.3283064370807974E-10)
---- testing: 1 / 4294967293 ---
-float(2.3283064381649995E-10)
---- testing: 1 / 9223372036854775806 ---
-float(1.0842021724855044E-19)
---- testing: 1 / 9.2233720368548E+18 ---
-float(1.0842021724855044E-19)
---- testing: 1 / -9223372036854775807 ---
-float(-1.0842021724855044E-19)
---- testing: 1 / -9.2233720368548E+18 ---
-float(-1.0842021724855044E-19)
---- testing: -1 / 9223372036854775807 ---
-float(-1.0842021724855044E-19)
---- testing: -1 / -9223372036854775808 ---
-float(1.0842021724855044E-19)
---- testing: -1 / 2147483647 ---
-float(-4.656612875245797E-10)
---- testing: -1 / -2147483648 ---
-float(4.656612873077393E-10)
---- testing: -1 / 9223372034707292160 ---
-float(-1.08420217273794E-19)
---- testing: -1 / -9223372034707292160 ---
-float(1.08420217273794E-19)
---- testing: -1 / 2147483648 ---
-float(-4.656612873077393E-10)
---- testing: -1 / -2147483649 ---
-float(4.656612870908988E-10)
---- testing: -1 / 4294967294 ---
-float(-2.3283064376228985E-10)
---- testing: -1 / 4294967295 ---
-float(-2.3283064370807974E-10)
---- testing: -1 / 4294967293 ---
-float(-2.3283064381649995E-10)
---- testing: -1 / 9223372036854775806 ---
-float(-1.0842021724855044E-19)
---- testing: -1 / 9.2233720368548E+18 ---
-float(-1.0842021724855044E-19)
---- testing: -1 / -9223372036854775807 ---
-float(1.0842021724855044E-19)
---- testing: -1 / -9.2233720368548E+18 ---
-float(1.0842021724855044E-19)
---- testing: 7 / 9223372036854775807 ---
-float(7.589415207398531E-19)
---- testing: 7 / -9223372036854775808 ---
-float(-7.589415207398531E-19)
---- testing: 7 / 2147483647 ---
-float(3.259629012672058E-9)
---- testing: 7 / -2147483648 ---
-float(-3.259629011154175E-9)
---- testing: 7 / 9223372034707292160 ---
-float(7.589415209165579E-19)
---- testing: 7 / -9223372034707292160 ---
-float(-7.589415209165579E-19)
---- testing: 7 / 2147483648 ---
-float(3.259629011154175E-9)
---- testing: 7 / -2147483649 ---
-float(-3.2596290096362918E-9)
---- testing: 7 / 4294967294 ---
-float(1.629814506336029E-9)
---- testing: 7 / 4294967295 ---
-float(1.6298145059565582E-9)
---- testing: 7 / 4294967293 ---
-float(1.6298145067154997E-9)
---- testing: 7 / 9223372036854775806 ---
-float(7.589415207398531E-19)
---- testing: 7 / 9.2233720368548E+18 ---
-float(7.589415207398531E-19)
---- testing: 7 / -9223372036854775807 ---
-float(-7.589415207398531E-19)
---- testing: 7 / -9.2233720368548E+18 ---
-float(-7.589415207398531E-19)
---- testing: 9 / 9223372036854775807 ---
-float(9.75781955236954E-19)
---- testing: 9 / -9223372036854775808 ---
-float(-9.75781955236954E-19)
---- testing: 9 / 2147483647 ---
-float(4.190951587721217E-9)
---- testing: 9 / -2147483648 ---
-float(-4.190951585769653E-9)
---- testing: 9 / 9223372034707292160 ---
-float(9.75781955464146E-19)
---- testing: 9 / -9223372034707292160 ---
-float(-9.75781955464146E-19)
---- testing: 9 / 2147483648 ---
-float(4.190951585769653E-9)
---- testing: 9 / -2147483649 ---
-float(-4.190951583818089E-9)
---- testing: 9 / 4294967294 ---
-float(2.0954757938606086E-9)
---- testing: 9 / 4294967295 ---
-float(2.0954757933727176E-9)
---- testing: 9 / 4294967293 ---
-float(2.0954757943484996E-9)
---- testing: 9 / 9223372036854775806 ---
-float(9.75781955236954E-19)
---- testing: 9 / 9.2233720368548E+18 ---
-float(9.75781955236954E-19)
---- testing: 9 / -9223372036854775807 ---
-float(-9.75781955236954E-19)
---- testing: 9 / -9.2233720368548E+18 ---
-float(-9.75781955236954E-19)
---- testing: 65 / 9223372036854775807 ---
-float(7.047314121155779E-18)
---- testing: 65 / -9223372036854775808 ---
-float(-7.047314121155779E-18)
---- testing: 65 / 2147483647 ---
-float(3.026798368909768E-8)
---- testing: 65 / -2147483648 ---
-float(-3.026798367500305E-8)
---- testing: 65 / 9223372034707292160 ---
-float(7.04731412279661E-18)
---- testing: 65 / -9223372034707292160 ---
-float(-7.04731412279661E-18)
---- testing: 65 / 2147483648 ---
-float(3.026798367500305E-8)
---- testing: 65 / -2147483649 ---
-float(-3.0267983660908424E-8)
---- testing: 65 / 4294967294 ---
-float(1.513399184454884E-8)
---- testing: 65 / 4294967295 ---
-float(1.5133991841025183E-8)
---- testing: 65 / 4294967293 ---
-float(1.5133991848072497E-8)
---- testing: 65 / 9223372036854775806 ---
-float(7.047314121155779E-18)
---- testing: 65 / 9.2233720368548E+18 ---
-float(7.047314121155779E-18)
---- testing: 65 / -9223372036854775807 ---
-float(-7.047314121155779E-18)
---- testing: 65 / -9.2233720368548E+18 ---
-float(-7.047314121155779E-18)
---- testing: -44 / 9223372036854775807 ---
-float(-4.7704895589362195E-18)
---- testing: -44 / -9223372036854775808 ---
-float(4.7704895589362195E-18)
---- testing: -44 / 2147483647 ---
-float(-2.0489096651081506E-8)
---- testing: -44 / -2147483648 ---
-float(2.0489096641540527E-8)
---- testing: -44 / 9223372034707292160 ---
-float(-4.770489560046936E-18)
---- testing: -44 / -9223372034707292160 ---
-float(4.770489560046936E-18)
---- testing: -44 / 2147483648 ---
-float(-2.0489096641540527E-8)
---- testing: -44 / -2147483649 ---
-float(2.0489096631999548E-8)
---- testing: -44 / 4294967294 ---
-float(-1.0244548325540753E-8)
---- testing: -44 / 4294967295 ---
-float(-1.0244548323155508E-8)
---- testing: -44 / 4294967293 ---
-float(-1.0244548327925998E-8)
---- testing: -44 / 9223372036854775806 ---
-float(-4.7704895589362195E-18)
---- testing: -44 / 9.2233720368548E+18 ---
-float(-4.7704895589362195E-18)
---- testing: -44 / -9223372036854775807 ---
-float(4.7704895589362195E-18)
---- testing: -44 / -9.2233720368548E+18 ---
-float(4.7704895589362195E-18)
---- testing: 2147483647 / 9223372036854775807 ---
-float(2.328306435454494E-10)
---- testing: 2147483647 / -9223372036854775808 ---
-float(-2.328306435454494E-10)
---- testing: 2147483647 / 2147483647 ---
-int(1)
---- testing: 2147483647 / -2147483648 ---
-float(-0.9999999995343387)
---- testing: 2147483647 / 9223372034707292160 ---
-float(2.3283064359965952E-10)
---- testing: 2147483647 / -9223372034707292160 ---
-float(-2.3283064359965952E-10)
---- testing: 2147483647 / 2147483648 ---
-float(0.9999999995343387)
---- testing: 2147483647 / -2147483649 ---
-float(-0.9999999990686774)
---- testing: 2147483647 / 4294967294 ---
-float(0.5)
---- testing: 2147483647 / 4294967295 ---
-float(0.4999999998835847)
---- testing: 2147483647 / 4294967293 ---
-float(0.5000000001164153)
---- testing: 2147483647 / 9223372036854775806 ---
-float(2.328306435454494E-10)
---- testing: 2147483647 / 9.2233720368548E+18 ---
-float(2.328306435454494E-10)
---- testing: 2147483647 / -9223372036854775807 ---
-float(-2.328306435454494E-10)
---- testing: 2147483647 / -9.2233720368548E+18 ---
-float(-2.328306435454494E-10)
---- testing: 9223372036854775807 / 9223372036854775807 ---
-int(1)
---- testing: 9223372036854775807 / -9223372036854775808 ---
-float(-1)
---- testing: 9223372036854775807 / 2147483647 ---
-float(4294967298)
---- testing: 9223372036854775807 / -2147483648 ---
-float(-4294967296)
---- testing: 9223372036854775807 / 9223372034707292160 ---
-float(1.0000000002328306)
---- testing: 9223372036854775807 / -9223372034707292160 ---
-float(-1.0000000002328306)
---- testing: 9223372036854775807 / 2147483648 ---
-float(4294967296)
---- testing: 9223372036854775807 / -2147483649 ---
-float(-4294967294)
---- testing: 9223372036854775807 / 4294967294 ---
-float(2147483649)
---- testing: 9223372036854775807 / 4294967295 ---
-float(2147483648.5)
---- testing: 9223372036854775807 / 4294967293 ---
-float(2147483649.5)
---- testing: 9223372036854775807 / 9223372036854775806 ---
-float(1)
---- testing: 9223372036854775807 / 9.2233720368548E+18 ---
-float(1)
---- testing: 9223372036854775807 / -9223372036854775807 ---
-int(-1)
---- testing: 9223372036854775807 / -9.2233720368548E+18 ---
-float(-1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ != object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class test could not be converted to int in %s on line %d
+ != object(test)#%d (0) {}
+int(-9223372036854775808) != array(0) {}
+int(-9223372036854775808) == int(-9223372036854775808)
+int(-9223372036854775808) == string(20) "-9223372036854775808"
+string(20) "-9223372036854775808" != array(3) {  [0]=>  int(1)  [1]=>  int(2)  [2]=>  int(3)}
+string(20) "-9223372036854775808" != string(0) ""
+string(20) "-9223372036854775808" != int(1)
+string(20) "-9223372036854775808" != float(2.5)
+string(20) "-9223372036854775808" != int(0)
+string(20) "-9223372036854775808" != string(6) "string"
+string(20) "-9223372036854775808" != string(3) "123"
+string(20) "-9223372036854775808" != string(3) "2.5"
+string(20) "-9223372036854775808" != NULL
+string(20) "-9223372036854775808" == bool(true)
+string(20) "-9223372036854775808" != bool(false)
+string(20) "-9223372036854775808" != object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" != object(stdClass)#%d (0) {}
+string(20) "-9223372036854775808" != object(test)#%d (0) {}
+string(20) "-9223372036854775808" != array(0) {}
+string(20) "-9223372036854775808" == int(-9223372036854775808)
+string(20) "-9223372036854775808" == string(20) "-9223372036854775808"
+Done
+Fatal error: Type of Bar::$property1 must not be defined (as in class Foo) in %s on line %d

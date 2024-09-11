@@ -61,23 +61,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$array = array('foo', 'bar', 'baz');
-$iterator = new ArrayIterator($array);
-$regexIterator = new RegexIterator($iterator, "/f/");
-var_dump($regexIterator->getMode() === RegexIterator::MATCH);
-$regexIterator->setMode(RegexIterator::MATCH);
-var_dump($regexIterator->getMode() === RegexIterator::MATCH);
-$regexIterator->setMode(RegexIterator::GET_MATCH);
-var_dump($regexIterator->getMode() === RegexIterator::GET_MATCH);
-$regexIterator->setMode(RegexIterator::ALL_MATCHES);
-var_dump($regexIterator->getMode() === RegexIterator::ALL_MATCHES);
-$regexIterator->setMode(RegexIterator::SPLIT);
-var_dump($regexIterator->getMode() === RegexIterator::SPLIT);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(asinh($longVal));
+}
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+class DateTimeZoneExt1 extends DateTimeZone {
+    public $property1 = 99;
+    public $property2 = "Hello";
+}
+class DateTimeZoneExt2 extends DateTimeZoneExt1 {
+    public $property3 = true;
+    public $fusion = 10.5;
+}
+echo "*** Testing clone on objects whose class derived from DateTimeZone class ***\n";
+$d1 = new DateTimeZoneExt1("Europe/London");
+var_dump($d1);
+$d1_clone = clone $d1;
+var_dump($d1_clone);
+$d2 = new DateTimeZoneExt2("Europe/London");
+var_dump($d2);
+$d2_clone = clone $d2;
+var_dump($d2_clone);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

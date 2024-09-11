@@ -1,5 +1,13 @@
 --TEST--
-Test array_intersect_assoc() function : usage variations - two dimensional arrays for $arr1 and $arr2 arguments+Test breakpoint into function context
+Cleaning must preserve breakpoints+jump 16: goto into try/catch
+--INI--
+opcache.enable_cli=0
+session.cookie_secure=0
+opcache.jit_buffer_size=64M
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1051
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,161 +72,81 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
-* Testing the behavior of array_intersect_assoc() by passing 2-D arrays
-* to both $arr1 and $arr2 argument.
-* Optional argument takes the same value as that of $arr1
-*/
-echo "*** Testing array_intersect_assoc() : passing two dimensional array to both \$arr1 and \$arr2 arguments ***\n";
-// two dimensional arrays for $arr1 and $arr2 argument
-$arr1 = array (
-  // arrays with default keys
-  array(1, 2, "hello", 'world'),
-  array(1, 2, 3, 4),
-  // arrays with explicit keys
-  array(1 => "one", 2 => "two", 3 => "three"),
-  array("ten" => 10, "twenty" => 20.00, "thirty" => 30)
-);
-$arr2 = array (
-  array(1, 2, 3, 4),
-  array(1 => "one", 2 => "two", 3 => "three")
-);
-/* Passing the entire array as argument to $arr1 and $arr2 */
-// Calling array_intersect_assoc() with default arguments
-echo "-- Passing the entire 2-D array to \$arr1 and \$arr2 --\n";
-echo "- With default arguments -\n";
-var_dump( array_intersect_assoc($arr1, $arr2) );
-// Calling array_intersect_assoc() with more arguments
-// additional argument passed is the same as $arr1
-echo "- With more arguments -\n";
-var_dump( array_intersect_assoc($arr1, $arr2, $arr1) );
-/* Passing the sub-array as argument to $arr1 and $arr2 */
-// Calling array_intersect_assoc() with default arguments
-echo "-- Passing the sub-array to \$arr1 and \$arr2 --\n";
-echo "- With default arguments -\n";
-var_dump( array_intersect_assoc($arr1[0], $arr2[0]) );
-// Calling array_intersect_assoc() with more arguments
-// additional argument passed is the same as $arr1
-echo "- With more arguments -\n";
-var_dump( array_intersect_assoc($arr1[0], $arr2[0], $arr1[0]) );
-echo "Done";
-$fusion = $arr2;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function foo($bar) {
-	var_dump($fusion);
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
 }
-foo("test");
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+goto a;
+try {
+    echo "1";
+a:
+    echo "2";
+    throw new Exception();
+} catch (Exception $e) {
+    echo "3";
+}
+echo "4";
+goto b;
+try {
+    echo "5";
+    throw new Exception();
+} catch (Exception $e) {
+    echo "6";
+b:
+    echo "7";
+}
+echo "8\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --PHPDBG--
-b breakpoints_005.php:4
+b 4
+b foo
 r
-ev $bar
+c
+clean
+y
+c
+r
 c
 q
 --EXPECTF--
-*** Testing array_intersect_assoc() : passing two dimensional array to both $arr1 and $arr2 arguments ***
--- Passing the entire 2-D array to $arr1 and $arr2 --
-- With default arguments -
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-array(2) {
-  [0]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    string(5) "hello"
-    [3]=>
-    string(5) "world"
-  }
-  [1]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-  }
-}
-- With more arguments -
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-
-Warning: Array to string conversion in %s on line %d
-array(2) {
-  [0]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    string(5) "hello"
-    [3]=>
-    string(5) "world"
-  }
-  [1]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-  }
-}
--- Passing the sub-array to $arr1 and $arr2 --
-- With default arguments -
-array(2) {
-  [0]=>
-  int(1)
-  [1]=>
-  int(2)
-}
-- With more arguments -
-array(2) {
-  [0]=>
-  int(1)
-  [1]=>
-  int(2)
-}
-Done
 [Successful compilation of %s]
 prompt> [Breakpoint #0 added at %s:4]
-prompt> [Breakpoint #0 at %s:4, hits: 1]
->00004: 	var_dump($bar);
- 00005: }
- 00006: 
-prompt> test
-prompt> string(4) "test"
+prompt> [Breakpoint #1 added at foo]
+prompt> 1
+[Breakpoint #0 at %s:4, hits: 1]
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> Do you really want to clean your current environment? (type y or n): Cleaning Execution Environment
+Classes    %d
+Functions  %d
+Constants  %d
+Includes   0
+prompt> [Not running]
+prompt> 1
+[Breakpoint #0 at %s:4, hits: 1]
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> 4
 [Script ended normally]
 prompt> 
+23478

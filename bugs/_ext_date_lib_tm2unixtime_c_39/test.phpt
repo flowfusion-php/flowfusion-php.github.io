@@ -1,6 +1,13 @@
 --TEST--
-Test log10 function : 64bit long tests+ReflectionClass and Traits
+Test decbin function : 64bit long tests+Test decoct() function : usage variations - different data types as $number arg
+--INI--
+precision=14
+session.use_cookies=1
+session.use_trans_sid=0
 --SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
 ?>
@@ -78,86 +85,118 @@ $longVals = array(
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(log10($longVal));
+    echo "--- testing: $longVal ---\n";
+    try {
+        var_dump(decbin($longVal));
+    } catch (TypeError $exception) {
+        echo $exception->getMessage() . "\n";
+    }
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-abstract class foo {
+echo "*** Testing decoct() : usage variations ***\n";
+$inputs = [
+       // int data
+/*1*/  0,
+       1,
+       12345,
+       -2345,
+       18446744073709551615,  // largest decimal
+       18446744073709551616,
+       // float data
+/* 7*/ 12.3456789000e10,
+       // boolean data
+/* 8*/ true,
+       false,
+       TRUE,
+       FALSE,
+       // empty data
+/*12*/ "",
+       '',
+];
+// loop through each element of $inputs to check the behaviour of decoct()
+foreach ($inputs as $i => $fusion) {
+    $iterator = $i + 1;
+    echo "\n-- Iteration $iterator --\n";
+    try {
+        var_dump(decoct($input));
+    } catch (TypeError $exception) {
+        echo $exception->getMessage() . "\n";
+    }
 }
-trait bar {
-}
-echo new ReflectionClass('foo'), "\n";
-echo new ReflectionClass('bar'), "\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
+--EXPECT--
 --- testing: 9223372036854775807 ---
-float(18.964889726830815)
+string(63) "111111111111111111111111111111111111111111111111111111111111111"
 --- testing: -9223372036854775808 ---
-float(NAN)
+string(64) "1000000000000000000000000000000000000000000000000000000000000000"
 --- testing: 2147483647 ---
-float(9.331929865381182)
+string(31) "1111111111111111111111111111111"
 --- testing: -2147483648 ---
-float(NAN)
+string(64) "1111111111111111111111111111111110000000000000000000000000000000"
 --- testing: 9223372034707292160 ---
-float(18.964889726729698)
+string(63) "111111111111111111111111111111110000000000000000000000000000000"
 --- testing: -9223372034707292160 ---
-float(NAN)
+string(64) "1000000000000000000000000000000010000000000000000000000000000000"
 --- testing: 2147483648 ---
-float(9.331929865583417)
+string(32) "10000000000000000000000000000000"
 --- testing: -2147483649 ---
-float(NAN)
+string(64) "1111111111111111111111111111111101111111111111111111111111111111"
 --- testing: 4294967294 ---
-float(9.632959861045164)
+string(32) "11111111111111111111111111111110"
 --- testing: 4294967295 ---
-float(9.632959861146281)
+string(32) "11111111111111111111111111111111"
 --- testing: 4294967293 ---
-float(9.632959860944046)
+string(32) "11111111111111111111111111111101"
 --- testing: 9223372036854775806 ---
-float(18.964889726830815)
+string(63) "111111111111111111111111111111111111111111111111111111111111110"
 --- testing: 9.2233720368548E+18 ---
-float(18.964889726830815)
+decbin(): Argument #1 ($num) must be of type int, float given
 --- testing: -9223372036854775807 ---
-float(NAN)
+string(64) "1000000000000000000000000000000000000000000000000000000000000001"
 --- testing: -9.2233720368548E+18 ---
-float(NAN)
-Class [ <user> abstract class foo ] {
-  @@ %s 3-4
+string(64) "1000000000000000000000000000000000000000000000000000000000000000"
+*** Testing decoct() : usage variations ***
 
-  - Constants [0] {
-  }
+-- Iteration 1 --
+string(1) "0"
 
-  - Static properties [0] {
-  }
+-- Iteration 2 --
+string(1) "1"
 
-  - Static methods [0] {
-  }
+-- Iteration 3 --
+string(5) "30071"
 
-  - Properties [0] {
-  }
+-- Iteration 4 --
+string(22) "1777777777777777773327"
 
-  - Methods [0] {
-  }
-}
+-- Iteration 5 --
+decoct(): Argument #1 ($num) must be of type int, float given
 
-Trait [ <user> trait bar ] {
-  @@ %s 6-8
+-- Iteration 6 --
+decoct(): Argument #1 ($num) must be of type int, float given
 
-  - Constants [0] {
-  }
+-- Iteration 7 --
+string(13) "1627646215010"
 
-  - Static properties [0] {
-  }
+-- Iteration 8 --
+string(1) "1"
 
-  - Static methods [0] {
-  }
+-- Iteration 9 --
+string(1) "0"
 
-  - Properties [0] {
-  }
+-- Iteration 10 --
+string(1) "1"
 
-  - Methods [0] {
-  }
-}
+-- Iteration 11 --
+string(1) "0"
+
+-- Iteration 12 --
+decoct(): Argument #1 ($num) must be of type int, string given
+
+-- Iteration 13 --
+decoct(): Argument #1 ($num) must be of type int, string given

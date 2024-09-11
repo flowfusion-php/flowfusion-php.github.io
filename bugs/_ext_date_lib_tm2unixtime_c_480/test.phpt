@@ -1,5 +1,12 @@
 --TEST--
-Bug #30362 (stream_get_line() not working as documented)+Test strftime() function : usage variation - Checking date related formats which was not supported on Windows before VC14.
+__DIR__ constant used with eval()+Test mktime() function : basic functionality
+--INI--
+opcache.max_accelerated_files=10
+session.use_cookies=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0004
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,79 +71,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$resource = fopen(__DIR__.'/bug30362.txt', 'rb');
-for ($i = 0; ($i < 10) && !feof($resource); ++$i ) {
-    $a = "Y";
-    $line = stream_get_line($resource, 50, $a);
-    echo $line . "\n";
-}
-fclose($resource);
-$fusion = $line;
+eval('echo __DIR__ . "\n";');
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing strftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(PHP_INT_MIN, 8, 8, 8, 8, 2008);
-//array of values to iterate over
-$inputs = array(
-      'Century number' => "%C",
-      'Month Date Year' => "%D",
-      'Year with century' => "%G",
-      'Year without century' => "%g",
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $fusion) );
-}
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+echo "*** Testing DateTime::modify() : basic functionality ***\n";
+$hour = PHP_INT_MAX;
+$minute = 30;
+$sec = 45;
+$month = 7;
+$day = 2;
+$year = 1963;
+var_dump( mktime($hour) );
+var_dump( mktime($hour, $minute) );
+var_dump( mktime($hour, $minute, $sec) );
+var_dump( mktime($hour, $minute, $sec, $month) );
+var_dump( mktime($hour, $minute, $sec, $month, $day) );
+var_dump( mktime($hour, $minute, $sec, $month, $day, $year) );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-111
-111111111
-111111111
-111111111
-111111111
-111111111
-111111111
-111111111
-111111111
-111111111
-*** Testing strftime() : usage variation ***
-
---Century number--
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(2) "20"
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(2) "20"
-
---Month Date Year--
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(%d) "%d/%d/%d"
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(8) "08/08/08"
-
---Year with century--
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(4) "%d"
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(4) "2008"
-
---Year without century--
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(2) "%d"
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(2) "08"
+%stests%sconstants
+*** Testing DateTime::modify() : basic functionality ***
+int(%i)
+int(%i)
+int(%i)
+int(%i)
+int(%i)
+int(%i)

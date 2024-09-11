@@ -61,37 +61,52 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class TEST { const FOO = SEEK_CUR; };
-class TEST2 { const FOO = 1; };
-class TEST3 { const FOO = PHP_VERSION; };
-print TEST::FOO."\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+class test {
+}
+$a = array(
+    array(1,2,3),
+    "",
+    1,
+    2.5,
+    0,
+    "string",
+    "123",
+    "2.5",
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-    foreach($otherVals as $otherVal) {
-        echo "--- testing: $longVal / $otherVal ---\n";
-        try {
-            var_dump($longVal/$otherVal);
-        } catch (\Throwable $e) {
-            echo get_class($e) . ': ' . $e->getMessage() . \PHP_EOL;
-        }
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace("\n", "", $buf);
+}
+foreach($a as $var) {
+    for ($i = 0; $i < $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var == $a[$i]) ? " == " : " != ";
+        my_dump($a[$i]);
+        echo "\n";
     }
 }
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-       echo "--- testing: $otherVal / $longVal ---\n";
-      var_dump($otherVal/$longVal);
-   }
+echo "Done\n";
+$fusion = $i;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class Foo
+{
+    public $fusion;
+}
+class Bar extends Foo
+{
+    public mixed $property1;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

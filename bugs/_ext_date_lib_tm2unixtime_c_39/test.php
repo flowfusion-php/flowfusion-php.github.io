@@ -71,16 +71,45 @@ $longVals = array(
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
 foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(log10($longVal));
+    echo "--- testing: $longVal ---\n";
+    try {
+        var_dump(decbin($longVal));
+    } catch (TypeError $exception) {
+        echo $exception->getMessage() . "\n";
+    }
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-abstract class foo {
+echo "*** Testing decoct() : usage variations ***\n";
+$inputs = [
+       // int data
+/*1*/  0,
+       1,
+       12345,
+       -2345,
+       18446744073709551615,  // largest decimal
+       18446744073709551616,
+       // float data
+/* 7*/ 12.3456789000e10,
+       // boolean data
+/* 8*/ true,
+       false,
+       TRUE,
+       FALSE,
+       // empty data
+/*12*/ "",
+       '',
+];
+// loop through each element of $inputs to check the behaviour of decoct()
+foreach ($inputs as $i => $fusion) {
+    $iterator = $i + 1;
+    echo "\n-- Iteration $iterator --\n";
+    try {
+        var_dump(decoct($input));
+    } catch (TypeError $exception) {
+        echo $exception->getMessage() . "\n";
+    }
 }
-trait bar {
-}
-echo new ReflectionClass('foo'), "\n";
-echo new ReflectionClass('bar'), "\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

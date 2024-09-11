@@ -61,33 +61,23 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$resource = fopen(__DIR__.'/bug30362.txt', 'rb');
-for ($i = 0; ($i < 10) && !feof($resource); ++$i ) {
-    $a = "Y";
-    $line = stream_get_line($resource, 50, $a);
-    echo $line . "\n";
-}
-fclose($resource);
-$fusion = $line;
+eval('echo __DIR__ . "\n";');
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing strftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(PHP_INT_MIN, 8, 8, 8, 8, 2008);
-//array of values to iterate over
-$inputs = array(
-      'Century number' => "%C",
-      'Month Date Year' => "%D",
-      'Year with century' => "%G",
-      'Year without century' => "%g",
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $fusion) );
-}
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+echo "*** Testing DateTime::modify() : basic functionality ***\n";
+$hour = PHP_INT_MAX;
+$minute = 30;
+$sec = 45;
+$month = 7;
+$day = 2;
+$year = 1963;
+var_dump( mktime($hour) );
+var_dump( mktime($hour, $minute) );
+var_dump( mktime($hour, $minute, $sec) );
+var_dump( mktime($hour, $minute, $sec, $month) );
+var_dump( mktime($hour, $minute, $sec, $month, $day) );
+var_dump( mktime($hour, $minute, $sec, $month, $day, $year) );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

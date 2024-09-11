@@ -1,14 +1,13 @@
 --TEST--
-iptcembed() and wrong file+Phar with metadata (read)
+Phar object: iterating via SplFileObject+Bug #65006: spl_autoload_register fails with multiple callables using self, same method
 --INI--
-phar.readonly=0
 phar.require_hash=0
-session.sid_length=32
-session.use_strict_mode=0
+opcache.jit_buffer_size=64M
+default_charset=cp874
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0151
+opcache.jit=0251
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -73,46 +72,82 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$file = __DIR__.'/iptcembed_001.data';
-$fp = fopen($file, "w");
-fwrite($fp, "-1-1");
-fclose($fp);
-var_dump(iptcembed(-1, $file, -1));
-unlink($file);
-echo "Done\n";
-$fusion = $file;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$fusion = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$pmeta = 'hi there';
-$files['a'] = array('cont' => 'a');
-$files['b'] = array('cont' => 'b');
-$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
-$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
-include 'files/phar_test.inc';
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$name));
-}
+$pharconfig = 1;
+require_once 'files/phar_oo_test.inc';
 $phar = new Phar($fname);
-var_dump($phar->hasMetaData());
-var_dump($phar->getMetaData());
-var_dump($phar->delMetaData());
-var_dump($phar->getMetaData());
-var_dump($phar->delMetaData());
-var_dump($phar->getMetaData());
-foreach($files as $name => $cont) {
-    echo "  meta $name\n";
-    var_dump($phar[$name]->hasMetadata());
-    var_dump($phar[$name]->getMetadata());
-    var_dump($phar[$name]->delMetadata());
-    var_dump($phar[$name]->getMetadata());
+$phar->setInfoClass('SplFileObject');
+$f = $phar['a.csv'];
+echo "===1===\n";
+foreach($f as $k => $v)
+{
+    echo "$k=>$v\n";
 }
-unset($phar);
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$name));
+$f->setFlags(SplFileObject::DROP_NEW_LINE);
+echo "===2===\n";
+foreach($f as $k => $v)
+{
+    echo "$k=>$v\n";
 }
+class MyCSVFile extends SplFileObject
+{
+    function current(): array|false
+    {
+        return parent::fgetcsv(',', '"');
+    }
+}
+$phar->setInfoClass('MyCSVFile');
+/** @var MyCSVFile $v */
+$v = $phar['a.csv'];
+echo "===3===\n";
+while(!$v->eof())
+{
+    echo $v->key() . "=>" . join('|', $v->fgetcsv()) . "\n";
+}
+echo "===4===\n";
+$v->rewind();
+while(!$v->eof())
+{
+    $l = $v->fgetcsv();
+    echo $v->key() . "=>" . join('|', $l) . "\n";
+}
+echo "===5===\n";
+foreach($v as $k => $d)
+{
+    echo "$k=>" . join('|', $d) . "\n";
+}
+class MyCSVFile2 extends SplFileObject
+{
+    function getCurrentLine(): string
+    {
+        echo __METHOD__ . "\n";
+        return implode('|', parent::fgetcsv(',', '"'));
+    }
+}
+$phar->setInfoClass('MyCSVFile2');
+/** @var MyCSVFile2 $v */
+$v = $phar['a.csv'];
+echo "===6===\n";
+foreach($v as $k => $d)
+{
+    echo "$k=>" . $d . "\n";
+}
+$fusion = $l;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class first {
+    public static function init() {
+        spl_autoload_register(array('self','load'));
+    }
+    public static function load($class) {}
+}
+class second {
+    public static function init() {
+        spl_autoload_register(array('self','load'));
+    }
+    public static function load($fusion){}
+}
+first::init();
+second::init();
+var_dump(spl_autoload_functions());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -121,51 +156,56 @@ var_fusion($v1,$v2,$v3);
 --EXTENSIONS--
 phar
 --CLEAN--
-<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php'); ?>
---EXPECT--
-bool(false)
-Done	
-string(1) "a"
-string(1) "b"
-string(1) "c"
-string(1) "d"
-bool(true)
-string(8) "hi there"
-bool(true)
-NULL
-bool(true)
-NULL
-  meta a
-bool(false)
-NULL
-bool(true)
-NULL
-  meta b
-bool(false)
-NULL
-bool(true)
-NULL
-  meta c
-bool(true)
+<?php
+unlink(__DIR__ . '/files/phar_oo_008.phar.php');
+__halt_compiler();
+?>
+--EXPECTF--
+===1===
+0=>1,2,3
+
+1=>2,a,b
+
+2=>3,"c","'e'"
+===2===
+0=>1,2,3
+1=>2,a,b
+2=>3,"c","'e'"
+===3===
+0=>1|2|3
+0=>2|a|b
+1=>3|c|'e'
+===4===
+0=>1|2|3
+1=>2|a|b
+2=>3|c|'e'
+===5===
+0=>1|2|3
+1=>2|a|b
+2=>3|c|'e'
+===6===
+MyCSVFile2::getCurrentLine
+1=>1|2|3
+MyCSVFile2::getCurrentLine
+3=>2|a|b
+MyCSVFile2::getCurrentLine
+5=>3|c|'e'
+Deprecated: Use of "self" in callables is deprecated in %s on line %d
+
+Deprecated: Use of "self" in callables is deprecated in %s on line %d
 array(2) {
   [0]=>
-  string(2) "hi"
+  array(2) {
+    [0]=>
+    string(5) "first"
+    [1]=>
+    string(4) "load"
+  }
   [1]=>
-  string(5) "there"
+  array(2) {
+    [0]=>
+    string(6) "second"
+    [1]=>
+    string(4) "load"
+  }
 }
-bool(true)
-NULL
-  meta d
-bool(true)
-array(2) {
-  ["hi"]=>
-  string(5) "there"
-  ["foo"]=>
-  string(3) "bar"
-}
-bool(true)
-NULL
-string(1) "a"
-string(1) "b"
-string(1) "c"
-string(1) "d"

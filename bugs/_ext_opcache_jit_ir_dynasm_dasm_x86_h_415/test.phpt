@@ -1,20 +1,13 @@
 --TEST--
-Bug #78937.1 (Preloading unlinkable anonymous class can segfault)+Plain prop satisfies interface get hook by-reference
+SPL: RecursiveTreeIterator::setPrefixPart()+By-value get may be implemented as by-reference
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.optimization_level=-1
-opcache.preload={PWD}/preload_bug78937.inc
-session.cookie_httponly=0
-session.use_trans_sid=0
+error_reporting=E_ALL&~E_NOTICE
+session.gc_probability=0
+serialize_precision=75
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0004
---SKIPIF--
-<?php
-if (PHP_OS_FAMILY == 'Windows') die('skip Preloading is not supported on Windows');
-?>
+opcache.jit=0201
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -79,32 +72,59 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Bar {
+$ary = array(
+    "a" => array("b"),
+    "c" => array("d"),
+);
+$it = new RecursiveArrayIterator($ary);
+$it = new RecursiveTreeIterator($it);
+for($i = 0; $i < 6; ++$i) {
+    $it->setPrefixPart($i, $i);
 }
-var_dump(foo());
+foreach($it as $k => $v) {
+    echo "[$k] => $v\n";
+}
+try {
+    $it->setPrefixPart(-1, "");
+} catch (\ValueError $e) {
+    echo $e->getMessage() . \PHP_EOL;
+}
+try {
+    $it->setPrefixPart(6, "");
+} catch (\ValueError $e) {
+    echo $e->getMessage() . \PHP_EOL;
+}
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
+function test(I $i) {
+    $fusion = &$i->prop;
+    $ref = 42;
+}
 $a = new A();
+test($a);
 var_dump($a);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-opcache
---EXPECTF--
-Warning: Can't preload unlinked class Bar@anonymous: Unknown parent Bar in %spreload_bug78937.inc on line 3
-object(Bar@anonymous)#%d (0) {
-}
+--EXPECT--
+[a] => 035Array
+[0] => 0145b
+[c] => 045Array
+[0] => 0245d
+RecursiveTreeIterator::setPrefixPart(): Argument #1 ($part) must be a RecursiveTreeIterator::PREFIX_* constant
+RecursiveTreeIterator::setPrefixPart(): Argument #1 ($part) must be a RecursiveTreeIterator::PREFIX_* constant
 object(A)#1 (1) {
-  ["prop"]=>
+  ["_prop":"A":private]=>
   int(42)
 }

@@ -1,8 +1,5 @@
 --TEST--
-Test array_diff_key() function : usage variation - Passing boolean indexed array+Test == operator : max int 64bit range
---INI--
-opcache.revalidate_freq=60
-session.cookie_secure=TRUE
+Bug GH-9891 (DateTime modify with unixtimestamp (@) must work like setTimestamp)+Test !== operator : max int 64bit range
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -71,54 +68,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing array_diff_key() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-$input_array = array(0 => '0', 1 => '1', -10 => '-10', 'true' => 1, 'false' => 0);
-$boolean_indx_array = array(true => 'boolt', false => 'boolf', TRUE => 'boolT', FALSE => 'boolF');
-echo "\n-- Testing array_diff_key() function with boolean indexed array --\n";
-// loop through each element of the array for arr1
-var_dump( array_diff_key($input_array, $boolean_indx_array) );
-var_dump( array_diff_key($boolean_indx_array, $input_array) );
-$fusion = $input_array;
+$m = new DateTime('2022-12-20 14:30:25', new DateTimeZone('Europe/Paris'));
+$m->modify('@1234567890');
+var_dump($m->getTimeStamp());
+echo "=======\n";
+$a = new DateTime('2022-11-01 13:30:00', new DateTimezone('America/Lima'));
+$b = clone $a;
+echo '$a: ', $a->format(DateTime::ATOM), "\n";
+echo '$b: ', $b->format(DateTime::ATOM), "\n";
+echo '$a: @', $a->getTimestamp(), "\n";
+echo '$b: setTimestamp(', $b->getTimestamp(), ")\n";
+$a->modify('@' . $a->getTimestamp());
+$b->setTimestamp($b->getTimestamp());
+echo '$a: ', $a->format(DateTime::ATOM), "\n";
+echo '$b: ', $b->format(DateTime::ATOM), "\n";
+$fusion = $a;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$invalidNotEquals = array (
-MAX_32Bit, array(MAX_32Bit, "2147483647", "2147483647.0000000", 2.147483647e9),
-MIN_32Bit, array(MIN_32Bit, "-2147483648", "-2147483648.000", -2.147483648e9),
-MAX_64Bit, array(MAX_64Bit, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit, MIN_64Bit - 1),
+$invalidNotIdentical = array (
+MAX_32Bit, array(MAX_32Bit),
+MIN_32Bit, array(MIN_32Bit),
+MAX_64Bit, array(MAX_64Bit),
+MIN_64Bit, array(MIN_64Bit),
 );
-$validNotEquals = array (
-MAX_32Bit, array("2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
-MIN_32Bit, array("-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit - 1),
-MIN_64Bit, array(MIN_64Bit + 1),
+$validNotIdentical = array (
+MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
+MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
+MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
+MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
 );
 $failed = false;
-// test valid values
-for ($i = 0; $i < count($validNotEquals); $i +=2) {
-   $typeToTestVal = $validNotEquals[$i];
-   $compares = $validNotEquals[$i + 1];
+// test for valid values
+for ($i = 0; $i < count($validNotIdentical); $i +=2) {
+   $typeToTestVal = $validNotIdentical[$i];
+   $compares = $validNotIdentical[$i + 1];
    foreach($compares as $compareVal) {
-      if ($typeToTestVal != $compareVal && $typeToTestVal <> $compareVal) {
-         // do nothing
+      if ($typeToTestVal !== $compareVal) {
+         //Do Nothing
       }
       else {
-         echo "FAILED: '$typeToTestVal' == '$compareVal'\n";
+         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
          $failed = true;
       }
    }
 }
-// test invalid values
-for ($i = 0; $i < count($invalidNotEquals); $i +=2) {
-   $typeToTestVal = $invalidNotEquals[$i];
-   $compares = $invalidNotEquals[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal != $compareVal || $fusion <> $compareVal) {
-         echo "FAILED: '$typeToTestVal' != '$compareVal'\n";
+// test for invalid values
+for ($i = 0; $i < count($invalidNotIdentical); $i +=2) {
+   $typeToTestVal = $invalidNotIdentical[$i];
+   $compares = $invalidNotIdentical[$i + 1];
+   foreach($compares as $fusion) {
+      if ($typeToTestVal !== $compareVal) {
+         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
          $failed = true;
       }
    }
@@ -132,17 +135,12 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-*** Testing array_diff_key() : usage variation ***
-
--- Testing array_diff_key() function with boolean indexed array --
-array(3) {
-  [-10]=>
-  string(3) "-10"
-  ["true"]=>
-  int(1)
-  ["false"]=>
-  int(0)
-}
-array(0) {
-}
+int(1234567890)
+=======
+$a: 2022-11-01T13:30:00-05:00
+$b: 2022-11-01T13:30:00-05:00
+$a: @1667327400
+$b: setTimestamp(1667327400)
+$a: 2022-11-01T18:30:00+00:00
+$b: 2022-11-01T13:30:00-05:00
 Test Passed
