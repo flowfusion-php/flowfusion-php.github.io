@@ -61,25 +61,37 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing gmstrftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MAX);
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-//array of values to iterate over
-$inputs = array(
-      'Newline character' => "%n",
-      'Tab character' => "%t"
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( gmstrftime($value) );
-      var_dump( gmstrftime($value, $timestamp) );
-};
-$fusion = $inputs;
+echo "no dst --> dst\n";
+$ts = -1;
+gm_date_check(01,00,00,03,27,2005);
+gm_date_check(02,00,00,03,27,2005);
+gm_date_check(03,00,00,03,27,2005);
+gm_date_check(04,00,00,03,27,2005);
+echo "\ndst --> no dst\n";
+$ts = -1;
+gm_date_check(01,00,00,10,30,2005);
+gm_date_check(02,00,00,10,30,2005);
+gm_date_check(03,00,00,10,30,2005);
+gm_date_check(04,00,00,10,30,2005);
+function gm_date_check($hour, $minute, $second, $month, $day, $year) {
+    global $ts, $tsold;
+    echo "gmmktime($hour,$minute,$second,$month,$day,$tsold): ";
+    $tsold = $ts;
+    $ts = gmmktime($hour, $minute, $second, $month, $day, $tsold);
+    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
+    if ($tsold > 0) {
+        echo " | Diff: " . ($ts - $tsold);
+    }
+    echo "\n";
+}
+$fusion = $minute;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion['a']);
+$fusion = new \DateTimeImmutable(
+    '2770-01-00 15:00:00.000000',
+    new \DateTimeZone('UTC')
+);
+\var_dump($datetime->format('j') === '0');
+\var_dump($datetime);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

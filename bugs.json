@@ -2,7 +2,7 @@
     {
         "bugID": 1,
         "identifier": "/php-src/Zend/Optimizer/zend_inference.c:5043",
-        "bugHit": 898,
+        "bugHit": 923,
         "details": [
             "33507",
             "37925",
@@ -36,18 +36,18 @@
     {
         "bugID": 3,
         "identifier": "/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415",
-        "bugHit": 35,
+        "bugHit": 38,
         "details": [
-            "68968",
-            "73431",
-            "87048",
             "87301",
             "88141",
             "93126",
             "95347",
             "95952",
             "98789",
-            "103340"
+            "103340",
+            "105226",
+            "105402",
+            "105766"
         ]
     },
     {
@@ -70,27 +70,25 @@
     {
         "bugID": 5,
         "identifier": "/php-src/ext/date/lib/tm2unixtime.c:481",
-        "bugHit": 37,
+        "bugHit": 38,
         "details": [
-            "60727",
-            "65231",
-            "65649",
-            "68599",
-            "72972",
             "76564",
             "76985",
             "79550",
             "85987",
-            "95458"
+            "95458",
+            "12328",
+            "65231",
+            "72972",
+            "59786",
+            "106057"
         ]
     },
     {
         "bugID": 6,
         "identifier": "/php-src/ext/date/lib/unixtime2tm.c:141",
-        "bugHit": 27,
+        "bugHit": 29,
         "details": [
-            "56202",
-            "74746",
             "80435",
             "83026",
             "90263",
@@ -98,15 +96,16 @@
             "96053",
             "99023",
             "101813",
+            "105292",
+            "105733",
             "81669"
         ]
     },
     {
         "bugID": 7,
         "identifier": "/php-src/ext/date/lib/tm2unixtime.c:39",
-        "bugHit": 41,
+        "bugHit": 42,
         "details": [
-            "81507",
             "81946",
             "86570",
             "91174",
@@ -115,6 +114,7 @@
             "99392",
             "99479",
             "101635",
+            "106730",
             "62742"
         ]
     },
@@ -179,7 +179,6 @@
         "identifier": "/php-src/ext/date/lib/astro.c:268",
         "bugHit": 13,
         "details": [
-            "22053",
             "42387",
             "44173",
             "54526",
@@ -188,6 +187,7 @@
             "81742",
             "83440",
             "90156",
+            "22053",
             "69194"
         ]
     },
@@ -288,16 +288,6 @@
     },
     {
         "bugID": 21,
-        "identifier": "/php-src/ext/date/lib/tm2unixtime.c:464",
-        "bugHit": 3,
-        "details": [
-            "28249",
-            "41192",
-            "50663"
-        ]
-    },
-    {
-        "bugID": 22,
         "identifier": "/php-src/Zend/zend_alloc.c:1528",
         "bugHit": 1,
         "details": [
@@ -305,13 +295,23 @@
         ]
     },
     {
-        "bugID": 23,
+        "bugID": 22,
         "identifier": "/php-src/Zend/zend_hash.c:748",
         "bugHit": 3,
         "details": [
             "33428",
             "77992",
             "97733"
+        ]
+    },
+    {
+        "bugID": 23,
+        "identifier": "/php-src/ext/date/lib/tm2unixtime.c:464",
+        "bugHit": 3,
+        "details": [
+            "41192",
+            "50663",
+            "28249"
         ]
     },
     {
@@ -391,9 +391,10 @@
     {
         "bugID": 33,
         "identifier": "/php-src/main/spprintf.c:376",
-        "bugHit": 1,
+        "bugHit": 2,
         "details": [
-            "99167"
+            "99167",
+            "107293"
         ]
     },
     {

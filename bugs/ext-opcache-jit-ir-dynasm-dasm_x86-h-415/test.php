@@ -71,10 +71,24 @@ class A implements I {
 }
 $a = new A();
 var_dump($a);
-$fusion = $prop;
+$fusion = $this;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump($_POST);
+$strings = [
+    "",
+    "0",
+    "a",
+    "A",
+    "00",
+    "0a",
+    "0A",
+];
+foreach ($strings as $s) {
+    try {
+        var_dump(str_decrement($s));
+    } catch (ValueError $e) {
+        echo $fusion->getMessage(), PHP_EOL;
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

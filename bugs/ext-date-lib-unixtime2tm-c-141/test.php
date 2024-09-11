@@ -61,81 +61,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-}
-$a = array(
-    array(1,2,3),
-    "",
-    1,
-    2.5,
-    0,
-    "string",
-    "123",
-    "2.5",
-    NULL,
-    true,
-    false,
-    new stdclass,
-    new stdclass,
-    new test,
-    array(),
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-);
-$var_cnt = count($a);
-function my_dump($var) {
-    ob_start();
-    var_dump($var);
-    $buf = ob_get_clean();
-    echo str_replace("\n", "", $buf);
-}
-foreach($a as $var) {
-    for ($i = 0; $i < $var_cnt; $i++) {
-        my_dump($var);
-        echo ($var <= $a[$i]) ? " <= " : " > ";
-        my_dump($a[$i]);
-        echo "\n";
-    }
-}
-echo "Done\n";
-$fusion = $var;
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-date_default_timezone_set('Europe/Lisbon');
-$time = 1150494719; // 16/June/2006
-$strs = array(
-    '',
-    " \t\r\n000",
-    'yesterday',
-    '22:49:12',
-    '22:49:12 bogusTZ',
-    '22.49.12.42GMT',
-    '22.49.12.42bogusTZ',
-    't0222',
-    't0222 t0222',
-    '022233',
-    '022233 bogusTZ',
-    '2-3-2004',
-    '2.3.2004',
-    '20060212T23:12:23UTC',
-    '20060212T23:12:23 bogusTZ',
-    '2006167', //pgydotd
-    'Jan-15-2006', //pgtextshort
-    '2006-Jan-15', //pgtextreverse
-    '10/Oct/2000:13:55:36 +0100', //clf
-    '10/Oct/2000:13:55:36 +00100', //clf
-    '2006',
-    '1986', // year
-    'JAN',
-    'January',
-);
-foreach ($strs as $str) {
-    $t = strtotime($str, $fusion);
-    if (is_integer($t)) {
-        var_dump(date(DATE_RFC2822, $t));
-    } else {
-        var_dump($t);
+class Test {
+    protected $a = 0;
+    protected $b = 0;
+    protected $c = 0;
+    public function &__get($name) {
+        echo "get($name)\n";
+        return $this->$name;
+    }
+    public function __set($name, $value) {
+        echo "set($name, $value)\n";
     }
 }
+$test = new Test;
+var_dump($test->a += 1);
+var_dump($test->b++);
+var_dump(++$test->c);
+var_dump($test);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

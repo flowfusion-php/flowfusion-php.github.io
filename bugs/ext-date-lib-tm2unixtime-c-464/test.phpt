@@ -1,8 +1,9 @@
 --TEST--
-Test gmstrftime() function : usage variation - Checking newline and tab formats which was not supported on Windows before VC14.+POST Method test and arrays - 2
+Bug #30096 (gmmktime does not return the correct time)+Bug #79716 (Invalid date time created (with day "00"))
 --INI--
-session.use_strict_mode=0
-auto_globals_jit=0
+error_reporting=2047
+opcache.jit=0
+opcache.preload={PWD}/preload_ind.inc
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,55 +68,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing gmstrftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MAX);
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-//array of values to iterate over
-$inputs = array(
-      'Newline character' => "%n",
-      'Tab character' => "%t"
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( gmstrftime($value) );
-      var_dump( gmstrftime($value, $timestamp) );
-};
-$fusion = $inputs;
+echo "no dst --> dst\n";
+$ts = -1;
+gm_date_check(01,00,00,03,27,2005);
+gm_date_check(02,00,00,03,27,2005);
+gm_date_check(03,00,00,03,27,2005);
+gm_date_check(04,00,00,03,27,2005);
+echo "\ndst --> no dst\n";
+$ts = -1;
+gm_date_check(01,00,00,10,30,2005);
+gm_date_check(02,00,00,10,30,2005);
+gm_date_check(03,00,00,10,30,2005);
+gm_date_check(04,00,00,10,30,2005);
+function gm_date_check($hour, $minute, $second, $month, $day, $year) {
+    global $ts, $tsold;
+    echo "gmmktime($hour,$minute,$second,$month,$day,$tsold): ";
+    $tsold = $ts;
+    $ts = gmmktime($hour, $minute, $second, $month, $day, $tsold);
+    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
+    if ($tsold > 0) {
+        echo " | Diff: " . ($ts - $tsold);
+    }
+    echo "\n";
+}
+$fusion = $minute;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion['a']);
+$fusion = new \DateTimeImmutable(
+    '2770-01-00 15:00:00.000000',
+    new \DateTimeZone('UTC')
+);
+\var_dump($datetime->format('j') === '0');
+\var_dump($datetime);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---POST--
-a[]=1&a[]=1
 --EXPECTF--
-*** Testing gmstrftime() : usage variation ***
+no dst --> dst
+gmmktime(1,0,0,3,27,2005): 1111885200 | gmdate('r', 1111885200):Sun, 27 Mar 2005 01:00:00 +0000
+gmmktime(2,0,0,3,27,2005): 1111888800 | gmdate('r', 1111888800):Sun, 27 Mar 2005 02:00:00 +0000 | Diff: 3600
+gmmktime(3,0,0,3,27,2005): 1111892400 | gmdate('r', 1111892400):Sun, 27 Mar 2005 03:00:00 +0000 | Diff: 3600
+gmmktime(4,0,0,3,27,2005): 1111896000 | gmdate('r', 1111896000):Sun, 27 Mar 2005 04:00:00 +0000 | Diff: 3600
 
---Newline character--
-
-Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(1) "
-"
-
-Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(1) "
-"
-
---Tab character--
-
-Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(1) "	"
-
-Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(1) "	"
-array(2) {
-  [0]=>
-  string(1) "1"
-  [1]=>
-  string(1) "1"
+dst --> no dst
+gmmktime(1,0,0,10,30,2005): 1130634000 | gmdate('r', 1130634000):Sun, 30 Oct 2005 01:00:00 +0000
+gmmktime(2,0,0,10,30,2005): 1130637600 | gmdate('r', 1130637600):Sun, 30 Oct 2005 02:00:00 +0000 | Diff: 3600
+gmmktime(3,0,0,10,30,2005): 1130641200 | gmdate('r', 1130641200):Sun, 30 Oct 2005 03:00:00 +0000 | Diff: 3600
+gmmktime(4,0,0,10,30,2005): 1130644800 | gmdate('r', 1130644800):Sun, 30 Oct 2005 04:00:00 +0000 | Diff: 3600
+bool(false)
+object(DateTimeImmutable)#%d (%d) {
+  ["date"]=>
+  string(26) "2769-12-31 15:00:00.000000"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(3) "UTC"
 }

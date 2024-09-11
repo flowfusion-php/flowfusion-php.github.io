@@ -61,6 +61,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+class C {
+    public function __destruct() {
+        echo __METHOD__, "\n";
+    }
+}
+function f() {
+    $fiber = Fiber::getCurrent();
+    Fiber::suspend();
+}
+$fiber = new Fiber(function () {
+    $c = new C();
+    preg_replace_callback('#.#', f(...), '.');
+});
+print "1\n";
+$fiber->start();
+gc_collect_cycles();
+print "2\n";
+$fiber = null;
+gc_collect_cycles();
+print "3\n";
+$fusion = $c;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
@@ -72,30 +94,8 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(is_finite($longVal));
+   var_dump(expm1($fusion));
 }
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function test($use_extract) {
-    $a = 1;
-    $b = 1;
-    $arr = array(
-        '_a' => $a,
-        '_b' => &$b
-    );
-    var_dump($a, $b);
-    if ($use_extract) {
-        extract($arr, EXTR_REFS);
-    } else {
-        $_a = &$fusion['_a'];
-        $_b = &$arr['_b'];
-    }
-    $_a++;
-    $_b++;
-    var_dump($a, $b, $_a, $_b, $arr);
-}
-test(false);
-test(true);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

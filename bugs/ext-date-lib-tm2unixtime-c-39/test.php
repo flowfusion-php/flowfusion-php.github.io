@@ -61,34 +61,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$doubles = array(
-        PHP_INT_MAX,
-        PHP_INT_MAX + 1,
-        PHP_INT_MAX + 1000,
-        PHP_INT_MAX * 2 + 4,
-        -PHP_INT_MAX -1,
-        -PHP_INT_MAX -2,
-        -PHP_INT_MAX -1000,
-        );
-foreach ($doubles as $d) {
-        $l = (int)$d;
-        var_dump($l);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+    foreach($otherVals as $otherVal) {
+        echo "--- testing: $longVal / $otherVal ---\n";
+        try {
+            var_dump($longVal/$otherVal);
+        } catch (\Throwable $e) {
+            echo get_class($e) . ': ' . $e->getMessage() . \PHP_EOL;
+        }
+    }
 }
-echo "Done\n";
-$fusion = $d;
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+       echo "--- testing: $otherVal / $longVal ---\n";
+      var_dump($otherVal/$longVal);
+   }
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$rng = __DIR__.'/foo.rng';
-$xml = <<< XML
-<?xml version="1.0"?>
-<apple>
-  <pear>Pear</pear>
-  <pear>Pear</pear>
-</apple>
-XML;
-$doc = new DOMDocument();
-$doc->loadXML($xml);
-$result = $doc->relaxNGValidate($rng);
-var_dump($fusion);
+echo "*** testing stat ***\n";
+var_dump(stat(false));
+var_dump(stat(''));
+var_dump(stat(' '));
+var_dump(stat('|'));
+echo "*** testing lstat ***\n";
+var_dump(lstat(false));
+var_dump(lstat(''));
+var_dump(lstat(' '));
+var_dump(lstat('|'));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

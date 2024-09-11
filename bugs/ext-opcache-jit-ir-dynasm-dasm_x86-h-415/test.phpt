@@ -1,15 +1,12 @@
 --TEST--
-Backed prop satisfies interface get hook by-reference+rfc1867 array upload
+Backed prop satisfies interface get hook by-reference+str_decrement(): Out of Range ValueErrors for strings that cannot be decremented
 --INI--
-file_uploads=1
-upload_max_filesize=1024
-max_file_uploads=10
-opcache.enable_cli=1
-opcache.jit_buffer_size=1M
+expose_php=On
+opcache.jit=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1004
+opcache.jit=1002
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -84,78 +81,38 @@ class A implements I {
 }
 $a = new A();
 var_dump($a);
-$fusion = $prop;
+$fusion = $this;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump($_POST);
+$strings = [
+    "",
+    "0",
+    "a",
+    "A",
+    "00",
+    "0a",
+    "0A",
+];
+foreach ($strings as $s) {
+    try {
+        var_dump(str_decrement($s));
+    } catch (ValueError $e) {
+        echo $fusion->getMessage(), PHP_EOL;
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
+--EXPECT--
 object(A)#1 (1) {
   ["prop"]=>
   int(42)
 }
-array(1) {
-  ["file"]=>
-  array(6) {
-    ["name"]=>
-    array(3) {
-      [0]=>
-      string(9) "file1.txt"
-      [2]=>
-      string(9) "file2.txt"
-      [3]=>
-      string(9) "file3.txt"
-    }
-    ["full_path"]=>
-    array(3) {
-      [0]=>
-      string(9) "file1.txt"
-      [2]=>
-      string(9) "file2.txt"
-      [3]=>
-      string(9) "file3.txt"
-    }
-    ["type"]=>
-    array(3) {
-      [0]=>
-      string(16) "text/plain-file1"
-      [2]=>
-      string(16) "text/plain-file2"
-      [3]=>
-      string(16) "text/plain-file3"
-    }
-    ["tmp_name"]=>
-    array(3) {
-      [0]=>
-      string(%d) "%s"
-      [2]=>
-      string(%d) "%s"
-      [3]=>
-      string(%d) "%s"
-    }
-    ["error"]=>
-    array(3) {
-      [0]=>
-      int(0)
-      [2]=>
-      int(0)
-      [3]=>
-      int(0)
-    }
-    ["size"]=>
-    array(3) {
-      [0]=>
-      int(1)
-      [2]=>
-      int(1)
-      [3]=>
-      int(1)
-    }
-  }
-}
-array(0) {
-}
+str_decrement(): Argument #1 ($string) must not be empty
+str_decrement(): Argument #1 ($string) "0" is out of decrement range
+str_decrement(): Argument #1 ($string) "a" is out of decrement range
+str_decrement(): Argument #1 ($string) "A" is out of decrement range
+str_decrement(): Argument #1 ($string) "00" is out of decrement range
+str_decrement(): Argument #1 ($string) "0a" is out of decrement range
+str_decrement(): Argument #1 ($string) "0A" is out of decrement range
