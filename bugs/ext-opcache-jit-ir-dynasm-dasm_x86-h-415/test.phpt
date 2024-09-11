@@ -1,12 +1,16 @@
 --TEST--
-SPL: ArrayObject::getFlags() basic usage+By-value get may be implemented as by-reference
+JIT ASSIGN: Typed reference error with return value+set $value parameter variance
 --INI--
-session.upload_progress.enabled=1
-expose_php=On
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.protect_memory=1
+session.use_cookies=1
+opcache.jit_buffer_size=1M
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1001
+opcache.jit=0001
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,46 +75,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ao = new ArrayObject(new ArrayObject(new stdClass));
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayObject(array(1,2,3)), ArrayObject::STD_PROP_LIST);
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayIterator(new ArrayObject()), ArrayObject::ARRAY_AS_PROPS);
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayObject(), ArrayObject::STD_PROP_LIST|ArrayObject::ARRAY_AS_PROPS);
-var_dump($ao->getFlags());
-$cao = clone $ao;
-var_dump($cao->getFlags());
-$fusion = $ao;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface I {
-    public $prop { get; }
+class Test {
+    public string $x;
 }
-class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+function test() {
+    $test = new Test;
+    $test->x = "";
+    $r =& $test->x;
+    +($r = $y);
+}
+try {
+    test();
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+$fusion = $test;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+interface X {}
+interface Y extends X {}
+class A {
+    public Y $prop {
+        set(X $fusion) {}
     }
 }
-function test(I $i) {
-    $fusion = &$i->prop;
-    $ref = 42;
+class B extends A {
+    public Y $prop {
+        set(Y $prop) {}
+    }
 }
-$a = new A();
-test($a);
-var_dump($a);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-int(0)
-int(1)
-int(2)
-int(3)
-int(3)
-object(A)#1 (1) {
-  ["_prop":"A":private]=>
-  int(42)
-}
+--EXPECTF--
+Warning: Undefined variable $y in %s on line %d
+Cannot assign null to reference held by property Test::$x of type string
+Fatal error: Declaration of B::$prop::set(Y $prop): void must be compatible with A::$prop::set(X $prop): void in %s on line %d

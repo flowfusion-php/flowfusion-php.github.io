@@ -1,13 +1,8 @@
 --TEST--
-Test fprintf() function (variation - 8)+Cleaning must preserve breakpoints
+Cannot write to closure properties+Stdin and escaped args being passed to run command
 --INI--
-opcache.enable_cli=0
-opcache.jit_buffer_size=64M
-session.cookie_httponly=0
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+implicit_flush=1
+session.use_cookies=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,87 +67,67 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$int_variation = array( "%d", "%-d", "%+d", "%7.2d", "%-7.2d", "%07.2d", "%-07.2d", "%'#7.2d" );
-$int_numbers = array( 0, 1, -1, 2.7, -2.7, 23333333, -23333333, "1234" );
-/* creating dumping file */
-$data_file = __DIR__ . '/fprintf_variation_008_64bit.txt';
-if (!($fp = fopen($data_file, 'wt')))
-   return;
-/* hexadecimal type variations */
-fprintf($fp, "\n*** Testing fprintf() for hexadecimals ***\n");
-foreach( $int_numbers as $hexa_num ) {
- fprintf( $fp, "\n");
- fprintf( $fp, "%x", $hexa_num );
+class A {
+    function getFn() {
+        return function() {
+        };
+    }
 }
-fclose($fp);
-print_r(file_get_contents($data_file));
-echo "\nDone";
-unlink($data_file);
+$a = new A;
+try {
+    $c = $a->getFn()->b = new stdClass;
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+$fusion = $c;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
-}
+var_dump($fusion);
+var_dump(stream_get_contents(STDIN));
+echo "ok\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--CLEAN--
+<?php
+@unlink("run_002_tmp.fixture");
+?>
 --PHPDBG--
-b 4
-b foo
-r
-c
-clean
+ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
+b 6
+r <run_002_tmp.fixture
+r arg1 '_ \' arg2 "' < run_002_tmp.fixture
 y
-c
-r
 c
 q
 --EXPECTF--
-*** Testing fprintf() for hexadecimals ***
-
-0
-1
-ffffffffffffffff
-2
-fffffffffffffffe
-16409d5
-fffffffffe9bf62b
-4d2
-Done
+Cannot create dynamic property Closure::$b
 [Successful compilation of %s]
-prompt> [Breakpoint #0 added at %s:4]
-prompt> [Breakpoint #1 added at foo]
-prompt> 1
-[Breakpoint #0 at %s:4, hits: 1]
->00004: echo 2;
- 00005: echo 3;
- 00006: foo();
-prompt> 23
-[Breakpoint #1 in foo() at %s:9, hits: 1]
->00009: 	echo 4;
- 00010: }
- 00011: 
-prompt> Do you really want to clean your current environment? (type y or n): Cleaning Execution Environment
-Classes    %d
-Functions  %d
-Constants  %d
-Includes   0
-prompt> [Not running]
-prompt> 1
-[Breakpoint #0 at %s:4, hits: 1]
->00004: echo 2;
- 00005: echo 3;
- 00006: foo();
-prompt> 23
-[Breakpoint #1 in foo() at %s:9, hits: 1]
->00009: 	echo 4;
- 00010: }
- 00011: 
-prompt> 4
+prompt> 10
+prompt> [Breakpoint #0 added at %s:6]
+prompt> array(1) {
+  [0]=>
+  string(%d) "%s"
+}
+string(10) "stdin
+data"
+[Breakpoint #0 at %s:6, hits: 1]
+>00006: echo "ok\n";
+ 00007: 
+prompt> Do you really want to restart execution? (type y or n): array(3) {
+  [0]=>
+  string(%d) "%s"
+  [1]=>
+  string(4) "arg1"
+  [2]=>
+  string(10) "_ ' arg2 ""
+}
+string(10) "stdin
+data"
+[Breakpoint #0 at %s:6, hits: 1]
+>00006: echo "ok\n";
+ 00007: 
+prompt> ok
 [Script ended normally]
 prompt> 

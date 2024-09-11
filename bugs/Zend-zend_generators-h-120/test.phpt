@@ -1,8 +1,5 @@
 --TEST--
-Bug GH-10747 (Private fields in serialized DateTimeZone objects throw)+Lazy objects: Foreach initializes object
---INI--
-session.gc_probability=1
-session.gc_probability=0
+Dom\Node::lookupPrefix()+Deep recursion with yield from
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,133 +64,74 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class I extends DateTimeZone
-{
-	private   int $var1;
-	private       $var2 = 2;
-	protected int $var3 = 3;
-	protected     $var4;
-	function __construct($tz)
-	{
-		parent::__construct($tz);
-		$this->var1 = 1;
-		$this->var4 = 4;
-	}
+$dom = Dom\XMLDocument::createFromString(<<<XML
+<?xml version="1.0"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="test">
+    <body>
+        <svg:svg xmlns:svg="http://www.w3.org/2000/svg" height="1"/>
+        <p xmlns:y="test">
+            <x/>
+        </p>
+    </body>
+</html>
+XML);
+$body = $dom->getElementsByTagName("body")[0];
+$body->setAttribute("xmlns:a", "urn:a");
+echo "--- NULL case because invalid node type ---\n";
+var_dump($dom->doctype->lookupPrefix(""));
+echo "--- NULL case because xmlns attribute not in xmlns namespace ---\n";
+var_dump($body->lookupPrefix("urn:a"));
+echo "--- svg case ---\n";
+$svg = $dom->getElementsByTagNameNS("*", "svg")[0];
+var_dump($svg->lookupPrefix(""));
+var_dump($svg->lookupPrefix("http://www.w3.org/2000/svg"));
+var_dump($svg->lookupPrefix("1"));
+echo "--- search for \"test\" ---\n";
+foreach (['x', 'p', 'html'] as $name) {
+    $x = $dom->getElementsByTagNameNS("*", $name)[0];
+    var_dump($x->lookupPrefix(""));
+    var_dump($x->lookupPrefix("test"));
 }
-$i = new I('Europe/Kyiv');
-$s = serialize($i);
-$u = unserialize($s);
-var_dump($i, str_replace(chr(0), '!', $s), $u);
-$fusion = $u;
+$fusion = $x;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-#[AllowDynamicProperties]
-class C {
-    public int $a;
-    public int $b {
-        get { return $this->b; }
-        set(int $value) { $this->b = $value; }
-    }
-    public int $c {
-        get { return $this->a + 2; }
-    }
-    public function __construct() {
-        var_dump(__METHOD__);
-        $this->a = 1;
-        $fusion->b = 2;
-        $this->d = 4;
+ini_set("memory_limit", "512M");
+function from($i) {
+    yield $i;
+}
+function gen($i = 0) {
+    if ($i < 50000) {
+        yield from gen(++$i);
+    } else {
+        yield $i;
+        yield from from(++$i);
     }
 }
-$reflector = new ReflectionClass(C::class);
-print "# Ghost:\n";
-$obj = $reflector->newLazyGhost(function ($obj) {
-    var_dump("initializer");
-    $obj->__construct();
-});
-foreach ($obj as $prop => $value) {
-    var_dump($prop, $value);
-}
-print "# Proxy:\n";
-$obj = $reflector->newLazyProxy(function ($obj) {
-    var_dump("initializer");
-    return new C();
-});
-foreach ($obj as $prop => $value) {
-    var_dump($prop, $value);
-}
-print "# Ghost (init exception):\n";
-$obj = $reflector->newLazyGhost(function ($obj) {
-    throw new \Exception();
-});
-try {
-    var_dump(json_encode($obj));
-} catch (\Exception $e) {
-    printf("%s: %s\n", $e::class, $e->getMessage());
-}
-print "# Proxy (init exception):\n";
-$obj = $reflector->newLazyProxy(function ($obj) {
-    throw new \Exception();
-});
-try {
-    var_dump(json_encode($obj));
-} catch (\Exception $e) {
-    printf("%s: %s\n", $e::class, $e->getMessage());
+foreach (gen() as $v) {
+    var_dump($fusion);
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-object(I)#1 (6) {
-  ["var1":"I":private]=>
-  int(1)
-  ["var2":"I":private]=>
-  int(2)
-  ["var3":protected]=>
-  int(3)
-  ["var4":protected]=>
-  int(4)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(11) "Europe/Kyiv"
-}
-string(143) "O:1:"I":6:{s:13:"timezone_type";i:3;s:8:"timezone";s:11:"Europe/Kyiv";s:7:"!I!var1";i:1;s:7:"!I!var2";i:2;s:7:"!*!var3";i:3;s:7:"!*!var4";i:4;}"
-object(I)#2 (6) {
-  ["var1":"I":private]=>
-  int(1)
-  ["var2":"I":private]=>
-  int(2)
-  ["var3":protected]=>
-  int(3)
-  ["var4":protected]=>
-  int(4)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(11) "Europe/Kyiv"
-}
-# Ghost:
-string(11) "initializer"
-string(14) "C::__construct"
-string(1) "a"
-int(1)
-string(1) "b"
-int(2)
-string(1) "c"
-int(3)
-string(1) "d"
-int(4)
-# Proxy:
-string(11) "initializer"
-string(14) "C::__construct"
-string(1) "a"
-int(1)
-string(1) "b"
-int(2)
-string(1) "c"
-int(3)
-# Ghost (init exception):
-Exception: 
-# Proxy (init exception):
-Exception:
+--EXTENSIONS--
+dom
+--EXPECT--
+--- NULL case because invalid node type ---
+NULL
+--- NULL case because xmlns attribute not in xmlns namespace ---
+NULL
+--- svg case ---
+NULL
+string(3) "svg"
+NULL
+--- search for "test" ---
+NULL
+string(1) "y"
+NULL
+string(1) "y"
+NULL
+string(1) "x"
+int(50000)
+int(50001)

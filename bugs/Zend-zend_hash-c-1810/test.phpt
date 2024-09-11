@@ -1,13 +1,9 @@
 --TEST--
-ReflectionClass::hasProperty()+Bug #71818 (Memory leak when array altered in destructor)
+Check that reference detection works properly+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
 zend.enable_gc = 1
-session.cookie_secure=0
-opcache.preload={PWD}/preload_ind.inc
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1232
+expose_php=On
+precision=12
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,39 +68,30 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class pubf {
-    public $a;
-    static public $s;
+$v00 = $v01 = $v32 = $v33 = 0;
+test(p32: $v32, p33: $v33, p00: $v00, p01: $v01);
+echo "$v00 $v01 $v32 $v33\n";
+$v = [0 => 0, 1 => 0, 32 => 0, 33 => 0];
+test(p32: $v[32], p33: $v[33], p00: $v[0], p01: $v[1]);
+echo "$v[0] $v[1] $v[32] $v[33]\n";
+function test(
+    &$p00 = null, $p01 = null, &$p02 = null, $p03 = null, &$p04 = null, $p05 = null,
+    &$p06 = null, $p07 = null, &$p08 = null, $p09 = null, &$p10 = null, $p11 = null,
+    &$p12 = null, $p13 = null, &$p14 = null, $p15 = null, &$p16 = null, $p17 = null,
+    &$p18 = null, $p19 = null, &$p20 = null, $p21 = null, &$p22 = null, $p23 = null,
+    &$p24 = null, $p25 = null, &$p26 = null, $p27 = null, &$p28 = null, $p29 = null,
+    &$p30 = null, $p31 = null, &$p32 = null, $p33 = null, &$p34 = null, $p35 = null
+) {
+    $p00++;
+    $p32++;
 }
-class subpubf extends pubf {
-}
-class protf {
-    protected $a;
-    static protected $s;
-}
-class subprotf extends protf {
-}
-class privf {
-    private $a;
-    static protected $s;
-}
-class subprivf extends privf  {
-}
-$classes = array("pubf", "subpubf", "protf", "subprotf",
-                 "privf", "subprivf");
-foreach($classes as $class) {
-    echo "Reflecting on class $class: \n";
-    $rc = new ReflectionClass($class);
-    echo "  --> Check for s: ";
-    var_dump($rc->hasProperty("s"));
-    echo "  --> Check for a: ";
-    var_dump($rc->hasProperty("a"));
-    echo "  --> Check for A: ";
-    var_dump($rc->hasProperty("A"));
-    echo "  --> Check for doesNotExist: ";
-    var_dump($rc->hasProperty("doesNotExist"));
-}
-$fusion = $s;
+$v00 = $v01 = $v32 = $v33 = 0;
+test(p32: $v32, p33: $v33, p00: $v00, p01: $v01);
+echo "$v00 $v01 $v32 $v33\n";
+$v = [0 => 0, 1 => 0, 32 => 0, 33 => 0];
+test(p32: $v[32], p33: $v[33], p00: $v[0], p01: $v[1]);
+echo "$v[0] $v[1] $v[32] $v[33]\n";
+$fusion = $p00;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -129,34 +116,8 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-Reflecting on class pubf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(true)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
-Reflecting on class subpubf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(true)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
-Reflecting on class protf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(true)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
-Reflecting on class subprotf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(true)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
-Reflecting on class privf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(true)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
-Reflecting on class subprivf: 
-  --> Check for s: bool(true)
-  --> Check for a: bool(false)
-  --> Check for A: bool(false)
-  --> Check for doesNotExist: bool(false)
+1 0 1 0
+1 0 1 0
+1 0 1 0
+1 0 1 0
 OK

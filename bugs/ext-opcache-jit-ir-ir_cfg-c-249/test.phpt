@@ -1,16 +1,19 @@
 --TEST--
-Test method_exists() function : variation - Case sensitivity+GH-11189: Exceeding memory limit in zend_hash_do_resize leaves the array in an invalid state (packed array)
+Different numbers of arguments in __construct()+Bug #76846: Segfault in shutdown function after memory limit error
 --INI--
-memory_limit=2M
-opcache.file_update_protection=0
-opcache.max_accelerated_files=4000
+memory_limit=33M
+opcache.revalidate_freq=60
+session.cookie_secure=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
 opcache.jit=0001
 --SKIPIF--
 <?php
-if (getenv("USE_ZEND_ALLOC") === "0") die("skip ZMM is disabled");
+$zend_mm_enabled = getenv("USE_ZEND_ALLOC");
+if ($zend_mm_enabled === "0") {
+    die("skip Zend MM disabled");
+}
 ?>
 --FILE--
 <?php
@@ -76,25 +79,27 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing method_exists() : variation ***\n";
-Class caseSensitivityTest {
-    public function myMethod() {}
+interface foobar {
+    function __construct();
 }
-var_dump(method_exists(new casesensitivitytest, 'myMetHOD'));
-var_dump(method_exists('casesensiTivitytest', 'myMetHOD'));
-echo "Done";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start(function() {
-    global $a;
-    for ($i = count($a); $i > 0; --$i) {
-        $a[] = 2;
+abstract class bar implements foobar {
+    public function __construct($x = 1) {
     }
-    fwrite(STDOUT, "Success");
+}
+final class foo extends bar implements foobar {
+    public function __construct($x = 1, $y = 2) {
+    }
+}
+new foo;
+print "ok!";
+$fusion = $y;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+register_shutdown_function(function() {
+    new stdClass;
 });
-$a = [];
-// trigger OOM in a resize operation
-while (1) {
-    $a[] = 1;
+$ary = [];
+while (true) {
+    $fusion[] = new stdClass;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
@@ -102,9 +107,5 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-*** Testing method_exists() : variation ***
-bool(true)
-bool(true)
-Done
-Success
-Fatal error: Allowed memory size of %s bytes exhausted%s(tried to allocate %s bytes) in %s on line %d
+ok!
+Fatal error: Allowed memory size of %d bytes exhausted%s(tried to allocate %d bytes) in %s on line %d%A

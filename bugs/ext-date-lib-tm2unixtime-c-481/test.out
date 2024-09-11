@@ -1,3 +1,53 @@
-*** Testing gmdate() : usage variation ***
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12: runtime error: signed integer overflow: -4611686019501120308 + -4611686019501139200 cannot be represented in type 'long long'
+--- testing: 9223372036854775807 ---
+float(INF)
+--- testing: -9223372036854775808 ---
+float(0)
+--- testing: 2147483647 ---
+float(INF)
+--- testing: -2147483648 ---
+float(0)
+--- testing: 9223372034707292160 ---
+float(INF)
+--- testing: -9223372034707292160 ---
+float(0)
+--- testing: 2147483648 ---
+float(INF)
+--- testing: -2147483649 ---
+float(0)
+--- testing: 4294967294 ---
+float(INF)
+--- testing: 4294967295 ---
+float(INF)
+--- testing: 4294967293 ---
+float(INF)
+--- testing: 9223372036854775806 ---
+float(INF)
+--- testing: 9.2233720368548E+18 ---
+float(INF)
+--- testing: -9223372036854775807 ---
+float(0)
+--- testing: -9.2233720368548E+18 ---
+float(0)
+int(42)
+string(11) "random_var:"
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+Calling function: is_double with arguments: -9.2233720368548E+18
+Calling function: array_combine with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function array_combine: array_combine(): Argument #1 ($keys) must be of type array, float given
+Calling function: str_increment with arguments: -9.2233720368548E+18
+Error calling function str_increment: str_increment(): Argument #1 ($string) must be composed only of alphanumeric ASCII characters
+Calling function: var_export with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: htmlentities with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: htmlentities(): Charset "-9.2233720368548E+18" is not supported, assuming UTF-8 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused765.php on line 41
+Calling function: array_chunk with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function array_chunk: array_chunk(): Argument #1 ($array) must be of type array, float given
+Calling function: quoted_printable_decode with arguments: -9.2233720368548E+18
+Calling function: gc_disable with arguments: 
+Calling function: chop with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: class_exists with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: date_sun_info with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12: runtime error: signed integer overflow: -4611686018427403200 + -4611686018427403200 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12 in

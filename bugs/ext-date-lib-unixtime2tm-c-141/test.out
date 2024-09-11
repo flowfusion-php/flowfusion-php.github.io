@@ -1,2 +1,38 @@
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -75 cannot be represented in type 'long long'
+--- testing: 9223372036854775807 ---
+float(5.2846029059076024E+20)
+--- testing: -9223372036854775808 ---
+float(-5.2846029059076024E+20)
+--- testing: 2147483647 ---
+float(123041749546.46191)
+--- testing: -2147483648 ---
+float(-123041749603.75769)
+--- testing: 9223372034707292160 ---
+float(5.284602904677184E+20)
+--- testing: -9223372034707292160 ---
+float(-5.284602904677184E+20)
+--- testing: 2147483648 ---
+float(123041749603.75769)
+--- testing: -2147483649 ---
+float(-123041749661.05348)
+--- testing: 4294967294 ---
+float(246083499092.92383)
+--- testing: 4294967295 ---
+float(246083499150.21957)
+--- testing: 4294967293 ---
+float(246083499035.62805)
+--- testing: 9223372036854775806 ---
+float(5.2846029059076024E+20)
+--- testing: 9.2233720368548E+18 ---
+float(5.2846029059076024E+20)
+--- testing: -9223372036854775807 ---
+float(-5.2846029059076024E+20)
+--- testing: -9.2233720368548E+18 ---
+float(-5.2846029059076024E+20)
+*** Testing date_sunset() : usage variation ***
+
+--12 Aug 2008--
+bool(false)
+bool(false)
+bool(false)
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -1820 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32 in

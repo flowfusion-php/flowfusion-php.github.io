@@ -1,2 +1,62 @@
+*** Testing session_set_save_handler() : using closures as callbacks ***
+string(5) "files"
+
+Warning: session_module_name(): Session handler module "" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 68
+bool(false)
+
+Warning: session_module_name(): Session handler module "blah" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 69
+bool(false)
+
+Warning: session_module_name(): Session handler module "foo" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 70
+bool(false)
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 74
+Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
+Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Starting session again..!
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 85
+Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
+array(4) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+  ["Bar"]=>
+  string(3) "Foo"
+}
+Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
+Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+Cleanup
+Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
+Destroy [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,256645e6d14a46a09b1ca8a9cdc8d7e1]
+Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_closures,PHPSESSID]
+
+Fatal error: Uncaught Error: Cannot create references to/from string offsets in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php:98
+Stack trace:
+#0 {main}
+  thrown in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused929.php on line 98
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in

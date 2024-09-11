@@ -1,14 +1,15 @@
 --TEST--
-Phar::isWriteable+null returned by resolver function
+Test session_set_save_handler() function : using closures as callbacks+Bug #71539.2 (Memory error on $arr[$a] =& $arr[$b] if RHS rehashes)
 --INI--
-phar.readonly=0
-phar.require_hash=0
-opcache.enable_cli=0
-serialize_precision=-1
+session.save_path=
+session.name=PHPSESSID
+session.save_handler=files
+session.upload_progress.enabled=0
+serialize_precision=5
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1231
+opcache.jit=1021
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -73,104 +74,123 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.1.phar.php';
-$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.tar';
-$pname = 'phar://hio';
-$file = '<?php include "' . $pname . '/a.php"; __HALT_COMPILER(); ?>';
-$files = array();
-$files['a.php']   = '<?php echo "This is a\n"; include "'.$pname.'/b.php"; ?>';
-$files['dir/'] = '';
-$hasdir = 1;
-include 'files/phar_test.inc';
-$a = new Phar($fname);
-$b = new PharData($fname2);
-$b['test'] = 'hi';
-var_dump($a['a.php']->isWritable());
-var_dump($a['a.php']->isReadable());
-$a['a.php']->chmod(000);
-var_dump($a['a.php']->isWritable());
-var_dump($a['a.php']->isReadable());
-$a['a.php']->chmod(0666);
-var_dump($a['a.php']->isWritable());
-var_dump($a['a.php']->isReadable());
-ini_set('phar.readonly',1);
-clearstatcache();
-var_dump($a['a.php']->isWritable());
-var_dump($a['a.php']->isReadable());
-ini_set('phar.readonly',0);
-clearstatcache();
-var_dump($a['a.php']->isWritable());
-var_dump($a['a.php']->isReadable());
-?>
-archive
-<?php
-ini_set('phar.readonly',0);
-$p = new Phar('doesnotexisthere.phar');
-var_dump($p->isWritable());
-clearstatcache();
-var_dump($a->isWritable());
-var_dump($b->isWritable());
-ini_set('phar.readonly',1);
-clearstatcache();
-var_dump($a->isWritable());
-var_dump($b->isWritable());
-chmod($fname2, 000);
-clearstatcache();
-var_dump($a->isWritable());
-var_dump($b->isWritable());
-chmod($fname2, 0666);
-$fusion = $fname;
+ob_start();
+echo "*** Testing session_set_save_handler() : using closures as callbacks ***\n";
+require_once "save_handler_closures.inc";
+var_dump(session_module_name());
+var_dump(session_module_name(FALSE));
+var_dump(session_module_name("blah"));
+var_dump(session_module_name("foo"));
+$path = __DIR__ . '/session_set_save_handler_closures';
+@mkdir($path);
+session_save_path($path);
+session_set_save_handler($open_closure, $close_closure, $read_closure, $write_closure, $destroy_closure, $gc_closure);
+session_start();
+$_SESSION["Blah"] = "Hello World!";
+$_SESSION["Foo"] = FALSE;
+$_SESSION["Guff"] = 1234567890;
+var_dump($_SESSION);
+session_write_close();
+session_unset();
+var_dump($_SESSION);
+echo "Starting session again..!\n";
+session_id($session_id);
+session_set_save_handler($open_closure, $close_closure, $read_closure, $write_closure, $destroy_closure, $gc_closure);
+session_start();
+$_SESSION['Bar'] = 'Foo';
+var_dump($_SESSION);
+session_write_close();
+echo "Cleanup\n";
+session_start();
+session_destroy();
+ob_end_flush();
+@rmdir($path);
+$fusion = $session_id;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-libxml_set_external_entity_loader(function ($public_id, $system_id, $context) {
-    var_dump($public_id, $fusion, $context);
-    return null;
-});
-$doc = new DOMDocument();
-$doc->loadHTMLFile("foobar");
+$a = [0,1,2,3,4,5,6];
+$a[200] =& $fusion[100];
+$a[100] =42;
+var_dump($a);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-phar
-libxml
-dom
---CLEAN--
-<?php
-unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.1.phar.php');
-unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.tar');
-?>
+session
 --EXPECTF--
-bool(true)
-bool(true)
-bool(false)
-bool(false)
-bool(true)
-bool(true)
-bool(false)
-bool(true)
-bool(true)
-bool(true)
-archive
-bool(true)
-bool(true)
-bool(true)
-bool(false)
-bool(true)
-bool(false)
-bool(false)
-NULL
-string(6) "foobar"
-array(4) {
-  ["directory"]=>
-  NULL
-  ["intSubName"]=>
-  NULL
-  ["extSubURI"]=>
-  NULL
-  ["extSubSystem"]=>
-  NULL
-}
+*** Testing session_set_save_handler() : using closures as callbacks ***
+string(%d) "%s"
 
-Warning: DOMDocument::loadHTMLFile(): Failed to load external entity because the resolver function returned null in %s on line %d
+Warning: session_module_name(): Session handler module "" cannot be found in %s on line %d
+bool(false)
+
+Warning: session_module_name(): Session handler module "blah" cannot be found in %s on line %d
+bool(false)
+
+Warning: session_module_name(): Session handler module "foo" cannot be found in %s on line %d
+bool(false)
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Open [%s,PHPSESSID]
+Read [%s,%s]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
+Close [%s,PHPSESSID]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Starting session again..!
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Open [%s,PHPSESSID]
+Read [%s,%s]
+array(4) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+  ["Bar"]=>
+  string(3) "Foo"
+}
+Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
+Close [%s,PHPSESSID]
+Cleanup
+Open [%s,PHPSESSID]
+Read [%s,%s]
+Destroy [%s,%s]
+Close [%s,PHPSESSID]
+array(9) {
+  [0]=>
+  int(0)
+  [1]=>
+  int(1)
+  [2]=>
+  int(2)
+  [3]=>
+  int(3)
+  [4]=>
+  int(4)
+  [5]=>
+  int(5)
+  [6]=>
+  int(6)
+  [100]=>
+  &int(42)
+  [200]=>
+  &int(42)
+}

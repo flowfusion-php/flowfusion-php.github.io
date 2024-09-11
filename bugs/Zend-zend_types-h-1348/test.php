@@ -61,28 +61,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing array_multisort() : case-insensitive\n";
-$a = array(
-    'Second',
-    'First.1',
-    'First.2',
-    'First.3',
-    'Twentieth',
-    'Tenth',
-    'Third',
-);
-$b = array(
-    '2 a',
-    '1 bb 1',
-    '1 bB 2',
-    '1 BB 3',
-    '20 c',
-    '10 d',
-    '3 e',
-);
-array_multisort($b, SORT_STRING | SORT_FLAG_CASE, $a);
-var_dump($a, $b);
-$fusion = $b;
+class I extends DateTimeZone
+{
+	private   int $var1;
+	private       $var2 = 2;
+	protected int $var3 = 3;
+	protected     $var4;
+	function __construct($tz)
+	{
+		parent::__construct($tz);
+		$this->var1 = 1;
+		$this->var4 = 4;
+	}
+}
+$i = new I('Europe/Kyiv');
+$s = serialize($i);
+$u = unserialize($s);
+var_dump($i, str_replace(chr(0), '!', $s), $u);
+$fusion = $u;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {

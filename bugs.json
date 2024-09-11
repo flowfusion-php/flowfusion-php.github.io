@@ -2,18 +2,18 @@
     {
         "bugID": 1,
         "identifier": "/php-src/Zend/Optimizer/zend_inference.c:5043",
-        "bugHit": 975,
+        "bugHit": 991,
         "details": [
-            "103200",
-            "104259",
-            "105009",
-            "106792",
             "107109",
             "107979",
             "109877",
             "111528",
             "111775",
-            "113503"
+            "112547",
+            "113503",
+            "115839",
+            "116655",
+            "116657"
         ]
     },
     {
@@ -21,13 +21,13 @@
         "identifier": "/php-src/Zend/zend_types.h:1348",
         "bugHit": 20,
         "details": [
-            "67679",
             "73373",
             "94873",
             "98494",
             "108462",
             "114136",
             "115007",
+            "10474",
             "11515",
             "13780",
             "58213"
@@ -36,9 +36,8 @@
     {
         "bugID": 3,
         "identifier": "/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415",
-        "bugHit": 40,
+        "bugHit": 41,
         "details": [
-            "93126",
             "95347",
             "95952",
             "98789",
@@ -47,21 +46,22 @@
             "105766",
             "113104",
             "113783",
+            "117804",
             "105402"
         ]
     },
     {
         "bugID": 4,
         "identifier": "/php-src/ext/date/lib/tm2unixtime.c:480",
-        "bugHit": 16,
+        "bugHit": 17,
         "details": [
-            "76051",
-            "76417",
             "78779",
             "84547",
             "90640",
             "92033",
             "109971",
+            "116909",
+            "35228",
             "56592",
             "98755",
             "99991"
@@ -70,17 +70,17 @@
     {
         "bugID": 5,
         "identifier": "/php-src/ext/date/lib/tm2unixtime.c:39",
-        "bugHit": 46,
+        "bugHit": 47,
         "details": [
-            "99479",
-            "101635",
             "106730",
             "111862",
             "111910",
             "114404",
+            "117115",
             "20433",
             "55356",
             "62742",
+            "99479",
             "113060"
         ]
     },
@@ -117,10 +117,10 @@
     {
         "bugID": 8,
         "identifier": "/php-src/ext/date/lib/tm2unixtime.c:481",
-        "bugHit": 40,
+        "bugHit": 41,
         "details": [
-            "85987",
             "114532",
+            "116324",
             "131",
             "12328",
             "59786",
@@ -143,9 +143,8 @@
     {
         "bugID": 10,
         "identifier": "/php-src/sapi/phpdbg/phpdbg_bp.c:132",
-        "bugHit": 25,
+        "bugHit": 26,
         "details": [
-            "74148",
             "74611",
             "76514",
             "80577",
@@ -154,6 +153,7 @@
             "101261",
             "101918",
             "104398",
+            "116318",
             "6506"
         ]
     },
@@ -186,9 +186,8 @@
     {
         "bugID": 13,
         "identifier": "/php-src/Zend/zend_hash.c:1810",
-        "bugHit": 12,
+        "bugHit": 13,
         "details": [
-            "19643",
             "19890",
             "22060",
             "41866",
@@ -197,7 +196,8 @@
             "62157",
             "69140",
             "72350",
-            "80921"
+            "80921",
+            "116199"
         ]
     },
     {
@@ -205,7 +205,6 @@
         "identifier": "/php-src/ext/date/lib/unixtime2tm.c:141",
         "bugHit": 30,
         "details": [
-            "96053",
             "99023",
             "101813",
             "105292",
@@ -213,6 +212,7 @@
             "112336",
             "135",
             "46757",
+            "50673",
             "53164",
             "81669"
         ]
@@ -247,20 +247,20 @@
     },
     {
         "bugID": 17,
-        "identifier": "/php-src/ext/opcache/jit/ir/ir_cfg.c:249",
-        "bugHit": 2,
-        "details": [
-            "6780",
-            "13555"
-        ]
-    },
-    {
-        "bugID": 18,
         "identifier": "/php-src/Zend/zend_alloc.c:1419",
         "bugHit": 2,
         "details": [
             "9651",
             "24811"
+        ]
+    },
+    {
+        "bugID": 18,
+        "identifier": "/php-src/ext/opcache/jit/ir/ir_cfg.c:249",
+        "bugHit": 2,
+        "details": [
+            "13555",
+            "6780"
         ]
     },
     {
@@ -400,6 +400,14 @@
     },
     {
         "bugID": 34,
+        "identifier": "/php-src/Zend/zend_generators.h:120",
+        "bugHit": 1,
+        "details": [
+            "115630"
+        ]
+    },
+    {
+        "bugID": 35,
         "identifier": "/php-src/Zend/Optimizer/zend_cfg.c:664",
         "bugHit": 1,
         "details": [

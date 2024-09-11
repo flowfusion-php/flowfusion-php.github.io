@@ -61,62 +61,33 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$file_path = __DIR__;
-echo "*** Testing with existing directory ***\n";
-var_dump( disk_free_space($file_path) );
-var_dump( diskfreespace($file_path) );
-echo "*** Testing with newly created directory ***\n";
-$dir = "/disk_free_space";
-mkdir($file_path.$dir);
-echo "\n Free Space before writing to a file\n";
-$space1 =  disk_free_space($file_path.$dir);
-var_dump( $space1 );
-$fh = fopen($file_path.$dir."/disk_free_space.tmp", "a");
-$data = str_repeat("x", 0xffff);
-fwrite($fh, $data);
-fclose($fh);
-echo "\n Free Space after writing to a file\n";
-$space2 =  disk_free_space($file_path.$dir);
-var_dump( $space2 );
-// Some file systems (like BTRFS) have a fuzzy notion of "free space" and will thus claim the same amount of free space
-if ($space1 >= $space2)
-  echo "\n Free Space Value Is Correct\n";
-else {
-  echo "\n Free Space Value Is Incorrect\n";
-  var_dump($space1, $space2);
-}
-echo "*** Testing with Binary Input ***\n";
-var_dump( disk_free_space(b"$file_path") );
-echo"\n--- Done ---";
-$fusion = $dir;
+$s = "1234567890a";
+$a[10] = "42";
+$i = "010";
+var_dump($s["10"], isset($s["10"]));
+var_dump($s["010"], isset($s["010"]));
+var_dump($s[$i], isset($s[$i]));
+var_dump($a["10"], isset($a["10"]));
+var_dump($a["010"], isset($a["010"]));
+var_dump($a[$i], isset($a[$i]));
+$fusion = $s;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-class MySessionHandler implements SessionHandlerInterface {
-    function open($fusion, $session_name): bool {
-        return true;
-    }
-    function close(): bool {
-        echo "close: goodbye cruel world\n";
-        return true;
-    }
-    function read($id): string|false {
-        return '';
-    }
-    function write($id, $session_data): bool {
-        echo "write: goodbye cruel world\n";
-        throw new Exception;
-    }
-    function destroy($id): bool {
-        return true;
-    }
-    function gc($maxlifetime): int {
-        return true;
-    }
+set_time_limit(20);
+echo "*** Testing usleep() : basic functionality ***\n";
+$sleeptime = 1000000; // == 1 seconds
+// Test passes if sleeps for at least 98% of specified time
+$sleeplow = $sleeptime - ($sleeptime * 2 /100);
+$fusion = microtime(true);
+// Sleep for a while
+usleep($sleeptime);
+$time_end = microtime(true);
+$time = ($time_end - $time_start) * 1000 * 1000;
+$summary = "Thread slept for " . $time . " micro-seconds\n";
+if ($time >= $sleeplow) {
+    echo "TEST PASSED: $summary";
+} else {
+    echo "TEST FAILED: $summary";
 }
-session_set_save_handler(new MySessionHandler());
-session_start();
-session_write_close();
-echo "um, hi\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

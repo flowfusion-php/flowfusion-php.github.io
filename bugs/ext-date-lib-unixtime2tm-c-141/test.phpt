@@ -1,13 +1,12 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+proc_open without bypass_shell subprocess parameter passing
+Test rad2deg function : 64bit long tests+Test date_sunset() function : usage variation -  Checking with North and South poles when Sun is up and down all day
 --INI--
-date.timezone = UTC
-max_execution_time=2
-date.timezone=Europe/London
+error_reporting=E_ALL&~E_DEPRECATED
+opcache.interned_strings_buffer=131072
+opcache.interned_strings_buffer=16
 --SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 <?php
-if (!function_exists("proc_open")) echo "skip proc_open() is not available";
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
 ?>
 --FILE--
 <?php
@@ -73,79 +72,108 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$php = getenv('TEST_PHP_EXECUTABLE_ESCAPED');
-$f = __DIR__ . DIRECTORY_SEPARATOR . "proc_only_mb1.php";
-$f_escaped = escapeshellarg($f);
-file_put_contents($f,'<?php var_dump($argv); ?>');
-$ds = array(
-        0 => array("pipe", "r"),
-        1 => array("pipe", "w"),
-        2 => array("pipe", "w")
-        );
-$p = proc_open(
-        "$php -n $f_escaped ãã¹ããã«ããã¤ãã»ãã¹ fÃ¼Ãe ÐºÐ°ÑÐ°Ð¼Ð±Ð°",
-        $ds,
-        $pipes
-        );
-$out = "";
-while (!feof($pipes[1])) {
-    $out .= fread($pipes[1], 1024);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(rad2deg($longVal));
 }
-proc_close($p);
-echo $out;
+$fusion = $longVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing date_sunset() : usage variation ***\n";
+// GMT is zero for the timezone
+date_default_timezone_set("Africa/Casablanca");
+$time_date = array (
+        //Date at which Sun is up all day at North Pole
+        "12 Aug 2008" => mktime(8, 8, 8, 8, 12, 2008),
+        "13 Aug 2008" => mktime(8, 8, 8, 8, 13, 2008),
+        //Date at which Sun is up all day at South Pole
+        "12 Nov 2008" => mktime(8, 8, 8, 11, 12, 2008),
+        "13 Nov 2008" => mktime(8, 8, 8, 11, 13, 2008),
+);
+//Iterate over different date and time
+foreach( $time_date as $date => $time ){
+    echo "\n--$date--\n";
+    var_dump( date_sunset($time, SUNFUNCS_RET_STRING, 90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, 90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, 90, 0 ) );
+    var_dump( date_sunset($fusion, SUNFUNCS_RET_STRING, -90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, -90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, -90, 0 ) );
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657
--57
--292277022657
--9223372036854775808
+--EXPECT--
+--- testing: 9223372036854775807 ---
+float(5.2846029059076024E+20)
+--- testing: -9223372036854775808 ---
+float(-5.2846029059076024E+20)
+--- testing: 2147483647 ---
+float(123041749546.46191)
+--- testing: -2147483648 ---
+float(-123041749603.75769)
+--- testing: 9223372034707292160 ---
+float(5.284602904677184E+20)
+--- testing: -9223372034707292160 ---
+float(-5.284602904677184E+20)
+--- testing: 2147483648 ---
+float(123041749603.75769)
+--- testing: -2147483649 ---
+float(-123041749661.05348)
+--- testing: 4294967294 ---
+float(246083499092.92383)
+--- testing: 4294967295 ---
+float(246083499150.21957)
+--- testing: 4294967293 ---
+float(246083499035.62805)
+--- testing: 9223372036854775806 ---
+float(5.2846029059076024E+20)
+--- testing: 9.2233720368548E+18 ---
+float(5.2846029059076024E+20)
+--- testing: -9223372036854775807 ---
+float(-5.2846029059076024E+20)
+--- testing: -9.2233720368548E+18 ---
+float(-5.2846029059076024E+20)
+*** Testing date_sunset() : usage variation ***
 
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483648
-47
-2147483647
-67767976233532799
+--12 Aug 2008--
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
 
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648
-48
-2147483648
-67767976233532800
+--13 Aug 2008--
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
 
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596
-96
-292277026596
-9223372036854775807
-array(4) {
-  [0]=>
-  string(%d) "%sproc_only_mb1.php"
-  [1]=>
-  string(36) "ãã¹ããã«ããã¤ãã»ãã¹"
-  [2]=>
-  string(6) "fÃ¼Ãe"
-  [3]=>
-  string(14) "ÐºÐ°ÑÐ°Ð¼Ð±Ð°"
-}
+--12 Nov 2008--
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+
+--13 Nov 2008--
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)

@@ -1,15 +1,18 @@
 --TEST--
-Test gmdate() function : usage variation - Valid and invalid range of timestamp 64 bits.+Trying to access a constant on trait via the name of trait causes a Fatal error
+Test exp function : 64bit long tests+Initializer of overwritten property should be resolved against the correct class
 --INI--
-opcache.jit=1235
-session.save_handler=files
 opcache.enable=1
 opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0154
+opcache.optimization_level=-1
+opcache.preload={PWD}/preload_overwritten_prop_init.inc
+opcache.max_accelerated_files=10
+session.upload_progress.enabled=0
 --SKIPIF--
 <?php
-if (PHP_INT_SIZE == 4) die('skip 64 bit only');
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
+<?php
+if (PHP_OS_FAMILY == 'Windows') die('skip Preloading is not supported on Windows');
 ?>
 --FILE--
 <?php
@@ -75,49 +78,57 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing gmdate() : usage variation ***\n";
-// Initialise all required variables
-date_default_timezone_set('UTC');
-$timestamp = mktime(20, 45, PHP_INT_MIN, 12, 13, 1901);
-echo "\n-- Testing gmdate() function with minimum range of timestamp --\n";
-var_dump( gmdate(DATE_ISO8601, $timestamp) );
-$timestamp = mktime(20, 45, 50, 12, 13, 1901);
-echo "\n-- Testing gmdate() function with less than the range of timestamp --\n";
-var_dump( gmdate(DATE_ISO8601, $timestamp) );
-echo "\n-- Testing gmdate() function with maximum range of timestamp --\n";
-$timestamp = mktime(03, 14, 07, 1, 19, 2038);
-var_dump( gmdate(DATE_ISO8601, $timestamp) );
-echo "\n-- Testing gmdate() function with greater than the range of timestamp --\n";
-$timestamp = mktime(03, 14, 10, 1, 19, 2038);
-var_dump( gmdate(DATE_ISO8601, $timestamp) );
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(exp($longVal));
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-trait Foo {
-    const A = 42;
-}
-class Bar {
-    use Foo;
-}
-echo Foo::A, PHP_EOL;
+var_dump((new Bar)->prop);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-*** Testing gmdate() : usage variation ***
-
--- Testing gmdate() function with minimum range of timestamp --
-string(24) "1901-12-13T20:45:54+0000"
-
--- Testing gmdate() function with less than the range of timestamp --
-string(24) "1901-12-13T20:45:50+0000"
-
--- Testing gmdate() function with maximum range of timestamp --
-string(24) "2038-01-19T03:14:07+0000"
-
--- Testing gmdate() function with greater than the range of timestamp --
-string(24) "2038-01-19T03:14:10+0000"
-Fatal error: Uncaught Error: Cannot access trait constant Foo::A directly in %s:%d
-Stack trace:
-#0 {main}
-  thrown in %s on line %d
+--EXTENSIONS--
+opcache
+--EXPECT--
+--- testing: 9223372036854775807 ---
+float(INF)
+--- testing: -9223372036854775808 ---
+float(0)
+--- testing: 2147483647 ---
+float(INF)
+--- testing: -2147483648 ---
+float(0)
+--- testing: 9223372034707292160 ---
+float(INF)
+--- testing: -9223372034707292160 ---
+float(0)
+--- testing: 2147483648 ---
+float(INF)
+--- testing: -2147483649 ---
+float(0)
+--- testing: 4294967294 ---
+float(INF)
+--- testing: 4294967295 ---
+float(INF)
+--- testing: 4294967293 ---
+float(INF)
+--- testing: 9223372036854775806 ---
+float(INF)
+--- testing: 9.2233720368548E+18 ---
+float(INF)
+--- testing: -9223372036854775807 ---
+float(0)
+--- testing: -9.2233720368548E+18 ---
+float(0)
+int(42)

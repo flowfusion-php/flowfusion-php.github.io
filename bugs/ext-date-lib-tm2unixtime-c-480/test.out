@@ -1,21 +1,98 @@
-*** Testing with existing directory ***
-float(790037004288)
-float(790037004288)
-*** Testing with newly created directory ***
+string(1) "a"
+bool(true)
+string(1) "a"
+bool(true)
+string(1) "a"
+bool(true)
+string(2) "42"
+bool(true)
 
- Free Space before writing to a file
-float(790037000192)
+Warning: Undefined array key "010" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 71
+NULL
+bool(false)
 
- Free Space after writing to a file
-float(790036934656)
+Warning: Undefined array key "010" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 72
+NULL
+bool(false)
+*** Testing usleep() : basic functionality ***
 
- Free Space Value Is Correct
-*** Testing with Binary Input ***
-float(790036934656)
+Warning: Undefined variable $time_start in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 84
+TEST PASSED: Thread slept for 1.7260394688151E+15 micro-seconds
+string(11) "random_var:"
+array(0) {
+}
+int(1000000)
+float(1.726E+15)
+Calling function: preg_last_error with arguments: 
+Calling function: xml_parser_get_option with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array, 1000000
+Error calling function xml_parser_get_option: xml_parser_get_option(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: settype with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array, 1.7260394688151E+15
 
---- Done ---Calling function: libxml_get_external_entity_loader with arguments: 
-Calling function: move_uploaded_file with arguments: Resource id #5, 790037000192
-Error calling function move_uploaded_file: move_uploaded_file(): Argument #1 ($from) must be of type string, resource given
-Calling function: gmmktime with arguments: 790037000192, 790037000192, 790037000192, 790037000192, 790037000192, 790037000192
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 313424858732571 * 43200 cannot be represented in type 'long long'
+Warning: settype(): Argument #1 ($var) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
+Error calling function settype: settype(): Argument #2 ($type) must be a valid type
+Calling function: is_callable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+1000000, Array, 1000000
+
+Warning: is_callable(): Argument #3 ($callable_name) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
+Error calling function is_callable: is_callable(): Argument #2 ($syntax_only) must be of type bool, array given
+Calling function: error_clear_last with arguments: 
+Calling function: key_exists with arguments: 1000000, 1.7260394688151E+15
+Error calling function key_exists: key_exists(): Argument #2 ($array) must be of type array, float given
+Calling function: stream_get_transports with arguments: 
+Calling function: gettype with arguments: 1.7260394688151E+15
+Calling function: closedir with arguments: 1.7260394688151E+15
+Error calling function closedir: closedir(): Argument #1 ($dir_handle) must be of type resource or null, float given
+Calling function: floatval with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array
+Calling function: preg_replace with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array, 1000000, Array, 1000000, Array
+
+Warning: preg_replace(): Argument #5 ($count) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
+Calling function: array_key_last with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array
+Calling function: get_declared_classes with arguments: 
+Calling function: xmlwriter_flush with arguments: 1000000, 1000000
+Error calling function xmlwriter_flush: xmlwriter_flush(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: xmlwriter_end_dtd_attlist with arguments: 1000000
+Error calling function xmlwriter_end_dtd_attlist: xmlwriter_end_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: set_time_limit with arguments: 1.7260394688151E+15
+Calling function: hash_update with arguments: 1.7260394688151E+15, 1000000
+Error calling function hash_update: hash_update(): Argument #1 ($context) must be of type HashContext, float given
+Calling function: register_tick_function with arguments: 1.7260394688151E+15, 1.7260394688151E+15
+Error calling function register_tick_function: register_tick_function(): Argument #1 ($callback) must be a valid callback, no array or string given
+Calling function: is_double with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array
+Calling function: xml_set_character_data_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array, 1000000
+Error calling function xml_set_character_data_handler: xml_set_character_data_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: get_defined_functions with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+Array
+Error calling function get_defined_functions: get_defined_functions(): Argument #1 ($exclude_disabled) must be of type bool, array given
+Calling function: fileatime with arguments: 1000000
+Calling function: iconv_mime_decode with arguments: 1000000, 1000000, 1000000
+
+Warning: iconv_mime_decode(): Wrong encoding, conversion from "???" to "1000000" is not allowed in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 41
+Calling function: array_keys with arguments: 1000000, 1.7260394688151E+15, 1000000
+Error calling function array_keys: array_keys(): Argument #1 ($array) must be of type array, int given
+Calling function: iptcembed with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused859.php on line 38
+1.7260394688151E+15, Array, 1.7260394688151E+15
+Error calling function iptcembed: iptcembed(): Argument #2 ($filename) must be of type string, array given
+Calling function: mktime with arguments: 1.7260394688151E+15, 1000000, 1.7260394688151E+15, 1000000, 1.7260394688151E+15, 1000000
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 1797978152284909 * 43200 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

@@ -61,25 +61,27 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing method_exists() : variation ***\n";
-Class caseSensitivityTest {
-    public function myMethod() {}
+interface foobar {
+    function __construct();
 }
-var_dump(method_exists(new casesensitivitytest, 'myMetHOD'));
-var_dump(method_exists('casesensiTivitytest', 'myMetHOD'));
-echo "Done";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start(function() {
-    global $a;
-    for ($i = count($a); $i > 0; --$i) {
-        $a[] = 2;
+abstract class bar implements foobar {
+    public function __construct($x = 1) {
     }
-    fwrite(STDOUT, "Success");
+}
+final class foo extends bar implements foobar {
+    public function __construct($x = 1, $y = 2) {
+    }
+}
+new foo;
+print "ok!";
+$fusion = $y;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+register_shutdown_function(function() {
+    new stdClass;
 });
-$a = [];
-// trigger OOM in a resize operation
-while (1) {
-    $a[] = 1;
+$ary = [];
+while (true) {
+    $fusion[] = new stdClass;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

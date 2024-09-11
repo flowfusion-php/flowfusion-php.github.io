@@ -1,63 +1,59 @@
-*** Testing array_multisort() : case-insensitive
-array(7) {
-  [0]=>
-  string(7) "First.1"
-  [1]=>
-  string(7) "First.2"
-  [2]=>
-  string(7) "First.3"
-  [3]=>
-  string(5) "Tenth"
-  [4]=>
-  string(6) "Second"
-  [5]=>
-  string(9) "Twentieth"
-  [6]=>
-  string(5) "Third"
+object(I)#1 (6) {
+  ["var1":"I":private]=>
+  int(1)
+  ["var2":"I":private]=>
+  int(2)
+  ["var3":protected]=>
+  int(3)
+  ["var4":protected]=>
+  int(4)
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(11) "Europe/Kyiv"
 }
-array(7) {
-  [0]=>
-  string(6) "1 bb 1"
-  [1]=>
-  string(6) "1 bB 2"
-  [2]=>
-  string(6) "1 BB 3"
-  [3]=>
-  string(4) "10 d"
-  [4]=>
-  string(3) "2 a"
-  [5]=>
-  string(4) "20 c"
-  [6]=>
-  string(3) "3 e"
+string(143) "O:1:"I":6:{s:13:"timezone_type";i:3;s:8:"timezone";s:11:"Europe/Kyiv";s:7:"!I!var1";i:1;s:7:"!I!var2";i:2;s:7:"!*!var3";i:3;s:7:"!*!var4";i:4;}"
+object(I)#2 (6) {
+  ["var1":"I":private]=>
+  int(1)
+  ["var2":"I":private]=>
+  int(2)
+  ["var3":protected]=>
+  int(3)
+  ["var4":protected]=>
+  int(4)
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(11) "Europe/Kyiv"
 }
 # Ghost:
 string(11) "initializer"
 string(14) "C::__construct"
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==3210126==ERROR: AddressSanitizer: SEGV on unknown address 0x55786c7f6c00 (pc 0x55786b2874d5 bp 0x7ffce1a77260 sp 0x7ffce1a77230 T0)
-==3210126==The signal is caused by a WRITE memory access.
-    #0 0x55786b2874d5 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9
-    #1 0x55786b286abc in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44:8
-    #2 0x55786b2868a4 in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84:2
-    #3 0x55786b236485 in zho_it_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_property_hooks.c:211:2
-    #4 0x55786b032c3f in iter_wrapper_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_iterators.c:66:2
-    #5 0x55786b18fe53 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
-    #6 0x55786adf9bea in zend_object_release /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.h:77:3
-    #7 0x55786ae3bfac in zend_fe_reset_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.c:5182:4
-    #8 0x55786aac8eba in ZEND_FE_RESET_R_SPEC_CV_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:41164:20
-    #9 0x55786a7a8f47 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58585:7
-    #10 0x55786a7aa382 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64237:2
-    #11 0x55786b2c74f8 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1926:3
-    #12 0x557869e77e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
-    #13 0x557869e786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
-    #14 0x55786b2d5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
-    #15 0x55786b2d14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
-    #16 0x7f170911ad8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
-    #17 0x7f170911ae3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
-    #18 0x557868003244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+==3894335==ERROR: AddressSanitizer: SEGV on unknown address 0x5630dfbf6c00 (pc 0x5630de6874d5 bp 0x7fff07f16680 sp 0x7fff07f16650 T0)
+==3894335==The signal is caused by a WRITE memory access.
+    #0 0x5630de6874d5 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9
+    #1 0x5630de686abc in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44:8
+    #2 0x5630de6868a4 in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84:2
+    #3 0x5630de636485 in zho_it_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_property_hooks.c:211:2
+    #4 0x5630de432c3f in iter_wrapper_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_iterators.c:66:2
+    #5 0x5630de58fe53 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #6 0x5630de1f9bea in zend_object_release /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.h:77:3
+    #7 0x5630de23bfac in zend_fe_reset_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.c:5182:4
+    #8 0x5630ddec8eba in ZEND_FE_RESET_R_SPEC_CV_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:41164:20
+    #9 0x5630ddba8f47 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58585:7
+    #10 0x5630ddbaa382 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64237:2
+    #11 0x5630de6c74f8 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1926:3
+    #12 0x5630dd277e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
+    #13 0x5630dd2786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
+    #14 0x5630de6d5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #15 0x5630de6d14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #16 0x7f4937fe3d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #17 0x7f4937fe3e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #18 0x5630db403244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9 in zend_gc_delref
-==3210126==ABORTING
+==3894335==ABORTING

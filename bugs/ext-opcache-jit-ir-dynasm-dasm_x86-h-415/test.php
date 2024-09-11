@@ -61,34 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ao = new ArrayObject(new ArrayObject(new stdClass));
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayObject(array(1,2,3)), ArrayObject::STD_PROP_LIST);
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayIterator(new ArrayObject()), ArrayObject::ARRAY_AS_PROPS);
-var_dump($ao->getFlags());
-$ao = new ArrayObject(new ArrayObject(), ArrayObject::STD_PROP_LIST|ArrayObject::ARRAY_AS_PROPS);
-var_dump($ao->getFlags());
-$cao = clone $ao;
-var_dump($cao->getFlags());
-$fusion = $ao;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface I {
-    public $prop { get; }
+class Test {
+    public string $x;
 }
-class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+function test() {
+    $test = new Test;
+    $test->x = "";
+    $r =& $test->x;
+    +($r = $y);
+}
+try {
+    test();
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+$fusion = $test;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+interface X {}
+interface Y extends X {}
+class A {
+    public Y $prop {
+        set(X $fusion) {}
     }
 }
-function test(I $i) {
-    $fusion = &$i->prop;
-    $ref = 42;
+class B extends A {
+    public Y $prop {
+        set(Y $prop) {}
+    }
 }
-$a = new A();
-test($a);
-var_dump($a);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

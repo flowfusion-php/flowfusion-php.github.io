@@ -61,31 +61,42 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$php = getenv('TEST_PHP_EXECUTABLE_ESCAPED');
-$f = __DIR__ . DIRECTORY_SEPARATOR . "proc_only_mb1.php";
-$f_escaped = escapeshellarg($f);
-file_put_contents($f,'<?php var_dump($argv); ?>');
-$ds = array(
-        0 => array("pipe", "r"),
-        1 => array("pipe", "w"),
-        2 => array("pipe", "w")
-        );
-$p = proc_open(
-        "$php -n $f_escaped ãã¹ããã«ããã¤ãã»ãã¹ fÃ¼Ãe ÐºÐ°ÑÐ°Ð¼Ð±Ð°",
-        $ds,
-        $pipes
-        );
-$out = "";
-while (!feof($pipes[1])) {
-    $out .= fread($pipes[1], 1024);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(rad2deg($longVal));
 }
-proc_close($p);
-echo $out;
+$fusion = $longVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing date_sunset() : usage variation ***\n";
+// GMT is zero for the timezone
+date_default_timezone_set("Africa/Casablanca");
+$time_date = array (
+        //Date at which Sun is up all day at North Pole
+        "12 Aug 2008" => mktime(8, 8, 8, 8, 12, 2008),
+        "13 Aug 2008" => mktime(8, 8, 8, 8, 13, 2008),
+        //Date at which Sun is up all day at South Pole
+        "12 Nov 2008" => mktime(8, 8, 8, 11, 12, 2008),
+        "13 Nov 2008" => mktime(8, 8, 8, 11, 13, 2008),
+);
+//Iterate over different date and time
+foreach( $time_date as $date => $time ){
+    echo "\n--$date--\n";
+    var_dump( date_sunset($time, SUNFUNCS_RET_STRING, 90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, 90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, 90, 0 ) );
+    var_dump( date_sunset($fusion, SUNFUNCS_RET_STRING, -90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_DOUBLE, -90, 0 ) );
+    var_dump( date_sunset($time, SUNFUNCS_RET_TIMESTAMP, -90, 0 ) );
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
