@@ -70,35 +70,12 @@ $longVals = array(
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
 foreach ($longVals as $longVal) {
-    foreach($otherVals as $otherVal) {
-        echo "--- testing: $longVal / $otherVal ---\n";
-        try {
-            var_dump($longVal/$otherVal);
-        } catch (\Throwable $e) {
-            echo get_class($e) . ': ' . $e->getMessage() . \PHP_EOL;
-        }
-    }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-       echo "--- testing: $otherVal / $longVal ---\n";
-      var_dump($otherVal/$longVal);
-   }
+   echo "--- testing: $longVal ---\n";
+   var_dump(sinh($longVal));
 }
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** testing stat ***\n";
-var_dump(stat(false));
-var_dump(stat(''));
-var_dump(stat(' '));
-var_dump(stat('|'));
-echo "*** testing lstat ***\n";
-var_dump(lstat(false));
-var_dump(lstat(''));
-var_dump(lstat(' '));
-var_dump(lstat('|'));
+echo "foo\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

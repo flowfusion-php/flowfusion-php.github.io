@@ -1,10 +1,2 @@
-Zone Type 3: 2010-10-04 02:18:48 EDT
-Zone Type 2: 2010-10-04 02:18:48 EDT
-Add 2 hours 1 minutes
-Zone Type 3: 2010-10-04 04:19:48 EDT
-Zone Type 2: 2010-10-04 04:19:48 EDT
-Subtract 2 hours 1 minutes from expected
-Zone Type 3: 2010-10-04 02:18:48 EDT
-Zone Type 2: 2010-10-04 02:18:48 EDT
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -17762 cannot be represented in type 'long long'
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -28378 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32 in

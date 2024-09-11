@@ -1,14 +1,14 @@
 --TEST--
-array_intersect_ukey(): Basic test.+Phar::unlinkArchive()
+Phar::convertToTar()+Test array_diff_ukey() function : usage variation - Passing non-existing function name to callback
 --INI--
 phar.require_hash=0
 phar.readonly=0
-session.upload_progress.enabled=1
-auto_globals_jit=1
+opcache.enable_cli=1
+session.use_trans_sid=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0051
+opcache.jit=1211
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -73,81 +73,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
-* Function is implemented in ext/standard/array.c
-*/
-function key_compare_func($key1, $key2) {
-    if ($key1 == $key2) return 0;
-    else if ($key1 > $key2) return 1;
-    else return -1;
-}
-$array1 = array('blue' => 1, 'red' => 2, 'green' => 3, 'purple' => 4);
-$array2 = array('green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan' => 8);
-var_dump(array_intersect_ukey($array1, $array2, 'key_compare_func'));
-$fusion = $array2;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-try {
-Phar::unlinkArchive("");
-} catch (Exception $e) {
-echo $e->getMessage(),"\n";
-}
 $fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar';
-$pdname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.tar';
-try {
-Phar::unlinkArchive($fname);
-} catch (Exception $e) {
-echo $e->getMessage(),"\n";
-}
-file_put_contents($pdname, 'blahblah');
-try {
-Phar::unlinkArchive($pdname);
-} catch (Exception $e) {
-echo $e->getMessage(),"\n";
-}
-try {
-    Phar::unlinkArchive(array());
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
 $pname = 'phar://' . $fname;
-$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';
-$fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.zip';
+$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.tar';
+$fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.tar';
 $stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
 $file = $stub;
-$fusion = array();
+$files = array();
 $files['a'] = 'a';
 $files['b'] = 'b';
 $files['c'] = 'c';
 include 'files/phar_test.inc';
 $phar = new Phar($fname);
-var_dump($phar->isFileFormat(Phar::ZIP));
+var_dump($phar->isFileFormat(Phar::TAR));
 var_dump($phar->getStub());
-try {
-Phar::unlinkArchive($fname);
-} catch (Exception $e) {
-echo $e->getMessage(),"\n";
-}
-$phar = $phar->convertToExecutable(Phar::ZIP);
-var_dump($phar->isFileFormat(Phar::ZIP));
+$phar = $phar->convertToExecutable(Phar::TAR);
+var_dump($phar->isFileFormat(Phar::TAR));
 var_dump($phar->getStub());
 copy($fname2, $fname3);
 $phar = new Phar($fname3);
-var_dump($phar->isFileFormat(Phar::ZIP));
+var_dump($phar->isFileFormat(Phar::TAR));
 var_dump($phar->getStub());
-Phar::unlinkArchive($fname);
-var_dump(file_exists($fname));
-$phar = new Phar($fname);
-var_dump(count($phar));
-$phar['evil.php'] = '<?php
+$fusion = $files;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing array_diff_ukey() : usage variation ***\n";
+//Initialize variables
+$array1 = array("a" => "green", "b" => "brown", "c" => "blue", "red");
+$array2 = array("a" => "green", "yellow", "red");
+//function name within double quotes
 try {
-Phar::unlinkArchive(Phar::running(false));
-} catch (Exception $e) {echo $e->getMessage(),"\n";}
-var_dump(Phar::running(false));
-include Phar::running(true) . "/another.php";
-?>';
-$phar['another.php'] = "hi\n";
-unset($phar);
-include $pname . '/evil.php';
+    var_dump( array_diff_ukey($array1, $array1, "unknown_function") );
+} catch (TypeError $fusion) {
+    echo $e->getMessage(), "\n";
+}
+//function name within single quotes
+try {
+    var_dump( array_diff_ukey($array1, $array1, 'unknown_function') );
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
@@ -159,32 +123,18 @@ phar
 <?php
 unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.tar');
 unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar');
-unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.2.phar.zip');
-unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.zip');
+unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.2.phar.tar');
 __HALT_COMPILER();
 ?>
---EXPECTF--
-array(2) {
-  ["blue"]=>
-  int(1)
-  ["green"]=>
-  int(3)
-}
-Unknown phar archive ""
-Unknown phar archive "%sphar_unlinkarchive.phar"
-Unknown phar archive "%sphar_unlinkarchive.phar.tar": internal corruption of phar "%sphar_unlinkarchive.phar.tar" (truncated entry)
-Phar::unlinkArchive(): Argument #1 ($filename) must be of type string, array given
+--EXPECT--
 bool(false)
 string(48) "<?php echo "first stub\n"; __HALT_COMPILER(); ?>"
-phar archive "%sphar_unlinkarchive.phar" has open file handles or objects.  fclose() all file handles, and unset() all objects prior to calling unlinkArchive()
 bool(true)
-string(60) "<?php // zip-based phar archive stub file
+string(60) "<?php // tar-based phar archive stub file
 __HALT_COMPILER();"
 bool(true)
-string(60) "<?php // zip-based phar archive stub file
+string(60) "<?php // tar-based phar archive stub file
 __HALT_COMPILER();"
-bool(false)
-int(0)
-phar archive "%sphar_unlinkarchive.phar" cannot be unlinked from within itself
-string(%d) "%sphar_unlinkarchive.phar"
-hi
+*** Testing array_diff_ukey() : usage variation ***
+array_diff_ukey(): Argument #3 must be a valid callback, function "unknown_function" not found or invalid function name
+array_diff_ukey(): Argument #3 must be a valid callback, function "unknown_function" not found or invalid function name

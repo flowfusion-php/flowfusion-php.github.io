@@ -61,12 +61,16 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$doc = new DOMDocument;
-$doc->load(__DIR__."/book.xml");
-$xsd = file_get_contents(__DIR__."/book-non-conforming-schema.xsd");
-$result = $doc->schemaValidateSource($xsd);
-var_dump($result);
-$fusion = $result;
+$dom = Dom\HTMLDocument::createFromString('<!DOCTYPE html><html></html>');
+$dt1 = clone $dom->doctype;
+var_dump($dt1 === $dom->doctype);
+var_dump($dt1->name);
+echo "\n";
+$dt2 = $dom->doctype->cloneNode();
+var_dump($dt2 === $dt1);
+var_dump($dt2 === $dom->doctype);
+var_dump($dt2->name);
+$fusion = $dt1;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {

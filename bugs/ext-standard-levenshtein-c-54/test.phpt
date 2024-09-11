@@ -1,9 +1,8 @@
 --TEST--
-Dynamic calls to scope introspection functions are forbidden (misoptimization)+Test << operator : 64bit long tests
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+Bug #47745 (FILTER_VALIDATE_INT doesn't allow minimum integer)+Test ctype_space() function : usage variations - different strings
+--INI--
+expose_php=0
+max_execution_time=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,595 +67,139 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function test() {
-    $i = 1;
-    try {
-        array_map('extract', [['i' => new stdClass]]);
-    } catch (\Error $e) {
-        echo $e->getMessage() . "\n";
-    }
-    $i += 1;
-    var_dump($i);
-}
-test();
-$fusion = $i;
+$s = (string)(-PHP_INT_MAX-1);
+var_dump(intval($s));
+var_dump(filter_var($s, FILTER_VALIDATE_INT));
+$fusion = $s;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+/*
+ * Pass strings containing different character types to ctype_space() to test
+ * which are considered valid whitespace character only strings
+ */
+echo "*** Testing ctype_space() : usage variations ***\n";
+$orig = setlocale(LC_CTYPE, "C");
+$values = array(
+/*1*/  "This string contains just letters and spaces", // Simple string
+       "but this one contains some numbers too 123+456 = 678", // Mixed string
+       "",
+       " ",
+/*5*/  "a",
+       "ABCXYZ",
+       "abcxyz",
+       "ABCXYZ123DEF456",
+       "abczyz123DEF456",
+/*10*/ "\r\n",
+       "123",
+       "03F", // hexadecimal 'digits'
+       ")speci@! ch@r$(",
+       '@!$*',
+/*15*/ 'ABC',
+       'abc',
+       'ABC123',
+       'abc123',
+       "abc123\n",
+/*20*/ 'abc 123',
+       '',
+       ' ',
+       base64_decode("w4DDoMOHw6fDiMOo"), // non-ascii characters
+       "\"\n",
+/*25*/ " \t\r\n",
+/*26*/ "\v\f",
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo "--- testing: $fusion << $otherVal ---\n";
-      try {
-        var_dump($longVal<<$otherVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo "--- testing: $otherVal << $longVal ---\n";
-      try {
-        var_dump($otherVal<<$longVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
+$iterator = 1;
+foreach($values as $fusion) {
+      echo "\n-- Iteration $iterator --\n";
+      var_dump( ctype_space($value) );
+      $iterator++;
+};
+setlocale(LC_CTYPE, $orig);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Cannot call extract() dynamically
-int(2)
---- testing: 9223372036854775807 << 0 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 << 1 ---
-int(-2)
---- testing: 9223372036854775807 << -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 7 ---
-int(-128)
---- testing: 9223372036854775807 << 9 ---
-int(-512)
---- testing: 9223372036854775807 << 65 ---
-int(0)
---- testing: 9223372036854775807 << -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 2147483647 ---
-int(0)
---- testing: 9223372036854775807 << 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 << 0 ---
-int(-9223372036854775808)
---- testing: -9223372036854775808 << 1 ---
-int(0)
---- testing: -9223372036854775808 << -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775808 << 7 ---
-int(0)
---- testing: -9223372036854775808 << 9 ---
-int(0)
---- testing: -9223372036854775808 << 65 ---
-int(0)
---- testing: -9223372036854775808 << -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775808 << 2147483647 ---
-int(0)
---- testing: -9223372036854775808 << 9223372036854775807 ---
-int(0)
---- testing: 2147483647 << 0 ---
-int(2147483647)
---- testing: 2147483647 << 1 ---
-int(4294967294)
---- testing: 2147483647 << -1 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 7 ---
-int(274877906816)
---- testing: 2147483647 << 9 ---
-int(1099511627264)
---- testing: 2147483647 << 65 ---
-int(0)
---- testing: 2147483647 << -44 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 2147483647 ---
-int(0)
---- testing: 2147483647 << 9223372036854775807 ---
-int(0)
---- testing: -2147483648 << 0 ---
-int(-2147483648)
---- testing: -2147483648 << 1 ---
-int(-4294967296)
---- testing: -2147483648 << -1 ---
-Exception: Bit shift by negative number
---- testing: -2147483648 << 7 ---
-int(-274877906944)
---- testing: -2147483648 << 9 ---
-int(-1099511627776)
---- testing: -2147483648 << 65 ---
-int(0)
---- testing: -2147483648 << -44 ---
-Exception: Bit shift by negative number
---- testing: -2147483648 << 2147483647 ---
-int(0)
---- testing: -2147483648 << 9223372036854775807 ---
-int(0)
---- testing: 9223372034707292160 << 0 ---
-int(9223372034707292160)
---- testing: 9223372034707292160 << 1 ---
-int(-4294967296)
---- testing: 9223372034707292160 << -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372034707292160 << 7 ---
-int(-274877906944)
---- testing: 9223372034707292160 << 9 ---
-int(-1099511627776)
---- testing: 9223372034707292160 << 65 ---
-int(0)
---- testing: 9223372034707292160 << -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372034707292160 << 2147483647 ---
-int(0)
---- testing: 9223372034707292160 << 9223372036854775807 ---
-int(0)
---- testing: -9223372034707292160 << 0 ---
-int(-9223372034707292160)
---- testing: -9223372034707292160 << 1 ---
-int(4294967296)
---- testing: -9223372034707292160 << -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372034707292160 << 7 ---
-int(274877906944)
---- testing: -9223372034707292160 << 9 ---
-int(1099511627776)
---- testing: -9223372034707292160 << 65 ---
-int(0)
---- testing: -9223372034707292160 << -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372034707292160 << 2147483647 ---
-int(0)
---- testing: -9223372034707292160 << 9223372036854775807 ---
-int(0)
---- testing: 2147483648 << 0 ---
-int(2147483648)
---- testing: 2147483648 << 1 ---
-int(4294967296)
---- testing: 2147483648 << -1 ---
-Exception: Bit shift by negative number
---- testing: 2147483648 << 7 ---
-int(274877906944)
---- testing: 2147483648 << 9 ---
-int(1099511627776)
---- testing: 2147483648 << 65 ---
-int(0)
---- testing: 2147483648 << -44 ---
-Exception: Bit shift by negative number
---- testing: 2147483648 << 2147483647 ---
-int(0)
---- testing: 2147483648 << 9223372036854775807 ---
-int(0)
---- testing: -2147483649 << 0 ---
-int(-2147483649)
---- testing: -2147483649 << 1 ---
-int(-4294967298)
---- testing: -2147483649 << -1 ---
-Exception: Bit shift by negative number
---- testing: -2147483649 << 7 ---
-int(-274877907072)
---- testing: -2147483649 << 9 ---
-int(-1099511628288)
---- testing: -2147483649 << 65 ---
-int(0)
---- testing: -2147483649 << -44 ---
-Exception: Bit shift by negative number
---- testing: -2147483649 << 2147483647 ---
-int(0)
---- testing: -2147483649 << 9223372036854775807 ---
-int(0)
---- testing: 4294967294 << 0 ---
-int(4294967294)
---- testing: 4294967294 << 1 ---
-int(8589934588)
---- testing: 4294967294 << -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967294 << 7 ---
-int(549755813632)
---- testing: 4294967294 << 9 ---
-int(2199023254528)
---- testing: 4294967294 << 65 ---
-int(0)
---- testing: 4294967294 << -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967294 << 2147483647 ---
-int(0)
---- testing: 4294967294 << 9223372036854775807 ---
-int(0)
---- testing: 4294967295 << 0 ---
-int(4294967295)
---- testing: 4294967295 << 1 ---
-int(8589934590)
---- testing: 4294967295 << -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967295 << 7 ---
-int(549755813760)
---- testing: 4294967295 << 9 ---
-int(2199023255040)
---- testing: 4294967295 << 65 ---
-int(0)
---- testing: 4294967295 << -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967295 << 2147483647 ---
-int(0)
---- testing: 4294967295 << 9223372036854775807 ---
-int(0)
---- testing: 4294967293 << 0 ---
-int(4294967293)
---- testing: 4294967293 << 1 ---
-int(8589934586)
---- testing: 4294967293 << -1 ---
-Exception: Bit shift by negative number
---- testing: 4294967293 << 7 ---
-int(549755813504)
---- testing: 4294967293 << 9 ---
-int(2199023254016)
---- testing: 4294967293 << 65 ---
-int(0)
---- testing: 4294967293 << -44 ---
-Exception: Bit shift by negative number
---- testing: 4294967293 << 2147483647 ---
-int(0)
---- testing: 4294967293 << 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775806 << 0 ---
-int(9223372036854775806)
---- testing: 9223372036854775806 << 1 ---
-int(-4)
---- testing: 9223372036854775806 << -1 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775806 << 7 ---
-int(-256)
---- testing: 9223372036854775806 << 9 ---
-int(-1024)
---- testing: 9223372036854775806 << 65 ---
-int(0)
---- testing: 9223372036854775806 << -44 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775806 << 2147483647 ---
-int(0)
---- testing: 9223372036854775806 << 9223372036854775807 ---
-int(0)
---- testing: 9.2233720368548E+18 << 0 ---
-int(-9223372036854775808)
---- testing: 9.2233720368548E+18 << 1 ---
-int(0)
---- testing: 9.2233720368548E+18 << -1 ---
-Exception: Bit shift by negative number
---- testing: 9.2233720368548E+18 << 7 ---
-int(0)
---- testing: 9.2233720368548E+18 << 9 ---
-int(0)
---- testing: 9.2233720368548E+18 << 65 ---
-int(0)
---- testing: 9.2233720368548E+18 << -44 ---
-Exception: Bit shift by negative number
---- testing: 9.2233720368548E+18 << 2147483647 ---
-int(0)
---- testing: 9.2233720368548E+18 << 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775807 << 0 ---
-int(-9223372036854775807)
---- testing: -9223372036854775807 << 1 ---
-int(2)
---- testing: -9223372036854775807 << -1 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775807 << 7 ---
-int(128)
---- testing: -9223372036854775807 << 9 ---
-int(512)
---- testing: -9223372036854775807 << 65 ---
-int(0)
---- testing: -9223372036854775807 << -44 ---
-Exception: Bit shift by negative number
---- testing: -9223372036854775807 << 2147483647 ---
-int(0)
---- testing: -9223372036854775807 << 9223372036854775807 ---
-int(0)
---- testing: -9.2233720368548E+18 << 0 ---
-int(-9223372036854775808)
---- testing: -9.2233720368548E+18 << 1 ---
-int(0)
---- testing: -9.2233720368548E+18 << -1 ---
-Exception: Bit shift by negative number
---- testing: -9.2233720368548E+18 << 7 ---
-int(0)
---- testing: -9.2233720368548E+18 << 9 ---
-int(0)
---- testing: -9.2233720368548E+18 << 65 ---
-int(0)
---- testing: -9.2233720368548E+18 << -44 ---
-Exception: Bit shift by negative number
---- testing: -9.2233720368548E+18 << 2147483647 ---
-int(0)
---- testing: -9.2233720368548E+18 << 9223372036854775807 ---
-int(0)
---- testing: 0 << 9223372036854775807 ---
-int(0)
---- testing: 0 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 0 << 2147483647 ---
-int(0)
---- testing: 0 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 0 << 9223372034707292160 ---
-int(0)
---- testing: 0 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 0 << 2147483648 ---
-int(0)
---- testing: 0 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 0 << 4294967294 ---
-int(0)
---- testing: 0 << 4294967295 ---
-int(0)
---- testing: 0 << 4294967293 ---
-int(0)
---- testing: 0 << 9223372036854775806 ---
-int(0)
---- testing: 0 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 0 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 0 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 1 << 9223372036854775807 ---
-int(0)
---- testing: 1 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 1 << 2147483647 ---
-int(0)
---- testing: 1 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 1 << 9223372034707292160 ---
-int(0)
---- testing: 1 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 1 << 2147483648 ---
-int(0)
---- testing: 1 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 1 << 4294967294 ---
-int(0)
---- testing: 1 << 4294967295 ---
-int(0)
---- testing: 1 << 4294967293 ---
-int(0)
---- testing: 1 << 9223372036854775806 ---
-int(0)
---- testing: 1 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 1 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 1 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -1 << 9223372036854775807 ---
-int(0)
---- testing: -1 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: -1 << 2147483647 ---
-int(0)
---- testing: -1 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: -1 << 9223372034707292160 ---
-int(0)
---- testing: -1 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: -1 << 2147483648 ---
-int(0)
---- testing: -1 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: -1 << 4294967294 ---
-int(0)
---- testing: -1 << 4294967295 ---
-int(0)
---- testing: -1 << 4294967293 ---
-int(0)
---- testing: -1 << 9223372036854775806 ---
-int(0)
---- testing: -1 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -1 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: -1 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 7 << 9223372036854775807 ---
-int(0)
---- testing: 7 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 7 << 2147483647 ---
-int(0)
---- testing: 7 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 7 << 9223372034707292160 ---
-int(0)
---- testing: 7 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 7 << 2147483648 ---
-int(0)
---- testing: 7 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 7 << 4294967294 ---
-int(0)
---- testing: 7 << 4294967295 ---
-int(0)
---- testing: 7 << 4294967293 ---
-int(0)
---- testing: 7 << 9223372036854775806 ---
-int(0)
---- testing: 7 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 7 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 7 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9 << 9223372036854775807 ---
-int(0)
---- testing: 9 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 9 << 2147483647 ---
-int(0)
---- testing: 9 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 9 << 9223372034707292160 ---
-int(0)
---- testing: 9 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 9 << 2147483648 ---
-int(0)
---- testing: 9 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 9 << 4294967294 ---
-int(0)
---- testing: 9 << 4294967295 ---
-int(0)
---- testing: 9 << 4294967293 ---
-int(0)
---- testing: 9 << 9223372036854775806 ---
-int(0)
---- testing: 9 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 9 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 65 << 9223372036854775807 ---
-int(0)
---- testing: 65 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 65 << 2147483647 ---
-int(0)
---- testing: 65 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 65 << 9223372034707292160 ---
-int(0)
---- testing: 65 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 65 << 2147483648 ---
-int(0)
---- testing: 65 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 65 << 4294967294 ---
-int(0)
---- testing: 65 << 4294967295 ---
-int(0)
---- testing: 65 << 4294967293 ---
-int(0)
---- testing: 65 << 9223372036854775806 ---
-int(0)
---- testing: 65 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 65 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 65 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -44 << 9223372036854775807 ---
-int(0)
---- testing: -44 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: -44 << 2147483647 ---
-int(0)
---- testing: -44 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: -44 << 9223372034707292160 ---
-int(0)
---- testing: -44 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: -44 << 2147483648 ---
-int(0)
---- testing: -44 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: -44 << 4294967294 ---
-int(0)
---- testing: -44 << 4294967295 ---
-int(0)
---- testing: -44 << 4294967293 ---
-int(0)
---- testing: -44 << 9223372036854775806 ---
-int(0)
---- testing: -44 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: -44 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: -44 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 9223372036854775807 ---
-int(0)
---- testing: 2147483647 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 2147483647 ---
-int(0)
---- testing: 2147483647 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 9223372034707292160 ---
-int(0)
---- testing: 2147483647 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 2147483648 ---
-int(0)
---- testing: 2147483647 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << 4294967294 ---
-int(0)
---- testing: 2147483647 << 4294967295 ---
-int(0)
---- testing: 2147483647 << 4294967293 ---
-int(0)
---- testing: 2147483647 << 9223372036854775806 ---
-int(0)
---- testing: 2147483647 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 2147483647 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 << -9223372036854775808 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 2147483647 ---
-int(0)
---- testing: 9223372036854775807 << -2147483648 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 9223372034707292160 ---
-int(0)
---- testing: 9223372036854775807 << -9223372034707292160 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 2147483648 ---
-int(0)
---- testing: 9223372036854775807 << -2147483649 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << 4294967294 ---
-int(0)
---- testing: 9223372036854775807 << 4294967295 ---
-int(0)
---- testing: 9223372036854775807 << 4294967293 ---
-int(0)
---- testing: 9223372036854775807 << 9223372036854775806 ---
-int(0)
---- testing: 9223372036854775807 << 9.2233720368548E+18 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << -9223372036854775807 ---
-Exception: Bit shift by negative number
---- testing: 9223372036854775807 << -9.2233720368548E+18 ---
-Exception: Bit shift by negative number
+--EXTENSIONS--
+filter
+ctype
+--EXPECTF--
+int(-%d)
+int(-%d)
+*** Testing ctype_space() : usage variations ***
+
+-- Iteration 1 --
+bool(false)
+
+-- Iteration 2 --
+bool(false)
+
+-- Iteration 3 --
+bool(false)
+
+-- Iteration 4 --
+bool(true)
+
+-- Iteration 5 --
+bool(false)
+
+-- Iteration 6 --
+bool(false)
+
+-- Iteration 7 --
+bool(false)
+
+-- Iteration 8 --
+bool(false)
+
+-- Iteration 9 --
+bool(false)
+
+-- Iteration 10 --
+bool(true)
+
+-- Iteration 11 --
+bool(false)
+
+-- Iteration 12 --
+bool(false)
+
+-- Iteration 13 --
+bool(false)
+
+-- Iteration 14 --
+bool(false)
+
+-- Iteration 15 --
+bool(false)
+
+-- Iteration 16 --
+bool(false)
+
+-- Iteration 17 --
+bool(false)
+
+-- Iteration 18 --
+bool(false)
+
+-- Iteration 19 --
+bool(false)
+
+-- Iteration 20 --
+bool(false)
+
+-- Iteration 21 --
+bool(false)
+
+-- Iteration 22 --
+bool(true)
+
+-- Iteration 23 --
+bool(false)
+
+-- Iteration 24 --
+bool(false)
+
+-- Iteration 25 --
+bool(true)
+
+-- Iteration 26 --
+bool(true)

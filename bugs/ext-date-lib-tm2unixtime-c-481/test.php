@@ -61,30 +61,27 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-       echo "--- testing: $longVal, $otherVal ---\n";
-      var_dump(atan2($longVal, $otherVal));
-   }
-}
-$fusion = $otherVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$payload = 'O:23:"RecursiveFilterIterator":0:{}';
+ob_start("str_rot13");
+echo "foo\n";
 try {
-    var_dump(unserialize($fusion));
-} catch (Error $e) {
+    ob_end_flush();
+} catch (TypeError $e) {
     echo $e->getMessage(), "\n";
 }
+$fusion = $e;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$doubles = array(
+        -9223372036854775808,
+        -9223372036854775809,
+        -9223372036854775818,
+        -9223372036854775908,
+        -9223372036854776808,
+        );
+foreach ($doubles as $d) {
+        $fusion = (int)$d;
+        var_dump($l);
+}
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

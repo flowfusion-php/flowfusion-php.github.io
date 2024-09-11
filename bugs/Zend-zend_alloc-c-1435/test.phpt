@@ -1,13 +1,13 @@
 --TEST--
-DomDocument::schemaValidateSource() - non-conforming schema+Bug #71818 (Memory leak when array altered in destructor)
+Cloning a dtd node+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
 zend.enable_gc = 1
-precision=13
-opcache.file_update_protection=0
+session.use_strict_mode=0
+session.use_cookies=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0114
+opcache.jit=1035
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,12 +72,16 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$doc = new DOMDocument;
-$doc->load(__DIR__."/book.xml");
-$xsd = file_get_contents(__DIR__."/book-non-conforming-schema.xsd");
-$result = $doc->schemaValidateSource($xsd);
-var_dump($result);
-$fusion = $result;
+$dom = Dom\HTMLDocument::createFromString('<!DOCTYPE html><html></html>');
+$dt1 = clone $dom->doctype;
+var_dump($dt1 === $dom->doctype);
+var_dump($dt1->name);
+echo "\n";
+$dt2 = $dom->doctype->cloneNode();
+var_dump($dt2 === $dt1);
+var_dump($dt2 === $dom->doctype);
+var_dump($dt2->name);
+$fusion = $dt1;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -103,7 +107,11 @@ var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
 dom
---EXPECTF--
-Warning: DOMDocument::schemaValidateSource(): Element 'books': No matching global declaration available for the validation root. in %s on line %d
+--EXPECT--
 bool(false)
+string(4) "html"
+
+bool(false)
+bool(false)
+string(4) "html"
 OK
