@@ -1,8 +1,68 @@
-=====crash_site:/php-src/ext/pcre/php_pcre.c:3074=====
-=====keywords:['use-after-free']=====
-=====bughit:1=====
 
-=====output=====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/ext/pcre/php_pcre.c:3074=====</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['use-after-free']=====</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:1=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
 string(5) "/.at/"
 string(2) "//"
 string(43) "|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|"
@@ -188,8 +248,12 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   Left alloca redzone:     ca
   Right alloca redzone:    cb
 ==581932==ABORTING
+            </pre>
+        </div>
 
-=====reproducing php(reduced)=====
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -273,9 +337,13 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
-=====reproducing phpt=====
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
 --TEST--
 SPL: RegexIterator::getRegex() basic tests+Bug #71527 Buffer over-write in finfo_open with malformed magic file
 --INI--
@@ -375,9 +443,13 @@ string(2) "//"
 string(43) "|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|"
 Warning: finfo_open(): Failed to load magic database at "%sbug71527.magic" in %sbug71527.php on line %d
 bool(false)
-=====
 
-=====reproducing script=====
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -461,5 +533,10 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

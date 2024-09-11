@@ -1,8 +1,68 @@
-=====crash_site:/php-src/Zend/zend_alloc.c:1429=====
-=====keywords:['stack-overflow']=====
-=====bughit:1=====
 
-=====output=====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/Zend/zend_alloc.c:1429=====</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['stack-overflow']=====</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:1=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
 Warning: Invalid "opcache.jit" setting. Should be "disable", "on", "off", "tracing", "function" or 4-digit number in Unknown on line 0
 *** Testing open_basedir configuration [tempnam] ***
 bool(true)
@@ -317,8 +377,12 @@ AddressSanitizer:DEADLYSIGNAL
 
 SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1429:64 in zend_mm_free_small
 ==4150349==ABORTING
+            </pre>
+        </div>
 
-=====reproducing php(reduced)=====
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -428,9 +492,13 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
-=====reproducing phpt=====
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
 --TEST--
 Test open_basedir configuration+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
@@ -593,9 +661,13 @@ string(%d) "%s"
 bool(true)
 *** Finished testing open_basedir configuration [tempnam] ***
 OK
-=====
 
-=====reproducing script=====
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -705,5 +777,10 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

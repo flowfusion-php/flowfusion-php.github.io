@@ -1,8 +1,68 @@
-=====crash_site:/php-src/Zend/zend_types.h:1348=====
-=====keywords:['SEGV']=====
-=====bughit:16=====
 
-=====output=====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/Zend/zend_types.h:1348=====</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['SEGV']=====</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:16=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
 *** Testing bin2hex() : basic functionality ***
 -- Iteration 1 --
 string(46) "4865726520697320612073696d706c6520737472696e67"
@@ -46,8 +106,12 @@ AddressSanitizer:DEADLYSIGNAL
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9 in zend_gc_delref
 ==286605==ABORTING
+            </pre>
+        </div>
 
-=====reproducing php(reduced)=====
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -189,9 +253,13 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
-=====reproducing phpt=====
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
 --TEST--
 Test bin2hex() function : basic functionality+Lazy objects: Foreach initializes object
 --FILE--
@@ -374,9 +442,13 @@ int(3)
 Exception: 
 # Proxy (init exception):
 Exception:
-=====
 
-=====reproducing script=====
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -518,5 +590,10 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

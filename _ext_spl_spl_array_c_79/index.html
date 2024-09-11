@@ -1,8 +1,68 @@
-=====crash_site:/php-src/ext/spl/spl_array.c:79=====
-=====keywords:['null pointer']=====
-=====bughit:2=====
 
-=====output=====
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/ext/spl/spl_array.c:79=====</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['null pointer']=====</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:2=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
 # Ghost
 bool(true)
 string(11) "initializer"
@@ -15,8 +75,12 @@ int(1)
 bool(false)
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_array.c:79:7: runtime error: member access within null pointer of type 'HashTable' (aka 'struct _zend_array')
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_array.c:79:7 in
+            </pre>
+        </div>
 
-=====reproducing php(reduced)=====
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -124,9 +188,13 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
-=====reproducing phpt=====
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
 --TEST--
 Lazy objects: ReflectionClass::isUninitializedLazyObject()+SPL: RecursiveIteratorIterator, getCallChildren
 --FILE--
@@ -259,9 +327,13 @@ array(3) {
 int(7)
 ArrayIterator::__construct(): Argument #1 ($array) must be of type array, int given
 NULL
-=====
 
-=====reproducing script=====
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -369,5 +441,10 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

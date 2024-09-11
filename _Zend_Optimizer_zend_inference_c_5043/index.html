@@ -1,91 +1,77 @@
-=====crash_site:/php-src/Zend/Optimizer/zend_inference.c:5043=====
-=====keywords:['null pointer']=====
-=====bughit:836=====
 
-=====output=====
-*** Testing session_set_save_handler() : test write short circuit ***
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused22.php on line 70
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-CreateID [PHPT-1726059173]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Starting session again..!
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/Zend/Optimizer/zend_inference.c:5043=====</pre>
+        </div>
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused22.php on line 82
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Starting session again..!
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['null pointer']=====</pre>
+        </div>
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused22.php on line 89
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-array(4) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-  ["Bar"]=>
-  string(3) "Foo"
-}
-Update [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Cleanup
-Open [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Read [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-Destroy [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPT-1726059173]
-Close [/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/session_set_save_handler_variation6,PHPSESSID]
-Basic test of POSIX times function
-array(5) {
-  ["ticks"]=>
-  int(1752403576)
-  ["utime"]=>
-  int(3)
-  ["stime"]=>
-  int(2)
-  ["cutime"]=>
-  int(0)
-  ["cstime"]=>
-  int(0)
-}
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
-?>
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:842=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
+--- testing include path ---
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in
+            </pre>
+        </div>
 
-=====reproducing php(reduced)=====
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -149,73 +135,124 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start();
-echo "*** Testing session_set_save_handler() : test write short circuit ***\n";
-require_once "save_handler.inc";
-$path = __DIR__ . '/session_set_save_handler_variation6';
-@mkdir($path);
-session_save_path($path);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-$session_id = session_id();
-$_SESSION["Blah"] = "Hello World!";
-$_SESSION["Foo"] = FALSE;
-$_SESSION["Guff"] = 1234567890;
-var_dump($_SESSION);
-session_write_close();
-session_unset();
-var_dump($_SESSION);
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-$_SESSION['Bar'] = 'Foo';
-session_write_close();
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-// $_SESSION should be the same and should skip write()
-session_write_close();
-echo "Cleanup\n";
-session_start();
-session_destroy();
-ob_end_flush();
-$fusion = $session_id;
+//create the include directory structure
+$thisTestDir =  basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$workingDir = "workdir";
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptDir = __DIR__;
+$baseDir = getcwd();
+$secondFile = $baseDir."/dir2/".$filename;
+$firstFile = "../dir1/".$filename;
+$scriptFile = $scriptDir.'/'.$filename;
+$newdirs = array("dir1", "dir2", "dir3");
+$pathSep = ":";
+$newIncludePath = "";
+if(substr(PHP_OS, 0, 3) == 'WIN' ) {
+   $pathSep = ";";
+}
+foreach($newdirs as $newdir) {
+   mkdir($newdir);
+   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
+}
+mkdir($workingDir);
+chdir($workingDir);
+//define the files to go into these directories, create one in dir2
+echo "\n--- testing include path ---\n";
+set_include_path($newIncludePath);
+$modes = array("r", "r+", "rt");
+foreach($modes as $mode) {
+    test_fopen($mode);
+}
+// remove the directory structure
+chdir($baseDir);
+rmdir($workingDir);
+foreach($newdirs as $newdir) {
+   rmdir($newdir);
+}
+chdir("..");
+rmdir($thisTestDir);
+function test_fopen($mode) {
+   global $scriptFile, $secondFile, $firstFile, $filename;
+   // create a file in the middle directory
+   $h = fopen($secondFile, "w");
+   fwrite($h, "in dir2");
+   fclose($h);
+   echo "\n** testing with mode=$mode **\n";
+   // should read dir2 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //create a file in dir1
+   $h = fopen($firstFile, "w");
+   fwrite($h, "in dir1");
+   fclose($h);
+   //should now read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in working directory
+   $h = fopen($filename, "w");
+   fwrite($h, "in working dir");
+   fclose($h);
+   //should still read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   unlink($firstFile);
+   unlink($secondFile);
+   //should read the file in working dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in the script directory
+   $h = fopen($scriptFile, "w");
+   fwrite($h, "in script dir");
+   fclose($h);
+   //should read the file in script dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //cleanup
+   unlink($filename);
+   unlink($scriptFile);
+}
+$fusion = $newdirs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "Basic test of POSIX times function\n";
-  $times = posix_times();
-  var_dump($times);
-  if ($times == FALSE) {
-    $fusion= posix_get_last_error();
-    var_dump(posix_strerror($errno));
-  }
-?>
+$fusionrray = ['a', 'b', 'c', 'd'];
+foreach ($array as &$a) {
+}
+var_dump($array);
+var_dump(array_values($array));
+var_dump($a);
+var_dump(array_reverse($array));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
-=====reproducing phpt=====
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
 --TEST--
-Test session_set_save_handler() function : test lazy_write+Test posix_times() function : basic functionality
+Test fopen() function : variation: use include path and stream context (absolute directories in path)+foreach with reference
 --INI--
-session.use_strict_mode=0
-session.lazy_write=1
-session.save_path=
-session.name=PHPSESSID
-session.gc_probability=0
-session.save_handler=files
-session.gc_probability=0
-session.sid_length=32
+opcache.memory_consumption=7
+opcache.validate_timestamps=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1121
+opcache.jit=1011
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -280,142 +317,169 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start();
-echo "*** Testing session_set_save_handler() : test write short circuit ***\n";
-require_once "save_handler.inc";
-$path = __DIR__ . '/session_set_save_handler_variation6';
-@mkdir($path);
-session_save_path($path);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-$session_id = session_id();
-$_SESSION["Blah"] = "Hello World!";
-$_SESSION["Foo"] = FALSE;
-$_SESSION["Guff"] = 1234567890;
-var_dump($_SESSION);
-session_write_close();
-session_unset();
-var_dump($_SESSION);
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-$_SESSION['Bar'] = 'Foo';
-session_write_close();
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-// $_SESSION should be the same and should skip write()
-session_write_close();
-echo "Cleanup\n";
-session_start();
-session_destroy();
-ob_end_flush();
-$fusion = $session_id;
+//create the include directory structure
+$thisTestDir =  basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$workingDir = "workdir";
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptDir = __DIR__;
+$baseDir = getcwd();
+$secondFile = $baseDir."/dir2/".$filename;
+$firstFile = "../dir1/".$filename;
+$scriptFile = $scriptDir.'/'.$filename;
+$newdirs = array("dir1", "dir2", "dir3");
+$pathSep = ":";
+$newIncludePath = "";
+if(substr(PHP_OS, 0, 3) == 'WIN' ) {
+   $pathSep = ";";
+}
+foreach($newdirs as $newdir) {
+   mkdir($newdir);
+   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
+}
+mkdir($workingDir);
+chdir($workingDir);
+//define the files to go into these directories, create one in dir2
+echo "\n--- testing include path ---\n";
+set_include_path($newIncludePath);
+$modes = array("r", "r+", "rt");
+foreach($modes as $mode) {
+    test_fopen($mode);
+}
+// remove the directory structure
+chdir($baseDir);
+rmdir($workingDir);
+foreach($newdirs as $newdir) {
+   rmdir($newdir);
+}
+chdir("..");
+rmdir($thisTestDir);
+function test_fopen($mode) {
+   global $scriptFile, $secondFile, $firstFile, $filename;
+   // create a file in the middle directory
+   $h = fopen($secondFile, "w");
+   fwrite($h, "in dir2");
+   fclose($h);
+   echo "\n** testing with mode=$mode **\n";
+   // should read dir2 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //create a file in dir1
+   $h = fopen($firstFile, "w");
+   fwrite($h, "in dir1");
+   fclose($h);
+   //should now read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in working directory
+   $h = fopen($filename, "w");
+   fwrite($h, "in working dir");
+   fclose($h);
+   //should still read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   unlink($firstFile);
+   unlink($secondFile);
+   //should read the file in working dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in the script directory
+   $h = fopen($scriptFile, "w");
+   fwrite($h, "in script dir");
+   fclose($h);
+   //should read the file in script dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //cleanup
+   unlink($filename);
+   unlink($scriptFile);
+}
+$fusion = $newdirs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "Basic test of POSIX times function\n";
-  $times = posix_times();
-  var_dump($times);
-  if ($times == FALSE) {
-    $fusion= posix_get_last_error();
-    var_dump(posix_strerror($errno));
-  }
-?>
+$fusionrray = ['a', 'b', 'c', 'd'];
+foreach ($array as &$a) {
+}
+var_dump($array);
+var_dump(array_values($array));
+var_dump($a);
+var_dump(array_reverse($array));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-session
-posix
---CLEAN--
-<?php
-$path = __DIR__ . '/session_set_save_handler_variation6';
-rmdir($path);
-?>
---EXPECTF--
-*** Testing session_set_save_handler() : test write short circuit ***
+--EXPECT--
+--- testing include path ---
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
-Open [%s,PHPSESSID]
-CreateID [PHPT-%s]
-Read [%s,%s]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
-Close [%s,PHPSESSID]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Starting session again..!
+** testing with mode=r **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
-Open [%s,PHPSESSID]
-Read [%s,%s]
-array(3) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-}
-Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
-Close [%s,PHPSESSID]
-Starting session again..!
+** testing with mode=r+ **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
 
-Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
-Open [%s,PHPSESSID]
-Read [%s,%s]
+** testing with mode=rt **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
 array(4) {
-  ["Blah"]=>
-  string(12) "Hello World!"
-  ["Foo"]=>
-  bool(false)
-  ["Guff"]=>
-  int(1234567890)
-  ["Bar"]=>
-  string(3) "Foo"
+  [0]=>
+  string(1) "a"
+  [1]=>
+  string(1) "b"
+  [2]=>
+  string(1) "c"
+  [3]=>
+  &string(1) "d"
 }
-Update [%s,PHPT-%d]
-Close [%s,PHPSESSID]
-Cleanup
-Open [%s,PHPSESSID]
-Read [%s,PHPT-%d]
-Destroy [%s,PHPT-%d]
-Close [%s,PHPSESSID]
-Basic test of POSIX times function
-array(5) {
-  ["ticks"]=>
-  int(%i)
-  ["utime"]=>
-  int(%i)
-  ["stime"]=>
-  int(%i)
-  ["cutime"]=>
-  int(%i)
-  ["cstime"]=>
-  int(%i)
+array(4) {
+  [0]=>
+  string(1) "a"
+  [1]=>
+  string(1) "b"
+  [2]=>
+  string(1) "c"
+  [3]=>
+  &string(1) "d"
 }
-===DONE====
-=====
+string(1) "d"
+array(4) {
+  [0]=>
+  &string(1) "d"
+  [1]=>
+  string(1) "c"
+  [2]=>
+  string(1) "b"
+  [3]=>
+  string(1) "a"
+}
 
-=====reproducing script=====
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
 <?php
 function fuzz_internal_interface($vars) {
     $result = array();
@@ -479,54 +543,112 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start();
-echo "*** Testing session_set_save_handler() : test write short circuit ***\n";
-require_once "save_handler.inc";
-$path = __DIR__ . '/session_set_save_handler_variation6';
-@mkdir($path);
-session_save_path($path);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-$session_id = session_id();
-$_SESSION["Blah"] = "Hello World!";
-$_SESSION["Foo"] = FALSE;
-$_SESSION["Guff"] = 1234567890;
-var_dump($_SESSION);
-session_write_close();
-session_unset();
-var_dump($_SESSION);
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-$_SESSION['Bar'] = 'Foo';
-session_write_close();
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-// $_SESSION should be the same and should skip write()
-session_write_close();
-echo "Cleanup\n";
-session_start();
-session_destroy();
-ob_end_flush();
-$fusion = $session_id;
+//create the include directory structure
+$thisTestDir =  basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$workingDir = "workdir";
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptDir = __DIR__;
+$baseDir = getcwd();
+$secondFile = $baseDir."/dir2/".$filename;
+$firstFile = "../dir1/".$filename;
+$scriptFile = $scriptDir.'/'.$filename;
+$newdirs = array("dir1", "dir2", "dir3");
+$pathSep = ":";
+$newIncludePath = "";
+if(substr(PHP_OS, 0, 3) == 'WIN' ) {
+   $pathSep = ";";
+}
+foreach($newdirs as $newdir) {
+   mkdir($newdir);
+   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
+}
+mkdir($workingDir);
+chdir($workingDir);
+//define the files to go into these directories, create one in dir2
+echo "\n--- testing include path ---\n";
+set_include_path($newIncludePath);
+$modes = array("r", "r+", "rt");
+foreach($modes as $mode) {
+    test_fopen($mode);
+}
+// remove the directory structure
+chdir($baseDir);
+rmdir($workingDir);
+foreach($newdirs as $newdir) {
+   rmdir($newdir);
+}
+chdir("..");
+rmdir($thisTestDir);
+function test_fopen($mode) {
+   global $scriptFile, $secondFile, $firstFile, $filename;
+   // create a file in the middle directory
+   $h = fopen($secondFile, "w");
+   fwrite($h, "in dir2");
+   fclose($h);
+   echo "\n** testing with mode=$mode **\n";
+   // should read dir2 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //create a file in dir1
+   $h = fopen($firstFile, "w");
+   fwrite($h, "in dir1");
+   fclose($h);
+   //should now read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in working directory
+   $h = fopen($filename, "w");
+   fwrite($h, "in working dir");
+   fclose($h);
+   //should still read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   unlink($firstFile);
+   unlink($secondFile);
+   //should read the file in working dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in the script directory
+   $h = fopen($scriptFile, "w");
+   fwrite($h, "in script dir");
+   fclose($h);
+   //should read the file in script dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //cleanup
+   unlink($filename);
+   unlink($scriptFile);
+}
+$fusion = $newdirs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "Basic test of POSIX times function\n";
-  $times = posix_times();
-  var_dump($times);
-  if ($times == FALSE) {
-    $fusion= posix_get_last_error();
-    var_dump(posix_strerror($errno));
-  }
-?>
+$fusionrray = ['a', 'b', 'c', 'd'];
+foreach ($array as &$a) {
+}
+var_dump($array);
+var_dump(array_values($array));
+var_dump($a);
+var_dump(array_reverse($array));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
-=====
 
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

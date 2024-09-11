@@ -61,50 +61,103 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-ob_start();
-echo "*** Testing session_set_save_handler() : test write short circuit ***\n";
-require_once "save_handler.inc";
-$path = __DIR__ . '/session_set_save_handler_variation6';
-@mkdir($path);
-session_save_path($path);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-$session_id = session_id();
-$_SESSION["Blah"] = "Hello World!";
-$_SESSION["Foo"] = FALSE;
-$_SESSION["Guff"] = 1234567890;
-var_dump($_SESSION);
-session_write_close();
-session_unset();
-var_dump($_SESSION);
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-$_SESSION['Bar'] = 'Foo';
-session_write_close();
-echo "Starting session again..!\n";
-session_id($session_id);
-session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
-session_start();
-var_dump($_SESSION);
-// $_SESSION should be the same and should skip write()
-session_write_close();
-echo "Cleanup\n";
-session_start();
-session_destroy();
-ob_end_flush();
-$fusion = $session_id;
+//create the include directory structure
+$thisTestDir =  basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$workingDir = "workdir";
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptDir = __DIR__;
+$baseDir = getcwd();
+$secondFile = $baseDir."/dir2/".$filename;
+$firstFile = "../dir1/".$filename;
+$scriptFile = $scriptDir.'/'.$filename;
+$newdirs = array("dir1", "dir2", "dir3");
+$pathSep = ":";
+$newIncludePath = "";
+if(substr(PHP_OS, 0, 3) == 'WIN' ) {
+   $pathSep = ";";
+}
+foreach($newdirs as $newdir) {
+   mkdir($newdir);
+   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
+}
+mkdir($workingDir);
+chdir($workingDir);
+//define the files to go into these directories, create one in dir2
+echo "\n--- testing include path ---\n";
+set_include_path($newIncludePath);
+$modes = array("r", "r+", "rt");
+foreach($modes as $mode) {
+    test_fopen($mode);
+}
+// remove the directory structure
+chdir($baseDir);
+rmdir($workingDir);
+foreach($newdirs as $newdir) {
+   rmdir($newdir);
+}
+chdir("..");
+rmdir($thisTestDir);
+function test_fopen($mode) {
+   global $scriptFile, $secondFile, $firstFile, $filename;
+   // create a file in the middle directory
+   $h = fopen($secondFile, "w");
+   fwrite($h, "in dir2");
+   fclose($h);
+   echo "\n** testing with mode=$mode **\n";
+   // should read dir2 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //create a file in dir1
+   $h = fopen($firstFile, "w");
+   fwrite($h, "in dir1");
+   fclose($h);
+   //should now read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in working directory
+   $h = fopen($filename, "w");
+   fwrite($h, "in working dir");
+   fclose($h);
+   //should still read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   unlink($firstFile);
+   unlink($secondFile);
+   //should read the file in working dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in the script directory
+   $h = fopen($scriptFile, "w");
+   fwrite($h, "in script dir");
+   fclose($h);
+   //should read the file in script dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //cleanup
+   unlink($filename);
+   unlink($scriptFile);
+}
+$fusion = $newdirs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "Basic test of POSIX times function\n";
-  $times = posix_times();
-  var_dump($times);
-  if ($times == FALSE) {
-    $fusion= posix_get_last_error();
-    var_dump(posix_strerror($errno));
-  }
-?>
+$fusionrray = ['a', 'b', 'c', 'd'];
+foreach ($array as &$a) {
+}
+var_dump($array);
+var_dump(array_values($array));
+var_dump($a);
+var_dump(array_reverse($array));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
