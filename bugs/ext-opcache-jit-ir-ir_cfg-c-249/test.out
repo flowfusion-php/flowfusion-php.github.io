@@ -1,0 +1,25 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==4032897==ERROR: AddressSanitizer: SEGV on unknown address 0x7fbd200c59f4 (pc 0x7fbd056a566d bp 0x7ffee53e57f0 sp 0x7ffee53e2c80 T0)
+==4032897==The signal is caused by a WRITE memory access.
+    #0 0x7fbd056a566d in ir_build_cfg /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_cfg.c:249:62
+    #1 0x7fbd060e77d8 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2778:2
+    #2 0x7fbd05fbed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
+    #3 0x7fbd05cb911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
+    #4 0x7fbd05c1dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
+    #5 0x7fbd05c4fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
+    #6 0x7fbd055f60be in zend_accel_script_persist /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:1406:4
+    #7 0x7fbd0563c9d0 in cache_script_in_shared_memory /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:1633:26
+    #8 0x7fbd05631c33 in persistent_compile_file /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2167:24
+    #9 0x55c1000c7399 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1919:28
+    #10 0x55c0fec77e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
+    #11 0x55c0fec786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
+    #12 0x55c1000d5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #13 0x55c1000d14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #14 0x7fbd0ba49d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #15 0x7fbd0ba49e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #16 0x55c0fce03244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_cfg.c:249:62 in ir_build_cfg
+==4032897==ABORTING

@@ -1,0 +1,125 @@
+--- testing: 9223372036854775807 ---
+bool(true)
+--- testing: -9223372036854775808 ---
+bool(true)
+--- testing: 2147483647 ---
+bool(true)
+--- testing: -2147483648 ---
+bool(true)
+--- testing: 9223372034707292160 ---
+bool(true)
+--- testing: -9223372034707292160 ---
+bool(true)
+--- testing: 2147483648 ---
+bool(true)
+--- testing: -2147483649 ---
+bool(true)
+--- testing: 4294967294 ---
+bool(true)
+--- testing: 4294967295 ---
+bool(true)
+--- testing: 4294967293 ---
+bool(true)
+--- testing: 9223372036854775806 ---
+bool(true)
+--- testing: 9.2233720368548E+18 ---
+bool(true)
+--- testing: -9223372036854775807 ---
+bool(true)
+--- testing: -9.2233720368548E+18 ---
+bool(true)
+int(1)
+int(1)
+int(1)
+int(2)
+int(1)
+int(2)
+array(2) {
+  ["_a"]=>
+  int(1)
+  ["_b"]=>
+  &int(2)
+}
+int(1)
+int(1)
+int(1)
+int(2)
+int(2)
+int(2)
+array(2) {
+  ["_a"]=>
+  &int(2)
+  ["_b"]=>
+  &int(2)
+}
+string(11) "random_var:"
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+array(0) {
+}
+Calling function: forward_static_call with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function forward_static_call: forward_static_call(): Argument #1 ($callback) must be a valid callback, no array or string given
+Calling function: headers_list with arguments: 
+Calling function: get_loaded_extensions with arguments: -9.2233720368548E+18
+Calling function: xmlwriter_open_memory with arguments: 
+Calling function: disk_total_space with arguments: -9.2233720368548E+18
+
+Warning: disk_total_space(): No such file or directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 41
+Calling function: xml_set_notation_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+-9.2233720368548E+18, Array
+Error calling function xml_set_notation_decl_handler: xml_set_notation_decl_handler(): Argument #1 ($parser) must be of type XMLParser, float given
+Calling function: xml_set_start_namespace_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+Array, -9.2233720368548E+18
+Error calling function xml_set_start_namespace_decl_handler: xml_set_start_namespace_decl_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: link with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+Array, -9.2233720368548E+18
+Error calling function link: link(): Argument #1 ($target) must be of type string, array given
+Calling function: idate with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+Array, Array
+Error calling function idate: idate(): Argument #1 ($format) must be of type string, array given
+Calling function: floor with arguments: -9.2233720368548E+18
+Calling function: dns_get_record with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: dns_get_record(): Argument #3 ($authoritative_name_servers) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 41
+
+Warning: dns_get_record(): Argument #4 ($additional_records) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 41
+Error calling function dns_get_record: dns_get_record(): Argument #2 ($type) must be between 1 and 65535 when argument #5 ($raw) is true
+Calling function: localtime with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+-9.2233720368548E+18, Array
+Error calling function localtime: localtime(): Argument #2 ($associative) must be of type bool, array given
+Calling function: date_parse with arguments: -9.2233720368548E+18
+Calling function: date_create with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function date_create: date_create(): Argument #2 ($timezone) must be of type ?DateTimeZone, float given
+Calling function: getmypid with arguments: 
+Calling function: is_iterable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+Array
+Calling function: iptcparse with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+Array
+Error calling function iptcparse: iptcparse(): Argument #1 ($iptc_block) must be of type string, array given
+Calling function: ob_end_flush with arguments: 
+
+Notice: ob_end_flush(): Failed to delete and flush buffer. No buffer to delete or flush in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 41
+Calling function: str_decrement with arguments: -9.2233720368548E+18
+Error calling function str_decrement: str_decrement(): Argument #1 ($string) must be composed only of alphanumeric ASCII characters
+Calling function: stream_bucket_new with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function stream_bucket_new: stream_bucket_new(): supplied argument is not a valid stream resource
+Calling function: socket_set_blocking with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 38
+-9.2233720368548E+18, Array
+Error calling function socket_set_blocking: socket_set_blocking(): Argument #1 ($stream) must be of type resource, float given
+Calling function: assert_options with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+
+Deprecated: Function assert_options() is deprecated since 8.3 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused270.php on line 41
+Error calling function assert_options: assert_options(): Argument #1 ($option) must be an ASSERT_* constant
+Calling function: date_sun_info with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12: runtime error: signed integer overflow: -4611686018427403200 + -4611686018427403200 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12 in

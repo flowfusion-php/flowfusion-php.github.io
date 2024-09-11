@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>=====crash_site:/php-src/ext/pcre/php_pcre.c:3074=====</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>=====keywords:['use-after-free']=====</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>=====bughit:1=====</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
+string(5) "/.at/"
+string(2) "//"
+string(43) "|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|"
+
+Warning: finfo_open(): Failed to load magic database at "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug71527.magic" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 77
+object(ArrayIterator)#1 (1) {
+  ["storage":"ArrayIterator":private]=>
+  array(3) {
+    [0]=>
+    string(3) "cat"
+    [1]=>
+    string(3) "hat"
+    [2]=>
+    string(3) "sat"
+  }
+}
+string(11) "random_var:"
+object(RegexIterator)#2 (1) {
+  ["replacement"]=>
+  NULL
+}
+array(1) {
+  [0]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php"
+}
+int(1)
+Calling function: move_uploaded_file with arguments: Error calling function move_uploaded_file: Object of class RegexIterator could not be converted to string
+Calling function: getopt with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Error calling function getopt: Object of class RegexIterator could not be converted to string
+Calling function: get_debug_type with arguments: Error calling function get_debug_type: Object of class RegexIterator could not be converted to string
+Calling function: xmlwriter_end_dtd_entity with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array
+Error calling function xmlwriter_end_dtd_entity: xmlwriter_end_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: strtoupper with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array
+Error calling function strtoupper: strtoupper(): Argument #1 ($string) must be of type string, array given
+Calling function: session_name with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array
+Error calling function session_name: session_name(): Argument #1 ($name) must be of type ?string, array given
+Calling function: xmlwriter_start_attribute with arguments: Error calling function xmlwriter_start_attribute: Object of class RegexIterator could not be converted to string
+Calling function: array_multisort with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+1, Array
+Error calling function array_multisort: array_multisort(): Argument #1 ($array) must be an array or a sort flag that has not already been specified
+Calling function: xmlwriter_start_element with arguments: 1, 1
+Error calling function xmlwriter_start_element: xmlwriter_start_element(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: session_set_cookie_params with arguments: Error calling function session_set_cookie_params: Object of class RegexIterator could not be converted to string
+Calling function: assert with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Error calling function assert: Object of class RegexIterator could not be converted to string
+Calling function: spl_autoload_call with arguments: Error calling function spl_autoload_call: Object of class RegexIterator could not be converted to string
+Calling function: date_isodate_set with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Error calling function date_isodate_set: Object of class RegexIterator could not be converted to string
+Calling function: strncasecmp with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array, Array, Array
+Error calling function strncasecmp: strncasecmp(): Argument #1 ($string1) must be of type string, array given
+Calling function: memory_reset_peak_usage with arguments: 
+Calling function: copy with arguments: Error calling function copy: Object of class RegexIterator could not be converted to string
+Calling function: getlastmod with arguments: 
+Calling function: get_resources with arguments: 1
+Error calling function get_resources: get_resources(): Argument #1 ($type) must be a valid resource type
+Calling function: assert_options with arguments: Error calling function assert_options: Object of class RegexIterator could not be converted to string
+Calling function: strtoupper with arguments: Error calling function strtoupper: Object of class RegexIterator could not be converted to string
+Calling function: is_bool with arguments: Error calling function is_bool: Object of class RegexIterator could not be converted to string
+Calling function: stream_set_blocking with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Error calling function stream_set_blocking: Object of class RegexIterator could not be converted to string
+Calling function: getprotobynumber with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array
+Error calling function getprotobynumber: getprotobynumber(): Argument #1 ($protocol) must be of type int, array given
+Calling function: date_time_set with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+Array, 1, Array, 1, Array
+Error calling function date_time_set: date_time_set(): Argument #1 ($object) must be of type DateTime, array given
+Calling function: array_diff_assoc with arguments: Error calling function array_diff_assoc: Object of class RegexIterator could not be converted to string
+Calling function: range with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused502.php on line 38
+1, Array, 1
+Error calling function range: range(): Argument #2 ($end) must be of type string|int|float, array given
+Calling function: long2ip with arguments: 1
+=================================================================
+==581932==ERROR: AddressSanitizer: heap-use-after-free on address 0x60300002fd2c at pc 0x5615af15bf8c bp 0x7fff5ff49d70 sp 0x7fff5ff49d68
+READ of size 4 at 0x60300002fd2c thread T0
+    #0 0x5615af15bf8b in php_pcre_pce_decref /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:3074:2
+    #1 0x5615b010df34 in spl_dual_it_free_storage /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_iterators.c:2041:4
+    #2 0x5615b1b8fe53 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #3 0x5615b1c86869 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #4 0x5615b1c86ace in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #5 0x5615b1c868a4 in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84:2
+    #6 0x5615b1919a95 in _zend_hash_del_el_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1487:3
+    #7 0x5615b19173ed in _zend_hash_del_el /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1514:2
+    #8 0x5615b192b961 in zend_hash_graceful_reverse_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:2039:4
+    #9 0x5615b113b6fb in zend_shutdown_executor_values /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:287:3
+    #10 0x5615b1144d6e in shutdown_executor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:442:2
+    #11 0x5615b1cbc213 in zend_deactivate /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1338:2
+    #12 0x5615b086d41f in php_request_shutdown /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:1954:2
+    #13 0x5615b1cd7e30 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1105:3
+    #14 0x5615b1cd14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #15 0x7f6c7cc95d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #16 0x7f6c7cc95e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #17 0x5615aea03244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+
+0x60300002fd2c is located 28 bytes inside of 32-byte region [0x60300002fd10,0x60300002fd30)
+freed by thread T0 here:
+    #0 0x5615aea889c2 in free (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c889c2) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+    #1 0x5615b0e49903 in __zend_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:3308:2
+    #2 0x5615b0e527cd in _efree /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:2747:3
+    #3 0x5615af1642df in php_efree_pcre_cache /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:186:2
+    #4 0x5615b1920e58 in zend_hash_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1763:8
+    #5 0x5615af15b058 in zm_deactivate_pcre /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:508:3
+    #6 0x5615b0eb6996 in zend_deactivate_modules /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:3400:5
+    #7 0x5615b086cea5 in php_request_shutdown /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:1931:3
+    #8 0x5615b1cd7e30 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1105:3
+    #9 0x5615b1cd14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #10 0x7f6c7cc95d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+
+previously allocated by thread T0 here:
+    #0 0x5615aea88c6e in malloc (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c88c6e) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+    #1 0x5615b0e52fc3 in __zend_malloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:3280:14
+    #2 0x5615b0e525d5 in _emalloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:2737:10
+    #3 0x5615af13037f in zend_hash_add_new_mem /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.h:738:17
+    #4 0x5615af12dd7f in pcre_get_compiled_regex_cache_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:902:9
+    #5 0x5615af1306d9 in pcre_get_compiled_regex_cache /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:916:9
+    #6 0x5615b00cdc46 in spl_dual_it_construct /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_iterators.c:1373:26
+    #7 0x5615b00d7c0f in zim_RegexIterator___construct /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_iterators.c:1729:2
+    #8 0x5615b14458f8 in ZEND_DO_FCALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1907:4
+    #9 0x5615b11a8f47 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58585:7
+    #10 0x5615b11aa382 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64237:2
+    #11 0x5615b1cc74f8 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1926:3
+    #12 0x5615b0877e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
+    #13 0x5615b08786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
+    #14 0x5615b1cd5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #15 0x5615b1cd14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #16 0x7f6c7cc95d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:3074:2 in php_pcre_pce_decref
+Shadow bytes around the buggy address:
+  0x0c067fffdf50: fd fd fa fa fd fd fd fa fa fa 00 00 00 00 fa fa
+  0x0c067fffdf60: 00 00 00 00 fa fa fd fd fd fa fa fa 00 00 00 00
+  0x0c067fffdf70: fa fa fd fd fd fd fa fa 00 00 00 00 fa fa 00 00
+  0x0c067fffdf80: 00 00 fa fa fd fd fd fa fa fa fd fd fd fd fa fa
+  0x0c067fffdf90: 00 00 00 01 fa fa fd fd fd fa fa fa fd fd fd fd
+=>0x0c067fffdfa0: fa fa fd fd fd[fd]fa fa fd fd fd fa fa fa fd fd
+  0x0c067fffdfb0: fd fd fa fa fd fd fd fd fa fa fd fd fd fd fa fa
+  0x0c067fffdfc0: fd fd fd fd fa fa fd fd fd fd fa fa fd fd fd fd
+  0x0c067fffdfd0: fa fa fd fd fd fd fa fa fd fd fd fd fa fa fd fd
+  0x0c067fffdfe0: fd fd fa fa fd fd fd fd fa fa fd fd fd fd fa fa
+  0x0c067fffdff0: fd fd fd fd fa fa fd fd fd fd fa fa fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==581932==ABORTING
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+$array = array('cat', 'hat', 'sat');
+$iterator = new ArrayIterator($array);
+# Simple regex
+$regexIterator = new RegexIterator($iterator, '/.at/');
+var_dump($regexIterator->getRegex());
+# Empty regular expression
+$regexIterator = new RegexIterator($iterator, '//');
+var_dump($regexIterator->getRegex());
+# "Complex" email regular expression
+$regexIterator = new RegexIterator($iterator, '|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|');
+var_dump($regexIterator->getRegex());
+$fusion = $iterator;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527.magic");
+    var_dump($fusion);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+SPL: RegexIterator::getRegex() basic tests+Bug #71527 Buffer over-write in finfo_open with malformed magic file
+--INI--
+opcache.enable_cli=0
+max_execution_time=10
+--FILE--
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+$array = array('cat', 'hat', 'sat');
+$iterator = new ArrayIterator($array);
+# Simple regex
+$regexIterator = new RegexIterator($iterator, '/.at/');
+var_dump($regexIterator->getRegex());
+# Empty regular expression
+$regexIterator = new RegexIterator($iterator, '//');
+var_dump($regexIterator->getRegex());
+# "Complex" email regular expression
+$regexIterator = new RegexIterator($iterator, '|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|');
+var_dump($regexIterator->getRegex());
+$fusion = $iterator;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527.magic");
+    var_dump($fusion);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+--EXTENSIONS--
+fileinfo
+--ENV--
+USE_ZEND_ALLOC=0
+--EXPECTF--
+string(5) "/.at/"
+string(2) "//"
+string(43) "|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|"
+Warning: finfo_open(): Failed to load magic database at "%sbug71527.magic" in %sbug71527.php on line %d
+bool(false)
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+$array = array('cat', 'hat', 'sat');
+$iterator = new ArrayIterator($array);
+# Simple regex
+$regexIterator = new RegexIterator($iterator, '/.at/');
+var_dump($regexIterator->getRegex());
+# Empty regular expression
+$regexIterator = new RegexIterator($iterator, '//');
+var_dump($regexIterator->getRegex());
+# "Complex" email regular expression
+$regexIterator = new RegexIterator($iterator, '|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|');
+var_dump($regexIterator->getRegex());
+$fusion = $iterator;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527.magic");
+    var_dump($fusion);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
