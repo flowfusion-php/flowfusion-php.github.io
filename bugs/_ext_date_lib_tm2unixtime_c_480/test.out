@@ -1,0 +1,14 @@
+111
+111111111
+111111111
+111111111
+111111111
+111111111
+111111111
+111111111
+111111111
+111111111
+
+*** Testing strftime() : usage variation ***
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: -384307168202268227 * 43200 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

@@ -1,0 +1,150 @@
+*** Testing array_diff_key() : usage variation ***
+
+-- Testing array_diff_key() function with boolean indexed array --
+array(3) {
+  [-10]=>
+  string(3) "-10"
+  ["true"]=>
+  int(1)
+  ["false"]=>
+  int(0)
+}
+array(0) {
+}
+FAILED: '2147483647' != '2147483647'
+FAILED: '2147483647' != '2147483647'
+FAILED: '2147483647' != '2147483647.0000000'
+FAILED: '2147483647' != '2147483647'
+FAILED: '-2147483648' != '-2147483648'
+FAILED: '-2147483648' != '-2147483648'
+FAILED: '-2147483648' != '-2147483648.000'
+FAILED: '-2147483648' != '-2147483648'
+FAILED: '9223372036854775807' != '9223372036854775807'
+FAILED: '9223372036854775807' != '9.2233720368548E+18'
+FAILED: '-9223372036854775808' != '-9223372036854775808'
+FAILED: '-9223372036854775808' != '-9.2233720368548E+18'
+string(11) "random_var:"
+array(5) {
+  [0]=>
+  string(1) "0"
+  [1]=>
+  string(1) "1"
+  [-10]=>
+  string(3) "-10"
+  ["true"]=>
+  int(1)
+  ["false"]=>
+  int(0)
+}
+float(-9.223372036854776E+18)
+array(2) {
+  [1]=>
+  string(5) "boolT"
+  [0]=>
+  string(5) "boolF"
+}
+Calling function: atan with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Error calling function atan: atan(): Argument #1 ($num) must be of type float, array given
+Calling function: xml_get_error_code with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Error calling function xml_get_error_code: xml_get_error_code(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: xmlwriter_start_dtd_element with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array
+Error calling function xmlwriter_start_dtd_element: xmlwriter_start_dtd_element(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: output_add_rewrite_var with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+-9.2233720368548E+18, Array
+Error calling function output_add_rewrite_var: output_add_rewrite_var(): Argument #2 ($value) must be of type string, array given
+Calling function: is_nan with arguments: -9.2233720368548E+18
+Calling function: xml_parser_create_ns with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+-9.2233720368548E+18, Array
+Error calling function xml_parser_create_ns: xml_parser_create_ns(): Argument #2 ($separator) must be of type string, array given
+Calling function: is_nan with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Error calling function is_nan: is_nan(): Argument #1 ($num) must be of type float, array given
+Calling function: xmlwriter_write_comment with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, -9.2233720368548E+18
+Error calling function xmlwriter_write_comment: xmlwriter_write_comment(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: getimagesize with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array
+
+Warning: getimagesize(): Argument #2 ($image_info) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 41
+Error calling function getimagesize: getimagesize(): Argument #1 ($filename) must be of type string, array given
+Calling function: hash_hmac with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array, Array, Array
+Error calling function hash_hmac: hash_hmac(): Argument #1 ($algo) must be of type string, array given
+Calling function: htmlspecialchars with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, -9.2233720368548E+18, Array, -9.2233720368548E+18
+Error calling function htmlspecialchars: htmlspecialchars(): Argument #1 ($string) must be of type string, array given
+Calling function: register_shutdown_function with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array
+Error calling function register_shutdown_function: register_shutdown_function(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members
+Calling function: pi with arguments: 
+Calling function: str_split with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function str_split: str_split(): Argument #2 ($length) must be greater than 0
+Calling function: idate with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+-9.2233720368548E+18, Array
+Error calling function idate: idate(): Argument #2 ($timestamp) must be of type ?int, array given
+Calling function: simplexml_load_file with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array, Array, Array, Array
+Error calling function simplexml_load_file: simplexml_load_file(): Argument #1 ($filename) must be of type string, array given
+Calling function: xml_set_notation_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, -9.2233720368548E+18
+Error calling function xml_set_notation_decl_handler: xml_set_notation_decl_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: session_decode with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Error calling function session_decode: session_decode(): Argument #1 ($data) must be of type string, array given
+Calling function: finfo_open with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array, Array
+Error calling function finfo_open: finfo_open(): Argument #1 ($flags) must be of type int, array given
+Calling function: atanh with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Error calling function atanh: atanh(): Argument #1 ($num) must be of type float, array given
+Calling function: is_countable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused606.php on line 38
+Array
+Calling function: mt_getrandmax with arguments: 
+Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in

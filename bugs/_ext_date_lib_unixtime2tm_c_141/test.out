@@ -1,0 +1,34 @@
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+-292277022657-01-27T15:25:17+06:55
+Sun, 27 Jan -292277022657 15:25:17 +0655
+-292277022657-01-27T15:25:17+06:55
+Sun, 27 Jan -292277022657 15:25:17 +0655
+-292277022657
+-57
+-292277022657
+-9223372036854775808
+
+2147483648-01-01T07:59:59+08:00
+Wed, 01 Jan 2147483648 07:59:59 +0800
+2147483648-01-01T07:59:59+08:00
+Wed, 01 Jan 2147483648 07:59:59 +0800
+2147483648
+48
+2147483648
+67767976233532799
+
+2147483648-01-01T08:00:00+08:00
+Wed, 01 Jan 2147483648 08:00:00 +0800
+2147483648-01-01T08:00:00+08:00
+Wed, 01 Jan 2147483648 08:00:00 +0800
+2147483648
+48
+2147483648
+67767976233532800
+
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: 9223372036854775807 + 28800 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32 in

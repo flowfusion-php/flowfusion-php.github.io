@@ -1,0 +1,27 @@
+Warning: Can't preload unlinked class Bar@anonymous: Unknown parent Bar in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_bug78937.inc on line 3
+object(Bar@anonymous)#1 (0) {
+}
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==3198913==ERROR: AddressSanitizer: SEGV on unknown address 0x7f6dfe399010 (pc 0x7f6e3ed26cf7 bp 0x7ffea25e4b50 sp 0x7ffea25e4140 T0)
+==3198913==The signal is caused by a WRITE memory access.
+LLVMSymbolizer: error reading file: No such file or directory
+    #0 0x7f6e3ed26cf7 in dasm_encode /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10
+    #1 0x7f6e3ed5204c in ir_emit_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_x86.dasc:10804:8
+    #2 0x7f6e3f6e85e0 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2837:10
+    #3 0x7f6e3f5bed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
+    #4 0x7f6e3f2b911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
+    #5 0x7f6e3f21dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
+    #6 0x7f6e3f24fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
+    #7 0x7f6e3ebe28ab in zend_persist_property_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:825:7
+    #8 0x7f6e3ebaad34 in zend_persist_class_entry /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:975:21
+    #9 0x7f6e3ec5a379 in zend_accel_inheritance_cache_add /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2431:23
+    #10 0x556161f85109 in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3661:12
+    #11 0x5561615dd7a1 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1332:7
+    #12 0x5561615de354 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1366:9
+    #13 0x556161c5dffd in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5724:2
+    #14 0x7f6dfe397e78  (/dev/zero (deleted)+0x8003e78)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/dynasm/dasm_x86.h:415:10 in dasm_encode
+==3198913==ABORTING

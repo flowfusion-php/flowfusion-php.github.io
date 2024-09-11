@@ -1,0 +1,105 @@
+--- testing: 9223372036854775807 ---
+float(18.964889726830815)
+--- testing: -9223372036854775808 ---
+float(NAN)
+--- testing: 2147483647 ---
+float(9.331929865381182)
+--- testing: -2147483648 ---
+float(NAN)
+--- testing: 9223372034707292160 ---
+float(18.964889726729698)
+--- testing: -9223372034707292160 ---
+float(NAN)
+--- testing: 2147483648 ---
+float(9.331929865583417)
+--- testing: -2147483649 ---
+float(NAN)
+--- testing: 4294967294 ---
+float(9.632959861045164)
+--- testing: 4294967295 ---
+float(9.632959861146281)
+--- testing: 4294967293 ---
+float(9.632959860944046)
+--- testing: 9223372036854775806 ---
+float(18.964889726830815)
+--- testing: 9.2233720368548E+18 ---
+float(18.964889726830815)
+--- testing: -9223372036854775807 ---
+float(NAN)
+--- testing: -9.2233720368548E+18 ---
+float(NAN)
+Class [ <user> abstract class foo ] {
+  @@ /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php 78-79
+
+  - Constants [0] {
+  }
+
+  - Static properties [0] {
+  }
+
+  - Static methods [0] {
+  }
+
+  - Properties [0] {
+  }
+
+  - Methods [0] {
+  }
+}
+
+Trait [ <user> trait bar ] {
+  @@ /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php 80-81
+
+  - Constants [0] {
+  }
+
+  - Static properties [0] {
+  }
+
+  - Static methods [0] {
+  }
+
+  - Properties [0] {
+  }
+
+  - Methods [0] {
+  }
+}
+
+string(11) "random_var:"
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+Calling function: filter_input with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: filter_input(): Unknown filter with ID -9223372036854775808 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php on line 41
+Calling function: gettype with arguments: -9.2233720368548E+18
+Calling function: var_export with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: is_string with arguments: -9.2233720368548E+18
+Calling function: ctype_cntrl with arguments: -9.2233720368548E+18
+
+Deprecated: ctype_cntrl(): Argument of type float will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php on line 41
+Calling function: html_entity_decode with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: rewind with arguments: -9.2233720368548E+18
+Error calling function rewind: rewind(): Argument #1 ($stream) must be of type resource, float given
+Calling function: random_int with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: mt_getrandmax with arguments: 
+Calling function: http_get_last_response_headers with arguments: 
+Calling function: get_loaded_extensions with arguments: -9.2233720368548E+18
+Calling function: date_default_timezone_get with arguments: 
+Calling function: http_response_code with arguments: -9.2233720368548E+18
+
+Warning: http_response_code(): Cannot set response code - headers already sent (output started at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php:74) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php on line 41
+Calling function: getprotobyname with arguments: -9.2233720368548E+18
+Calling function: stream_set_chunk_size with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function stream_set_chunk_size: stream_set_chunk_size(): Argument #1 ($stream) must be of type resource, float given
+Calling function: xmlwriter_start_dtd_entity with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function xmlwriter_start_dtd_entity: xmlwriter_start_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: preg_match with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: preg_match(): Argument #3 ($matches) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php on line 41
+
+Warning: preg_match(): No ending delimiter '-' found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused7.php on line 41
+Calling function: mktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in
