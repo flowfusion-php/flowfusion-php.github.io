@@ -10,8 +10,8 @@
             // Remove the "/php-src" part
             let formatted = identifier.replace("/php-src", "");
             // Replace remaining characters to fit the file pattern
-            formatted = formatted.replace(/[\/:]/g, "_");
-            return "." + formatted;
+            formatted = formatted.replace(/[\/:.]/g, "-");
+            return formatted + "/index.html";
         }
 
         // Function to read the JSON file and display bugs with links
