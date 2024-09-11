@@ -17,7 +17,7 @@
         // Function to read the JSON file and display bugs with links
         async function loadBugs() {
             try {
-                const response = await fetch('./bug.json');
+                const response = await fetch('./bugs.json');
                 const bugs = await response.json();
                 
                 const bugListContainer = document.getElementById('bug-list');
