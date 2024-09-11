@@ -1,13 +1,6 @@
 --TEST--
-Test decbin function : 64bit long tests+Test decoct() function : usage variations - different data types as $number arg
---INI--
-precision=14
-session.use_cookies=1
-session.use_trans_sid=0
+Test extract() function (variation 6)+Test log1p function : 64bit long tests
 --SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
 ?>
@@ -75,6 +68,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+/* EXTR_REFS as second Argument */
+$a = array ('foo' => 'aaa');
+var_dump ( extract($a, EXTR_REFS));
+var_dump($foo);
+$b = $a;
+$b['foo'] = 'bbb';
+var_dump ( extract($a, EXTR_REFS));
+var_dump($foo);
+var_dump($a);
+echo "Done\n";
+$fusion = $foo;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
@@ -85,44 +90,8 @@ $longVals = array(
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
 foreach ($longVals as $longVal) {
-    echo "--- testing: $longVal ---\n";
-    try {
-        var_dump(decbin($longVal));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
-}
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing decoct() : usage variations ***\n";
-$inputs = [
-       // int data
-/*1*/  0,
-       1,
-       12345,
-       -2345,
-       18446744073709551615,  // largest decimal
-       18446744073709551616,
-       // float data
-/* 7*/ 12.3456789000e10,
-       // boolean data
-/* 8*/ true,
-       false,
-       TRUE,
-       FALSE,
-       // empty data
-/*12*/ "",
-       '',
-];
-// loop through each element of $inputs to check the behaviour of decoct()
-foreach ($inputs as $i => $fusion) {
-    $iterator = $i + 1;
-    echo "\n-- Iteration $iterator --\n";
-    try {
-        var_dump(decoct($input));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
+   echo "--- testing: $fusion ---\n";
+   var_dump(log1p($longVal));
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
@@ -130,73 +99,42 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+int(1)
+string(3) "aaa"
+int(1)
+string(3) "bbb"
+array(1) {
+  ["foo"]=>
+  &string(3) "bbb"
+}
+Done
 --- testing: 9223372036854775807 ---
-string(63) "111111111111111111111111111111111111111111111111111111111111111"
+float(43.66827237527655)
 --- testing: -9223372036854775808 ---
-string(64) "1000000000000000000000000000000000000000000000000000000000000000"
+float(NAN)
 --- testing: 2147483647 ---
-string(31) "1111111111111111111111111111111"
+float(21.487562597358306)
 --- testing: -2147483648 ---
-string(64) "1111111111111111111111111111111110000000000000000000000000000000"
+float(NAN)
 --- testing: 9223372034707292160 ---
-string(63) "111111111111111111111111111111110000000000000000000000000000000"
+float(43.66827237504372)
 --- testing: -9223372034707292160 ---
-string(64) "1000000000000000000000000000000010000000000000000000000000000000"
+float(NAN)
 --- testing: 2147483648 ---
-string(32) "10000000000000000000000000000000"
+float(21.487562597823967)
 --- testing: -2147483649 ---
-string(64) "1111111111111111111111111111111101111111111111111111111111111111"
+float(NAN)
 --- testing: 4294967294 ---
-string(32) "11111111111111111111111111111110"
+float(22.18070977768542)
 --- testing: 4294967295 ---
-string(32) "11111111111111111111111111111111"
+float(22.18070977791825)
 --- testing: 4294967293 ---
-string(32) "11111111111111111111111111111101"
+float(22.180709777452588)
 --- testing: 9223372036854775806 ---
-string(63) "111111111111111111111111111111111111111111111111111111111111110"
+float(43.66827237527655)
 --- testing: 9.2233720368548E+18 ---
-decbin(): Argument #1 ($num) must be of type int, float given
+float(43.66827237527655)
 --- testing: -9223372036854775807 ---
-string(64) "1000000000000000000000000000000000000000000000000000000000000001"
+float(NAN)
 --- testing: -9.2233720368548E+18 ---
-string(64) "1000000000000000000000000000000000000000000000000000000000000000"
-*** Testing decoct() : usage variations ***
-
--- Iteration 1 --
-string(1) "0"
-
--- Iteration 2 --
-string(1) "1"
-
--- Iteration 3 --
-string(5) "30071"
-
--- Iteration 4 --
-string(22) "1777777777777777773327"
-
--- Iteration 5 --
-decoct(): Argument #1 ($num) must be of type int, float given
-
--- Iteration 6 --
-decoct(): Argument #1 ($num) must be of type int, float given
-
--- Iteration 7 --
-string(13) "1627646215010"
-
--- Iteration 8 --
-string(1) "1"
-
--- Iteration 9 --
-string(1) "0"
-
--- Iteration 10 --
-string(1) "1"
-
--- Iteration 11 --
-string(1) "0"
-
--- Iteration 12 --
-decoct(): Argument #1 ($num) must be of type int, string given
-
--- Iteration 13 --
-decoct(): Argument #1 ($num) must be of type int, string given
+float(NAN)

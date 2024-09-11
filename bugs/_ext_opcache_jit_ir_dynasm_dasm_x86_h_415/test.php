@@ -61,46 +61,21 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ary = array(
-    "a" => array("b"),
-    "c" => array("d"),
-);
-$it = new RecursiveArrayIterator($ary);
-$it = new RecursiveTreeIterator($it);
-for($i = 0; $i < 6; ++$i) {
-    $it->setPrefixPart($i, $i);
-}
-foreach($it as $k => $v) {
-    echo "[$k] => $v\n";
-}
-try {
-    $it->setPrefixPart(-1, "");
-} catch (\ValueError $e) {
-    echo $e->getMessage() . \PHP_EOL;
-}
-try {
-    $it->setPrefixPart(6, "");
-} catch (\ValueError $e) {
-    echo $e->getMessage() . \PHP_EOL;
-}
-$fusion = $e;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $fusion = &$i->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(ini_set("open_basedir", "/usr/local/bin"));
+var_dump(ini_get("open_basedir"));
+var_dump(ini_set("open_basedir", "/usr"));
+var_dump(ini_get("open_basedir"));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

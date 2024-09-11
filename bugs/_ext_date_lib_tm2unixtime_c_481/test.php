@@ -61,53 +61,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-}
-$a = array(
-    array(1,2,3),
-    "",
-    1,
-    2.5,
-    0,
-    "string",
-    "123",
-    "2.5",
-    NULL,
-    true,
-    false,
-    new stdclass,
-    new stdclass,
-    new test,
-    array(),
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$var_cnt = count($a);
-function my_dump($var) {
-    ob_start();
-    var_dump($var);
-    $buf = ob_get_clean();
-    echo str_replace("\n", "", $buf);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(is_finite($longVal));
 }
-foreach($a as $var) {
-    for ($i = 0; $i < $var_cnt; $i++) {
-        my_dump($var);
-        echo ($var == $a[$i]) ? " == " : " != ";
-        my_dump($a[$i]);
-        echo "\n";
-    }
-}
-echo "Done\n";
-$fusion = $i;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo
-{
-    public $fusion;
+function test($use_extract) {
+    $a = 1;
+    $b = 1;
+    $arr = array(
+        '_a' => $a,
+        '_b' => &$b
+    );
+    var_dump($a, $b);
+    if ($use_extract) {
+        extract($arr, EXTR_REFS);
+    } else {
+        $_a = &$fusion['_a'];
+        $_b = &$arr['_b'];
+    }
+    $_a++;
+    $_b++;
+    var_dump($a, $b, $_a, $_b, $arr);
 }
-class Bar extends Foo
-{
-    public mixed $property1;
-}
+test(false);
+test(true);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

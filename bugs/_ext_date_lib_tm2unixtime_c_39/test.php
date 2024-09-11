@@ -61,6 +61,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+/* EXTR_REFS as second Argument */
+$a = array ('foo' => 'aaa');
+var_dump ( extract($a, EXTR_REFS));
+var_dump($foo);
+$b = $a;
+$b['foo'] = 'bbb';
+var_dump ( extract($a, EXTR_REFS));
+var_dump($foo);
+var_dump($a);
+echo "Done\n";
+$fusion = $foo;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
@@ -71,44 +83,8 @@ $longVals = array(
     MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
 foreach ($longVals as $longVal) {
-    echo "--- testing: $longVal ---\n";
-    try {
-        var_dump(decbin($longVal));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
-}
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing decoct() : usage variations ***\n";
-$inputs = [
-       // int data
-/*1*/  0,
-       1,
-       12345,
-       -2345,
-       18446744073709551615,  // largest decimal
-       18446744073709551616,
-       // float data
-/* 7*/ 12.3456789000e10,
-       // boolean data
-/* 8*/ true,
-       false,
-       TRUE,
-       FALSE,
-       // empty data
-/*12*/ "",
-       '',
-];
-// loop through each element of $inputs to check the behaviour of decoct()
-foreach ($inputs as $i => $fusion) {
-    $iterator = $i + 1;
-    echo "\n-- Iteration $iterator --\n";
-    try {
-        var_dump(decoct($input));
-    } catch (TypeError $exception) {
-        echo $exception->getMessage() . "\n";
-    }
+   echo "--- testing: $fusion ---\n";
+   var_dump(log1p($longVal));
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

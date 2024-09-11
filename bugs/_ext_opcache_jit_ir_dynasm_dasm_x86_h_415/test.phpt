@@ -1,13 +1,22 @@
 --TEST--
-SPL: RecursiveTreeIterator::setPrefixPart()+By-value get may be implemented as by-reference
+Plain prop satisfies interface get hook by-reference+openbase_dir runtime hardening
 --INI--
-error_reporting=E_ALL&~E_NOTICE
-session.gc_probability=0
-serialize_precision=75
+open_basedir=/usr/local
+opcache.jit_buffer_size=0
+opcache.optimization_level=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0201
+opcache.jit=0101
+--SKIPIF--
+<?php
+if(PHP_OS_FAMILY === "Windows") {
+    die('skip.. only for unix');
+}
+if (!is_dir("/usr/local/bin")) {
+    die('skip.. no /usr/local/bin on this machine');
+}
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,59 +81,32 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ary = array(
-    "a" => array("b"),
-    "c" => array("d"),
-);
-$it = new RecursiveArrayIterator($ary);
-$it = new RecursiveTreeIterator($it);
-for($i = 0; $i < 6; ++$i) {
-    $it->setPrefixPart($i, $i);
-}
-foreach($it as $k => $v) {
-    echo "[$k] => $v\n";
-}
-try {
-    $it->setPrefixPart(-1, "");
-} catch (\ValueError $e) {
-    echo $e->getMessage() . \PHP_EOL;
-}
-try {
-    $it->setPrefixPart(6, "");
-} catch (\ValueError $e) {
-    echo $e->getMessage() . \PHP_EOL;
-}
-$fusion = $e;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $fusion = &$i->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(ini_set("open_basedir", "/usr/local/bin"));
+var_dump(ini_get("open_basedir"));
+var_dump(ini_set("open_basedir", "/usr"));
+var_dump(ini_get("open_basedir"));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-[a] => 035Array
-[0] => 0145b
-[c] => 045Array
-[0] => 0245d
-RecursiveTreeIterator::setPrefixPart(): Argument #1 ($part) must be a RecursiveTreeIterator::PREFIX_* constant
-RecursiveTreeIterator::setPrefixPart(): Argument #1 ($part) must be a RecursiveTreeIterator::PREFIX_* constant
 object(A)#1 (1) {
-  ["_prop":"A":private]=>
+  ["prop"]=>
   int(42)
 }
+string(10) "/usr/local"
+string(14) "/usr/local/bin"
+bool(false)
+string(14) "/usr/local/bin"

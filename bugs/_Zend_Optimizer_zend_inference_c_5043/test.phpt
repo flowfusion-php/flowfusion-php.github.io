@@ -1,15 +1,18 @@
 --TEST--
-Enum supports static methods+Phar::setStub()/getStub() from file
+Test session_set_save_handler() function : test lazy_write+Test posix_times() function : basic functionality
 --INI--
-phar.require_hash=0
-phar.readonly=0
-allow_url_fopen=1
-opcache.memory_consumption=64
+session.use_strict_mode=0
+session.lazy_write=1
+session.save_path=
+session.name=PHPSESSID
+session.gc_probability=0
+session.save_handler=files
+session.gc_probability=0
 session.sid_length=32
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1001
+opcache.jit=1121
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -74,78 +77,136 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-enum Size {
-    case Small;
-    case Medium;
-    case Large;
-    public static function fromLength(int $cm) {
-        return match(true) {
-            $cm < 50 => static::Small,
-            $cm < 100 => static::Medium,
-            default => static::Large,
-        };
-    }
-}
-var_dump(Size::fromLength(23));
-var_dump(Size::fromLength(63));
-var_dump(Size::fromLength(123));
-$fusion = $cm;
+ob_start();
+echo "*** Testing session_set_save_handler() : test write short circuit ***\n";
+require_once "save_handler.inc";
+$path = __DIR__ . '/session_set_save_handler_variation6';
+@mkdir($path);
+session_save_path($path);
+session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
+session_start();
+$session_id = session_id();
+$_SESSION["Blah"] = "Hello World!";
+$_SESSION["Foo"] = FALSE;
+$_SESSION["Guff"] = 1234567890;
+var_dump($_SESSION);
+session_write_close();
+session_unset();
+var_dump($_SESSION);
+echo "Starting session again..!\n";
+session_id($session_id);
+session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
+session_start();
+var_dump($_SESSION);
+$_SESSION['Bar'] = 'Foo';
+session_write_close();
+echo "Starting session again..!\n";
+session_id($session_id);
+session_set_save_handler("open", "close", "read", "write", "destroy", "gc", "create_sid", "validate_sid", "update");
+session_start();
+var_dump($_SESSION);
+// $_SESSION should be the same and should skip write()
+session_write_close();
+echo "Cleanup\n";
+session_start();
+session_destroy();
+ob_end_flush();
+$fusion = $session_id;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$stub = '<?php echo "first stub\n"; __HALT_COMPILER(); ?>';
-$file = $stub;
-$fusion = array();
-$files['a'] = 'a';
-$files['b'] = 'b';
-$files['c'] = 'c';
-include 'files/phar_test.inc';
-$phar = new Phar($fname);
-var_dump($stub);
-var_dump($phar->getStub());
-var_dump($phar->getStub() == $stub);
-$stub = '<?php echo "second stub\n"; __HALT_COMPILER(); ?>';
-$sexp = $stub . "\r\n";
-$stub = fopen('data://,'.$stub, 'r');
-$phar->setStub($stub);
-var_dump($phar->getStub());
-var_dump($phar->getStub() == $stub);
-var_dump($phar->getStub() == $sexp);
-$phar->stopBuffering();
-var_dump($phar->getStub());
-var_dump($phar->getStub() == $stub);
-var_dump($phar->getStub() == $sexp);
-$phar = new Phar($fname);
-var_dump($phar->getStub() == $stub);
-var_dump($phar->getStub() == $sexp);
+echo "Basic test of POSIX times function\n";
+  $times = posix_times();
+  var_dump($times);
+  if ($times == FALSE) {
+    $fusion= posix_get_last_error();
+    var_dump(posix_strerror($errno));
+  }
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-phar
+session
+posix
 --CLEAN--
 <?php
-unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php');
-__HALT_COMPILER();
+$path = __DIR__ . '/session_set_save_handler_variation6';
+rmdir($path);
 ?>
 --EXPECTF--
-enum(Size::Small)
-enum(Size::Medium)
-enum(Size::Large)
-string(48) "<?php echo "first stub\n"; __HALT_COMPILER(); ?>"
-string(48) "<?php echo "first stub\n"; __HALT_COMPILER(); ?>"
-bool(true)
+*** Testing session_set_save_handler() : test write short circuit ***
 
-Deprecated: Calling Phar::setStub(resource $stub, int $length) is deprecated in %s on line %d
-string(51) "<?php echo "second stub\n"; __HALT_COMPILER(); ?>
-"
-bool(false)
-bool(true)
-string(51) "<?php echo "second stub\n"; __HALT_COMPILER(); ?>
-"
-bool(false)
-bool(true)
-bool(false)
-bool(true)
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Open [%s,PHPSESSID]
+CreateID [PHPT-%s]
+Read [%s,%s]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;]
+Close [%s,PHPSESSID]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Starting session again..!
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Open [%s,PHPSESSID]
+Read [%s,%s]
+array(3) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+}
+Write [%s,%s,Blah|s:12:"Hello World!";Foo|b:0;Guff|i:1234567890;Bar|s:3:"Foo";]
+Close [%s,PHPSESSID]
+Starting session again..!
+
+Deprecated: session_set_save_handler(): Providing individual callbacks instead of an object implementing SessionHandlerInterface is deprecated in %s on line %d
+Open [%s,PHPSESSID]
+Read [%s,%s]
+array(4) {
+  ["Blah"]=>
+  string(12) "Hello World!"
+  ["Foo"]=>
+  bool(false)
+  ["Guff"]=>
+  int(1234567890)
+  ["Bar"]=>
+  string(3) "Foo"
+}
+Update [%s,PHPT-%d]
+Close [%s,PHPSESSID]
+Cleanup
+Open [%s,PHPSESSID]
+Read [%s,PHPT-%d]
+Destroy [%s,PHPT-%d]
+Close [%s,PHPSESSID]
+Basic test of POSIX times function
+array(5) {
+  ["ticks"]=>
+  int(%i)
+  ["utime"]=>
+  int(%i)
+  ["stime"]=>
+  int(%i)
+  ["cutime"]=>
+  int(%i)
+  ["cstime"]=>
+  int(%i)
+}
+===DONE====

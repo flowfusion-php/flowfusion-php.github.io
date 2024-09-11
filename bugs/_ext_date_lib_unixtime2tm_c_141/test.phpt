@@ -1,17 +1,11 @@
 --TEST--
-Test asinh function : 64bit long tests+Testing clone on objects whose class derived from DateTimeZone class
+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+ReflectionClass::hasConstant()
 --INI--
-serialize_precision=14
-session.save_handler=qwerty
-opcache.jit=1235
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0101
+date.timezone = UTC
+expose_php=On
+date.timezone=America/New_York
 --SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -76,122 +70,71 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(asinh($longVal));
-}
-$fusion = $longVal;
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-//Set the default time zone
-date_default_timezone_set("Europe/London");
-class DateTimeZoneExt1 extends DateTimeZone {
-    public $property1 = 99;
-    public $property2 = "Hello";
+class C {
+    const myConst = 1;
 }
-class DateTimeZoneExt2 extends DateTimeZoneExt1 {
-    public $property3 = true;
-    public $fusion = 10.5;
+class D extends C {
 }
-echo "*** Testing clone on objects whose class derived from DateTimeZone class ***\n";
-$d1 = new DateTimeZoneExt1("Europe/London");
-var_dump($d1);
-$d1_clone = clone $d1;
-var_dump($d1_clone);
-$d2 = new DateTimeZoneExt2("Europe/London");
-var_dump($d2);
-$d2_clone = clone $d2;
-var_dump($d2_clone);
+$rc = new ReflectionClass("C");
+echo "Check existing constant: ";
+var_dump($rc->hasConstant("myConst"));
+echo "Check existing constant, different case: ";
+var_dump($rc->hasConstant("MyCoNsT"));
+echo "Check absent constant: ";
+var_dump($rc->hasConstant("doesNotExist"));
+$rd = new ReflectionClass("D");
+echo "Check inherited constant: ";
+var_dump($rd->hasConstant("myConst"));
+echo "Check absent constant: ";
+var_dump($rd->hasConstant("doesNotExist"));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
---- testing: 9223372036854775807 ---
-float(44.361419555836)
---- testing: -9223372036854775808 ---
-float(-44.361419555836)
---- testing: 2147483647 ---
-float(22.180709777453)
---- testing: -2147483648 ---
-float(-22.180709777918)
---- testing: 9223372034707292160 ---
-float(44.361419555604)
---- testing: -9223372034707292160 ---
-float(-44.361419555604)
---- testing: 2147483648 ---
-float(22.180709777918)
---- testing: -2147483649 ---
-float(-22.180709778384)
---- testing: 4294967294 ---
-float(22.873856958013)
---- testing: 4294967295 ---
-float(22.873856958245)
---- testing: 4294967293 ---
-float(22.87385695778)
---- testing: 9223372036854775806 ---
-float(44.361419555836)
---- testing: 9.2233720368548E+18 ---
-float(44.361419555836)
---- testing: -9223372036854775807 ---
-float(-44.361419555836)
---- testing: -9.2233720368548E+18 ---
-float(-44.361419555836)
-*** Testing clone on objects whose class derived from DateTimeZone class ***
-object(DateTimeZoneExt1)#%d (4) {
-  ["property1"]=>
-  int(99)
-  ["property2"]=>
-  string(5) "Hello"
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(13) "Europe/London"
-}
-object(DateTimeZoneExt1)#%d (4) {
-  ["property1"]=>
-  int(99)
-  ["property2"]=>
-  string(5) "Hello"
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(13) "Europe/London"
-}
-object(DateTimeZoneExt2)#%d (6) {
-  ["property1"]=>
-  int(99)
-  ["property2"]=>
-  string(5) "Hello"
-  ["property3"]=>
-  bool(true)
-  ["property4"]=>
-  float(10.5)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(13) "Europe/London"
-}
-object(DateTimeZoneExt2)#%d (6) {
-  ["property1"]=>
-  int(99)
-  ["property2"]=>
-  string(5) "Hello"
-  ["property3"]=>
-  bool(true)
-  ["property4"]=>
-  float(10.5)
-  ["timezone_type"]=>
-  int(3)
-  ["timezone"]=>
-  string(13) "Europe/London"
-}
+--EXPECT--
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657
+-57
+-292277022657
+-9223372036854775808
+
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483648
+47
+2147483647
+67767976233532799
+
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648
+48
+2147483648
+67767976233532800
+
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596
+96
+292277026596
+9223372036854775807
+Check existing constant: bool(true)
+Check existing constant, different case: bool(false)
+Check absent constant: bool(false)
+Check inherited constant: bool(true)
+Check absent constant: bool(false)
