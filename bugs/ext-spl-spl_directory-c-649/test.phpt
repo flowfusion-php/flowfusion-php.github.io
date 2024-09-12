@@ -1,9 +1,12 @@
 --TEST--
-Bug #69181 (READ_CSV|DROP_NEW_LINE drops newlines within fields)+Phar: PharFileInfo::__construct
+Bug #72496 (declare public method with signature incompatible with parent private method should not throw a warning)+ReflectionFiber errors
 --INI--
-phar.readonly=0
-opcache.preload={PWD}/preload_bug80634.inc
-filter.default_flags=
+opcache.memory_consumption=7
+opcache.enable_cli=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0103
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,110 +71,95 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$filename = __DIR__ . "/bug69181.csv";
-$csv = <<<CSV
-"foo\n\nbar\nbaz",qux
-"foo\nbar\nbaz",qux
-CSV;
-file_put_contents($filename, $csv);
-$file = new SplFileObject($filename);
-$file->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE | SplFileObject::READ_CSV);
-var_dump(iterator_to_array($file));
-echo "\n====\n\n";
-$file->rewind();
-while (($record = $file->fgetcsv())) {
-  var_dump($record);
+class Foo
+{
+    private function getFoo()
+    {
+        return 'Foo';
+    }
+    private function getBar()
+    {
+        return 'Bar';
+    }
+    private function getBaz()
+    {
+        return 'Baz';
+    }
 }
-$script1_dataflow = $file;
+class Bar extends Foo
+{
+    public function getFoo($extraArgument)
+    {
+        return $extraArgument;
+    }
+    protected function getBar($extraArgument)
+    {
+        return $extraArgument;
+    }
+    private function getBaz($extraArgument)
+    {
+        return $extraArgument;
+    }
+}
+echo "OK\n";
+$fusion = $extraArgument;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar';
-$pname = 'phar://' . $fname;
+$fusion = new Fiber(function (): void {
+    Fiber::suspend();
+});
+$reflection = new ReflectionFiber($fiber);
 try {
-file_put_contents($fname, 'blah');
-$a = new PharFileInfo($pname . '/oops');
-} catch (Exception $e) {
-echo $e->getMessage() . "\n";
-unlink($fname);
+    $reflection->getTrace();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
 }
 try {
-$a = new PharFileInfo(array());
-} catch (TypeError $e) {
-echo $e->getMessage() . "\n";
-}
-$a = new Phar($fname);
-$a['a'] = 'hi';
-$b = $a['a'];
-try {
-$a = new PharFileInfo($pname . '/oops/I/do/not/exist');
-} catch (Exception $e) {
-echo $e->getMessage() . "\n";
+    $reflection->getExecutingFile();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
 }
 try {
-$script1_dataflow->__construct('oops');
-} catch (Exception $e) {
-echo $e->getMessage() . "\n";
+    $reflection->getExecutingLine();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
+}
+$fiber->start();
+var_dump($reflection->getExecutingFile());
+var_dump($reflection->getExecutingLine());
+$fiber->resume();
+try {
+    $reflection->getTrace();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
 }
 try {
-$a = new PharFileInfo(__FILE__);
-} catch (Exception $e) {
-echo $e->getMessage() . "\n";
+    $reflection->getExecutingFile();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
+}
+try {
+    $reflection->getExecutingLine();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
+}
+try {
+    $reflection->getCallable();
+} catch (Error $error) {
+    echo $error->getMessage(), "\n";
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-phar
---CLEAN--
-<?php
-@unlink(__DIR__ . "/bug69181.csv");
-?>
-<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar'); ?>
 --EXPECTF--
-array(2) {
-  [0]=>
-  array(2) {
-    [0]=>
-    string(12) "foo
-
-bar
-baz"
-    [1]=>
-    string(3) "qux"
-  }
-  [2]=>
-  array(2) {
-    [0]=>
-    string(11) "foo
-bar
-baz"
-    [1]=>
-    string(3) "qux"
-  }
-}
-
-====
-
-array(2) {
-  [0]=>
-  string(12) "foo
-
-bar
-baz"
-  [1]=>
-  string(3) "qux"
-}
-array(2) {
-  [0]=>
-  string(11) "foo
-bar
-baz"
-  [1]=>
-  string(3) "qux"
-}
-Cannot open phar file 'phar://%spharfileinfo_construct.phar/oops': internal corruption of phar "%spharfileinfo_construct.phar" (truncated entry)
-PharFileInfo::__construct(): Argument #1 ($filename) must be of type string, array given
-Cannot access phar file entry '%s' in archive '%s'
-Cannot call constructor twice
-'%s' is not a valid phar archive URL (must have at least phar://filename.phar)
+OK
+Cannot fetch information from a fiber that has not been started or is terminated
+Cannot fetch information from a fiber that has not been started or is terminated
+Cannot fetch information from a fiber that has not been started or is terminated
+string(%d) "%s%eReflectionFiber_errors.php"
+int(4)
+Cannot fetch information from a fiber that has not been started or is terminated
+Cannot fetch information from a fiber that has not been started or is terminated
+Cannot fetch information from a fiber that has not been started or is terminated
+Cannot fetch the callable from a fiber that has terminated

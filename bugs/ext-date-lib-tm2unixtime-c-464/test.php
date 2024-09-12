@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,32 +61,14 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-date_default_timezone_set('Europe/Berlin');
-$from = new DateTime();
-$from->setTime(0, 0, 0);
-$from->setISODate(PHP_INT_MAX, 28, 1); //Montag der 28ten Woche 2010
-echo $from->format('d.m.Y H:i'), "\n"; //A
-echo $from->getTimestamp(), "\n"; //B
-echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
-$from->add(new DateInterval('P0D'));
-echo $from->getTimestamp(), "\n"; //B
-echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
+K
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 'Binary to decimal:', \PHP_EOL;
-var_dump(base_convert('0b', 2, 10));
-var_dump(base_convert('0B', 2, 10));
-var_dump(base_convert('', 2, 10));
-echo 'Octal to decimal:', \PHP_EOL;
-var_dump(base_convert('0o', 8, 10));
-var_dump(base_convert('0O', 8, 10));
-var_dump(base_convert('0', 8, 10));
-var_dump(base_convert('', 8, 10));
-echo 'Hexadecimal to decimal:', \PHP_EOL;
-var_dump(base_convert('0x', 16, 10));
-var_dump(base_convert('0X', 16, 10));
-var_dump(base_convert('', 16, 10));
+function f() {
+    return array(1, 2);
+}
+var_dump(next(f()));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

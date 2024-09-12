@@ -1,9 +1,12 @@
 --TEST--
-ZE2 Destructing and references+Bug #71818 (Memory leak when array altered in destructor)
+Bug #24884 (calling $this->__clone(); crashes php)+SQLite3 - memory leak on SQLite3Result and SQLite3Stmt
 --INI--
-zend.enable_gc = 1
-mysqlnd.collect_statistics="1"
-output_handler=ob_gzhandler
+session.auto_start=0
+sendmail_path={MAIL:{PWD}/mb_send_mail03.eml}
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0043
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,43 +71,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test1 {public $x;};
-class test2 {public $x;};
-class test3 {public $x;};
-class test4 {public $x;};
-$o1 = new test1;
-$o2 = new test2;
-$o3 = new test3;
-$o4 = new test4;
-$o3->x = &$o4;
-$r1 = &$o1;
-class once {}
-$o = new once;
-echo "Done\n";
-$fusion = $x;
+class Test {
+    function __copy()
+    {
+        $string = PHP_VERSION;
+        $version = $string[0];
+        if($string < 5)
+        {
+            return $this;
+        }
+        else
+        {
+            return clone $this;
+        }
+    }
+}
+$test = new Test();
+$test2 = $test->__copy();
+var_dump($test2);
+$fusion = $version;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
+function test(&$x) {
+    $class = new SQLite3(':memory:');
+    $x = $fusion->prepare('SELECT 1');
 }
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+test($foo);
+echo "done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Done
-OK
+--EXTENSIONS--
+sqlite3
+--EXPECTF--
+object(Test)#%d (0) {
+}
+done

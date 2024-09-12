@@ -1,12 +1,17 @@
 --TEST--
-JIT IDENTICAL: 002 Comparison with NaN+Loop var dtor throwing exception during return inside try/catch inside finally
+Test strtr() function : usage variations - regular & numeric strings for 'str' argument+Test copy() function: usage variations - copying links across dirs
 --INI--
+opcache.preload={PWD}/preload_user.inc
+opcache.memory_consumption=64
 opcache.enable=1
 opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.protect_memory=1
-max_input_nesting_level=10
-default_charset=""
+opcache.jit_buffer_size=1024M
+opcache.jit=0031
+--SKIPIF--
+<?php
+if(substr(PHP_OS, 0, 3) == "WIN")
+  die("skip Invalid for Windows");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +43,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +66,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,157 +76,227 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function t() {
-    echo "!";
-    return true;
+/* Testing strtr() function by passing the
+ *   combination of numeric & regular strings for 'str' argument and
+ *   corresponding translation pair of chars for 'from', 'to' & 'replace_pairs' arguments
+*/
+echo "*** Testing strtr() : numeric & regular double quoted strings ***\n";
+/* definitions of required input variables */
+$count = 1;
+$heredoc_str = <<<EOD
+123
+abc
+1a2b3c
+EOD;
+//array of string inputs for $str
+$str_arr = array(
+  //double quoted strings
+  "123",
+  "abc",
+  "1a2b3c",
+  //single quoted strings
+  '123',
+  'abc',
+  '1a2b3c',
+  //heredoc string
+  $heredoc_str
+);
+$from = "123abc";
+$to = "abc123";
+$replace_pairs = array("1" => "a", "a" => 1, "2b3c" => "b2c3", "b2c3" => "3c2b");
+/* loop through to test strtr() with each element of $str_arr */
+for($index = 0; $index < count($str_arr); $index++) {
+  echo "-- Iteration $count --\n";
+  $str = $str_arr[$index];  //getting the $str_arr element in $str variable
+  //strtr() call in three args syntax form
+  var_dump( strtr($str, $from, $to) );
+  //strtr() call in two args syntax form
+  var_dump( strtr($str, $replace_pairs) );
+  $count++;
 }
-function f() {
-    echo "!";
-    return false;
-}
-$a = 0.0;
-$b = 0.0;
-$c = 1.0;
-$d = NAN;
-var_dump($a === $b);
-var_dump($a === $c);
-var_dump($a === $d);
-var_dump($a !== $b);
-var_dump($a !== $c);
-var_dump($a !== $d);
-var_dump($a === $b ? 1 : 0);
-var_dump($a === $c ? 1 : 0);
-var_dump($a === $d ? 1 : 0);
-var_dump($a !== $b ? 1 : 0);
-var_dump($a !== $c ? 1 : 0);
-var_dump($a !== $d ? 1 : 0);
-if ($a === $b) {
-    echo "1\n";
-}
-if ($a === $c) {
-    echo "2\n";
-}
-if ($a === $d) {
-    echo "3\n";
-}
-if ($a !== $b) {
-    echo "4\n";
-}
-if ($a !== $c) {
-    echo "5\n";
-}
-if ($a !== $d) {
-    echo "6\n";
-}
-if ($a === $b) {
-} else {
-    echo "7\n";
-}
-if ($a === $c) {
-} else {
-    echo "8\n";
-}
-if ($a === $d) {
-} else {
-    echo "9\n";
-}
-if ($a !== $b) {
-} else {
-    echo "A\n";
-}
-if ($a !== $c) {
-} else {
-    echo "B\n";
-}
-if ($a !== $d) {
-} else {
-    echo "C\n";
-}
-var_dump($a === $b && t());
-var_dump($a === $c && t());
-var_dump($a === $d && t());
-var_dump($a !== $b && t());
-var_dump($a !== $c && t());
-var_dump($a !== $d && t());
-var_dump($a === $b || f());
-var_dump($a === $c || f());
-var_dump($a === $d || f());
-var_dump($a !== $b || f());
-var_dump($a !== $c || f());
-var_dump($a !== $d || f());
-$a=NAN;
-var_dump($a === $d);
-var_dump($a !== $d);
-var_dump($a === $d ? 1 : 0);
-var_dump($a !== $d ? 1 : 0);
-$script1_dataflow = $d;
+echo "*** Done ***";
+$fusion = $str_arr;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Dtor {
-    public function __destruct() {
-        throw new Exception(2);
-    }
+/* Trying to copy the links across dir paths given in various notations
+     and dirs having limited access */
+echo "*** Testing copy() function: copying links across different directories ***\n";
+$file_path = __DIR__;
+$base_dir = $file_path."/copy_variation8";
+mkdir($base_dir);
+$sub_dir = $base_dir."/copy_variation8_sub";
+mkdir($sub_dir);
+$dirname_with_blank = $sub_dir."/copy variation6";
+mkdir($dirname_with_blank);
+$file = $file_path."/copy_variation8.tmp";
+fclose( fopen($file, "w") );
+$symlink = $file_path."/copy_variation8_symlink.tmp";
+$hardlink = $file_path."/copy_variation8_hardlink.tmp";
+symlink($file, $symlink);  //creating symlink
+link($file, $hardlink);  //creating hardlink
+$fusion = array(
+  $base_dir."/copy_copy_variation8.tmp",
+  $base_dir."/copy_variation8_sub/copy_copy_variation8.tmp",
+  "$sub_dir/copy_copy_variation8.tmp",
+  "$sub_dir/../copy_copy_variation8.tmp",
+  "$sub_dir/../copy_variation8_sub/copy_copy_variation8.tmp",
+  "$sub_dir/..///../copy_copy_variation8.tmp",
+  "$sub_dir///../*",
+  "$dirname_with_blank/copy_copy_variation8.tmp"
+);
+$count = 1;
+foreach($dests as $dest) {
+  echo "\n-- Iteration $count --\n";
+  echo "- With symlink -\n";
+  var_dump( copy($symlink, $dest) );
+  var_dump( file_exists($dest) );
+  var_dump( is_link($dest) ); //expected: bool(false)
+  var_dump( is_file($dest) );  //expected: bool(true)
+  clearstatcache();
+  unlink("$dest");
+  echo "- With hardlink -\n";
+  var_dump( copy($hardlink, $dest) );
+  var_dump( file_exists($dest) );
+  var_dump( is_link($dest) );  //expected: bool(flase)
+  var_dump( is_file($dest) );  //expected: bool(true)
+  clearstatcache();
+  unlink("$dest");
+  $count++;
 }
-function test() {
-    try {
-        throw new Exception(1);
-    } finally {
-        try {
-            foreach ([new Dtor] as $script1_dataflow) {
-                unset($v);
-                return 42;
-            }
-        } catch (Exception $e) {
-        }
-    }
-}
-try {
-    test();
-} catch (Exception $e) {
-    echo $e, "\n";
-}
+unlink($symlink);
+unlink($hardlink);
+unlink($file);
+rmdir($dirname_with_blank);
+rmdir($sub_dir);
+rmdir($base_dir);
+echo "*** Done ***\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-opcache
---EXPECTF--
+--EXPECT--
+*** Testing strtr() : numeric & regular double quoted strings ***
+-- Iteration 1 --
+string(3) "abc"
+string(3) "a23"
+-- Iteration 2 --
+string(3) "123"
+string(3) "1bc"
+-- Iteration 3 --
+string(6) "a1b2c3"
+string(6) "a1b2c3"
+-- Iteration 4 --
+string(3) "abc"
+string(3) "a23"
+-- Iteration 5 --
+string(3) "123"
+string(3) "1bc"
+-- Iteration 6 --
+string(6) "a1b2c3"
+string(6) "a1b2c3"
+-- Iteration 7 --
+string(14) "abc
+123
+a1b2c3"
+string(14) "a23
+1bc
+a1b2c3"
+*** Done ***
+*** Testing copy() function: copying links across different directories ***
+
+-- Iteration 1 --
+- With symlink -
+bool(true)
 bool(true)
 bool(false)
-bool(false)
-bool(false)
 bool(true)
-bool(true)
-int(1)
-int(0)
-int(0)
-int(0)
-int(1)
-int(1)
-1
-5
-6
-8
-9
-A
-!bool(true)
-bool(false)
-bool(false)
-bool(false)
-!bool(true)
-!bool(true)
-bool(true)
-!bool(false)
-!bool(false)
-!bool(false)
+- With hardlink -
 bool(true)
 bool(true)
 bool(false)
 bool(true)
-int(0)
-int(1)
-Exception: 1 in %s:%d
-Stack trace:
-#0 %s(%d): test()
-#1 {main}
+
+-- Iteration 2 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 3 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 4 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 5 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 6 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 7 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+
+-- Iteration 8 --
+- With symlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+- With hardlink -
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+*** Done ***

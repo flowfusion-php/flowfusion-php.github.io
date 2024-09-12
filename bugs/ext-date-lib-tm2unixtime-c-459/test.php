@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,76 +61,56 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing strftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(8, 8, 8, 8, 8, PHP_INT_MIN);
-//array of values to iterate over
-$inputs = array(
-      'Time in a.m/p.m notation' => "%r",
-      'Time in 24 hour notation' => "%R",
-      'Current time %H:%M:%S format' => "%T",
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $timestamp) );
+/*
+ * Function is implemented in ext/standard/math.c
+*/
+//Test cos with a different input values
+$values = array(23,
+        -23,
+        2.345e1,
+        -2.345e1,
+        0x17,
+        027,
+        "23",
+        "23.45",
+        "2.345e1",
+        "1000",
+        true,
+        false);
+for ($i = 0; $i < count($values); $i++) {
+    $res = cos($values[$i]);
+    var_dump($res);
 }
-$fusion = $value;
+$fusion = $res;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$f = 1.23456789012345678;
-$fusionx = 1.23456789012345678e100;
-var_dump($f, $fx);
-printf("%.*f\n", 10, $f);
-printf("%.*G\n", 10, $f);
-printf("%.*g\n", -1, $fx);
-printf("%.*G\n", -1, $fx);
-printf("%.*h\n", -1, $fx);
-printf("%.*H\n", -1, $fx);
-printf("%.*s\n", 3, "foobar");
-echo "\n";
-printf("%*f\n", 10, $f);
-printf("%*G\n", 10, $f);
-printf("%*s\n", 10, "foobar");
-echo "\n";
-printf("%*.*f\n", 10, 3, $f);
-printf("%*.*G\n", 10, 3, $f);
-printf("%*.*s\n", 10, 3, "foobar");
-echo "\n";
-printf("%1$.*2\$f\n", $f, 10);
-printf("%.*2\$f\n", $f, 10);
-printf("%2$.*f\n", 10, $f);
-printf("%1$*2\$f\n", $f, 10);
-printf("%*2\$f\n", $f, 10);
-printf("%2$*f\n", 10, $f);
-printf("%1$*2$.*3\$f\n", $f, 10, 3);
-printf("%*2$.*3\$f\n", $f, 10, 3);
-printf("%3$*.*f\n", 10, 3, $f);
-echo "\n";
-try {
-    printf("%.*G\n", "foo", 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*G\n", -100, 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*s\n", -1, "Foo");
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%*G\n", -1, $f);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
+/* test for stats of dir/file when their names are stored in an array */
+$fusion = __DIR__;
+require "$file_path/file.inc";
+/* create temp file, link and directory */
+@rmdir("$file_path/lstat_stat_variation19");  // ensure that dir doesn't exists
+mkdir("$file_path/lstat_stat_variation19");  // temp dir
+$fp = fopen("$file_path/lstat_stat_variation19.tmp", "w");  // temp file
+fclose($fp);
+echo "*** Testing stat() with filename & directory name stored inside an array ***\n";
+// array with default numeric index
+$names = array(
+  "$file_path/lstat_stat_variation19.tmp",
+  "$file_path/lstat_stat_variation19"
+);
+//array with string key index
+$names_with_key = array (
+  'file' => "$file_path/lstat_stat_variation19.tmp",
+  "dir" => "$file_path/lstat_stat_variation19"
+);
+echo "\n-- Testing stat() on filename stored inside an array --\n";
+var_dump( stat($names[0]) ); // values stored with numeric index
+var_dump( stat($names_with_key['file']) ); // value stored with string key
+echo "\n-- Testing stat() on dir name stored inside an array --\n";
+var_dump( stat($names[1]) ); // values stored with numeric index
+var_dump( stat($names_with_key["dir"]) ); // value stored with string key
+echo "\n--- Done ---";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

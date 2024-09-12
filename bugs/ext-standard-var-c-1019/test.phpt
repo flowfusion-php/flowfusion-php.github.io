@@ -1,9 +1,13 @@
 --TEST--
-Bug #77345 (Segmentation faults stack overflow in cyclic garbage collector) (Bug #77427)+Bug #27469 (serialize() objects of incomplete class)
+Bug #44607 (stream_get_line unable to correctly identify the "ending" in the stream content)+JIT ASSIGN: 028
 --INI--
-zend.enable_gc = 1
-}
-opcache.enabled=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.protect_memory=1
+;opcache.jit_debug=257
+session.use_trans_sid=1
+opcache.preload={PWD}/preload_user.inc
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +39,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +62,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,59 +72,38 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Node
-{
-    /** @var Node */
-    public $previous;
-    /** @var Node */
-    public $next;
-}
-var_dump(gc_enabled());
-var_dump('start');
-$firstNode = new Node();
-$firstNode->previous = $firstNode;
-$firstNode->next = $firstNode;
-$circularDoublyLinkedList = $firstNode;
-for ($i = 0; $i < 200000; $i++) {
-    $currentNode = $circularDoublyLinkedList;
-    $nextNode = $circularDoublyLinkedList->next;
-    $newNode = new Node();
-    $newNode->previous = $currentNode;
-    $currentNode->next = $newNode;
-    $newNode->next = $nextNode;
-    $nextNode->previous = $newNode;
-    $circularDoublyLinkedList = $nextNode;
-}
-var_dump('end');
-$fusion = $nextNode;
+$eol = '<EOL>';
+$tempnam = __DIR__ . '/' . 'tmpbug44607.txt';
+$data = str_repeat('.', 14000);
+$data .= $eol;
+$data .= $data;
+file_put_contents($tempnam, $data);
+$fd = fopen($tempnam, 'r');
+var_dump(strlen(stream_get_line($fd, 15000, $eol)));
+var_dump(strlen(stream_get_line($fd, 15000, $eol)));
+fseek($fd, 1, SEEK_SET);
+var_dump(strlen(stream_get_line($fd, 15000, $eol)));
+var_dump(strlen(stream_get_line($fd, 15000, $eol)));
+fclose($fd);
+unlink($tempnam);
+$fusion = $data;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$str = 'O:9:"TestClass":0:{}';
-$obj = unserialize($str);
-var_dump($obj);
-echo serialize($fusion)."\n";
-var_dump($obj);
-echo serialize($obj)."\n";
-var_dump($obj);
+function foo() {
+  var_dump($fusion=1);
+  return $i;
+}
+var_dump(foo());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+opcache
 --EXPECT--
-bool(true)
-string(5) "start"
-string(3) "end"
-object(__PHP_Incomplete_Class)#1 (1) {
-  ["__PHP_Incomplete_Class_Name"]=>
-  string(9) "TestClass"
-}
-O:9:"TestClass":0:{}
-object(__PHP_Incomplete_Class)#1 (1) {
-  ["__PHP_Incomplete_Class_Name"]=>
-  string(9) "TestClass"
-}
-O:9:"TestClass":0:{}
-object(__PHP_Incomplete_Class)#1 (1) {
-  ["__PHP_Incomplete_Class_Name"]=>
-  string(9) "TestClass"
-}
+int(14000)
+int(14000)
+int(13999)
+int(14000)
+int(1)
+int(1)

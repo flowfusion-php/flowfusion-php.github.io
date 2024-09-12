@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,67 +61,23 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo "--- testing: $longVal % $otherVal ---\n";
-      try {
-        var_dump($longVal%$otherVal);
-      } catch (DivisionByZeroError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo "--- testing: $otherVal % $longVal ---\n";
-      try {
-        var_dump($otherVal%$longVal);
-      } catch (DivisionByZeroError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-$fusion = $otherVals;
+$b = [0, 1, 2];
+var_dump($b);
+substr_replace("test", $b, "1");
+var_dump($b);
+$fusion = $b;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT => true));
-    }
-}
-class Baz extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT => true));
-    }
-}
-class Bar extends Baz {
-    function quux() {
-        echo get_class($this), "\n";
-        $fusion = new Foo("sqlite::memory:");
-        echo get_class($this), "\n";
-    }
-}
-$bar = new Bar("sqlite::memory:");
-$bar->quux();
-class MyPDO extends PDO {}
-$bar = new PDO("sqlite::memory:", null, null, array(PDO::ATTR_PERSISTENT => true));
-$baz = new MyPDO("sqlite::memory:", null, null, array(PDO::ATTR_PERSISTENT => true));
-var_dump($bar);
-unset($bar);
-var_dump($baz);
-var_dump($bar);
+$fd = fopen('php://temp', 'r+');
+$delimiter = 'MM';
+$str = str_repeat('.', 8191) . $delimiter . "rest";
+fwrite($fd, $str);
+rewind($fd);
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump(strlen($fusion));
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump($line);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

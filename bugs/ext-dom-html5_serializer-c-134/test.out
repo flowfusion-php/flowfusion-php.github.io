@@ -1,15 +1,4 @@
-<!DOCTYPE html><html><head>
-        <meta charset="utf-8">
-        <title>foo</title>
-    </head>
-    <body>
-        <script>
-        var foo = "</p>";
-        </script>
-        <p test="<script>">bar <!-- hi --></p>
-    
-</body></html>
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
+Aborted (core dumped)
 
-        
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/html5_serializer.c:134:20: runtime error: member access within null pointer of type 'struct _xmlNode'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/html5_serializer.c:134:20 in
+Termsig=6

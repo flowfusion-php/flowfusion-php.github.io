@@ -1,14 +1,12 @@
 --TEST--
-Test output_add_rewrite_var() with and without nested session URL-Rewriting+Bug #79821 (array grow during var_dump)
+ZE2 errors caught as exceptions+Bug #66121 - UTF-8 lookbehinds match bytes instead of characters
 --INI--
-session.trans_sid_tags="a=href,area=href,frame=src,form="
-url_rewriter.tags="a=href,area=href,frame=src,form="
-zend.multibyte=On
-sendmail_path={MAIL:{PWD}/mb_send_mail07.eml}
+serialize_precision=15
+date.timezone=Europe/Rome
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0200
+opcache.jit=0145
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -40,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -63,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -73,195 +71,77 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$testTags = <<<TEST
-<a href=""></a>
-<a href="./foo.php"></a>
-<a href="//php.net/foo.php"></a>
-<a href="http://php.net/foo.php"></a>
-<a href="bad://php.net/foo.php"></a>
-<a href="//www.php.net/foo.php"></a>
-<a href="//session-trans-sid.com/foo.php"></a>
-<a href="http://session-trans-sid.com/foo.php"></a>
-<a href="bad://session-trans-sid.com/foo.php"></a>
-<a href="//www.session-trans-sid.com/foo.php"></a>
-<a href="//url-rewriter.com/foo.php"></a>
-<a href="http://url-rewriter.com/foo.php"></a>
-<a href="bad://url-rewriter.com/foo.php"></a>
-<a href="//www.url-rewriter.com/foo.php"></a>
-<form action="" method="get"> </form>
-<form action="./foo.php" method="get"></form>
-<form action="//php.net/foo.php" method="get"></form>
-<form action="http://php.net/foo.php" method="get"></form>
-<form action="bad://php.net/foo.php" method="get"></form>
-<form action="//www.php.net/foo.php" method="get"></form>
-<form action="//session-trans-sid.com/bar.php" method="get"></form>
-<form action="http://session-trans-sid.com/bar.php" method="get"></form>
-<form action="bad://session-trans-sid.com/bar.php" method="get"></form>
-<form action="//www.session-trans-sid.com/bar.php" method="get"></form>
-<form action="//url-rewriter.com/bar.php" method="get"></form>
-<form action="http://url-rewriter.com/bar.php" method="get"></form>
-<form action="bad://url-rewriter.com/bar.php" method="get"></form>
-<form action="//www.url-rewriter.com/bar.php" method="get"></form>
-TEST;
-ob_start();
-ini_set('session.trans_sid_hosts', 'session-trans-sid.com');
-ini_set('url_rewriter.hosts', 'url-rewriter.com');
-ini_set('session.use_only_cookies', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_strict_mode', 0);
-ini_set('session.use_trans_sid', 0);
-output_add_rewrite_var('<name>', '<value>');
-echo "URL-Rewriting with output_add_rewrite_var() without transparent session id support\n";
-echo $testTags;
-ob_flush();
-output_reset_rewrite_vars();
-ini_set('session.use_only_cookies', 0);
-ini_set('session.use_cookies', 0);
-ini_set('session.use_strict_mode', 0);
-ini_set('session.use_trans_sid', 1);
-session_id('testid');
-session_start();
-output_add_rewrite_var('<NAME>', '<VALUE>');
-echo "\nURL-Rewriting with transparent session id support without output_add_rewrite_var()\n";
-echo $testTags;
-ob_end_flush();
-output_add_rewrite_var('<name2>', '<value2>');
-echo "\nURL-Rewriting with output_add_rewrite_var() without transparent session id support\n";
-echo $testTags;
-$fusion = $testTags;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
-    $foo = $bar = [];
-    for ($i = 0; $i < 3; $fusion++) {
-        $foo = [$foo, [&$bar]];
+class MyException extends Exception {
+    function __construct(public $errno, public $errmsg) {}
+    function getErrno() {
+        return $this->errno;
     }
-    ob_start(function (string $buffer) use (&$bar) {
-        $bar[][] = null;
-        return '';
-    }, 64);
-    $output($foo[0]);
-    ob_end_clean();
+    function getErrmsg() {
+        return $this->errmsg;
+    }
 }
-echo "OK\n";
+function ErrorsToExceptions($errno, $errmsg) {
+    throw new MyException($errno, $errmsg);
+}
+set_error_handler("ErrorsToExceptions");
+// make sure it isn't catching exceptions that weren't
+// thrown...
+try {
+} catch (MyException $exception) {
+    echo "There was an exception: " . $exception->getErrno() . ", '" . $exception->getErrmsg() . "'\n";
+}
+try {
+    trigger_error("I will become an exception", E_USER_WARNING);
+} catch (MyException $exception) {
+    echo "There was an exception: " . $exception->getErrno() . ", '" . $exception->getErrmsg() . "'\n";
+}
+$fusion = $errmsg;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+// Sinhala characters
+var_dump(preg_replace('/(?<!à¶)/u', '*', 'à¶'));
+var_dump(preg_replace('/(?<!à¶)/u', '*', 'à¶¸'));
+// English characters
+var_dump(preg_replace('/(?<!k)/u', '*', 'k'));
+var_dump(preg_replace('/(?<!k)/u', '*', 'm'));
+// Sinhala characters
+preg_match_all('/(?<!à¶)/u', 'à¶¸', $matches, PREG_OFFSET_CAPTURE);
+var_dump($matches);
+// invalid UTF-8
+var_dump(preg_replace('/(?<!à¶)/u', '*', "\xFCà¶"));
+var_dump(preg_replace('/(?<!à¶)/u', '*', "à¶\xFC"));
+var_dump(preg_match_all('/(?<!à¶)/u', "\xFCà¶¸", $fusion, PREG_OFFSET_CAPTURE));
+var_dump(preg_match_all('/(?<!à¶)/u', "\xFCà¶¸", $matches, PREG_OFFSET_CAPTURE));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-session
 --EXPECT--
-URL-Rewriting with output_add_rewrite_var() without transparent session id support
-
-<a href="?%3Cname%3E=%3Cvalue%3E"></a>
-<a href="./foo.php?%3Cname%3E=%3Cvalue%3E"></a>
-
-<a href="//php.net/foo.php"></a>
-<a href="http://php.net/foo.php"></a>
-<a href="bad://php.net/foo.php"></a>
-<a href="//www.php.net/foo.php"></a>
-
-<a href="//session-trans-sid.com/foo.php"></a>
-<a href="http://session-trans-sid.com/foo.php"></a>
-<a href="bad://session-trans-sid.com/foo.php"></a>
-<a href="//www.session-trans-sid.com/foo.php"></a>
-
-<a href="//url-rewriter.com/foo.php?%3Cname%3E=%3Cvalue%3E"></a>
-<a href="http://url-rewriter.com/foo.php?%3Cname%3E=%3Cvalue%3E"></a>
-<a href="bad://url-rewriter.com/foo.php"></a>
-<a href="//www.url-rewriter.com/foo.php"></a>
-
-<form action="" method="get"><input type="hidden" name="&lt;name&gt;" value="&lt;value&gt;" /> </form>
-<form action="./foo.php" method="get"><input type="hidden" name="&lt;name&gt;" value="&lt;value&gt;" /></form>
-
-<form action="//php.net/foo.php" method="get"></form>
-<form action="http://php.net/foo.php" method="get"></form>
-<form action="bad://php.net/foo.php" method="get"></form>
-<form action="//www.php.net/foo.php" method="get"></form>
-
-<form action="//session-trans-sid.com/bar.php" method="get"></form>
-<form action="http://session-trans-sid.com/bar.php" method="get"></form>
-<form action="bad://session-trans-sid.com/bar.php" method="get"></form>
-<form action="//www.session-trans-sid.com/bar.php" method="get"></form>
-
-<form action="//url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;name&gt;" value="&lt;value&gt;" /></form>
-<form action="http://url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;name&gt;" value="&lt;value&gt;" /></form>
-<form action="bad://url-rewriter.com/bar.php" method="get"></form>
-<form action="//www.url-rewriter.com/bar.php" method="get"></form>
-
-URL-Rewriting with transparent session id support without output_add_rewrite_var()
-
-<a href="?PHPSESSID=testid&%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="./foo.php?PHPSESSID=testid&%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-
-<a href="//php.net/foo.php"></a>
-<a href="http://php.net/foo.php"></a>
-<a href="bad://php.net/foo.php"></a>
-<a href="//www.php.net/foo.php"></a>
-
-<a href="//session-trans-sid.com/foo.php?PHPSESSID=testid"></a>
-<a href="http://session-trans-sid.com/foo.php?PHPSESSID=testid"></a>
-<a href="bad://session-trans-sid.com/foo.php"></a>
-<a href="//www.session-trans-sid.com/foo.php"></a>
-
-<a href="//url-rewriter.com/foo.php?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="http://url-rewriter.com/foo.php?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="bad://url-rewriter.com/foo.php"></a>
-<a href="//www.url-rewriter.com/foo.php"></a>
-
-<form action="" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /><input type="hidden" name="PHPSESSID" value="testid" /> </form>
-<form action="./foo.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /><input type="hidden" name="PHPSESSID" value="testid" /></form>
-
-<form action="//php.net/foo.php" method="get"></form>
-<form action="http://php.net/foo.php" method="get"></form>
-<form action="bad://php.net/foo.php" method="get"></form>
-<form action="//www.php.net/foo.php" method="get"></form>
-
-<form action="//session-trans-sid.com/bar.php" method="get"><input type="hidden" name="PHPSESSID" value="testid" /></form>
-<form action="http://session-trans-sid.com/bar.php" method="get"><input type="hidden" name="PHPSESSID" value="testid" /></form>
-<form action="bad://session-trans-sid.com/bar.php" method="get"></form>
-<form action="//www.session-trans-sid.com/bar.php" method="get"></form>
-
-<form action="//url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /></form>
-<form action="http://url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /></form>
-<form action="bad://url-rewriter.com/bar.php" method="get"></form>
-<form action="//www.url-rewriter.com/bar.php" method="get"></form>
-
-URL-Rewriting with output_add_rewrite_var() without transparent session id support
-
-<a href="?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="./foo.php?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-
-<a href="//php.net/foo.php"></a>
-<a href="http://php.net/foo.php"></a>
-<a href="bad://php.net/foo.php"></a>
-<a href="//www.php.net/foo.php"></a>
-
-<a href="//session-trans-sid.com/foo.php"></a>
-<a href="http://session-trans-sid.com/foo.php"></a>
-<a href="bad://session-trans-sid.com/foo.php"></a>
-<a href="//www.session-trans-sid.com/foo.php"></a>
-
-<a href="//url-rewriter.com/foo.php?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="http://url-rewriter.com/foo.php?%3CNAME%3E=%3CVALUE%3E&%3Cname2%3E=%3Cvalue2%3E"></a>
-<a href="bad://url-rewriter.com/foo.php"></a>
-<a href="//www.url-rewriter.com/foo.php"></a>
-
-<form action="" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /> </form>
-<form action="./foo.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /></form>
-
-<form action="//php.net/foo.php" method="get"></form>
-<form action="http://php.net/foo.php" method="get"></form>
-<form action="bad://php.net/foo.php" method="get"></form>
-<form action="//www.php.net/foo.php" method="get"></form>
-
-<form action="//session-trans-sid.com/bar.php" method="get"></form>
-<form action="http://session-trans-sid.com/bar.php" method="get"></form>
-<form action="bad://session-trans-sid.com/bar.php" method="get"></form>
-<form action="//www.session-trans-sid.com/bar.php" method="get"></form>
-
-<form action="//url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /></form>
-<form action="http://url-rewriter.com/bar.php" method="get"><input type="hidden" name="&lt;NAME&gt;" value="&lt;VALUE&gt;" /><input type="hidden" name="&lt;name2&gt;" value="&lt;value2&gt;" /></form>
-<form action="bad://url-rewriter.com/bar.php" method="get"></form>
-<form action="//www.url-rewriter.com/bar.php" method="get"></form>
-OK
+There was an exception: 512, 'I will become an exception'
+string(4) "*à¶"
+string(5) "*à¶¸*"
+string(2) "*k"
+string(3) "*m*"
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    array(2) {
+      [0]=>
+      string(0) ""
+      [1]=>
+      int(0)
+    }
+    [1]=>
+    array(2) {
+      [0]=>
+      string(0) ""
+      [1]=>
+      int(3)
+    }
+  }
+}
+NULL
+NULL
+bool(false)
+bool(false)

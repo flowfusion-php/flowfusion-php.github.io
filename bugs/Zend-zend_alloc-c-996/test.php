@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,57 +61,16 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Node
-{
-    /** @var Node */
-    public $previous;
-    /** @var Node */
-    public $next;
-}
-var_dump(gc_enabled());
-var_dump('start');
-$firstNode = new Node();
-$firstNode->previous = $firstNode;
-$firstNode->next = $firstNode;
-$circularDoublyLinkedList = $firstNode;
-for ($i = 0; $i < 200000; $i++) {
-    $currentNode = $circularDoublyLinkedList;
-    $nextNode = $circularDoublyLinkedList->next;
-    $newNode = new Node();
-    $newNode->previous = $currentNode;
-    $currentNode->next = $newNode;
-    $newNode->next = $nextNode;
-    $nextNode->previous = $newNode;
-    $circularDoublyLinkedList = $nextNode;
-}
-var_dump('end');
-$fusion = $circularDoublyLinkedList;
+// Ensure we can still unserialize the old style.
+var_dump(unserialize('O:8:"DateTime":3:{s:4:"date";s:19:"2005-07-14 22:30:41";s:13:"timezone_type";i:3;s:8:"timezone";s:13:"Europe/London";}'));
+// New style.
+var_dump(unserialize('O:8:"DateTime":3:{s:4:"date";s:26:"2005-07-14 22:30:41.123456";s:13:"timezone_type";i:3;s:8:"timezone";s:13:"Europe/London";}'));
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-function open($save_path, $fusion) {
-    return true;
-}
-function close() {
-    echo "close: goodbye cruel world\n";
-    exit;
-}
-function read($id) {
-    return '';
-}
-function write($id, $session_data) {
-    echo "write: goodbye cruel world\n";
-    throw new Exception;
-}
-function destroy($id) {
-    return true;
-}
-function gc($maxlifetime) {
-    return true;
-}
-session_set_save_handler('open', 'close', 'read', 'write', 'destroy', 'gc');
-session_start();
+$xml = new SimpleXMLElement('<root><elem>Text</elem></root>');
+echo 'elem2 is: ' . ($xml->elem2 ?? 'backup string') . "\n";
+echo 'elem2 is: ' . (isset($xml->elem2) ? $xml->elem2 : 'backup string') . "\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

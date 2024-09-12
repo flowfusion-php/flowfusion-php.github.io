@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
 </pre>
         </div>
 
@@ -64,7 +64,7 @@
 
         <div class="keywords">
             <div class="section-title">Keywords:</div>
-            <pre>['integer overflow']</pre>
+            <pre>['core dumped']</pre>
         </div>
 
         <div class="bughit">
@@ -75,35 +75,10 @@
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
--292277022657-01-27T09:23:20+00:53
-Sun, 27 Jan -292277022657 09:23:20 +0053
--292277022657-01-27T09:23:20+00:53
-Sun, 27 Jan -292277022657 09:23:20 +0053
--292277022657
--57
--292277022657
--9223372036854775808
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0&#x27; failed.
+Aborted (core dumped)
 
-2147483648-01-01T00:59:59+01:00
-Wed, 01 Jan 2147483648 00:59:59 +0100
-2147483648-01-01T00:59:59+01:00
-Wed, 01 Jan 2147483648 00:59:59 +0100
-2147483648
-48
-2147483648
-67767976233532799
-
-2147483648-01-01T01:00:00+01:00
-Wed, 01 Jan 2147483648 01:00:00 +0100
-2147483648-01-01T01:00:00+01:00
-Wed, 01 Jan 2147483648 01:00:00 +0100
-2147483648
-48
-2147483648
-67767976233532800
-
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/parse_posix.c:493:22: runtime error: signed integer overflow: 86400 * 106751991167328 cannot be represented in type &#x27;long long&#x27;
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/parse_posix.c:493:22 in
+Termsig=6
             </pre>
         </div>
 
@@ -140,7 +115,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -163,7 +138,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -173,36 +148,90 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, PHP_INT_MIN);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, 67767976233532799);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, 67767976233532800);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;no dst --&gt; dst\n&quot;;
-$ts = -1;
-gm_date_check(01,00,00,03,27,2005);
-gm_date_check(02,00,00,03,27,2005);
-gm_date_check(03,00,00,03,27,2005);
-gm_date_check(04,00,00,03,27,2005);
-echo &quot;\ndst --&gt; no dst\n&quot;;
-$ts = -1;
-gm_date_check(01,00,00,10,30,2005);
-gm_date_check(02,00,00,10,30,2005);
-gm_date_check(03,00,00,10,30,2005);
-gm_date_check(04,00,00,10,30,2005);
-function gm_date_check($hour, $minute, $second, $month, $day, $year) {
-    global $ts, $tsold;
-    echo &quot;gmmktime($hour,$minute,$second,$month,$day,$year): &quot;;
-    $tsold = $ts;
-    $ts = gmmktime($hour, $minute, $second, $month, $day, $year);
-    echo $ts, &quot; | gmdate(&#x27;r&#x27;, $ts):&quot;, gmdate(&#x27;r&#x27;, $ts);
-    if ($tsold &gt; 0) {
-        echo &quot; | Diff: &quot; . ($ts - $tsold);
-    }
-    echo &quot;\n&quot;;
+define(&#x27;V1&#x27;, strtoupper(php_sapi_name()));
+#[A1([V1 =&gt; V1])]
+class C1
+{
+    public const BAR = &#x27;bar&#x27;;
 }
+$ref = new \ReflectionClass(C1::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args), $args[0][V1] === V1);
+echo &quot;\n&quot;;
+#[A1(V1, 1 + 2, C1::class)]
+class C2 { }
+$ref = new \ReflectionClass(C2::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args));
+var_dump($args[0] === V1);
+var_dump($args[1] === 3);
+var_dump($args[2] === C1::class);
+echo &quot;\n&quot;;
+#[A1(self::FOO, C1::BAR)]
+class C3
+{
+    private const FOO = &#x27;foo&#x27;;
+}
+$ref = new \ReflectionClass(C3::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args));
+var_dump($args[0] === &#x27;foo&#x27;);
+var_dump($args[1] === C1::BAR);
+echo &quot;\n&quot;;
+#[ExampleWithShift(4 &gt;&gt; 1)]
+class C4 {}
+$ref = new \ReflectionClass(C4::class);
+var_dump($ref-&gt;getAttributes()[0]-&gt;getArguments());
+echo &quot;\n&quot;;
+#[Attribute]
+class C5
+{
+    public function __construct() { }
+}
+$ref = new \ReflectionFunction(#[C5(MissingClass::SOME_CONST)] function () { });
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+try {
+    $attr[0]-&gt;getArguments();
+} catch (\Error $e) {
+    var_dump($e-&gt;getMessage());
+}
+try {
+    $attr[0]-&gt;newInstance();
+} catch (\Error $e) {
+    var_dump($e-&gt;getMessage());
+}
+$fusion = $attr;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class TestClass {
+    public $pub;
+    public $pub2 = 5;
+    static public $stat = &quot;static property&quot;;
+    protected $prot = 4;
+    private $priv = &quot;keepOut&quot;;
+}
+#[AllowDynamicProperties]
+class AnotherClass {
+}
+$instance = new TestClass();
+$instanceWithNoProperties = new AnotherClass();
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;pub2&#x27;);
+echo &quot;\nProtected property:\n&quot;;
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;prot&#x27;);
+$propInfo-&gt;setValue($instance, &quot;NewValue&quot;);
+var_dump($propInfo-&gt;getValue($instance));
+echo &quot;\n\nInstance without property:\n&quot;;
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;pub2&#x27;);
+var_dump($propInfo-&gt;setValue($instanceWithNoProperties, &quot;NewValue&quot;));
+var_dump($fusion-&gt;pub2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -214,14 +243,14 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test for bug #75851: Year component overflow with date formats &quot;c&quot;, &quot;o&quot;, &quot;r&quot; and &quot;y&quot;+Bug #30096 (gmmktime does not return the correct time)
+Attributes can deal with AST nodes.+Test ReflectionProperty::setValue() error cases.
 --INI--
-date.timezone = UTC
-error_reporting=2047
-date.timezone=Asia/Singapore
-date.timezone=Europe/Berlin
---SKIPIF--
-&lt;?php if (PHP_INT_SIZE != 8) die(&quot;skip 64-bit only&quot;); ?&gt;
+opcache.jit=1255
+session.cookie_secure=TRUE
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1042
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -253,7 +282,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -276,7 +305,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -286,86 +315,124 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, PHP_INT_MIN);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, 67767976233532799);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, 67767976233532800);
-echo date(DATE_ATOM.&quot;\n&quot;.DATE_RFC2822.&quot;\nc\nr\no\ny\nY\nU\n\n&quot;, PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;no dst --&gt; dst\n&quot;;
-$ts = -1;
-gm_date_check(01,00,00,03,27,2005);
-gm_date_check(02,00,00,03,27,2005);
-gm_date_check(03,00,00,03,27,2005);
-gm_date_check(04,00,00,03,27,2005);
-echo &quot;\ndst --&gt; no dst\n&quot;;
-$ts = -1;
-gm_date_check(01,00,00,10,30,2005);
-gm_date_check(02,00,00,10,30,2005);
-gm_date_check(03,00,00,10,30,2005);
-gm_date_check(04,00,00,10,30,2005);
-function gm_date_check($hour, $minute, $second, $month, $day, $year) {
-    global $ts, $tsold;
-    echo &quot;gmmktime($hour,$minute,$second,$month,$day,$year): &quot;;
-    $tsold = $ts;
-    $ts = gmmktime($hour, $minute, $second, $month, $day, $year);
-    echo $ts, &quot; | gmdate(&#x27;r&#x27;, $ts):&quot;, gmdate(&#x27;r&#x27;, $ts);
-    if ($tsold &gt; 0) {
-        echo &quot; | Diff: &quot; . ($ts - $tsold);
-    }
-    echo &quot;\n&quot;;
+define(&#x27;V1&#x27;, strtoupper(php_sapi_name()));
+#[A1([V1 =&gt; V1])]
+class C1
+{
+    public const BAR = &#x27;bar&#x27;;
 }
+$ref = new \ReflectionClass(C1::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args), $args[0][V1] === V1);
+echo &quot;\n&quot;;
+#[A1(V1, 1 + 2, C1::class)]
+class C2 { }
+$ref = new \ReflectionClass(C2::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args));
+var_dump($args[0] === V1);
+var_dump($args[1] === 3);
+var_dump($args[2] === C1::class);
+echo &quot;\n&quot;;
+#[A1(self::FOO, C1::BAR)]
+class C3
+{
+    private const FOO = &#x27;foo&#x27;;
+}
+$ref = new \ReflectionClass(C3::class);
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+$args = $attr[0]-&gt;getArguments();
+var_dump(count($args));
+var_dump($args[0] === &#x27;foo&#x27;);
+var_dump($args[1] === C1::BAR);
+echo &quot;\n&quot;;
+#[ExampleWithShift(4 &gt;&gt; 1)]
+class C4 {}
+$ref = new \ReflectionClass(C4::class);
+var_dump($ref-&gt;getAttributes()[0]-&gt;getArguments());
+echo &quot;\n&quot;;
+#[Attribute]
+class C5
+{
+    public function __construct() { }
+}
+$ref = new \ReflectionFunction(#[C5(MissingClass::SOME_CONST)] function () { });
+$attr = $ref-&gt;getAttributes();
+var_dump(count($attr));
+try {
+    $attr[0]-&gt;getArguments();
+} catch (\Error $e) {
+    var_dump($e-&gt;getMessage());
+}
+try {
+    $attr[0]-&gt;newInstance();
+} catch (\Error $e) {
+    var_dump($e-&gt;getMessage());
+}
+$fusion = $attr;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class TestClass {
+    public $pub;
+    public $pub2 = 5;
+    static public $stat = &quot;static property&quot;;
+    protected $prot = 4;
+    private $priv = &quot;keepOut&quot;;
+}
+#[AllowDynamicProperties]
+class AnotherClass {
+}
+$instance = new TestClass();
+$instanceWithNoProperties = new AnotherClass();
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;pub2&#x27;);
+echo &quot;\nProtected property:\n&quot;;
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;prot&#x27;);
+$propInfo-&gt;setValue($instance, &quot;NewValue&quot;);
+var_dump($propInfo-&gt;getValue($instance));
+echo &quot;\n\nInstance without property:\n&quot;;
+$propInfo = new ReflectionProperty(&#x27;TestClass&#x27;, &#x27;pub2&#x27;);
+var_dump($propInfo-&gt;setValue($instanceWithNoProperties, &quot;NewValue&quot;));
+var_dump($fusion-&gt;pub2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
 --EXPECT--
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657
--57
--292277022657
--9223372036854775808
+int(1)
+int(1)
+bool(true)
 
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483648
-47
-2147483647
-67767976233532799
+int(1)
+int(3)
+bool(true)
+bool(true)
+bool(true)
 
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648
-48
-2147483648
-67767976233532800
+int(1)
+int(2)
+bool(true)
+bool(true)
 
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596
-96
-292277026596
-9223372036854775807
-no dst --&gt; dst
-gmmktime(1,0,0,3,27,2005): 1111885200 | gmdate(&#x27;r&#x27;, 1111885200):Sun, 27 Mar 2005 01:00:00 +0000
-gmmktime(2,0,0,3,27,2005): 1111888800 | gmdate(&#x27;r&#x27;, 1111888800):Sun, 27 Mar 2005 02:00:00 +0000 | Diff: 3600
-gmmktime(3,0,0,3,27,2005): 1111892400 | gmdate(&#x27;r&#x27;, 1111892400):Sun, 27 Mar 2005 03:00:00 +0000 | Diff: 3600
-gmmktime(4,0,0,3,27,2005): 1111896000 | gmdate(&#x27;r&#x27;, 1111896000):Sun, 27 Mar 2005 04:00:00 +0000 | Diff: 3600
+array(1) {
+  [0]=&gt;
+  int(2)
+}
 
-dst --&gt; no dst
-gmmktime(1,0,0,10,30,2005): 1130634000 | gmdate(&#x27;r&#x27;, 1130634000):Sun, 30 Oct 2005 01:00:00 +0000
-gmmktime(2,0,0,10,30,2005): 1130637600 | gmdate(&#x27;r&#x27;, 1130637600):Sun, 30 Oct 2005 02:00:00 +0000 | Diff: 3600
-gmmktime(3,0,0,10,30,2005): 1130641200 | gmdate(&#x27;r&#x27;, 1130641200):Sun, 30 Oct 2005 03:00:00 +0000 | Diff: 3600
-gmmktime(4,0,0,10,30,2005): 1130644800 | gmdate(&#x27;r&#x27;, 1130644800):Sun, 30 Oct 2005 04:00:00 +0000 | Diff: 3600
+int(1)
+string(30) &quot;Class &quot;MissingClass&quot; not found&quot;
+string(30) &quot;Class &quot;MissingClass&quot; not found&quot;
+Protected property:
+string(8) &quot;NewValue&quot;
+
+
+Instance without property:
+NULL
+string(8) &quot;NewValue&quot;
 
             </pre>
         </div>
@@ -380,8 +447,8 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
-export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -392,12 +459,11 @@ export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
-export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
@@ -410,30 +476,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=2047&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=Europe/Berlin&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused363.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1042&quot; -d &quot;session.cookie_secure=TRUE&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused213.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

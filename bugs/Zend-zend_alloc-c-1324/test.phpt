@@ -1,8 +1,12 @@
 --TEST--
-Bug #63882 (zend_std_compare_objects crash on recursion)+Bug #65251: array_merge_recursive() recursion detection broken
+Trying declare interface with repeated name of inherited method+Document URI/URL
 --INI--
-opcache.record_warnings=1
-ary2[1] = a
+opcache.optimization_level=1279
+auto_globals_jit=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1153
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -34,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -57,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -67,29 +71,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test { public $x = 5; }
-$testobj1 = new Test;
-$testobj2 = new Test;
-$testobj1->x = $testobj1;
-$testobj2->x = $testobj2;
+interface a {
+    function b();
+}
+interface b {
+    function b();
+}
+interface c extends a, b {
+}
+echo "done!\n";
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$dom = Dom\XMLDocument::createFromString('<root><child/></root>');
+var_dump($dom->documentURI);
+var_dump($dom->URL);
 try {
-    var_dump($testobj1 == $testobj2);
-} catch (Error $e) {
+    $dom->URL = NULL;
+    var_dump($dom->documentURI);
+    var_dump($dom->URL);
+} catch (TypeError $e) {
     echo $e->getMessage(), "\n";
 }
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/* This no longer involves any recursion. */
-try {
-    array_merge_recursive($GLOBALS, $GLOBALS);
-} catch (\Error $e) {
-    echo $e->getMessage() . "\n";
-}
-?>
+$dom->URL = "";
+var_dump($dom->documentURI);
+var_dump($dom->URL);
+$dom->URL = "http://example.com/";
+var_dump($dom->documentURI);
+var_dump($dom->URL);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Nesting level too deep - recursive dependency?
-===DONE===
+--EXTENSIONS--
+dom
+--EXPECTF--
+done!
+string(%d) "%s"
+string(%d) "%s"
+Cannot assign null to property Dom\Document::$URL of type string
+string(0) ""
+string(0) ""
+string(%d) "%s"
+string(%d) "%s"

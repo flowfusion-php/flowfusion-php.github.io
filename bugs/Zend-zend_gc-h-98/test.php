@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,40 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test1 {public $x;};
-class test2 {public $x;};
-class test3 {public $x;};
-class test4 {public $x;};
-$o1 = new test1;
-$o2 = new test2;
-$o3 = new test3;
-$o4 = new test4;
-$o3->x = &$o4;
-$r1 = &$o1;
-class once {}
-$o = new once;
-echo "Done\n";
-$fusion = $x;
+class Test {
+    function __copy()
+    {
+        $string = PHP_VERSION;
+        $version = $string[0];
+        if($string < 5)
+        {
+            return $this;
+        }
+        else
+        {
+            return clone $this;
+        }
+    }
+}
+$test = new Test();
+$test2 = $test->__copy();
+var_dump($test2);
+$fusion = $version;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
+function test(&$x) {
+    $class = new SQLite3(':memory:');
+    $x = $fusion->prepare('SELECT 1');
 }
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+test($foo);
+echo "done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

@@ -1,11 +1,16 @@
 --TEST--
-Decrementing min int values 64bit+Test array_fill() function : usage variations - different types of array values for 'val' argument
+SCCP 028: Don't propagate typed properties+XMLWriter: libxml2 XML Writer, Elements & Attributes
 --INI--
-precision=14
-mysqlnd.debug="t:O,/tmp/mysqli_debug_phpt.trace"
-internal_encoding=cp1255
---SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
+opcache.enable=1
+opcache.enable_cli=1
+opcache.optimization_level=-1
+opcache.preload=
+session.cookie_secure=0
+session.sid_length=32
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0103
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -37,7 +42,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -60,7 +65,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -70,293 +75,50 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$values = [
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-];
-foreach ($values as $var) {
-    $var--;
-    var_dump($var);
+class Foo {
+    public int $bar = 1;
 }
-echo "Done\n";
+function test() {
+    $foo = new Foo();
+    $foo->bar = "10";
+    var_dump($foo->bar);
+}
+test();
+$fusion = $bar;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * testing array_fill() by passing different types of array  values for 'val' argument
- */
-echo "*** Testing array_fill() : usage variations ***\n";
-// Initialise function arguments not being substituted
-$start_key = 0;
-$num = 2;
-//array of different types of array values for 'val' argument
-$values = array(
-  /* 1  */  array(),
-            array(1 , 2 , 3 , 4),
-            array(1 => "Hi" , 2 => "Hello"),
-            array("Saffron" , "White" , "Green"),
-  /* 5  */  array('color' => 'red' , 'item' => 'pen'),
-            array( 'color' => 'red' , 2 => 'green ' ),
-            array("colour" => "red" , "item" => "pen"),
-            array( TRUE => "red" , FALSE => "green" ),
-            array( true => "red" , FALSE => "green" ),
-  /* 10 */  array( 1 => "Hi" , "color" => "red" , 'item' => 'pen'),
-            array( NULL => "Hi", '1' => "Hello" , "1" => "Green"),
-            array( ""=>1, "color" => "green"),
-  /* 13 */  array('Saffron' , 'White' , 'Green')
-);
-// loop through each element of the values array for 'val' argument
-// check the working of array_fill()
-echo "--- Testing array_fill() with different types of array values for 'val' argument ---\n";
-$counter = 1;
-for($i = 0; $i < count($values); $i++)
-{
-  echo "-- Iteration $counter --\n";
-  $val = $values[$i];
-  var_dump( array_fill($start_key , $num , $val) );
-  $counter++;
-}
-echo "Done";
+$xw = new XMLWriter();
+$xw->openMemory();
+$xw->setIndent(TRUE);
+$xw->setIndentString('   ');
+$xw->startDocument('1.0', "UTF-8");
+$xw->startElement('root');
+$xw->startElementNS('ns1', 'child1', 'urn:ns1');
+$xw->startAttributeNS('ns1', 'att1', 'urn:ns1');
+$xw->text('a&b');
+$xw->endAttribute();
+$xw->writeAttribute('att2', "double\" single'");
+$xw->startAttributeNS('ns1', 'att2', 'urn:ns1');
+$xw->text("<>\"'&");
+$xw->endAttribute();
+$xw->writeElement('chars', "special characters: <>\"'&");
+$xw->endElement();
+$xw->endDocument();
+// Force to write and empty the buffer
+$fusion = $xw->flush(true);
+print $output;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+opcache
+xmlwriter
 --EXPECT--
-float(-9.223372036854776E+18)
-float(-9.223372036854776E+18)
-Done
-*** Testing array_fill() : usage variations ***
---- Testing array_fill() with different types of array values for 'val' argument ---
--- Iteration 1 --
-array(2) {
-  [0]=>
-  array(0) {
-  }
-  [1]=>
-  array(0) {
-  }
-}
--- Iteration 2 --
-array(2) {
-  [0]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-  }
-  [1]=>
-  array(4) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-  }
-}
--- Iteration 3 --
-array(2) {
-  [0]=>
-  array(2) {
-    [1]=>
-    string(2) "Hi"
-    [2]=>
-    string(5) "Hello"
-  }
-  [1]=>
-  array(2) {
-    [1]=>
-    string(2) "Hi"
-    [2]=>
-    string(5) "Hello"
-  }
-}
--- Iteration 4 --
-array(2) {
-  [0]=>
-  array(3) {
-    [0]=>
-    string(7) "Saffron"
-    [1]=>
-    string(5) "White"
-    [2]=>
-    string(5) "Green"
-  }
-  [1]=>
-  array(3) {
-    [0]=>
-    string(7) "Saffron"
-    [1]=>
-    string(5) "White"
-    [2]=>
-    string(5) "Green"
-  }
-}
--- Iteration 5 --
-array(2) {
-  [0]=>
-  array(2) {
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-  [1]=>
-  array(2) {
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-}
--- Iteration 6 --
-array(2) {
-  [0]=>
-  array(2) {
-    ["color"]=>
-    string(3) "red"
-    [2]=>
-    string(6) "green "
-  }
-  [1]=>
-  array(2) {
-    ["color"]=>
-    string(3) "red"
-    [2]=>
-    string(6) "green "
-  }
-}
--- Iteration 7 --
-array(2) {
-  [0]=>
-  array(2) {
-    ["colour"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-  [1]=>
-  array(2) {
-    ["colour"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-}
--- Iteration 8 --
-array(2) {
-  [0]=>
-  array(2) {
-    [1]=>
-    string(3) "red"
-    [0]=>
-    string(5) "green"
-  }
-  [1]=>
-  array(2) {
-    [1]=>
-    string(3) "red"
-    [0]=>
-    string(5) "green"
-  }
-}
--- Iteration 9 --
-array(2) {
-  [0]=>
-  array(2) {
-    [1]=>
-    string(3) "red"
-    [0]=>
-    string(5) "green"
-  }
-  [1]=>
-  array(2) {
-    [1]=>
-    string(3) "red"
-    [0]=>
-    string(5) "green"
-  }
-}
--- Iteration 10 --
-array(2) {
-  [0]=>
-  array(3) {
-    [1]=>
-    string(2) "Hi"
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-  [1]=>
-  array(3) {
-    [1]=>
-    string(2) "Hi"
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-  }
-}
--- Iteration 11 --
-array(2) {
-  [0]=>
-  array(2) {
-    [""]=>
-    string(2) "Hi"
-    [1]=>
-    string(5) "Green"
-  }
-  [1]=>
-  array(2) {
-    [""]=>
-    string(2) "Hi"
-    [1]=>
-    string(5) "Green"
-  }
-}
--- Iteration 12 --
-array(2) {
-  [0]=>
-  array(2) {
-    [""]=>
-    int(1)
-    ["color"]=>
-    string(5) "green"
-  }
-  [1]=>
-  array(2) {
-    [""]=>
-    int(1)
-    ["color"]=>
-    string(5) "green"
-  }
-}
--- Iteration 13 --
-array(2) {
-  [0]=>
-  array(3) {
-    [0]=>
-    string(7) "Saffron"
-    [1]=>
-    string(5) "White"
-    [2]=>
-    string(5) "Green"
-  }
-  [1]=>
-  array(3) {
-    [0]=>
-    string(7) "Saffron"
-    [1]=>
-    string(5) "White"
-    [2]=>
-    string(5) "Green"
-  }
-}
-Done
+int(10)
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <ns1:child1 ns1:att1="a&amp;b" att2="double&quot; single'" ns1:att2="&lt;&gt;&quot;'&amp;" xmlns:ns1="urn:ns1">
+      <chars>special characters: &lt;&gt;&quot;'&amp;</chars>
+   </ns1:child1>
+</root>

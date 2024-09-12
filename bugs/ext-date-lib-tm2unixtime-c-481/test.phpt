@@ -1,9 +1,12 @@
 --TEST--
-Test atan function : 64bit long tests+Test count() function : basic functionality
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+Bug #68976 Use After Free Vulnerability in unserialize()+Classes can only be used once they are fully linked
+--INI--
+memory_limit=16M
+allow_url_include=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1143
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,84 +71,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(atan($longVal));
+class evilClass {
+    public $name;
+    function __wakeup() {
+        unset($this->name);
+    }
 }
-$fusion = $longVal;
+$fakezval = pack(
+    'IIII',
+    0x00100000,
+    0x00000400,
+    0x00000000,
+    0x00000006
+);
+$data = unserialize('a:2:{i:0;O:9:"evilClass":1:{s:4:"name";a:2:{i:0;i:1;i:1;i:2;}}i:1;R:4;}');
+for($i = 0; $i < 5; $i++) {
+    $v[$i] = $fakezval.$i;
+}
+var_dump($data);
+$fusion = $v;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Test basic functionality of count() using an array as $var argument
- * and different values as $mode argument.
- */
-echo "*** Testing count() : basic functionality ***\n";
-echo "\n-- One Dimensional Array: --\n";
-$array = array('zero', 'one', 'two');
-var_dump(count($array));
-echo "\n-- Two Dimensional Array: --\n";
-$array_multi = array('zero', array(1, 2, 3), 'two');
-echo "\$mode = COUNT_NORMAL:    ";
-var_dump(count($array_multi, COUNT_NORMAL));
-echo "\$mode = 0:               ";
-var_dump(count($array_multi, 0));
-echo "\$fusion = COUNT_RECURSIVE: ";
-var_dump(count($array_multi, COUNT_RECURSIVE));
-echo "\$mode = 1:               ";
-var_dump(count($array_multi, 1));
-echo "Done";
+spl_autoload_register(function($fusion) {
+    echo new ReflectionClass(A::class), "\n";
+});
+class A implements I {
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
---- testing: 9223372036854775807 ---
-float(1.5707963267948966)
---- testing: -9223372036854775808 ---
-float(-1.5707963267948966)
---- testing: 2147483647 ---
-float(1.5707963263292353)
---- testing: -2147483648 ---
-float(-1.5707963263292353)
---- testing: 9223372034707292160 ---
-float(1.5707963267948966)
---- testing: -9223372034707292160 ---
-float(-1.5707963267948966)
---- testing: 2147483648 ---
-float(1.5707963263292353)
---- testing: -2147483649 ---
-float(-1.5707963263292353)
---- testing: 4294967294 ---
-float(1.570796326562066)
---- testing: 4294967295 ---
-float(1.570796326562066)
---- testing: 4294967293 ---
-float(1.570796326562066)
---- testing: 9223372036854775806 ---
-float(1.5707963267948966)
---- testing: 9.2233720368548E+18 ---
-float(1.5707963267948966)
---- testing: -9223372036854775807 ---
-float(-1.5707963267948966)
---- testing: -9.2233720368548E+18 ---
-float(-1.5707963267948966)
-*** Testing count() : basic functionality ***
-
--- One Dimensional Array: --
-int(3)
-
--- Two Dimensional Array: --
-$mode = COUNT_NORMAL:    int(3)
-$mode = 0:               int(3)
-$mode = COUNT_RECURSIVE: int(6)
-$mode = 1:               int(6)
-Done
+--EXPECTF--
+array(2) {
+  [0]=>
+  object(evilClass)#1 (0) {
+  }
+  [1]=>
+  int(1)
+}
+Fatal error: Uncaught ReflectionException: Class "A" does not exist in %s:%d
+Stack trace:
+#0 %s(%d): ReflectionClass->__construct('A')
+#1 %s(%d): {closure:%s:%d}('I')
+#2 {main}
+  thrown in %s on line %d

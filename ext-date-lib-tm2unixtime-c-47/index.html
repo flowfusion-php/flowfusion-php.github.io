@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
 </pre>
         </div>
 
@@ -64,7 +64,7 @@
 
         <div class="keywords">
             <div class="section-title">Keywords:</div>
-            <pre>['integer overflow']</pre>
+            <pre>['core dumped']</pre>
         </div>
 
         <div class="bughit">
@@ -75,592 +75,10 @@
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
---- testing: 9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775807 % 1 ---
-int(0)
---- testing: 9223372036854775807 % -1 ---
-int(0)
---- testing: 9223372036854775807 % 7 ---
-int(0)
---- testing: 9223372036854775807 % 9 ---
-int(7)
---- testing: 9223372036854775807 % 65 ---
-int(7)
---- testing: 9223372036854775807 % -44 ---
-int(7)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775808 % 1 ---
-int(0)
---- testing: -9223372036854775808 % -1 ---
-int(0)
---- testing: -9223372036854775808 % 7 ---
-int(-1)
---- testing: -9223372036854775808 % 9 ---
-int(-8)
---- testing: -9223372036854775808 % 65 ---
-int(-8)
---- testing: -9223372036854775808 % -44 ---
-int(-8)
---- testing: -9223372036854775808 % 2147483647 ---
-int(-2)
---- testing: -9223372036854775808 % 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483647 % 1 ---
-int(0)
---- testing: 2147483647 % -1 ---
-int(0)
---- testing: 2147483647 % 7 ---
-int(1)
---- testing: 2147483647 % 9 ---
-int(1)
---- testing: 2147483647 % 65 ---
-int(62)
---- testing: 2147483647 % -44 ---
-int(23)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: -2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483648 % 1 ---
-int(0)
---- testing: -2147483648 % -1 ---
-int(0)
---- testing: -2147483648 % 7 ---
-int(-2)
---- testing: -2147483648 % 9 ---
-int(-2)
---- testing: -2147483648 % 65 ---
-int(-63)
---- testing: -2147483648 % -44 ---
-int(-24)
---- testing: -2147483648 % 2147483647 ---
-int(-1)
---- testing: -2147483648 % 9223372036854775807 ---
-int(-2147483648)
---- testing: 9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372034707292160 % 1 ---
-int(0)
---- testing: 9223372034707292160 % -1 ---
-int(0)
---- testing: 9223372034707292160 % 7 ---
-int(6)
---- testing: 9223372034707292160 % 9 ---
-int(6)
---- testing: 9223372034707292160 % 65 ---
-int(10)
---- testing: 9223372034707292160 % -44 ---
-int(28)
---- testing: 9223372034707292160 % 2147483647 ---
-int(1)
---- testing: 9223372034707292160 % 9223372036854775807 ---
-int(9223372034707292160)
---- testing: -9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372034707292160 % 1 ---
-int(0)
---- testing: -9223372034707292160 % -1 ---
-int(0)
---- testing: -9223372034707292160 % 7 ---
-int(-6)
---- testing: -9223372034707292160 % 9 ---
-int(-6)
---- testing: -9223372034707292160 % 65 ---
-int(-10)
---- testing: -9223372034707292160 % -44 ---
-int(-28)
---- testing: -9223372034707292160 % 2147483647 ---
-int(-1)
---- testing: -9223372034707292160 % 9223372036854775807 ---
-int(-9223372034707292160)
---- testing: 2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483648 % 1 ---
-int(0)
---- testing: 2147483648 % -1 ---
-int(0)
---- testing: 2147483648 % 7 ---
-int(2)
---- testing: 2147483648 % 9 ---
-int(2)
---- testing: 2147483648 % 65 ---
-int(63)
---- testing: 2147483648 % -44 ---
-int(24)
---- testing: 2147483648 % 2147483647 ---
-int(1)
---- testing: 2147483648 % 9223372036854775807 ---
-int(2147483648)
---- testing: -2147483649 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483649 % 1 ---
-int(0)
---- testing: -2147483649 % -1 ---
-int(0)
---- testing: -2147483649 % 7 ---
-int(-3)
---- testing: -2147483649 % 9 ---
-int(-3)
---- testing: -2147483649 % 65 ---
-int(-64)
---- testing: -2147483649 % -44 ---
-int(-25)
---- testing: -2147483649 % 2147483647 ---
-int(-2)
---- testing: -2147483649 % 9223372036854775807 ---
-int(-2147483649)
---- testing: 4294967294 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967294 % 1 ---
-int(0)
---- testing: 4294967294 % -1 ---
-int(0)
---- testing: 4294967294 % 7 ---
-int(2)
---- testing: 4294967294 % 9 ---
-int(2)
---- testing: 4294967294 % 65 ---
-int(59)
---- testing: 4294967294 % -44 ---
-int(2)
---- testing: 4294967294 % 2147483647 ---
-int(0)
---- testing: 4294967294 % 9223372036854775807 ---
-int(4294967294)
---- testing: 4294967295 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967295 % 1 ---
-int(0)
---- testing: 4294967295 % -1 ---
-int(0)
---- testing: 4294967295 % 7 ---
-int(3)
---- testing: 4294967295 % 9 ---
-int(3)
---- testing: 4294967295 % 65 ---
-int(60)
---- testing: 4294967295 % -44 ---
-int(3)
---- testing: 4294967295 % 2147483647 ---
-int(1)
---- testing: 4294967295 % 9223372036854775807 ---
-int(4294967295)
---- testing: 4294967293 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967293 % 1 ---
-int(0)
---- testing: 4294967293 % -1 ---
-int(0)
---- testing: 4294967293 % 7 ---
-int(1)
---- testing: 4294967293 % 9 ---
-int(1)
---- testing: 4294967293 % 65 ---
-int(58)
---- testing: 4294967293 % -44 ---
-int(1)
---- testing: 4294967293 % 2147483647 ---
-int(2147483646)
---- testing: 4294967293 % 9223372036854775807 ---
-int(4294967293)
---- testing: 9223372036854775806 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775806 % 1 ---
-int(0)
---- testing: 9223372036854775806 % -1 ---
-int(0)
---- testing: 9223372036854775806 % 7 ---
-int(6)
---- testing: 9223372036854775806 % 9 ---
-int(6)
---- testing: 9223372036854775806 % 65 ---
-int(6)
---- testing: 9223372036854775806 % -44 ---
-int(6)
---- testing: 9223372036854775806 % 2147483647 ---
-int(0)
---- testing: 9223372036854775806 % 9223372036854775807 ---
-int(9223372036854775806)
---- testing: 9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: 9.2233720368548E+18 % 1 ---
-int(0)
---- testing: 9.2233720368548E+18 % -1 ---
-int(0)
---- testing: 9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: 9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: 9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: 9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775807 % 1 ---
-int(0)
---- testing: -9223372036854775807 % -1 ---
-int(0)
---- testing: -9223372036854775807 % 7 ---
-int(0)
---- testing: -9223372036854775807 % 9 ---
-int(-7)
---- testing: -9223372036854775807 % 65 ---
-int(-7)
---- testing: -9223372036854775807 % -44 ---
-int(-7)
---- testing: -9223372036854775807 % 2147483647 ---
-int(-1)
---- testing: -9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: -9.2233720368548E+18 % 1 ---
-int(0)
---- testing: -9.2233720368548E+18 % -1 ---
-int(0)
---- testing: -9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: -9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: -9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: -9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: 0 % 9223372036854775807 ---
-int(0)
---- testing: 0 % -9223372036854775808 ---
-int(0)
---- testing: 0 % 2147483647 ---
-int(0)
---- testing: 0 % -2147483648 ---
-int(0)
---- testing: 0 % 9223372034707292160 ---
-int(0)
---- testing: 0 % -9223372034707292160 ---
-int(0)
---- testing: 0 % 2147483648 ---
-int(0)
---- testing: 0 % -2147483649 ---
-int(0)
---- testing: 0 % 4294967294 ---
-int(0)
---- testing: 0 % 4294967295 ---
-int(0)
---- testing: 0 % 4294967293 ---
-int(0)
---- testing: 0 % 9223372036854775806 ---
-int(0)
---- testing: 0 % 9.2233720368548E+18 ---
-int(0)
---- testing: 0 % -9223372036854775807 ---
-int(0)
---- testing: 0 % -9.2233720368548E+18 ---
-int(0)
---- testing: 1 % 9223372036854775807 ---
-int(1)
---- testing: 1 % -9223372036854775808 ---
-int(1)
---- testing: 1 % 2147483647 ---
-int(1)
---- testing: 1 % -2147483648 ---
-int(1)
---- testing: 1 % 9223372034707292160 ---
-int(1)
---- testing: 1 % -9223372034707292160 ---
-int(1)
---- testing: 1 % 2147483648 ---
-int(1)
---- testing: 1 % -2147483649 ---
-int(1)
---- testing: 1 % 4294967294 ---
-int(1)
---- testing: 1 % 4294967295 ---
-int(1)
---- testing: 1 % 4294967293 ---
-int(1)
---- testing: 1 % 9223372036854775806 ---
-int(1)
---- testing: 1 % 9.2233720368548E+18 ---
-int(1)
---- testing: 1 % -9223372036854775807 ---
-int(1)
---- testing: 1 % -9.2233720368548E+18 ---
-int(1)
---- testing: -1 % 9223372036854775807 ---
-int(-1)
---- testing: -1 % -9223372036854775808 ---
-int(-1)
---- testing: -1 % 2147483647 ---
-int(-1)
---- testing: -1 % -2147483648 ---
-int(-1)
---- testing: -1 % 9223372034707292160 ---
-int(-1)
---- testing: -1 % -9223372034707292160 ---
-int(-1)
---- testing: -1 % 2147483648 ---
-int(-1)
---- testing: -1 % -2147483649 ---
-int(-1)
---- testing: -1 % 4294967294 ---
-int(-1)
---- testing: -1 % 4294967295 ---
-int(-1)
---- testing: -1 % 4294967293 ---
-int(-1)
---- testing: -1 % 9223372036854775806 ---
-int(-1)
---- testing: -1 % 9.2233720368548E+18 ---
-int(-1)
---- testing: -1 % -9223372036854775807 ---
-int(-1)
---- testing: -1 % -9.2233720368548E+18 ---
-int(-1)
---- testing: 7 % 9223372036854775807 ---
-int(7)
---- testing: 7 % -9223372036854775808 ---
-int(7)
---- testing: 7 % 2147483647 ---
-int(7)
---- testing: 7 % -2147483648 ---
-int(7)
---- testing: 7 % 9223372034707292160 ---
-int(7)
---- testing: 7 % -9223372034707292160 ---
-int(7)
---- testing: 7 % 2147483648 ---
-int(7)
---- testing: 7 % -2147483649 ---
-int(7)
---- testing: 7 % 4294967294 ---
-int(7)
---- testing: 7 % 4294967295 ---
-int(7)
---- testing: 7 % 4294967293 ---
-int(7)
---- testing: 7 % 9223372036854775806 ---
-int(7)
---- testing: 7 % 9.2233720368548E+18 ---
-int(7)
---- testing: 7 % -9223372036854775807 ---
-int(7)
---- testing: 7 % -9.2233720368548E+18 ---
-int(7)
---- testing: 9 % 9223372036854775807 ---
-int(9)
---- testing: 9 % -9223372036854775808 ---
-int(9)
---- testing: 9 % 2147483647 ---
-int(9)
---- testing: 9 % -2147483648 ---
-int(9)
---- testing: 9 % 9223372034707292160 ---
-int(9)
---- testing: 9 % -9223372034707292160 ---
-int(9)
---- testing: 9 % 2147483648 ---
-int(9)
---- testing: 9 % -2147483649 ---
-int(9)
---- testing: 9 % 4294967294 ---
-int(9)
---- testing: 9 % 4294967295 ---
-int(9)
---- testing: 9 % 4294967293 ---
-int(9)
---- testing: 9 % 9223372036854775806 ---
-int(9)
---- testing: 9 % 9.2233720368548E+18 ---
-int(9)
---- testing: 9 % -9223372036854775807 ---
-int(9)
---- testing: 9 % -9.2233720368548E+18 ---
-int(9)
---- testing: 65 % 9223372036854775807 ---
-int(65)
---- testing: 65 % -9223372036854775808 ---
-int(65)
---- testing: 65 % 2147483647 ---
-int(65)
---- testing: 65 % -2147483648 ---
-int(65)
---- testing: 65 % 9223372034707292160 ---
-int(65)
---- testing: 65 % -9223372034707292160 ---
-int(65)
---- testing: 65 % 2147483648 ---
-int(65)
---- testing: 65 % -2147483649 ---
-int(65)
---- testing: 65 % 4294967294 ---
-int(65)
---- testing: 65 % 4294967295 ---
-int(65)
---- testing: 65 % 4294967293 ---
-int(65)
---- testing: 65 % 9223372036854775806 ---
-int(65)
---- testing: 65 % 9.2233720368548E+18 ---
-int(65)
---- testing: 65 % -9223372036854775807 ---
-int(65)
---- testing: 65 % -9.2233720368548E+18 ---
-int(65)
---- testing: -44 % 9223372036854775807 ---
-int(-44)
---- testing: -44 % -9223372036854775808 ---
-int(-44)
---- testing: -44 % 2147483647 ---
-int(-44)
---- testing: -44 % -2147483648 ---
-int(-44)
---- testing: -44 % 9223372034707292160 ---
-int(-44)
---- testing: -44 % -9223372034707292160 ---
-int(-44)
---- testing: -44 % 2147483648 ---
-int(-44)
---- testing: -44 % -2147483649 ---
-int(-44)
---- testing: -44 % 4294967294 ---
-int(-44)
---- testing: -44 % 4294967295 ---
-int(-44)
---- testing: -44 % 4294967293 ---
-int(-44)
---- testing: -44 % 9223372036854775806 ---
-int(-44)
---- testing: -44 % 9.2233720368548E+18 ---
-int(-44)
---- testing: -44 % -9223372036854775807 ---
-int(-44)
---- testing: -44 % -9.2233720368548E+18 ---
-int(-44)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775808 ---
-int(2147483647)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % -2147483648 ---
-int(2147483647)
---- testing: 2147483647 % 9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % -9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % 2147483648 ---
-int(2147483647)
---- testing: 2147483647 % -2147483649 ---
-int(2147483647)
---- testing: 2147483647 % 4294967294 ---
-int(2147483647)
---- testing: 2147483647 % 4294967295 ---
-int(2147483647)
---- testing: 2147483647 % 4294967293 ---
-int(2147483647)
---- testing: 2147483647 % 9223372036854775806 ---
-int(2147483647)
---- testing: 2147483647 % 9.2233720368548E+18 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9.2233720368548E+18 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9223372036854775808 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % -2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % -9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % 2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % -2147483649 ---
-int(1)
---- testing: 9223372036854775807 % 4294967294 ---
-int(1)
---- testing: 9223372036854775807 % 4294967295 ---
-int(2147483647)
---- testing: 9223372036854775807 % 4294967293 ---
-int(2147483650)
---- testing: 9223372036854775807 % 9223372036854775806 ---
-int(1)
---- testing: 9223372036854775807 % 9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % -9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9.2233720368548E+18 ---
-int(9223372036854775807)
-Bar
-Bar
-object(PDO)#3 (0) {
-}
-object(MyPDO)#2 (0) {
-}
-NULL
-string(11) &quot;random_var:&quot;
-array(1) {
-  [0]=&gt;
-  string(67) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;
-}
-array(0) {
-}
-int(9223372036854775807)
-Calling function: xml_set_processing_instruction_handler with arguments: Array, Array
-Error calling function xml_set_processing_instruction_handler: xml_set_processing_instruction_handler(): Argument #1 ($parser) must be of type XMLParser, array given
-Calling function: fgets with arguments: Array, Array
-Error calling function fgets: fgets(): Argument #1 ($stream) must be of type resource, array given
-Calling function: strtolower with arguments: Array
-Error calling function strtolower: strtolower(): Argument #1 ($string) must be of type string, array given
-Calling function: ltrim with arguments: Array, Array
-Error calling function ltrim: ltrim(): Argument #1 ($string) must be of type string, array given
-Calling function: xmlwriter_write_cdata with arguments: Array, Array
-Error calling function xmlwriter_write_cdata: xmlwriter_write_cdata(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: get_class_methods with arguments: Array
-Error calling function get_class_methods: get_class_methods(): Argument #1 ($object_or_class) must be an object or a valid class name, array given
-Calling function: preg_grep with arguments: 9223372036854775807, Array, 9223372036854775807
-Calling function: ctype_alpha with arguments: 9223372036854775807
-Calling function: image_type_to_extension with arguments: 9223372036854775807, 9223372036854775807
-Calling function: atan2 with arguments: Array, Array
-Error calling function atan2: atan2(): Argument #1 ($y) must be of type float, array given
-Calling function: fileinode with arguments: Array
-Error calling function fileinode: fileinode(): Argument #1 ($filename) must be of type string, array given
-Calling function: sscanf with arguments: Array, 9223372036854775807, Array
-Error calling function sscanf: sscanf(): Argument #1 ($string) must be of type string, array given
-Calling function: stream_context_set_params with arguments: Array, Array
-Error calling function stream_context_set_params: stream_context_set_params(): Argument #1 ($context) must be of type resource, array given
-Calling function: mktime with arguments: Array, Array, Array, Array, Array, Array
-Error calling function mktime: mktime(): Argument #1 ($hour) must be of type int, array given
-Calling function: ctype_space with arguments: Array
-Calling function: dns_get_mx with arguments: 9223372036854775807, Array, 9223372036854775807
-Calling function: ob_get_length with arguments: 
-Calling function: gmmktime with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:47:6: runtime error: signed integer overflow: 9223372036854775807 + 153722867280912930 cannot be represented in type &#x27;long long&#x27;
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:47:6 in
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var-&gt;var &gt;= op_array-&gt;last_var || (ssa_var_info[__var].type &amp; (1 &lt;&lt; 10)) == (__type &amp; (1 &lt;&lt; 10))&#x27; failed.
+Aborted (core dumped)
+
+Termsig=6
             </pre>
         </div>
 
@@ -697,7 +115,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -720,7 +138,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -730,67 +148,23 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define(&quot;MAX_64Bit&quot;, 9223372036854775807);
-define(&quot;MAX_32Bit&quot;, 2147483647);
-define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
-define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo &quot;--- testing: $longVal % $otherVal ---\n&quot;;
-      try {
-        var_dump($longVal%$otherVal);
-      } catch (DivisionByZeroError $e) {
-        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo &quot;--- testing: $otherVal % $longVal ---\n&quot;;
-      try {
-        var_dump($otherVal%$longVal);
-      } catch (DivisionByZeroError $e) {
-        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
-      }
-   }
-}
-$fusion = $otherVals;
+$b = [0, 1, 2];
+var_dump($b);
+substr_replace(&quot;test&quot;, $b, &quot;1&quot;);
+var_dump($b);
+$fusion = $b;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-    }
-}
-class Baz extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-    }
-}
-class Bar extends Baz {
-    function quux() {
-        echo get_class($this), &quot;\n&quot;;
-        $fusion = new Foo(&quot;sqlite::memory:&quot;);
-        echo get_class($this), &quot;\n&quot;;
-    }
-}
-$bar = new Bar(&quot;sqlite::memory:&quot;);
-$bar-&gt;quux();
-class MyPDO extends PDO {}
-$bar = new PDO(&quot;sqlite::memory:&quot;, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-$baz = new MyPDO(&quot;sqlite::memory:&quot;, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-var_dump($bar);
-unset($bar);
-var_dump($baz);
-var_dump($bar);
+$fd = fopen(&#x27;php://temp&#x27;, &#x27;r+&#x27;);
+$delimiter = &#x27;MM&#x27;;
+$str = str_repeat(&#x27;.&#x27;, 8191) . $delimiter . &quot;rest&quot;;
+fwrite($fd, $str);
+rewind($fd);
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump(strlen($fusion));
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump($line);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -802,11 +176,14 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test % operator : 64bit long tests+Bug #43831 ($this gets mangled when extending PDO with persistent connection)
---SKIPIF--
-&lt;?php
-if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;);
-?&gt;
+Bug #71190 (substr_replace converts integers in original $search array to strings)+Bug #63240: stream_get_line() return contains delimiter string
+--INI--
+opcache.jit=1255
+precision=14
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1003
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -838,7 +215,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -861,7 +238,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -871,622 +248,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define(&quot;MAX_64Bit&quot;, 9223372036854775807);
-define(&quot;MAX_32Bit&quot;, 2147483647);
-define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
-define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo &quot;--- testing: $longVal % $otherVal ---\n&quot;;
-      try {
-        var_dump($longVal%$otherVal);
-      } catch (DivisionByZeroError $e) {
-        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo &quot;--- testing: $otherVal % $longVal ---\n&quot;;
-      try {
-        var_dump($otherVal%$longVal);
-      } catch (DivisionByZeroError $e) {
-        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
-      }
-   }
-}
-$fusion = $otherVals;
+$b = [0, 1, 2];
+var_dump($b);
+substr_replace(&quot;test&quot;, $b, &quot;1&quot;);
+var_dump($b);
+$fusion = $b;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-    }
-}
-class Baz extends PDO {
-    function __construct($dsn) {
-        parent::__construct($dsn, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-    }
-}
-class Bar extends Baz {
-    function quux() {
-        echo get_class($this), &quot;\n&quot;;
-        $fusion = new Foo(&quot;sqlite::memory:&quot;);
-        echo get_class($this), &quot;\n&quot;;
-    }
-}
-$bar = new Bar(&quot;sqlite::memory:&quot;);
-$bar-&gt;quux();
-class MyPDO extends PDO {}
-$bar = new PDO(&quot;sqlite::memory:&quot;, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-$baz = new MyPDO(&quot;sqlite::memory:&quot;, null, null, array(PDO::ATTR_PERSISTENT =&gt; true));
-var_dump($bar);
-unset($bar);
-var_dump($baz);
-var_dump($bar);
+$fd = fopen(&#x27;php://temp&#x27;, &#x27;r+&#x27;);
+$delimiter = &#x27;MM&#x27;;
+$str = str_repeat(&#x27;.&#x27;, 8191) . $delimiter . &quot;rest&quot;;
+fwrite($fd, $str);
+rewind($fd);
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump(strlen($fusion));
+$line = stream_get_line($fd, 9000, $delimiter);
+var_dump($line);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
---EXTENSIONS--
-pdo_sqlite
---EXPECTF--
---- testing: 9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775807 % 1 ---
-int(0)
---- testing: 9223372036854775807 % -1 ---
-int(0)
---- testing: 9223372036854775807 % 7 ---
-int(0)
---- testing: 9223372036854775807 % 9 ---
-int(7)
---- testing: 9223372036854775807 % 65 ---
-int(7)
---- testing: 9223372036854775807 % -44 ---
-int(7)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775808 % 1 ---
-int(0)
---- testing: -9223372036854775808 % -1 ---
-int(0)
---- testing: -9223372036854775808 % 7 ---
-int(-1)
---- testing: -9223372036854775808 % 9 ---
-int(-8)
---- testing: -9223372036854775808 % 65 ---
-int(-8)
---- testing: -9223372036854775808 % -44 ---
-int(-8)
---- testing: -9223372036854775808 % 2147483647 ---
-int(-2)
---- testing: -9223372036854775808 % 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483647 % 1 ---
-int(0)
---- testing: 2147483647 % -1 ---
-int(0)
---- testing: 2147483647 % 7 ---
-int(1)
---- testing: 2147483647 % 9 ---
-int(1)
---- testing: 2147483647 % 65 ---
-int(62)
---- testing: 2147483647 % -44 ---
-int(23)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: -2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483648 % 1 ---
-int(0)
---- testing: -2147483648 % -1 ---
-int(0)
---- testing: -2147483648 % 7 ---
-int(-2)
---- testing: -2147483648 % 9 ---
-int(-2)
---- testing: -2147483648 % 65 ---
-int(-63)
---- testing: -2147483648 % -44 ---
-int(-24)
---- testing: -2147483648 % 2147483647 ---
-int(-1)
---- testing: -2147483648 % 9223372036854775807 ---
-int(-2147483648)
---- testing: 9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372034707292160 % 1 ---
-int(0)
---- testing: 9223372034707292160 % -1 ---
-int(0)
---- testing: 9223372034707292160 % 7 ---
-int(6)
---- testing: 9223372034707292160 % 9 ---
-int(6)
---- testing: 9223372034707292160 % 65 ---
-int(10)
---- testing: 9223372034707292160 % -44 ---
-int(28)
---- testing: 9223372034707292160 % 2147483647 ---
-int(1)
---- testing: 9223372034707292160 % 9223372036854775807 ---
-int(9223372034707292160)
---- testing: -9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372034707292160 % 1 ---
-int(0)
---- testing: -9223372034707292160 % -1 ---
-int(0)
---- testing: -9223372034707292160 % 7 ---
-int(-6)
---- testing: -9223372034707292160 % 9 ---
-int(-6)
---- testing: -9223372034707292160 % 65 ---
-int(-10)
---- testing: -9223372034707292160 % -44 ---
-int(-28)
---- testing: -9223372034707292160 % 2147483647 ---
-int(-1)
---- testing: -9223372034707292160 % 9223372036854775807 ---
-int(-9223372034707292160)
---- testing: 2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483648 % 1 ---
-int(0)
---- testing: 2147483648 % -1 ---
-int(0)
---- testing: 2147483648 % 7 ---
-int(2)
---- testing: 2147483648 % 9 ---
-int(2)
---- testing: 2147483648 % 65 ---
-int(63)
---- testing: 2147483648 % -44 ---
-int(24)
---- testing: 2147483648 % 2147483647 ---
-int(1)
---- testing: 2147483648 % 9223372036854775807 ---
-int(2147483648)
---- testing: -2147483649 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483649 % 1 ---
-int(0)
---- testing: -2147483649 % -1 ---
-int(0)
---- testing: -2147483649 % 7 ---
-int(-3)
---- testing: -2147483649 % 9 ---
-int(-3)
---- testing: -2147483649 % 65 ---
-int(-64)
---- testing: -2147483649 % -44 ---
-int(-25)
---- testing: -2147483649 % 2147483647 ---
-int(-2)
---- testing: -2147483649 % 9223372036854775807 ---
-int(-2147483649)
---- testing: 4294967294 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967294 % 1 ---
-int(0)
---- testing: 4294967294 % -1 ---
-int(0)
---- testing: 4294967294 % 7 ---
-int(2)
---- testing: 4294967294 % 9 ---
-int(2)
---- testing: 4294967294 % 65 ---
-int(59)
---- testing: 4294967294 % -44 ---
-int(2)
---- testing: 4294967294 % 2147483647 ---
-int(0)
---- testing: 4294967294 % 9223372036854775807 ---
-int(4294967294)
---- testing: 4294967295 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967295 % 1 ---
-int(0)
---- testing: 4294967295 % -1 ---
-int(0)
---- testing: 4294967295 % 7 ---
-int(3)
---- testing: 4294967295 % 9 ---
-int(3)
---- testing: 4294967295 % 65 ---
-int(60)
---- testing: 4294967295 % -44 ---
-int(3)
---- testing: 4294967295 % 2147483647 ---
-int(1)
---- testing: 4294967295 % 9223372036854775807 ---
-int(4294967295)
---- testing: 4294967293 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967293 % 1 ---
-int(0)
---- testing: 4294967293 % -1 ---
-int(0)
---- testing: 4294967293 % 7 ---
-int(1)
---- testing: 4294967293 % 9 ---
-int(1)
---- testing: 4294967293 % 65 ---
-int(58)
---- testing: 4294967293 % -44 ---
-int(1)
---- testing: 4294967293 % 2147483647 ---
-int(2147483646)
---- testing: 4294967293 % 9223372036854775807 ---
-int(4294967293)
---- testing: 9223372036854775806 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775806 % 1 ---
-int(0)
---- testing: 9223372036854775806 % -1 ---
-int(0)
---- testing: 9223372036854775806 % 7 ---
-int(6)
---- testing: 9223372036854775806 % 9 ---
-int(6)
---- testing: 9223372036854775806 % 65 ---
-int(6)
---- testing: 9223372036854775806 % -44 ---
-int(6)
---- testing: 9223372036854775806 % 2147483647 ---
-int(0)
---- testing: 9223372036854775806 % 9223372036854775807 ---
-int(9223372036854775806)
---- testing: 9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: 9.2233720368548E+18 % 1 ---
-int(0)
---- testing: 9.2233720368548E+18 % -1 ---
-int(0)
---- testing: 9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: 9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: 9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: 9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775807 % 1 ---
-int(0)
---- testing: -9223372036854775807 % -1 ---
-int(0)
---- testing: -9223372036854775807 % 7 ---
-int(0)
---- testing: -9223372036854775807 % 9 ---
-int(-7)
---- testing: -9223372036854775807 % 65 ---
-int(-7)
---- testing: -9223372036854775807 % -44 ---
-int(-7)
---- testing: -9223372036854775807 % 2147483647 ---
-int(-1)
---- testing: -9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: -9.2233720368548E+18 % 1 ---
-int(0)
---- testing: -9.2233720368548E+18 % -1 ---
-int(0)
---- testing: -9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: -9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: -9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: -9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: 0 % 9223372036854775807 ---
-int(0)
---- testing: 0 % -9223372036854775808 ---
-int(0)
---- testing: 0 % 2147483647 ---
-int(0)
---- testing: 0 % -2147483648 ---
-int(0)
---- testing: 0 % 9223372034707292160 ---
-int(0)
---- testing: 0 % -9223372034707292160 ---
-int(0)
---- testing: 0 % 2147483648 ---
-int(0)
---- testing: 0 % -2147483649 ---
-int(0)
---- testing: 0 % 4294967294 ---
-int(0)
---- testing: 0 % 4294967295 ---
-int(0)
---- testing: 0 % 4294967293 ---
-int(0)
---- testing: 0 % 9223372036854775806 ---
-int(0)
---- testing: 0 % 9.2233720368548E+18 ---
-int(0)
---- testing: 0 % -9223372036854775807 ---
-int(0)
---- testing: 0 % -9.2233720368548E+18 ---
-int(0)
---- testing: 1 % 9223372036854775807 ---
-int(1)
---- testing: 1 % -9223372036854775808 ---
-int(1)
---- testing: 1 % 2147483647 ---
-int(1)
---- testing: 1 % -2147483648 ---
-int(1)
---- testing: 1 % 9223372034707292160 ---
-int(1)
---- testing: 1 % -9223372034707292160 ---
-int(1)
---- testing: 1 % 2147483648 ---
-int(1)
---- testing: 1 % -2147483649 ---
-int(1)
---- testing: 1 % 4294967294 ---
-int(1)
---- testing: 1 % 4294967295 ---
-int(1)
---- testing: 1 % 4294967293 ---
-int(1)
---- testing: 1 % 9223372036854775806 ---
-int(1)
---- testing: 1 % 9.2233720368548E+18 ---
-int(1)
---- testing: 1 % -9223372036854775807 ---
-int(1)
---- testing: 1 % -9.2233720368548E+18 ---
-int(1)
---- testing: -1 % 9223372036854775807 ---
-int(-1)
---- testing: -1 % -9223372036854775808 ---
-int(-1)
---- testing: -1 % 2147483647 ---
-int(-1)
---- testing: -1 % -2147483648 ---
-int(-1)
---- testing: -1 % 9223372034707292160 ---
-int(-1)
---- testing: -1 % -9223372034707292160 ---
-int(-1)
---- testing: -1 % 2147483648 ---
-int(-1)
---- testing: -1 % -2147483649 ---
-int(-1)
---- testing: -1 % 4294967294 ---
-int(-1)
---- testing: -1 % 4294967295 ---
-int(-1)
---- testing: -1 % 4294967293 ---
-int(-1)
---- testing: -1 % 9223372036854775806 ---
-int(-1)
---- testing: -1 % 9.2233720368548E+18 ---
-int(-1)
---- testing: -1 % -9223372036854775807 ---
-int(-1)
---- testing: -1 % -9.2233720368548E+18 ---
-int(-1)
---- testing: 7 % 9223372036854775807 ---
-int(7)
---- testing: 7 % -9223372036854775808 ---
-int(7)
---- testing: 7 % 2147483647 ---
-int(7)
---- testing: 7 % -2147483648 ---
-int(7)
---- testing: 7 % 9223372034707292160 ---
-int(7)
---- testing: 7 % -9223372034707292160 ---
-int(7)
---- testing: 7 % 2147483648 ---
-int(7)
---- testing: 7 % -2147483649 ---
-int(7)
---- testing: 7 % 4294967294 ---
-int(7)
---- testing: 7 % 4294967295 ---
-int(7)
---- testing: 7 % 4294967293 ---
-int(7)
---- testing: 7 % 9223372036854775806 ---
-int(7)
---- testing: 7 % 9.2233720368548E+18 ---
-int(7)
---- testing: 7 % -9223372036854775807 ---
-int(7)
---- testing: 7 % -9.2233720368548E+18 ---
-int(7)
---- testing: 9 % 9223372036854775807 ---
-int(9)
---- testing: 9 % -9223372036854775808 ---
-int(9)
---- testing: 9 % 2147483647 ---
-int(9)
---- testing: 9 % -2147483648 ---
-int(9)
---- testing: 9 % 9223372034707292160 ---
-int(9)
---- testing: 9 % -9223372034707292160 ---
-int(9)
---- testing: 9 % 2147483648 ---
-int(9)
---- testing: 9 % -2147483649 ---
-int(9)
---- testing: 9 % 4294967294 ---
-int(9)
---- testing: 9 % 4294967295 ---
-int(9)
---- testing: 9 % 4294967293 ---
-int(9)
---- testing: 9 % 9223372036854775806 ---
-int(9)
---- testing: 9 % 9.2233720368548E+18 ---
-int(9)
---- testing: 9 % -9223372036854775807 ---
-int(9)
---- testing: 9 % -9.2233720368548E+18 ---
-int(9)
---- testing: 65 % 9223372036854775807 ---
-int(65)
---- testing: 65 % -9223372036854775808 ---
-int(65)
---- testing: 65 % 2147483647 ---
-int(65)
---- testing: 65 % -2147483648 ---
-int(65)
---- testing: 65 % 9223372034707292160 ---
-int(65)
---- testing: 65 % -9223372034707292160 ---
-int(65)
---- testing: 65 % 2147483648 ---
-int(65)
---- testing: 65 % -2147483649 ---
-int(65)
---- testing: 65 % 4294967294 ---
-int(65)
---- testing: 65 % 4294967295 ---
-int(65)
---- testing: 65 % 4294967293 ---
-int(65)
---- testing: 65 % 9223372036854775806 ---
-int(65)
---- testing: 65 % 9.2233720368548E+18 ---
-int(65)
---- testing: 65 % -9223372036854775807 ---
-int(65)
---- testing: 65 % -9.2233720368548E+18 ---
-int(65)
---- testing: -44 % 9223372036854775807 ---
-int(-44)
---- testing: -44 % -9223372036854775808 ---
-int(-44)
---- testing: -44 % 2147483647 ---
-int(-44)
---- testing: -44 % -2147483648 ---
-int(-44)
---- testing: -44 % 9223372034707292160 ---
-int(-44)
---- testing: -44 % -9223372034707292160 ---
-int(-44)
---- testing: -44 % 2147483648 ---
-int(-44)
---- testing: -44 % -2147483649 ---
-int(-44)
---- testing: -44 % 4294967294 ---
-int(-44)
---- testing: -44 % 4294967295 ---
-int(-44)
---- testing: -44 % 4294967293 ---
-int(-44)
---- testing: -44 % 9223372036854775806 ---
-int(-44)
---- testing: -44 % 9.2233720368548E+18 ---
-int(-44)
---- testing: -44 % -9223372036854775807 ---
-int(-44)
---- testing: -44 % -9.2233720368548E+18 ---
-int(-44)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775808 ---
-int(2147483647)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % -2147483648 ---
-int(2147483647)
---- testing: 2147483647 % 9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % -9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % 2147483648 ---
-int(2147483647)
---- testing: 2147483647 % -2147483649 ---
-int(2147483647)
---- testing: 2147483647 % 4294967294 ---
-int(2147483647)
---- testing: 2147483647 % 4294967295 ---
-int(2147483647)
---- testing: 2147483647 % 4294967293 ---
-int(2147483647)
---- testing: 2147483647 % 9223372036854775806 ---
-int(2147483647)
---- testing: 2147483647 % 9.2233720368548E+18 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9.2233720368548E+18 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9223372036854775808 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % -2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % -9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % 2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % -2147483649 ---
-int(1)
---- testing: 9223372036854775807 % 4294967294 ---
-int(1)
---- testing: 9223372036854775807 % 4294967295 ---
-int(2147483647)
---- testing: 9223372036854775807 % 4294967293 ---
-int(2147483650)
---- testing: 9223372036854775807 % 9223372036854775806 ---
-int(1)
---- testing: 9223372036854775807 % 9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % -9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9.2233720368548E+18 ---
-int(9223372036854775807)
-Bar
-Bar
-object(PDO)#%d (0) {
+--EXPECT--
+array(3) {
+  [0]=&gt;
+  int(0)
+  [1]=&gt;
+  int(1)
+  [2]=&gt;
+  int(2)
 }
-object(MyPDO)#%d (0) {
+array(3) {
+  [0]=&gt;
+  int(0)
+  [1]=&gt;
+  int(1)
+  [2]=&gt;
+  int(2)
 }
-
-Warning: Undefined variable $bar in %s on line %d
-NULL
+int(8191)
+string(4) &quot;rest&quot;
 
             </pre>
         </div>
@@ -1501,8 +301,8 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
-export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -1513,12 +313,11 @@ export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
-export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
@@ -1531,30 +330,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1003&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused210.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

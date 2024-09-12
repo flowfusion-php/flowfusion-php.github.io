@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,26 +61,53 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527ç§ã¯ã¬ã©ã¹ãé£ã¹ããã¾ã.magic");
-    var_dump($finfo);
-$fusion = $finfo;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class foo extends ArrayIterator {
-    public function __construct( ) {
-        parent::__construct(array(
-            'test3'=>'test999'));
+function from($levels) {
+    foreach (range(0, 2 << $levels) as $v) {
+        yield $v;
+        if ($v == (1 << ($levels - 1)) - 2) {
+            throw new Exception();
+        }
     }
 }
-$h = new foo;
-$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
-$i->replacement = "42";
-var_dump($fusion->replacement);
-foreach ($i as $name=>$value) {
-    var_dump($name, $value);
+function gen($gen, $level) {
+    yield from $gen;
 }
-var_dump($i->replacement);
+$levels = 5;
+print "$levels levels\n\n";
+$all = array();
+$all[] = $gens[0][0] = from($levels);
+for ($level = 1; $level < $levels; $level++) {
+    for ($i = 0; $i < (1 << $level); $i++) {
+        $all[] = $gens[$level][$i] = gen($gens[$level-1][$i >> 1], $level);
+    }
+}
+for ($i = 0; $i < 2; $i++) {
+    try {
+        foreach ($all as $gen) {
+            var_dump($gen->current());
+            $gen->next();
+            if (!$gen->valid()) {
+                break;
+            }
+        }
+    } catch(Exception $e) {
+        print "$e\n";
+        unset($all[array_search($gen, $all)]);
+    }
+}
+$fusion = $levels;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing strftime() : usage variation ***\n";
+// Initialise function arguments not being substituted (if any)
+setlocale(LC_ALL, "C");
+date_default_timezone_set("Asia/Calcutta");
+$timestamp = mktime(8, 8, 8, 8, 8, 2008);
+echo "\n-- Testing strftime() function with Day of the month as decimal single digit format --\n";
+$format = "%e";
+var_dump( strftime($format) );
+var_dump( strftime($format, $fusion) );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

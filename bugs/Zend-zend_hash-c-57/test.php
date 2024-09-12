@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,61 +61,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-file_put_contents(__DIR__ . "/bug74596_1.php", <<<CODE
-<?php
-class A {
-    public function __construct() {
-        \$a = true;
-        if (\$a) {
-            echo 1 + 2;
-        } else {
-            echo 2 + 3;
-        }
-    }
+try {
+    assert(false && "Is this evaluated?");
+} catch (Throwable $e) {
+    echo $e::class, ': ', $e->getMessage(), PHP_EOL;
 }
-?>
-CODE
-);
-file_put_contents(__DIR__ . "/bug74596_2.php", "ok\n");
-class ufilter extends php_user_filter
-{
-    function filter($in, $out, &$consumed, $closing): int
-    {
-        include_once __DIR__ . "/bug74596_1.php";
-        while ($bucket = stream_bucket_make_writeable($in)) {
-            stream_bucket_append($out, $bucket);
-        }
-        return PSFS_PASS_ON;
-    }
+$fusion = $e;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class Foo {
+    public int $fusion = "string";
 }
-stream_filter_register("ufilter", "ufilter");
-include "php://filter/read=ufilter/resource=" . __DIR__ . "/bug74596_2.php";
-$script1_dataflow = $bucket;
-$script1_connect=$script1_dataflow;
-$array = array();
-for ($i=0; $script1_dataflow < 550; $i++) {
-    $array = array($array);
-}
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
-$script2_connect=$array;
-$random_var=$GLOBALS[array_rand($GLOBALS)];
-var_dump('random_var:',$random_var);
-var_fusion($script1_connect, $script2_connect, $random_var);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
 ?>
