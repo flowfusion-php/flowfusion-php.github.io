@@ -61,105 +61,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class EchoesOnWakeup {
-    public function __wakeup() {
-        echo "In __wakeup " . spl_object_id($this) . "\n";
-    }
-    public function __destruct() {
-        echo "In __destruct " . spl_object_id($this) . "\n";
-    }
+require_once('fopen_include_path.inc');
+$thisTestDir = basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$filename = basename(__FILE__, ".php") . ".tmp";
+$newpath = create_include_path();
+set_include_path($newpath);
+runtest();
+$newpath = generate_next_path();
+set_include_path($newpath);
+runtest();
+teardown_include_path();
+chdir("..");
+function runtest() {
+   global $filename;
+   //correct php53 behaviour is to ignore the FILE_USE_INCLUDE_PATH unless the file already exists
+   // in the include path. In this case it doesn't so the file should be written in the current dir.
+   file_put_contents($filename, "File in include path", FILE_USE_INCLUDE_PATH);
+   $line = file_get_contents($filename);
+   echo "$line\n";
+   unlink($filename);
 }
-class ThrowsOnSerialize {
-    public function __sleep() {
-        throw new RuntimeException("In sleep");
-    }
-}
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a'] = array('cont' => 'a', 'meta' => new EchoesOnWakeup());
-include 'files/phar_test.inc';
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$name));
-}
-unset($files);
-$phar = new Phar($fname);
-echo "Loading metadata for 'a' without allowed_classes\n";
-var_dump($phar['a']->getMetadata(['allowed_classes' => []]));
-echo "Loading metadata for 'a' with allowed_classes\n";
-var_dump($phar['a']->getMetadata(['allowed_classes' => true]));
-unset($phar);
-// NOTE: Phar will use the cached value of metadata if setMetaData was called on that Phar path before.
-// Save the writes to the phar and use a different file path.
-$fname_new = "$fname.copy.php";
-copy($fname, $fname_new);
-$phar = new Phar($fname_new);
-echo "Loading metadata from 'a' from the new phar\n";
-var_dump($phar['a']->getMetadata());
-echo "Loading metadata from 'a' from the new phar with unserialize options\n";
-var_dump($phar['a']->getMetadata(['allowed_classes' => true]));
-// PharEntry->setMetaData will do the following:
-// 1. serialize, checking for exceptions
-// 2. free the original data, checking for exceptions or the data getting set from destructors or error handlers.
-// 3. set the new data.
-try {
-    var_dump($phar['a']->setMetadata(new ThrowsOnSerialize()));
-} catch (RuntimeException $e) {
-    echo "Caught {$e->getMessage()} at {$e->getFile()}:{$e->getLine()}\n";
-    unset($e);
-}
-var_dump($phar['a']->getMetadata([]));
-var_dump($phar['a']->getMetadata(['allowed_classes' => false]));
-$fusion = $e;
+$fusion = $filename;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$now = new DateTimeImmutable();
-$simpleInterval = new DateInterval("P2D");
-$date = (new ReflectionClass(DateTime::class))->newInstanceWithoutConstructor();
-try {
-	new DatePeriod($date, new DateInterval('P1D'), 2);
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
+function foo() {
+    $fusion = null;
+    $b = $a;
+    $c = null;
+    $d = $c;
+    $a = 1;
+    $c = $a;
+    return $c;
 }
-$date = (new ReflectionClass(DateTime::class))->newInstanceWithoutConstructor();
-try {
-	new DatePeriod($now, new DateInterval('P1D'), $date);
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
-}
-$date = (new ReflectionClass(DateTime::class))->newInstanceWithoutConstructor();
-$dateperiod = (new ReflectionClass(DatePeriod::class))->newInstanceWithoutConstructor();
-$dateinterval = (new ReflectionClass(DateInterval::class))->newInstanceWithoutConstructor();
-try {
-	$dateperiod->__unserialize(['start' => $date]);
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
-}
-try {
-	$dateperiod->__unserialize(['start' => $now, 'end' => $date]);
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
-}
-try {
-	$dateperiod->__unserialize(['start' => $now, 'end' => $now, 'current' => $date]);
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
-}
-try {
-	$dateperiod->__unserialize(['start' => $now, 'end' => $now, 'current' => $now, 'interval' => $dateinterval]);
-} catch (Error $e) {
-	echo get_class($fusion), ': ', $e->getMessage(), "\n";
-}
-try {
-	$dateperiod->__unserialize([
-		'start' => $now, 'end' => $now, 'current' => $now, 'interval' => $simpleInterval,
-		'recurrences' => 2, 'include_start_date' => true, 'include_end_date' => true,
-	]);
-	echo "DatePeriod::__unserialize: SUCCESS\n";
-} catch (Error $e) {
-	echo get_class($e), ': ', $e->getMessage(), "\n";
-}
-echo "OK\n";
+var_dump(foo());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

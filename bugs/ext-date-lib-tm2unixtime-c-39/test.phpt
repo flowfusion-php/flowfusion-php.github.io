@@ -1,5 +1,5 @@
 --TEST--
-Test === operator : max int 64bit range+Bug#54946 stream_get_contents infinite loop
+Test pow function : 64bit long tests+"Reference Unpacking - Class ArrayAccess No Reference" list()
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -72,80 +72,402 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$validIdentical = array (
-MAX_32Bit, array(MAX_32Bit),
-MIN_32Bit, array(MIN_32Bit),
-MAX_64Bit, array(MAX_64Bit),
-MIN_64Bit, array(MIN_64Bit),
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$invalidIdentical = array (
-MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
-MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
-);
-$failed = false;
-// test for valid values
-for ($i = 0; $i < count($validIdentical); $i +=2) {
-   $typeToTestVal = $validIdentical[$i];
-   $compares = $validIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         // do nothing
-      }
-      else {
-         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
-         $failed = true;
-      }
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal, $otherVal ---\n";
+      var_dump(pow($longVal, $otherVal));
    }
 }
-// test for invalid values
-for ($i = 0; $i < count($invalidIdentical); $i +=2) {
-   $typeToTestVal = $invalidIdentical[$i];
-   $compares = $invalidIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
-         $failed = true;
-      }
-   }
-}
-if ($failed == false) {
-   echo "Test Passed\n";
-}
-$fusion = $typeToTestVal;
+$fusion = $longVals;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$filename = tempnam(__DIR__, "phpbug");
-$stream = fopen($filename, "w"); // w or a
-$retval = stream_get_contents($stream, 1, 1);
-fclose($stream);
-var_dump($retval);
-unlink($filename);
-$filename = tempnam(__DIR__, "phpbug2");
-$stream = fopen($filename, "a");
-$retval = stream_get_contents($stream, 1, 1);
-var_dump($fusion);
-fclose($stream);
-unlink($filename);
-$filename = tempnam(__DIR__, "phpbug3");
-$stream = fopen($filename, "a");
-fseek($stream, 1);
-$retval = stream_get_contents($stream, 1);
-var_dump($retval);
-fclose($stream);
-unlink($filename);
+class StorageNoRef implements ArrayAccess {
+    private $fusion = [];
+    function __construct(array $a) { $this->s = $a; }
+    function offsetSet ($k, $v): void { $this->s[$k] = $v; }
+    function offsetGet ($k): mixed { return $this->s[$k]; }
+    function offsetExists ($k): bool { return isset($this->s[$k]); }
+    function offsetUnset ($k): void { unset($this->s[$k]); }
+}
+$a = new StorageNoRef([1, 2]);
+list(&$one, $two) = $a;
+var_dump($a);
+$a = new StorageNoRef([1, 2]);
+list(,,list($var)) = $a;
+var_dump($a);
+$a = new StorageNoRef(['one' => 1, 'two' => 2]);
+['one' => &$one, 'two' => $two] = $a;
+var_dump($a);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-Test Passed
-Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
-string(0) ""
+--- testing: 9223372036854775807, 0 ---
+int(1)
+--- testing: 9223372036854775807, 1 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807, -1 ---
+float(1.0842021724855044E-19)
+--- testing: 9223372036854775807, 7 ---
+float(5.678427533559429E+132)
+--- testing: 9223372036854775807, 9 ---
+float(4.830671903771573E+170)
+--- testing: 9223372036854775807, 65 ---
+float(INF)
+--- testing: 9223372036854775807, -44 ---
+float(0)
+--- testing: 9223372036854775807, 2147483647 ---
+float(INF)
+--- testing: 9223372036854775807, -2147483648 ---
+float(0)
+--- testing: 9223372036854775807, 9223372036854775807 ---
+float(INF)
+--- testing: 9223372036854775807, -9223372036854775808 ---
+float(0)
+--- testing: -9223372036854775808, 0 ---
+int(1)
+--- testing: -9223372036854775808, 1 ---
+int(-9223372036854775808)
+--- testing: -9223372036854775808, -1 ---
+float(-1.0842021724855044E-19)
+--- testing: -9223372036854775808, 7 ---
+float(-5.678427533559429E+132)
+--- testing: -9223372036854775808, 9 ---
+float(-4.830671903771573E+170)
+--- testing: -9223372036854775808, 65 ---
+float(-INF)
+--- testing: -9223372036854775808, -44 ---
+float(0)
+--- testing: -9223372036854775808, 2147483647 ---
+float(-INF)
+--- testing: -9223372036854775808, -2147483648 ---
+float(0)
+--- testing: -9223372036854775808, 9223372036854775807 ---
+float(-INF)
+--- testing: -9223372036854775808, -9223372036854775808 ---
+float(0)
+--- testing: 2147483647, 0 ---
+int(1)
+--- testing: 2147483647, 1 ---
+int(2147483647)
+--- testing: 2147483647, -1 ---
+float(4.656612875245797E-10)
+--- testing: 2147483647, 7 ---
+float(2.1062458265055637E+65)
+--- testing: 2147483647, 9 ---
+float(9.713344420420489E+83)
+--- testing: 2147483647, 65 ---
+float(INF)
+--- testing: 2147483647, -44 ---
+float(0)
+--- testing: 2147483647, 2147483647 ---
+float(INF)
+--- testing: 2147483647, -2147483648 ---
+float(0)
+--- testing: 2147483647, 9223372036854775807 ---
+float(INF)
+--- testing: 2147483647, -9223372036854775808 ---
+float(0)
+--- testing: -2147483648, 0 ---
+int(1)
+--- testing: -2147483648, 1 ---
+int(-2147483648)
+--- testing: -2147483648, -1 ---
+float(-4.656612873077393E-10)
+--- testing: -2147483648, 7 ---
+float(-2.1062458333711437E+65)
+--- testing: -2147483648, 9 ---
+float(-9.713344461128645E+83)
+--- testing: -2147483648, 65 ---
+float(-INF)
+--- testing: -2147483648, -44 ---
+float(0)
+--- testing: -2147483648, 2147483647 ---
+float(-INF)
+--- testing: -2147483648, -2147483648 ---
+float(0)
+--- testing: -2147483648, 9223372036854775807 ---
+float(-INF)
+--- testing: -2147483648, -9223372036854775808 ---
+float(0)
+--- testing: 9223372034707292160, 0 ---
+int(1)
+--- testing: 9223372034707292160, 1 ---
+int(9223372034707292160)
+--- testing: 9223372034707292160, -1 ---
+float(1.08420217273794E-19)
+--- testing: 9223372034707292160, 7 ---
+float(5.678427524304645E+132)
+--- testing: 9223372034707292160, 9 ---
+float(4.830671893649017E+170)
+--- testing: 9223372034707292160, 65 ---
+float(INF)
+--- testing: 9223372034707292160, -44 ---
+float(0)
+--- testing: 9223372034707292160, 2147483647 ---
+float(INF)
+--- testing: 9223372034707292160, -2147483648 ---
+float(0)
+--- testing: 9223372034707292160, 9223372036854775807 ---
+float(INF)
+--- testing: 9223372034707292160, -9223372036854775808 ---
+float(0)
+--- testing: -9223372034707292160, 0 ---
+int(1)
+--- testing: -9223372034707292160, 1 ---
+int(-9223372034707292160)
+--- testing: -9223372034707292160, -1 ---
+float(-1.08420217273794E-19)
+--- testing: -9223372034707292160, 7 ---
+float(-5.678427524304645E+132)
+--- testing: -9223372034707292160, 9 ---
+float(-4.830671893649017E+170)
+--- testing: -9223372034707292160, 65 ---
+float(-INF)
+--- testing: -9223372034707292160, -44 ---
+float(0)
+--- testing: -9223372034707292160, 2147483647 ---
+float(-INF)
+--- testing: -9223372034707292160, -2147483648 ---
+float(0)
+--- testing: -9223372034707292160, 9223372036854775807 ---
+float(-INF)
+--- testing: -9223372034707292160, -9223372036854775808 ---
+float(0)
+--- testing: 2147483648, 0 ---
+int(1)
+--- testing: 2147483648, 1 ---
+int(2147483648)
+--- testing: 2147483648, -1 ---
+float(4.656612873077393E-10)
+--- testing: 2147483648, 7 ---
+float(2.1062458333711437E+65)
+--- testing: 2147483648, 9 ---
+float(9.713344461128645E+83)
+--- testing: 2147483648, 65 ---
+float(INF)
+--- testing: 2147483648, -44 ---
+float(0)
+--- testing: 2147483648, 2147483647 ---
+float(INF)
+--- testing: 2147483648, -2147483648 ---
+float(0)
+--- testing: 2147483648, 9223372036854775807 ---
+float(INF)
+--- testing: 2147483648, -9223372036854775808 ---
+float(0)
+--- testing: -2147483649, 0 ---
+int(1)
+--- testing: -2147483649, 1 ---
+int(-2147483649)
+--- testing: -2147483649, -1 ---
+float(-4.656612870908988E-10)
+--- testing: -2147483649, 7 ---
+float(-2.1062458402367238E+65)
+--- testing: -2147483649, 9 ---
+float(-9.713344501836802E+83)
+--- testing: -2147483649, 65 ---
+float(-INF)
+--- testing: -2147483649, -44 ---
+float(0)
+--- testing: -2147483649, 2147483647 ---
+float(-INF)
+--- testing: -2147483649, -2147483648 ---
+float(0)
+--- testing: -2147483649, 9223372036854775807 ---
+float(-INF)
+--- testing: -2147483649, -9223372036854775808 ---
+float(0)
+--- testing: 4294967294, 0 ---
+int(1)
+--- testing: 4294967294, 1 ---
+int(4294967294)
+--- testing: 4294967294, -1 ---
+float(2.3283064376228985E-10)
+--- testing: 4294967294, 7 ---
+float(2.6959946579271215E+67)
+--- testing: 4294967294, 9 ---
+float(4.9732323432552904E+86)
+--- testing: 4294967294, 65 ---
+float(INF)
+--- testing: 4294967294, -44 ---
+float(0)
+--- testing: 4294967294, 2147483647 ---
+float(INF)
+--- testing: 4294967294, -2147483648 ---
+float(0)
+--- testing: 4294967294, 9223372036854775807 ---
+float(INF)
+--- testing: 4294967294, -9223372036854775808 ---
+float(0)
+--- testing: 4294967295, 0 ---
+int(1)
+--- testing: 4294967295, 1 ---
+int(4294967295)
+--- testing: 4294967295, -1 ---
+float(2.3283064370807974E-10)
+--- testing: 4294967295, 7 ---
+float(2.6959946623210928E+67)
+--- testing: 4294967295, 9 ---
+float(4.9732323536765784E+86)
+--- testing: 4294967295, 65 ---
+float(INF)
+--- testing: 4294967295, -44 ---
+float(0)
+--- testing: 4294967295, 2147483647 ---
+float(INF)
+--- testing: 4294967295, -2147483648 ---
+float(0)
+--- testing: 4294967295, 9223372036854775807 ---
+float(INF)
+--- testing: 4294967295, -9223372036854775808 ---
+float(0)
+--- testing: 4294967293, 0 ---
+int(1)
+--- testing: 4294967293, 1 ---
+int(4294967293)
+--- testing: 4294967293, -1 ---
+float(2.3283064381649995E-10)
+--- testing: 4294967293, 7 ---
+float(2.6959946535331503E+67)
+--- testing: 4294967293, 9 ---
+float(4.9732323328340023E+86)
+--- testing: 4294967293, 65 ---
+float(INF)
+--- testing: 4294967293, -44 ---
+float(0)
+--- testing: 4294967293, 2147483647 ---
+float(INF)
+--- testing: 4294967293, -2147483648 ---
+float(0)
+--- testing: 4294967293, 9223372036854775807 ---
+float(INF)
+--- testing: 4294967293, -9223372036854775808 ---
+float(0)
+--- testing: 9223372036854775806, 0 ---
+int(1)
+--- testing: 9223372036854775806, 1 ---
+int(9223372036854775806)
+--- testing: 9223372036854775806, -1 ---
+float(1.0842021724855044E-19)
+--- testing: 9223372036854775806, 7 ---
+float(5.678427533559429E+132)
+--- testing: 9223372036854775806, 9 ---
+float(4.830671903771573E+170)
+--- testing: 9223372036854775806, 65 ---
+float(INF)
+--- testing: 9223372036854775806, -44 ---
+float(0)
+--- testing: 9223372036854775806, 2147483647 ---
+float(INF)
+--- testing: 9223372036854775806, -2147483648 ---
+float(0)
+--- testing: 9223372036854775806, 9223372036854775807 ---
+float(INF)
+--- testing: 9223372036854775806, -9223372036854775808 ---
+float(0)
+--- testing: 9.2233720368548E+18, 0 ---
+float(1)
+--- testing: 9.2233720368548E+18, 1 ---
+float(9.223372036854776E+18)
+--- testing: 9.2233720368548E+18, -1 ---
+float(1.0842021724855044E-19)
+--- testing: 9.2233720368548E+18, 7 ---
+float(5.678427533559429E+132)
+--- testing: 9.2233720368548E+18, 9 ---
+float(4.830671903771573E+170)
+--- testing: 9.2233720368548E+18, 65 ---
+float(INF)
+--- testing: 9.2233720368548E+18, -44 ---
+float(0)
+--- testing: 9.2233720368548E+18, 2147483647 ---
+float(INF)
+--- testing: 9.2233720368548E+18, -2147483648 ---
+float(0)
+--- testing: 9.2233720368548E+18, 9223372036854775807 ---
+float(INF)
+--- testing: 9.2233720368548E+18, -9223372036854775808 ---
+float(0)
+--- testing: -9223372036854775807, 0 ---
+int(1)
+--- testing: -9223372036854775807, 1 ---
+int(-9223372036854775807)
+--- testing: -9223372036854775807, -1 ---
+float(-1.0842021724855044E-19)
+--- testing: -9223372036854775807, 7 ---
+float(-5.678427533559429E+132)
+--- testing: -9223372036854775807, 9 ---
+float(-4.830671903771573E+170)
+--- testing: -9223372036854775807, 65 ---
+float(-INF)
+--- testing: -9223372036854775807, -44 ---
+float(0)
+--- testing: -9223372036854775807, 2147483647 ---
+float(-INF)
+--- testing: -9223372036854775807, -2147483648 ---
+float(0)
+--- testing: -9223372036854775807, 9223372036854775807 ---
+float(-INF)
+--- testing: -9223372036854775807, -9223372036854775808 ---
+float(0)
+--- testing: -9.2233720368548E+18, 0 ---
+float(1)
+--- testing: -9.2233720368548E+18, 1 ---
+float(-9.223372036854776E+18)
+--- testing: -9.2233720368548E+18, -1 ---
+float(-1.0842021724855044E-19)
+--- testing: -9.2233720368548E+18, 7 ---
+float(-5.678427533559429E+132)
+--- testing: -9.2233720368548E+18, 9 ---
+float(-4.830671903771573E+170)
+--- testing: -9.2233720368548E+18, 65 ---
+float(-INF)
+--- testing: -9.2233720368548E+18, -44 ---
+float(0)
+--- testing: -9.2233720368548E+18, 2147483647 ---
+float(-INF)
+--- testing: -9.2233720368548E+18, -2147483648 ---
+float(0)
+--- testing: -9.2233720368548E+18, 9223372036854775807 ---
+float(INF)
+--- testing: -9.2233720368548E+18, -9223372036854775808 ---
+float(0)
+Notice: Indirect modification of overloaded element of %s has no effect in %s on line %d
+object(StorageNoRef)#1 (1) {
+  ["s":"StorageNoRef":private]=>
+  array(2) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+  }
+}
 
-Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
-string(0) ""
+Warning: Undefined array key 2 in %s on line %d
+object(StorageNoRef)#2 (1) {
+  ["s":"StorageNoRef":private]=>
+  array(2) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+  }
+}
 
-Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
-string(0) ""
+Notice: Indirect modification of overloaded element of %s has no effect in %s on line %d
+object(StorageNoRef)#1 (1) {
+  ["s":"StorageNoRef":private]=>
+  array(2) {
+    ["one"]=>
+    int(1)
+    ["two"]=>
+    int(2)
+  }
+}

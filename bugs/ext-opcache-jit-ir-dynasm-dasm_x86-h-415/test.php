@@ -61,61 +61,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$default_max = getrandmax();
-echo "\nrand() tests with default min and max value (i.e 0 thru ", $default_max, ")\n";
-for ($i = 0; $i < 100; $i++) {
-    $res = rand();
-// By default RAND_MAX is 32768 although no constant is defined for it for user space apps
-    if ($res < 0 || $res > $default_max) {
-        break;
-    }
-}
-if ($i != 100) {
-    echo "FAILED: res = ", $res, " min = 0 max = ", $default_max, "\n";
-} else {
-    echo "PASSED: range min = 0 max = ", $default_max, "\n";
-}
-echo "\nrand() tests with defined min and max value\n";
-$min = array(10,
-             100,
-             10.5e3,
-             0x10,
-             0400);
-$max = array(100,
-             1000,
-             10.5e5,
-             0x10000,
-             0700);
-for ($x = 0; $x < count($min); $x++) {
-    for ($i = 0; $i < 100; $i++) {
-        $res = rand($min[$x], $max[$x]);
-        if (!is_int($res) || $res < intval($min[$x]) || $res > intval($max[$x])) {
-            echo "FAILED: res = ",  $res, " min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
-            break;
-        }
-    }
-    if ($i == 100) {
-        echo "PASSED: range min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
-    }
-}
-$fusion = $max;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $ref = &$fusion->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Pass arrays containing different string data to rsort() to test behaviour
+ */
+echo "*** Testing rsort() : variation ***\n";
+$fusion = array (
+// group of escape sequences
+array(null, NULL, "\a", "\cx", "\e", "\f", "\n", "\t", "\xhh", "\ddd", "\v"),
+// array contains combination of capital/small letters
+array("lemoN", "Orange", "banana", "apple", "Test", "TTTT", "ttt", "ww", "x", "X", "oraNGe", "BANANA")
+);
+$flags = array("SORT_REGULAR" => SORT_REGULAR, "SORT_STRING" => SORT_STRING);
+$count = 1;
+// loop through to test rsort() with different arrays
+foreach ($various_arrays as $array) {
+    echo "\n-- Iteration $count --\n";
+    echo "- With Default sort flag -\n";
+    $temp_array = $array;
+    var_dump(rsort($temp_array) );
+    var_dump($temp_array);
+    // loop through $flags array and setting all possible flag values
+    foreach($flags as $key => $flag){
+        echo "- Sort flag = $key -\n";
+        $temp_array = $array;
+        var_dump(rsort($temp_array, $flag) );
+        var_dump($temp_array);
+    }
+    $count++;
+}
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

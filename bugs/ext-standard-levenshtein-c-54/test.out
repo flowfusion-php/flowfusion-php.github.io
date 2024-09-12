@@ -1,371 +1,52 @@
---- testing: 9223372036854775807, 0 ---
-float(NAN)
---- testing: 9223372036854775807, 1 ---
-float(0)
---- testing: 9223372036854775807, -1 ---
-float(0)
---- testing: 9223372036854775807, 7 ---
-float(1)
---- testing: 9223372036854775807, 9 ---
-float(8)
---- testing: 9223372036854775807, 65 ---
-float(8)
---- testing: 9223372036854775807, -44 ---
-float(8)
---- testing: 9223372036854775807, 2147483647 ---
-float(2)
---- testing: 9223372036854775807, -2147483648 ---
-float(0)
---- testing: 9223372036854775807, 9223372036854775807 ---
-float(0)
---- testing: 9223372036854775807, -9223372036854775808 ---
-float(0)
---- testing: -9223372036854775808, 0 ---
-float(NAN)
---- testing: -9223372036854775808, 1 ---
-float(-0)
---- testing: -9223372036854775808, -1 ---
-float(-0)
---- testing: -9223372036854775808, 7 ---
-float(-1)
---- testing: -9223372036854775808, 9 ---
-float(-8)
---- testing: -9223372036854775808, 65 ---
-float(-8)
---- testing: -9223372036854775808, -44 ---
-float(-8)
---- testing: -9223372036854775808, 2147483647 ---
-float(-2)
---- testing: -9223372036854775808, -2147483648 ---
-float(-0)
---- testing: -9223372036854775808, 9223372036854775807 ---
-float(-0)
---- testing: -9223372036854775808, -9223372036854775808 ---
-float(-0)
---- testing: 2147483647, 0 ---
-float(NAN)
---- testing: 2147483647, 1 ---
-float(0)
---- testing: 2147483647, -1 ---
-float(0)
---- testing: 2147483647, 7 ---
-float(1)
---- testing: 2147483647, 9 ---
-float(1)
---- testing: 2147483647, 65 ---
-float(62)
---- testing: 2147483647, -44 ---
-float(23)
---- testing: 2147483647, 2147483647 ---
-float(0)
---- testing: 2147483647, -2147483648 ---
-float(2147483647)
---- testing: 2147483647, 9223372036854775807 ---
-float(2147483647)
---- testing: 2147483647, -9223372036854775808 ---
-float(2147483647)
---- testing: -2147483648, 0 ---
-float(NAN)
---- testing: -2147483648, 1 ---
-float(-0)
---- testing: -2147483648, -1 ---
-float(-0)
---- testing: -2147483648, 7 ---
-float(-2)
---- testing: -2147483648, 9 ---
-float(-2)
---- testing: -2147483648, 65 ---
-float(-63)
---- testing: -2147483648, -44 ---
-float(-24)
---- testing: -2147483648, 2147483647 ---
-float(-1)
---- testing: -2147483648, -2147483648 ---
-float(-0)
---- testing: -2147483648, 9223372036854775807 ---
-float(-2147483648)
---- testing: -2147483648, -9223372036854775808 ---
-float(-2147483648)
---- testing: 9223372034707292160, 0 ---
-float(NAN)
---- testing: 9223372034707292160, 1 ---
-float(0)
---- testing: 9223372034707292160, -1 ---
-float(0)
---- testing: 9223372034707292160, 7 ---
-float(6)
---- testing: 9223372034707292160, 9 ---
-float(6)
---- testing: 9223372034707292160, 65 ---
-float(10)
---- testing: 9223372034707292160, -44 ---
-float(28)
---- testing: 9223372034707292160, 2147483647 ---
-float(1)
---- testing: 9223372034707292160, -2147483648 ---
-float(0)
---- testing: 9223372034707292160, 9223372036854775807 ---
-float(9.22337203470729E+18)
---- testing: 9223372034707292160, -9223372036854775808 ---
-float(9.22337203470729E+18)
---- testing: -9223372034707292160, 0 ---
-float(NAN)
---- testing: -9223372034707292160, 1 ---
-float(-0)
---- testing: -9223372034707292160, -1 ---
-float(-0)
---- testing: -9223372034707292160, 7 ---
-float(-6)
---- testing: -9223372034707292160, 9 ---
-float(-6)
---- testing: -9223372034707292160, 65 ---
-float(-10)
---- testing: -9223372034707292160, -44 ---
-float(-28)
---- testing: -9223372034707292160, 2147483647 ---
-float(-1)
---- testing: -9223372034707292160, -2147483648 ---
-float(-0)
---- testing: -9223372034707292160, 9223372036854775807 ---
-float(-9.22337203470729E+18)
---- testing: -9223372034707292160, -9223372036854775808 ---
-float(-9.22337203470729E+18)
---- testing: 2147483648, 0 ---
-float(NAN)
---- testing: 2147483648, 1 ---
-float(0)
---- testing: 2147483648, -1 ---
-float(0)
---- testing: 2147483648, 7 ---
-float(2)
---- testing: 2147483648, 9 ---
-float(2)
---- testing: 2147483648, 65 ---
-float(63)
---- testing: 2147483648, -44 ---
-float(24)
---- testing: 2147483648, 2147483647 ---
-float(1)
---- testing: 2147483648, -2147483648 ---
-float(0)
---- testing: 2147483648, 9223372036854775807 ---
-float(2147483648)
---- testing: 2147483648, -9223372036854775808 ---
-float(2147483648)
---- testing: -2147483649, 0 ---
-float(NAN)
---- testing: -2147483649, 1 ---
-float(-0)
---- testing: -2147483649, -1 ---
-float(-0)
---- testing: -2147483649, 7 ---
-float(-3)
---- testing: -2147483649, 9 ---
-float(-3)
---- testing: -2147483649, 65 ---
-float(-64)
---- testing: -2147483649, -44 ---
-float(-25)
---- testing: -2147483649, 2147483647 ---
-float(-2)
---- testing: -2147483649, -2147483648 ---
-float(-1)
---- testing: -2147483649, 9223372036854775807 ---
-float(-2147483649)
---- testing: -2147483649, -9223372036854775808 ---
-float(-2147483649)
---- testing: 4294967294, 0 ---
-float(NAN)
---- testing: 4294967294, 1 ---
-float(0)
---- testing: 4294967294, -1 ---
-float(0)
---- testing: 4294967294, 7 ---
-float(2)
---- testing: 4294967294, 9 ---
-float(2)
---- testing: 4294967294, 65 ---
-float(59)
---- testing: 4294967294, -44 ---
-float(2)
---- testing: 4294967294, 2147483647 ---
-float(0)
---- testing: 4294967294, -2147483648 ---
-float(2147483646)
---- testing: 4294967294, 9223372036854775807 ---
-float(4294967294)
---- testing: 4294967294, -9223372036854775808 ---
-float(4294967294)
---- testing: 4294967295, 0 ---
-float(NAN)
---- testing: 4294967295, 1 ---
-float(0)
---- testing: 4294967295, -1 ---
-float(0)
---- testing: 4294967295, 7 ---
-float(3)
---- testing: 4294967295, 9 ---
-float(3)
---- testing: 4294967295, 65 ---
-float(60)
---- testing: 4294967295, -44 ---
-float(3)
---- testing: 4294967295, 2147483647 ---
-float(1)
---- testing: 4294967295, -2147483648 ---
-float(2147483647)
---- testing: 4294967295, 9223372036854775807 ---
-float(4294967295)
---- testing: 4294967295, -9223372036854775808 ---
-float(4294967295)
---- testing: 4294967293, 0 ---
-float(NAN)
---- testing: 4294967293, 1 ---
-float(0)
---- testing: 4294967293, -1 ---
-float(0)
---- testing: 4294967293, 7 ---
-float(1)
---- testing: 4294967293, 9 ---
-float(1)
---- testing: 4294967293, 65 ---
-float(58)
---- testing: 4294967293, -44 ---
-float(1)
---- testing: 4294967293, 2147483647 ---
-float(2147483646)
---- testing: 4294967293, -2147483648 ---
-float(2147483645)
---- testing: 4294967293, 9223372036854775807 ---
-float(4294967293)
---- testing: 4294967293, -9223372036854775808 ---
-float(4294967293)
---- testing: 9223372036854775806, 0 ---
-float(NAN)
---- testing: 9223372036854775806, 1 ---
-float(0)
---- testing: 9223372036854775806, -1 ---
-float(0)
---- testing: 9223372036854775806, 7 ---
-float(1)
---- testing: 9223372036854775806, 9 ---
-float(8)
---- testing: 9223372036854775806, 65 ---
-float(8)
---- testing: 9223372036854775806, -44 ---
-float(8)
---- testing: 9223372036854775806, 2147483647 ---
-float(2)
---- testing: 9223372036854775806, -2147483648 ---
-float(0)
---- testing: 9223372036854775806, 9223372036854775807 ---
-float(0)
---- testing: 9223372036854775806, -9223372036854775808 ---
-float(0)
---- testing: 9.2233720368548E+18, 0 ---
-float(NAN)
---- testing: 9.2233720368548E+18, 1 ---
-float(0)
---- testing: 9.2233720368548E+18, -1 ---
-float(0)
---- testing: 9.2233720368548E+18, 7 ---
-float(1)
---- testing: 9.2233720368548E+18, 9 ---
-float(8)
---- testing: 9.2233720368548E+18, 65 ---
-float(8)
---- testing: 9.2233720368548E+18, -44 ---
-float(8)
---- testing: 9.2233720368548E+18, 2147483647 ---
-float(2)
---- testing: 9.2233720368548E+18, -2147483648 ---
-float(0)
---- testing: 9.2233720368548E+18, 9223372036854775807 ---
-float(0)
---- testing: 9.2233720368548E+18, -9223372036854775808 ---
-float(0)
---- testing: -9223372036854775807, 0 ---
-float(NAN)
---- testing: -9223372036854775807, 1 ---
-float(-0)
---- testing: -9223372036854775807, -1 ---
-float(-0)
---- testing: -9223372036854775807, 7 ---
-float(-1)
---- testing: -9223372036854775807, 9 ---
-float(-8)
---- testing: -9223372036854775807, 65 ---
-float(-8)
---- testing: -9223372036854775807, -44 ---
-float(-8)
---- testing: -9223372036854775807, 2147483647 ---
-float(-2)
---- testing: -9223372036854775807, -2147483648 ---
-float(-0)
---- testing: -9223372036854775807, 9223372036854775807 ---
-float(-0)
---- testing: -9223372036854775807, -9223372036854775808 ---
-float(-0)
---- testing: -9.2233720368548E+18, 0 ---
-float(NAN)
---- testing: -9.2233720368548E+18, 1 ---
-float(-0)
---- testing: -9.2233720368548E+18, -1 ---
-float(-0)
---- testing: -9.2233720368548E+18, 7 ---
-float(-1)
---- testing: -9.2233720368548E+18, 9 ---
-float(-8)
---- testing: -9.2233720368548E+18, 65 ---
-float(-8)
---- testing: -9.2233720368548E+18, -44 ---
-float(-8)
---- testing: -9.2233720368548E+18, 2147483647 ---
-float(-2)
---- testing: -9.2233720368548E+18, -2147483648 ---
-float(-0)
---- testing: -9.2233720368548E+18, 9223372036854775807 ---
-float(-0)
---- testing: -9.2233720368548E+18, -9223372036854775808 ---
-float(-0)
-
-Deprecated: Creation of dynamic property Foo::$bar is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 85
+2003-10-28 13:20:30 EST
+2003-10-28 13:20:30 EST
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot increment property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement property Test::$prop2 of type int|bool past its minimal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
 string(11) "random_var:"
-float(-9.22337203685478E+18)
-float(-9.22337203685478E+18)
-array(0) {
+array(1) {
+  [0]=>
+  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php"
 }
-Calling function: xml_get_error_code with arguments: -9.2233720368548E+18
-Error calling function xml_get_error_code: xml_get_error_code(): Argument #1 ($parser) must be of type XMLParser, float given
-Calling function: chroot with arguments: -9.2233720368548E+18
+float(-9.223372036854776E+18)
+int(-9223372036854775808)
+Calling function: str_contains with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
 
-Warning: chroot(): Not a directory (errno 20) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 41
-Calling function: session_cache_expire with arguments: -9.2233720368548E+18
-
-Warning: session_cache_expire(): Session cache expiration cannot be changed after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 41
-Calling function: xmlwriter_start_element with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Error calling function xmlwriter_start_element: xmlwriter_start_element(): Argument #1 ($writer) must be of type XMLWriter, float given
-Calling function: forward_static_call with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Error calling function forward_static_call: forward_static_call(): Argument #1 ($callback) must be a valid callback, no array or string given
-Calling function: xml_parser_create_ns with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
--9.2233720368548E+18, Array
-Error calling function xml_parser_create_ns: xml_parser_create_ns(): Argument #2 ($separator) must be of type string, array given
-Calling function: iterator_to_array with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
-Array, -9.2233720368548E+18
-Calling function: stream_isatty with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
+Array, Array
+Error calling function str_contains: str_contains(): Argument #1 ($haystack) must be of type string, array given
+Calling function: finfo_close with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
 Array
-Error calling function stream_isatty: stream_isatty(): Argument #1 ($stream) must be of type resource, array given
-Calling function: timezone_transitions_get with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
-Array, Array, Array
-Error calling function timezone_transitions_get: timezone_transitions_get(): Argument #1 ($object) must be of type DateTimeZone, array given
-Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function finfo_close: finfo_close(): Argument #1 ($finfo) must be of type finfo, array given
+Calling function: asinh with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
+Array
+Error calling function asinh: asinh(): Argument #1 ($num) must be of type float, array given
+Calling function: enum_exists with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
+-9.2233720368548E+18, Array
+Error calling function enum_exists: enum_exists(): Argument #2 ($autoload) must be of type bool, array given
+Calling function: number_format with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: gettype with arguments: -9.2233720368548E+18
+Calling function: lchown with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
+-9223372036854775808, Array
+Error calling function lchown: lchown(): Argument #2 ($user) must be of type string|int, array given
+Calling function: levenshtein with arguments: -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in

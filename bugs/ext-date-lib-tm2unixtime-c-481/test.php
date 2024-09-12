@@ -61,26 +61,56 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$h = fopen("php://output", "w");
+$writer = XMLWriter::toStream($h);
+$writer->startDocument(encoding: "UTF-8");
+$writer->writeComment('Ã©Ã©Ã©');
+unset($writer);
+$fusion = $writer;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+$validLtOrEqual = array (
+MAX_32Bit, array(MAX_32Bit, "2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, MAX_32Bit + 1),
+MIN_32Bit, array(MIN_32Bit, "-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, MIN_32Bit + 1),
+MAX_64Bit, array(MAX_64Bit, MAX_64Bit + 1),
+MIN_64Bit, array(MIN_64Bit, MIN_64Bit - 1, MIN_64Bit + 1),
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MIN_32Bit, MAX_64Bit, MIN_64Bit);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-       echo "--- testing: $longVal, $otherVal ---\n";
-      var_dump(atan2($longVal, $otherVal));
+$invalidLtOrEqual = array (
+MAX_32Bit, array("2147483646", 2.1474836460001e9, MAX_32Bit - 1),
+MIN_32Bit, array(MIN_32Bit - 1, "-2147483649", -2.1474836480001e9)
+);
+$failed = false;
+// test valid values
+for ($i = 0; $i < count($validLtOrEqual); $i +=2) {
+   $typeToTestVal = $validLtOrEqual[$i];
+   $compares = $validLtOrEqual[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal <= $compareVal) {
+         // do nothing
+      }
+      else {
+         echo "FAILED: '$typeToTestVal' > '$compareVal'\n";
+         $failed = true;
+      }
    }
 }
-$fusion = $longVals;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = __FILE__ . chr(0). ".ridiculous";
-var_dump(file_exists($filename));
+// test invalid values
+for ($i = 0; $i < count($invalidLtOrEqual); $i +=2) {
+   $typeToTestVal = $invalidLtOrEqual[$i];
+   $compares = $fusion[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal <= $compareVal) {
+         echo "FAILED: '$typeToTestVal' <= '$compareVal'\n";
+         $failed = true;
+      }
+   }
+}
+if ($failed == false) {
+   echo "Test Passed\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

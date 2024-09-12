@@ -1,12 +1,12 @@
 --TEST--
-Test  rand() - basic function test rand()+By-value get may be implemented as by-reference
+Plain prop satisfies interface get hook by-reference+Test rsort() function : usage variations - String values
 --INI--
-opcache.optimization_level=-1
-session.gc_probability=0
+precision=17
+opcache.jit=1205
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1001
+opcache.jit=0004
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,77 +71,225 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$default_max = getrandmax();
-echo "\nrand() tests with default min and max value (i.e 0 thru ", $default_max, ")\n";
-for ($i = 0; $i < 100; $i++) {
-    $res = rand();
-// By default RAND_MAX is 32768 although no constant is defined for it for user space apps
-    if ($res < 0 || $res > $default_max) {
-        break;
-    }
-}
-if ($i != 100) {
-    echo "FAILED: res = ", $res, " min = 0 max = ", $default_max, "\n";
-} else {
-    echo "PASSED: range min = 0 max = ", $default_max, "\n";
-}
-echo "\nrand() tests with defined min and max value\n";
-$min = array(10,
-             100,
-             10.5e3,
-             0x10,
-             0400);
-$max = array(100,
-             1000,
-             10.5e5,
-             0x10000,
-             0700);
-for ($x = 0; $x < count($min); $x++) {
-    for ($i = 0; $i < 100; $i++) {
-        $res = rand($min[$x], $max[$x]);
-        if (!is_int($res) || $res < intval($min[$x]) || $res > intval($max[$x])) {
-            echo "FAILED: res = ",  $res, " min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
-            break;
-        }
-    }
-    if ($i == 100) {
-        echo "PASSED: range min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
-    }
-}
-$fusion = $max;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $ref = &$fusion->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Pass arrays containing different string data to rsort() to test behaviour
+ */
+echo "*** Testing rsort() : variation ***\n";
+$fusion = array (
+// group of escape sequences
+array(null, NULL, "\a", "\cx", "\e", "\f", "\n", "\t", "\xhh", "\ddd", "\v"),
+// array contains combination of capital/small letters
+array("lemoN", "Orange", "banana", "apple", "Test", "TTTT", "ttt", "ww", "x", "X", "oraNGe", "BANANA")
+);
+$flags = array("SORT_REGULAR" => SORT_REGULAR, "SORT_STRING" => SORT_STRING);
+$count = 1;
+// loop through to test rsort() with different arrays
+foreach ($various_arrays as $array) {
+    echo "\n-- Iteration $count --\n";
+    echo "- With Default sort flag -\n";
+    $temp_array = $array;
+    var_dump(rsort($temp_array) );
+    var_dump($temp_array);
+    // loop through $flags array and setting all possible flag values
+    foreach($flags as $key => $flag){
+        echo "- Sort flag = $key -\n";
+        $temp_array = $array;
+        var_dump(rsort($temp_array, $flag) );
+        var_dump($temp_array);
+    }
+    $count++;
+}
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-rand() tests with default min and max value (i.e 0 thru %i)
-PASSED: range min = 0 max = %i
-
-rand() tests with defined min and max value
-PASSED: range min = 10 max = 100
-PASSED: range min = 100 max = 1000
-PASSED: range min = 10500 max = 1050000
-PASSED: range min = 16 max = 65536
-PASSED: range min = 256 max = 448
+--EXPECT--
 object(A)#1 (1) {
-  ["_prop":"A":private]=>
+  ["prop"]=>
   int(42)
 }
+*** Testing rsort() : variation ***
+
+-- Iteration 1 --
+- With Default sort flag -
+bool(true)
+array(11) {
+  [0]=>
+  string(4) "\xhh"
+  [1]=>
+  string(4) "\ddd"
+  [2]=>
+  string(3) "\cx"
+  [3]=>
+  string(2) "\a"
+  [4]=>
+  string(1) ""
+  [5]=>
+  string(1) ""
+  [6]=>
+  string(1) ""
+  [7]=>
+  string(1) "
+"
+  [8]=>
+  string(1) "	"
+  [9]=>
+  NULL
+  [10]=>
+  NULL
+}
+- Sort flag = SORT_REGULAR -
+bool(true)
+array(11) {
+  [0]=>
+  string(4) "\xhh"
+  [1]=>
+  string(4) "\ddd"
+  [2]=>
+  string(3) "\cx"
+  [3]=>
+  string(2) "\a"
+  [4]=>
+  string(1) ""
+  [5]=>
+  string(1) ""
+  [6]=>
+  string(1) ""
+  [7]=>
+  string(1) "
+"
+  [8]=>
+  string(1) "	"
+  [9]=>
+  NULL
+  [10]=>
+  NULL
+}
+- Sort flag = SORT_STRING -
+bool(true)
+array(11) {
+  [0]=>
+  string(4) "\xhh"
+  [1]=>
+  string(4) "\ddd"
+  [2]=>
+  string(3) "\cx"
+  [3]=>
+  string(2) "\a"
+  [4]=>
+  string(1) ""
+  [5]=>
+  string(1) ""
+  [6]=>
+  string(1) ""
+  [7]=>
+  string(1) "
+"
+  [8]=>
+  string(1) "	"
+  [9]=>
+  NULL
+  [10]=>
+  NULL
+}
+
+-- Iteration 2 --
+- With Default sort flag -
+bool(true)
+array(12) {
+  [0]=>
+  string(1) "x"
+  [1]=>
+  string(2) "ww"
+  [2]=>
+  string(3) "ttt"
+  [3]=>
+  string(6) "oraNGe"
+  [4]=>
+  string(5) "lemoN"
+  [5]=>
+  string(6) "banana"
+  [6]=>
+  string(5) "apple"
+  [7]=>
+  string(1) "X"
+  [8]=>
+  string(4) "Test"
+  [9]=>
+  string(4) "TTTT"
+  [10]=>
+  string(6) "Orange"
+  [11]=>
+  string(6) "BANANA"
+}
+- Sort flag = SORT_REGULAR -
+bool(true)
+array(12) {
+  [0]=>
+  string(1) "x"
+  [1]=>
+  string(2) "ww"
+  [2]=>
+  string(3) "ttt"
+  [3]=>
+  string(6) "oraNGe"
+  [4]=>
+  string(5) "lemoN"
+  [5]=>
+  string(6) "banana"
+  [6]=>
+  string(5) "apple"
+  [7]=>
+  string(1) "X"
+  [8]=>
+  string(4) "Test"
+  [9]=>
+  string(4) "TTTT"
+  [10]=>
+  string(6) "Orange"
+  [11]=>
+  string(6) "BANANA"
+}
+- Sort flag = SORT_STRING -
+bool(true)
+array(12) {
+  [0]=>
+  string(1) "x"
+  [1]=>
+  string(2) "ww"
+  [2]=>
+  string(3) "ttt"
+  [3]=>
+  string(6) "oraNGe"
+  [4]=>
+  string(5) "lemoN"
+  [5]=>
+  string(6) "banana"
+  [6]=>
+  string(5) "apple"
+  [7]=>
+  string(1) "X"
+  [8]=>
+  string(4) "Test"
+  [9]=>
+  string(4) "TTTT"
+  [10]=>
+  string(6) "Orange"
+  [11]=>
+  string(6) "BANANA"
+}
+Done
