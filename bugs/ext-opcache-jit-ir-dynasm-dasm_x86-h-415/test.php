@@ -61,32 +61,61 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$default_max = getrandmax();
+echo "\nrand() tests with default min and max value (i.e 0 thru ", $default_max, ")\n";
+for ($i = 0; $i < 100; $i++) {
+    $res = rand();
+// By default RAND_MAX is 32768 although no constant is defined for it for user space apps
+    if ($res < 0 || $res > $default_max) {
+        break;
+    }
+}
+if ($i != 100) {
+    echo "FAILED: res = ", $res, " min = 0 max = ", $default_max, "\n";
+} else {
+    echo "PASSED: range min = 0 max = ", $default_max, "\n";
+}
+echo "\nrand() tests with defined min and max value\n";
+$min = array(10,
+             100,
+             10.5e3,
+             0x10,
+             0400);
+$max = array(100,
+             1000,
+             10.5e5,
+             0x10000,
+             0700);
+for ($x = 0; $x < count($min); $x++) {
+    for ($i = 0; $i < 100; $i++) {
+        $res = rand($min[$x], $max[$x]);
+        if (!is_int($res) || $res < intval($min[$x]) || $res > intval($max[$x])) {
+            echo "FAILED: res = ",  $res, " min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
+            break;
+        }
+    }
+    if ($i == 100) {
+        echo "PASSED: range min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
+    }
+}
+$fusion = $max;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
+function test(I $i) {
+    $ref = &$fusion->prop;
+    $ref = 42;
+}
 $a = new A();
+test($a);
 var_dump($a);
-$fusion = $this;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/* Try deleting a file which is already deleted */
-$file_path = __DIR__;
-// temp file used
-$filename = "$file_path/unlink_variation4.tmp";
-echo "*** Testing unlink() on deleted file ***\n";
-// create temp file
-$fusion = fopen($filename, "w");
-fclose($fp);
-// delete temp file
-var_dump( unlink($filename) );  // expected: true
-var_dump( file_exists($filename) );  // confirm file deleted
-// delete deleted file
-var_dump( unlink($filename) );  // expected: false
-echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

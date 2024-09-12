@@ -1,621 +1,371 @@
---- testing: 9223372036854775807 ^ 0 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 ^ 1 ---
-int(9223372036854775806)
---- testing: 9223372036854775807 ^ -1 ---
-int(-9223372036854775808)
---- testing: 9223372036854775807 ^ 7 ---
-int(9223372036854775800)
---- testing: 9223372036854775807 ^ 9 ---
-int(9223372036854775798)
---- testing: 9223372036854775807 ^ 65 ---
-int(9223372036854775742)
---- testing: 9223372036854775807 ^ -44 ---
-int(-9223372036854775765)
---- testing: 9223372036854775807 ^ 2147483647 ---
-int(9223372034707292160)
---- testing: 9223372036854775807 ^ 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 ^ 0 ---
-int(-9223372036854775808)
---- testing: -9223372036854775808 ^ 1 ---
-int(-9223372036854775807)
---- testing: -9223372036854775808 ^ -1 ---
-int(9223372036854775807)
---- testing: -9223372036854775808 ^ 7 ---
-int(-9223372036854775801)
---- testing: -9223372036854775808 ^ 9 ---
-int(-9223372036854775799)
---- testing: -9223372036854775808 ^ 65 ---
-int(-9223372036854775743)
---- testing: -9223372036854775808 ^ -44 ---
-int(9223372036854775764)
---- testing: -9223372036854775808 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: -9223372036854775808 ^ 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 ^ 0 ---
-int(2147483647)
---- testing: 2147483647 ^ 1 ---
-int(2147483646)
---- testing: 2147483647 ^ -1 ---
-int(-2147483648)
---- testing: 2147483647 ^ 7 ---
-int(2147483640)
---- testing: 2147483647 ^ 9 ---
-int(2147483638)
---- testing: 2147483647 ^ 65 ---
-int(2147483582)
---- testing: 2147483647 ^ -44 ---
-int(-2147483605)
---- testing: 2147483647 ^ 2147483647 ---
-int(0)
---- testing: 2147483647 ^ 9223372036854775807 ---
-int(9223372034707292160)
---- testing: -2147483648 ^ 0 ---
-int(-2147483648)
---- testing: -2147483648 ^ 1 ---
-int(-2147483647)
---- testing: -2147483648 ^ -1 ---
-int(2147483647)
---- testing: -2147483648 ^ 7 ---
-int(-2147483641)
---- testing: -2147483648 ^ 9 ---
-int(-2147483639)
---- testing: -2147483648 ^ 65 ---
-int(-2147483583)
---- testing: -2147483648 ^ -44 ---
-int(2147483604)
---- testing: -2147483648 ^ 2147483647 ---
-int(-1)
---- testing: -2147483648 ^ 9223372036854775807 ---
-int(-9223372034707292161)
---- testing: 9223372034707292160 ^ 0 ---
-int(9223372034707292160)
---- testing: 9223372034707292160 ^ 1 ---
-int(9223372034707292161)
---- testing: 9223372034707292160 ^ -1 ---
-int(-9223372034707292161)
---- testing: 9223372034707292160 ^ 7 ---
-int(9223372034707292167)
---- testing: 9223372034707292160 ^ 9 ---
-int(9223372034707292169)
---- testing: 9223372034707292160 ^ 65 ---
-int(9223372034707292225)
---- testing: 9223372034707292160 ^ -44 ---
-int(-9223372034707292204)
---- testing: 9223372034707292160 ^ 2147483647 ---
-int(9223372036854775807)
---- testing: 9223372034707292160 ^ 9223372036854775807 ---
-int(2147483647)
---- testing: -9223372034707292160 ^ 0 ---
-int(-9223372034707292160)
---- testing: -9223372034707292160 ^ 1 ---
-int(-9223372034707292159)
---- testing: -9223372034707292160 ^ -1 ---
-int(9223372034707292159)
---- testing: -9223372034707292160 ^ 7 ---
-int(-9223372034707292153)
---- testing: -9223372034707292160 ^ 9 ---
-int(-9223372034707292151)
---- testing: -9223372034707292160 ^ 65 ---
-int(-9223372034707292095)
---- testing: -9223372034707292160 ^ -44 ---
-int(9223372034707292116)
---- testing: -9223372034707292160 ^ 2147483647 ---
-int(-9223372032559808513)
---- testing: -9223372034707292160 ^ 9223372036854775807 ---
-int(-2147483649)
---- testing: 2147483648 ^ 0 ---
-int(2147483648)
---- testing: 2147483648 ^ 1 ---
-int(2147483649)
---- testing: 2147483648 ^ -1 ---
-int(-2147483649)
---- testing: 2147483648 ^ 7 ---
-int(2147483655)
---- testing: 2147483648 ^ 9 ---
-int(2147483657)
---- testing: 2147483648 ^ 65 ---
-int(2147483713)
---- testing: 2147483648 ^ -44 ---
-int(-2147483692)
---- testing: 2147483648 ^ 2147483647 ---
-int(4294967295)
---- testing: 2147483648 ^ 9223372036854775807 ---
-int(9223372034707292159)
---- testing: -2147483649 ^ 0 ---
-int(-2147483649)
---- testing: -2147483649 ^ 1 ---
-int(-2147483650)
---- testing: -2147483649 ^ -1 ---
-int(2147483648)
---- testing: -2147483649 ^ 7 ---
-int(-2147483656)
---- testing: -2147483649 ^ 9 ---
-int(-2147483658)
---- testing: -2147483649 ^ 65 ---
-int(-2147483714)
---- testing: -2147483649 ^ -44 ---
-int(2147483691)
---- testing: -2147483649 ^ 2147483647 ---
-int(-4294967296)
---- testing: -2147483649 ^ 9223372036854775807 ---
-int(-9223372034707292160)
---- testing: 4294967294 ^ 0 ---
-int(4294967294)
---- testing: 4294967294 ^ 1 ---
-int(4294967295)
---- testing: 4294967294 ^ -1 ---
-int(-4294967295)
---- testing: 4294967294 ^ 7 ---
-int(4294967289)
---- testing: 4294967294 ^ 9 ---
-int(4294967287)
---- testing: 4294967294 ^ 65 ---
-int(4294967231)
---- testing: 4294967294 ^ -44 ---
-int(-4294967254)
---- testing: 4294967294 ^ 2147483647 ---
-int(2147483649)
---- testing: 4294967294 ^ 9223372036854775807 ---
-int(9223372032559808513)
---- testing: 4294967295 ^ 0 ---
-int(4294967295)
---- testing: 4294967295 ^ 1 ---
-int(4294967294)
---- testing: 4294967295 ^ -1 ---
-int(-4294967296)
---- testing: 4294967295 ^ 7 ---
-int(4294967288)
---- testing: 4294967295 ^ 9 ---
-int(4294967286)
---- testing: 4294967295 ^ 65 ---
-int(4294967230)
---- testing: 4294967295 ^ -44 ---
-int(-4294967253)
---- testing: 4294967295 ^ 2147483647 ---
-int(2147483648)
---- testing: 4294967295 ^ 9223372036854775807 ---
-int(9223372032559808512)
---- testing: 4294967293 ^ 0 ---
-int(4294967293)
---- testing: 4294967293 ^ 1 ---
-int(4294967292)
---- testing: 4294967293 ^ -1 ---
-int(-4294967294)
---- testing: 4294967293 ^ 7 ---
-int(4294967290)
---- testing: 4294967293 ^ 9 ---
-int(4294967284)
---- testing: 4294967293 ^ 65 ---
-int(4294967228)
---- testing: 4294967293 ^ -44 ---
-int(-4294967255)
---- testing: 4294967293 ^ 2147483647 ---
-int(2147483650)
---- testing: 4294967293 ^ 9223372036854775807 ---
-int(9223372032559808514)
---- testing: 9223372036854775806 ^ 0 ---
-int(9223372036854775806)
---- testing: 9223372036854775806 ^ 1 ---
-int(9223372036854775807)
---- testing: 9223372036854775806 ^ -1 ---
-int(-9223372036854775807)
---- testing: 9223372036854775806 ^ 7 ---
-int(9223372036854775801)
---- testing: 9223372036854775806 ^ 9 ---
-int(9223372036854775799)
---- testing: 9223372036854775806 ^ 65 ---
-int(9223372036854775743)
---- testing: 9223372036854775806 ^ -44 ---
-int(-9223372036854775766)
---- testing: 9223372036854775806 ^ 2147483647 ---
-int(9223372034707292161)
---- testing: 9223372036854775806 ^ 9223372036854775807 ---
-int(1)
---- testing: 9.2233720368548E+18 ^ 0 ---
-int(-9223372036854775808)
---- testing: 9.2233720368548E+18 ^ 1 ---
-int(-9223372036854775807)
---- testing: 9.2233720368548E+18 ^ -1 ---
-int(9223372036854775807)
---- testing: 9.2233720368548E+18 ^ 7 ---
-int(-9223372036854775801)
---- testing: 9.2233720368548E+18 ^ 9 ---
-int(-9223372036854775799)
---- testing: 9.2233720368548E+18 ^ 65 ---
-int(-9223372036854775743)
---- testing: 9.2233720368548E+18 ^ -44 ---
-int(9223372036854775764)
---- testing: 9.2233720368548E+18 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: 9.2233720368548E+18 ^ 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 ^ 0 ---
-int(-9223372036854775807)
---- testing: -9223372036854775807 ^ 1 ---
-int(-9223372036854775808)
---- testing: -9223372036854775807 ^ -1 ---
-int(9223372036854775806)
---- testing: -9223372036854775807 ^ 7 ---
-int(-9223372036854775802)
---- testing: -9223372036854775807 ^ 9 ---
-int(-9223372036854775800)
---- testing: -9223372036854775807 ^ 65 ---
-int(-9223372036854775744)
---- testing: -9223372036854775807 ^ -44 ---
-int(9223372036854775765)
---- testing: -9223372036854775807 ^ 2147483647 ---
-int(-9223372034707292162)
---- testing: -9223372036854775807 ^ 9223372036854775807 ---
-int(-2)
---- testing: -9.2233720368548E+18 ^ 0 ---
-int(-9223372036854775808)
---- testing: -9.2233720368548E+18 ^ 1 ---
-int(-9223372036854775807)
---- testing: -9.2233720368548E+18 ^ -1 ---
-int(9223372036854775807)
---- testing: -9.2233720368548E+18 ^ 7 ---
-int(-9223372036854775801)
---- testing: -9.2233720368548E+18 ^ 9 ---
-int(-9223372036854775799)
---- testing: -9.2233720368548E+18 ^ 65 ---
-int(-9223372036854775743)
---- testing: -9.2233720368548E+18 ^ -44 ---
-int(9223372036854775764)
---- testing: -9.2233720368548E+18 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: -9.2233720368548E+18 ^ 9223372036854775807 ---
-int(-1)
---- testing: 0 ^ 9223372036854775807 ---
-int(9223372036854775807)
---- testing: 0 ^ -9223372036854775808 ---
-int(-9223372036854775808)
---- testing: 0 ^ 2147483647 ---
-int(2147483647)
---- testing: 0 ^ -2147483648 ---
-int(-2147483648)
---- testing: 0 ^ 9223372034707292160 ---
-int(9223372034707292160)
---- testing: 0 ^ -9223372034707292160 ---
-int(-9223372034707292160)
---- testing: 0 ^ 2147483648 ---
-int(2147483648)
---- testing: 0 ^ -2147483649 ---
-int(-2147483649)
---- testing: 0 ^ 4294967294 ---
-int(4294967294)
---- testing: 0 ^ 4294967295 ---
-int(4294967295)
---- testing: 0 ^ 4294967293 ---
-int(4294967293)
---- testing: 0 ^ 9223372036854775806 ---
-int(9223372036854775806)
---- testing: 0 ^ 9.2233720368548E+18 ---
-int(-9223372036854775808)
---- testing: 0 ^ -9223372036854775807 ---
-int(-9223372036854775807)
---- testing: 0 ^ -9.2233720368548E+18 ---
-int(-9223372036854775808)
---- testing: 1 ^ 9223372036854775807 ---
-int(9223372036854775806)
---- testing: 1 ^ -9223372036854775808 ---
-int(-9223372036854775807)
---- testing: 1 ^ 2147483647 ---
-int(2147483646)
---- testing: 1 ^ -2147483648 ---
-int(-2147483647)
---- testing: 1 ^ 9223372034707292160 ---
-int(9223372034707292161)
---- testing: 1 ^ -9223372034707292160 ---
-int(-9223372034707292159)
---- testing: 1 ^ 2147483648 ---
-int(2147483649)
---- testing: 1 ^ -2147483649 ---
-int(-2147483650)
---- testing: 1 ^ 4294967294 ---
-int(4294967295)
---- testing: 1 ^ 4294967295 ---
-int(4294967294)
---- testing: 1 ^ 4294967293 ---
-int(4294967292)
---- testing: 1 ^ 9223372036854775806 ---
-int(9223372036854775807)
---- testing: 1 ^ 9.2233720368548E+18 ---
-int(-9223372036854775807)
---- testing: 1 ^ -9223372036854775807 ---
-int(-9223372036854775808)
---- testing: 1 ^ -9.2233720368548E+18 ---
-int(-9223372036854775807)
---- testing: -1 ^ 9223372036854775807 ---
-int(-9223372036854775808)
---- testing: -1 ^ -9223372036854775808 ---
-int(9223372036854775807)
---- testing: -1 ^ 2147483647 ---
-int(-2147483648)
---- testing: -1 ^ -2147483648 ---
-int(2147483647)
---- testing: -1 ^ 9223372034707292160 ---
-int(-9223372034707292161)
---- testing: -1 ^ -9223372034707292160 ---
-int(9223372034707292159)
---- testing: -1 ^ 2147483648 ---
-int(-2147483649)
---- testing: -1 ^ -2147483649 ---
-int(2147483648)
---- testing: -1 ^ 4294967294 ---
-int(-4294967295)
---- testing: -1 ^ 4294967295 ---
-int(-4294967296)
---- testing: -1 ^ 4294967293 ---
-int(-4294967294)
---- testing: -1 ^ 9223372036854775806 ---
-int(-9223372036854775807)
---- testing: -1 ^ 9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: -1 ^ -9223372036854775807 ---
-int(9223372036854775806)
---- testing: -1 ^ -9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: 7 ^ 9223372036854775807 ---
-int(9223372036854775800)
---- testing: 7 ^ -9223372036854775808 ---
-int(-9223372036854775801)
---- testing: 7 ^ 2147483647 ---
-int(2147483640)
---- testing: 7 ^ -2147483648 ---
-int(-2147483641)
---- testing: 7 ^ 9223372034707292160 ---
-int(9223372034707292167)
---- testing: 7 ^ -9223372034707292160 ---
-int(-9223372034707292153)
---- testing: 7 ^ 2147483648 ---
-int(2147483655)
---- testing: 7 ^ -2147483649 ---
-int(-2147483656)
---- testing: 7 ^ 4294967294 ---
-int(4294967289)
---- testing: 7 ^ 4294967295 ---
-int(4294967288)
---- testing: 7 ^ 4294967293 ---
-int(4294967290)
---- testing: 7 ^ 9223372036854775806 ---
-int(9223372036854775801)
---- testing: 7 ^ 9.2233720368548E+18 ---
-int(-9223372036854775801)
---- testing: 7 ^ -9223372036854775807 ---
-int(-9223372036854775802)
---- testing: 7 ^ -9.2233720368548E+18 ---
-int(-9223372036854775801)
---- testing: 9 ^ 9223372036854775807 ---
-int(9223372036854775798)
---- testing: 9 ^ -9223372036854775808 ---
-int(-9223372036854775799)
---- testing: 9 ^ 2147483647 ---
-int(2147483638)
---- testing: 9 ^ -2147483648 ---
-int(-2147483639)
---- testing: 9 ^ 9223372034707292160 ---
-int(9223372034707292169)
---- testing: 9 ^ -9223372034707292160 ---
-int(-9223372034707292151)
---- testing: 9 ^ 2147483648 ---
-int(2147483657)
---- testing: 9 ^ -2147483649 ---
-int(-2147483658)
---- testing: 9 ^ 4294967294 ---
-int(4294967287)
---- testing: 9 ^ 4294967295 ---
-int(4294967286)
---- testing: 9 ^ 4294967293 ---
-int(4294967284)
---- testing: 9 ^ 9223372036854775806 ---
-int(9223372036854775799)
---- testing: 9 ^ 9.2233720368548E+18 ---
-int(-9223372036854775799)
---- testing: 9 ^ -9223372036854775807 ---
-int(-9223372036854775800)
---- testing: 9 ^ -9.2233720368548E+18 ---
-int(-9223372036854775799)
---- testing: 65 ^ 9223372036854775807 ---
-int(9223372036854775742)
---- testing: 65 ^ -9223372036854775808 ---
-int(-9223372036854775743)
---- testing: 65 ^ 2147483647 ---
-int(2147483582)
---- testing: 65 ^ -2147483648 ---
-int(-2147483583)
---- testing: 65 ^ 9223372034707292160 ---
-int(9223372034707292225)
---- testing: 65 ^ -9223372034707292160 ---
-int(-9223372034707292095)
---- testing: 65 ^ 2147483648 ---
-int(2147483713)
---- testing: 65 ^ -2147483649 ---
-int(-2147483714)
---- testing: 65 ^ 4294967294 ---
-int(4294967231)
---- testing: 65 ^ 4294967295 ---
-int(4294967230)
---- testing: 65 ^ 4294967293 ---
-int(4294967228)
---- testing: 65 ^ 9223372036854775806 ---
-int(9223372036854775743)
---- testing: 65 ^ 9.2233720368548E+18 ---
-int(-9223372036854775743)
---- testing: 65 ^ -9223372036854775807 ---
-int(-9223372036854775744)
---- testing: 65 ^ -9.2233720368548E+18 ---
-int(-9223372036854775743)
---- testing: -44 ^ 9223372036854775807 ---
-int(-9223372036854775765)
---- testing: -44 ^ -9223372036854775808 ---
-int(9223372036854775764)
---- testing: -44 ^ 2147483647 ---
-int(-2147483605)
---- testing: -44 ^ -2147483648 ---
-int(2147483604)
---- testing: -44 ^ 9223372034707292160 ---
-int(-9223372034707292204)
---- testing: -44 ^ -9223372034707292160 ---
-int(9223372034707292116)
---- testing: -44 ^ 2147483648 ---
-int(-2147483692)
---- testing: -44 ^ -2147483649 ---
-int(2147483691)
---- testing: -44 ^ 4294967294 ---
-int(-4294967254)
---- testing: -44 ^ 4294967295 ---
-int(-4294967253)
---- testing: -44 ^ 4294967293 ---
-int(-4294967255)
---- testing: -44 ^ 9223372036854775806 ---
-int(-9223372036854775766)
---- testing: -44 ^ 9.2233720368548E+18 ---
-int(9223372036854775764)
---- testing: -44 ^ -9223372036854775807 ---
-int(9223372036854775765)
---- testing: -44 ^ -9.2233720368548E+18 ---
-int(9223372036854775764)
---- testing: 2147483647 ^ 9223372036854775807 ---
-int(9223372034707292160)
---- testing: 2147483647 ^ -9223372036854775808 ---
-int(-9223372034707292161)
---- testing: 2147483647 ^ 2147483647 ---
-int(0)
---- testing: 2147483647 ^ -2147483648 ---
-int(-1)
---- testing: 2147483647 ^ 9223372034707292160 ---
-int(9223372036854775807)
---- testing: 2147483647 ^ -9223372034707292160 ---
-int(-9223372032559808513)
---- testing: 2147483647 ^ 2147483648 ---
-int(4294967295)
---- testing: 2147483647 ^ -2147483649 ---
-int(-4294967296)
---- testing: 2147483647 ^ 4294967294 ---
-int(2147483649)
---- testing: 2147483647 ^ 4294967295 ---
-int(2147483648)
---- testing: 2147483647 ^ 4294967293 ---
-int(2147483650)
---- testing: 2147483647 ^ 9223372036854775806 ---
-int(9223372034707292161)
---- testing: 2147483647 ^ 9.2233720368548E+18 ---
-int(-9223372034707292161)
---- testing: 2147483647 ^ -9223372036854775807 ---
-int(-9223372034707292162)
---- testing: 2147483647 ^ -9.2233720368548E+18 ---
-int(-9223372034707292161)
---- testing: 9223372036854775807 ^ 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 ^ -9223372036854775808 ---
-int(-1)
---- testing: 9223372036854775807 ^ 2147483647 ---
-int(9223372034707292160)
---- testing: 9223372036854775807 ^ -2147483648 ---
-int(-9223372034707292161)
---- testing: 9223372036854775807 ^ 9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 ^ -9223372034707292160 ---
-int(-2147483649)
---- testing: 9223372036854775807 ^ 2147483648 ---
-int(9223372034707292159)
---- testing: 9223372036854775807 ^ -2147483649 ---
-int(-9223372034707292160)
---- testing: 9223372036854775807 ^ 4294967294 ---
-int(9223372032559808513)
---- testing: 9223372036854775807 ^ 4294967295 ---
-int(9223372032559808512)
---- testing: 9223372036854775807 ^ 4294967293 ---
-int(9223372032559808514)
---- testing: 9223372036854775807 ^ 9223372036854775806 ---
-int(1)
---- testing: 9223372036854775807 ^ 9.2233720368548E+18 ---
-int(-1)
---- testing: 9223372036854775807 ^ -9223372036854775807 ---
-int(-2)
---- testing: 9223372036854775807 ^ -9.2233720368548E+18 ---
-int(-1)
---- Good Inputs - Base = 0 ---
-int(2147483647)
-int(2147483647)
-int(-2147483647)
-int(2147483647)
-int(2147483647)
-int(-2147483647)
-int(0)
-int(0)
-int(1)
-int(0)
-int(1)
-int(4)
-int(1)
---- Good Inputs - Base = 2 ---
---- Good Inputs - Base = default ---
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
---- Bad Inputs - Base = 0 ---
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
-int(0)
---- Done ---string(11) "random_var:"
+--- testing: 9223372036854775807, 0 ---
+float(NAN)
+--- testing: 9223372036854775807, 1 ---
+float(0)
+--- testing: 9223372036854775807, -1 ---
+float(0)
+--- testing: 9223372036854775807, 7 ---
+float(1)
+--- testing: 9223372036854775807, 9 ---
+float(8)
+--- testing: 9223372036854775807, 65 ---
+float(8)
+--- testing: 9223372036854775807, -44 ---
+float(8)
+--- testing: 9223372036854775807, 2147483647 ---
+float(2)
+--- testing: 9223372036854775807, -2147483648 ---
+float(0)
+--- testing: 9223372036854775807, 9223372036854775807 ---
+float(0)
+--- testing: 9223372036854775807, -9223372036854775808 ---
+float(0)
+--- testing: -9223372036854775808, 0 ---
+float(NAN)
+--- testing: -9223372036854775808, 1 ---
+float(-0)
+--- testing: -9223372036854775808, -1 ---
+float(-0)
+--- testing: -9223372036854775808, 7 ---
+float(-1)
+--- testing: -9223372036854775808, 9 ---
+float(-8)
+--- testing: -9223372036854775808, 65 ---
+float(-8)
+--- testing: -9223372036854775808, -44 ---
+float(-8)
+--- testing: -9223372036854775808, 2147483647 ---
+float(-2)
+--- testing: -9223372036854775808, -2147483648 ---
+float(-0)
+--- testing: -9223372036854775808, 9223372036854775807 ---
+float(-0)
+--- testing: -9223372036854775808, -9223372036854775808 ---
+float(-0)
+--- testing: 2147483647, 0 ---
+float(NAN)
+--- testing: 2147483647, 1 ---
+float(0)
+--- testing: 2147483647, -1 ---
+float(0)
+--- testing: 2147483647, 7 ---
+float(1)
+--- testing: 2147483647, 9 ---
+float(1)
+--- testing: 2147483647, 65 ---
+float(62)
+--- testing: 2147483647, -44 ---
+float(23)
+--- testing: 2147483647, 2147483647 ---
+float(0)
+--- testing: 2147483647, -2147483648 ---
+float(2147483647)
+--- testing: 2147483647, 9223372036854775807 ---
+float(2147483647)
+--- testing: 2147483647, -9223372036854775808 ---
+float(2147483647)
+--- testing: -2147483648, 0 ---
+float(NAN)
+--- testing: -2147483648, 1 ---
+float(-0)
+--- testing: -2147483648, -1 ---
+float(-0)
+--- testing: -2147483648, 7 ---
+float(-2)
+--- testing: -2147483648, 9 ---
+float(-2)
+--- testing: -2147483648, 65 ---
+float(-63)
+--- testing: -2147483648, -44 ---
+float(-24)
+--- testing: -2147483648, 2147483647 ---
+float(-1)
+--- testing: -2147483648, -2147483648 ---
+float(-0)
+--- testing: -2147483648, 9223372036854775807 ---
+float(-2147483648)
+--- testing: -2147483648, -9223372036854775808 ---
+float(-2147483648)
+--- testing: 9223372034707292160, 0 ---
+float(NAN)
+--- testing: 9223372034707292160, 1 ---
+float(0)
+--- testing: 9223372034707292160, -1 ---
+float(0)
+--- testing: 9223372034707292160, 7 ---
+float(6)
+--- testing: 9223372034707292160, 9 ---
+float(6)
+--- testing: 9223372034707292160, 65 ---
+float(10)
+--- testing: 9223372034707292160, -44 ---
+float(28)
+--- testing: 9223372034707292160, 2147483647 ---
+float(1)
+--- testing: 9223372034707292160, -2147483648 ---
+float(0)
+--- testing: 9223372034707292160, 9223372036854775807 ---
+float(9.22337203470729E+18)
+--- testing: 9223372034707292160, -9223372036854775808 ---
+float(9.22337203470729E+18)
+--- testing: -9223372034707292160, 0 ---
+float(NAN)
+--- testing: -9223372034707292160, 1 ---
+float(-0)
+--- testing: -9223372034707292160, -1 ---
+float(-0)
+--- testing: -9223372034707292160, 7 ---
+float(-6)
+--- testing: -9223372034707292160, 9 ---
+float(-6)
+--- testing: -9223372034707292160, 65 ---
+float(-10)
+--- testing: -9223372034707292160, -44 ---
+float(-28)
+--- testing: -9223372034707292160, 2147483647 ---
+float(-1)
+--- testing: -9223372034707292160, -2147483648 ---
+float(-0)
+--- testing: -9223372034707292160, 9223372036854775807 ---
+float(-9.22337203470729E+18)
+--- testing: -9223372034707292160, -9223372036854775808 ---
+float(-9.22337203470729E+18)
+--- testing: 2147483648, 0 ---
+float(NAN)
+--- testing: 2147483648, 1 ---
+float(0)
+--- testing: 2147483648, -1 ---
+float(0)
+--- testing: 2147483648, 7 ---
+float(2)
+--- testing: 2147483648, 9 ---
+float(2)
+--- testing: 2147483648, 65 ---
+float(63)
+--- testing: 2147483648, -44 ---
+float(24)
+--- testing: 2147483648, 2147483647 ---
+float(1)
+--- testing: 2147483648, -2147483648 ---
+float(0)
+--- testing: 2147483648, 9223372036854775807 ---
+float(2147483648)
+--- testing: 2147483648, -9223372036854775808 ---
+float(2147483648)
+--- testing: -2147483649, 0 ---
+float(NAN)
+--- testing: -2147483649, 1 ---
+float(-0)
+--- testing: -2147483649, -1 ---
+float(-0)
+--- testing: -2147483649, 7 ---
+float(-3)
+--- testing: -2147483649, 9 ---
+float(-3)
+--- testing: -2147483649, 65 ---
+float(-64)
+--- testing: -2147483649, -44 ---
+float(-25)
+--- testing: -2147483649, 2147483647 ---
+float(-2)
+--- testing: -2147483649, -2147483648 ---
+float(-1)
+--- testing: -2147483649, 9223372036854775807 ---
+float(-2147483649)
+--- testing: -2147483649, -9223372036854775808 ---
+float(-2147483649)
+--- testing: 4294967294, 0 ---
+float(NAN)
+--- testing: 4294967294, 1 ---
+float(0)
+--- testing: 4294967294, -1 ---
+float(0)
+--- testing: 4294967294, 7 ---
+float(2)
+--- testing: 4294967294, 9 ---
+float(2)
+--- testing: 4294967294, 65 ---
+float(59)
+--- testing: 4294967294, -44 ---
+float(2)
+--- testing: 4294967294, 2147483647 ---
+float(0)
+--- testing: 4294967294, -2147483648 ---
+float(2147483646)
+--- testing: 4294967294, 9223372036854775807 ---
+float(4294967294)
+--- testing: 4294967294, -9223372036854775808 ---
+float(4294967294)
+--- testing: 4294967295, 0 ---
+float(NAN)
+--- testing: 4294967295, 1 ---
+float(0)
+--- testing: 4294967295, -1 ---
+float(0)
+--- testing: 4294967295, 7 ---
+float(3)
+--- testing: 4294967295, 9 ---
+float(3)
+--- testing: 4294967295, 65 ---
+float(60)
+--- testing: 4294967295, -44 ---
+float(3)
+--- testing: 4294967295, 2147483647 ---
+float(1)
+--- testing: 4294967295, -2147483648 ---
+float(2147483647)
+--- testing: 4294967295, 9223372036854775807 ---
+float(4294967295)
+--- testing: 4294967295, -9223372036854775808 ---
+float(4294967295)
+--- testing: 4294967293, 0 ---
+float(NAN)
+--- testing: 4294967293, 1 ---
+float(0)
+--- testing: 4294967293, -1 ---
+float(0)
+--- testing: 4294967293, 7 ---
+float(1)
+--- testing: 4294967293, 9 ---
+float(1)
+--- testing: 4294967293, 65 ---
+float(58)
+--- testing: 4294967293, -44 ---
+float(1)
+--- testing: 4294967293, 2147483647 ---
+float(2147483646)
+--- testing: 4294967293, -2147483648 ---
+float(2147483645)
+--- testing: 4294967293, 9223372036854775807 ---
+float(4294967293)
+--- testing: 4294967293, -9223372036854775808 ---
+float(4294967293)
+--- testing: 9223372036854775806, 0 ---
+float(NAN)
+--- testing: 9223372036854775806, 1 ---
+float(0)
+--- testing: 9223372036854775806, -1 ---
+float(0)
+--- testing: 9223372036854775806, 7 ---
+float(1)
+--- testing: 9223372036854775806, 9 ---
+float(8)
+--- testing: 9223372036854775806, 65 ---
+float(8)
+--- testing: 9223372036854775806, -44 ---
+float(8)
+--- testing: 9223372036854775806, 2147483647 ---
+float(2)
+--- testing: 9223372036854775806, -2147483648 ---
+float(0)
+--- testing: 9223372036854775806, 9223372036854775807 ---
+float(0)
+--- testing: 9223372036854775806, -9223372036854775808 ---
+float(0)
+--- testing: 9.2233720368548E+18, 0 ---
+float(NAN)
+--- testing: 9.2233720368548E+18, 1 ---
+float(0)
+--- testing: 9.2233720368548E+18, -1 ---
+float(0)
+--- testing: 9.2233720368548E+18, 7 ---
+float(1)
+--- testing: 9.2233720368548E+18, 9 ---
+float(8)
+--- testing: 9.2233720368548E+18, 65 ---
+float(8)
+--- testing: 9.2233720368548E+18, -44 ---
+float(8)
+--- testing: 9.2233720368548E+18, 2147483647 ---
+float(2)
+--- testing: 9.2233720368548E+18, -2147483648 ---
+float(0)
+--- testing: 9.2233720368548E+18, 9223372036854775807 ---
+float(0)
+--- testing: 9.2233720368548E+18, -9223372036854775808 ---
+float(0)
+--- testing: -9223372036854775807, 0 ---
+float(NAN)
+--- testing: -9223372036854775807, 1 ---
+float(-0)
+--- testing: -9223372036854775807, -1 ---
+float(-0)
+--- testing: -9223372036854775807, 7 ---
+float(-1)
+--- testing: -9223372036854775807, 9 ---
+float(-8)
+--- testing: -9223372036854775807, 65 ---
+float(-8)
+--- testing: -9223372036854775807, -44 ---
+float(-8)
+--- testing: -9223372036854775807, 2147483647 ---
+float(-2)
+--- testing: -9223372036854775807, -2147483648 ---
+float(-0)
+--- testing: -9223372036854775807, 9223372036854775807 ---
+float(-0)
+--- testing: -9223372036854775807, -9223372036854775808 ---
+float(-0)
+--- testing: -9.2233720368548E+18, 0 ---
+float(NAN)
+--- testing: -9.2233720368548E+18, 1 ---
+float(-0)
+--- testing: -9.2233720368548E+18, -1 ---
+float(-0)
+--- testing: -9.2233720368548E+18, 7 ---
+float(-1)
+--- testing: -9.2233720368548E+18, 9 ---
+float(-8)
+--- testing: -9.2233720368548E+18, 65 ---
+float(-8)
+--- testing: -9.2233720368548E+18, -44 ---
+float(-8)
+--- testing: -9.2233720368548E+18, 2147483647 ---
+float(-2)
+--- testing: -9.2233720368548E+18, -2147483648 ---
+float(-0)
+--- testing: -9.2233720368548E+18, 9223372036854775807 ---
+float(-0)
+--- testing: -9.2233720368548E+18, -9223372036854775808 ---
+float(-0)
+
+Deprecated: Creation of dynamic property Foo::$bar is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 85
+string(11) "random_var:"
+float(-9.22337203685478E+18)
+float(-9.22337203685478E+18)
 array(0) {
 }
-float(-9223372036854775808)
-int(9223372036854775807)
-Calling function: strchr with arguments: Array, Array, Array
-Error calling function strchr: strchr(): Argument #1 ($haystack) must be of type string, array given
-Calling function: gc_enabled with arguments: 
-Calling function: phpinfo with arguments: Array
-Error calling function phpinfo: phpinfo(): Argument #1 ($flags) must be of type int, array given
-Calling function: date_default_timezone_set with arguments: -9.2233720368548E+18
-Calling function: date_timestamp_set with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Error calling function date_timestamp_set: date_timestamp_set(): Argument #1 ($object) must be of type DateTime, float given
-Calling function: checkdnsrr with arguments: -9.2233720368548E+18, 9223372036854775807
-Error calling function checkdnsrr: checkdnsrr(): Argument #2 ($type) must be a valid DNS record type
-Calling function: setrawcookie with arguments: 9223372036854775807, Array, 9223372036854775807, Array, 9223372036854775807, Array, 9223372036854775807
-Error calling function setrawcookie: setrawcookie(): Argument #2 ($value) must be of type string, array given
-Calling function: array_key_first with arguments: 9223372036854775807
-Error calling function array_key_first: array_key_first(): Argument #1 ($array) must be of type array, int given
-Calling function: strcasecmp with arguments: 9223372036854775807, 9223372036854775807
-Calling function: array_column with arguments: Array, Array, Array
-Error calling function array_column: array_column(): Argument #2 ($column_key) must be of type string|int|null, array given
-Calling function: date_create_immutable with arguments: Array, -9.2233720368548E+18
-Error calling function date_create_immutable: date_create_immutable(): Argument #1 ($datetime) must be of type string, array given
-Calling function: func_num_args with arguments: 
-Error calling function func_num_args: Cannot call func_num_args() dynamically
-Calling function: key_exists with arguments: -9.2233720368548E+18, Array
-Calling function: str_increment with arguments: -9.2233720368548E+18
-Error calling function str_increment: str_increment(): Argument #1 ($string) must be composed only of alphanumeric ASCII characters
-Calling function: dl with arguments: -9.2233720368548E+18
-Calling function: checkdnsrr with arguments: 9223372036854775807, Array
-Error calling function checkdnsrr: checkdnsrr(): Argument #2 ($type) must be of type string, array given
-Calling function: decbin with arguments: 9223372036854775807
-Calling function: date_time_set with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
-Error calling function date_time_set: date_time_set(): Argument #1 ($object) must be of type DateTime, int given
-Calling function: spl_autoload_unregister with arguments: Array
-Error calling function spl_autoload_unregister: spl_autoload_unregister(): Argument #1 ($callback) must be a valid callback, array callback must have exactly two members
-Calling function: xmlwriter_write_dtd_attlist with arguments: Array, -9.2233720368548E+18, Array
-Error calling function xmlwriter_write_dtd_attlist: xmlwriter_write_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: hash_final with arguments: Array, 9223372036854775807
-Error calling function hash_final: hash_final(): Argument #1 ($context) must be of type HashContext, array given
-Calling function: escapeshellcmd with arguments: -9.2233720368548E+18
+Calling function: xml_get_error_code with arguments: -9.2233720368548E+18
+Error calling function xml_get_error_code: xml_get_error_code(): Argument #1 ($parser) must be of type XMLParser, float given
+Calling function: chroot with arguments: -9.2233720368548E+18
+
+Warning: chroot(): Not a directory (errno 20) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 41
+Calling function: session_cache_expire with arguments: -9.2233720368548E+18
+
+Warning: session_cache_expire(): Session cache expiration cannot be changed after headers have already been sent in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 41
+Calling function: xmlwriter_start_element with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function xmlwriter_start_element: xmlwriter_start_element(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: forward_static_call with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function forward_static_call: forward_static_call(): Argument #1 ($callback) must be a valid callback, no array or string given
+Calling function: xml_parser_create_ns with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+-9.2233720368548E+18, Array
+Error calling function xml_parser_create_ns: xml_parser_create_ns(): Argument #2 ($separator) must be of type string, array given
+Calling function: iterator_to_array with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+Array, -9.2233720368548E+18
+Calling function: stream_isatty with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+Array
+Error calling function stream_isatty: stream_isatty(): Argument #1 ($stream) must be of type resource, array given
+Calling function: timezone_transitions_get with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused431.php on line 38
+Array, Array, Array
+Error calling function timezone_transitions_get: timezone_transitions_get(): Argument #1 ($object) must be of type DateTimeZone, array given
 Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in

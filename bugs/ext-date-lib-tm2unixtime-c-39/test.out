@@ -1,271 +1,66 @@
---- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
---- testing: -9223372036854775808 ---
-float(-9.223372036854776E+18)
---- testing: 2147483647 ---
-float(2147483647)
---- testing: -2147483648 ---
-float(-2147483648)
---- testing: 9223372034707292160 ---
-float(9.223372034707292E+18)
---- testing: -9223372034707292160 ---
-float(-9.223372034707292E+18)
---- testing: 2147483648 ---
-float(2147483648)
---- testing: -2147483649 ---
-float(-2147483649)
---- testing: 4294967294 ---
-float(4294967294)
---- testing: 4294967295 ---
-float(4294967295)
---- testing: 4294967293 ---
-float(4294967293)
---- testing: 9223372036854775806 ---
-float(9.223372036854776E+18)
---- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
---- testing: -9223372036854775807 ---
-float(-9.223372036854776E+18)
---- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-*** Testing mail() : basic functionality ***
--- failure --
-bool(false)
+Test Passed
+
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 113
+string(0) ""
+
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 119
+int(-9223372036854775808)
+
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 126
+string(0) ""
 string(11) "random_var:"
 float(-9.223372036854776E+18)
-array(43) {
-  ["LESSOPEN"]=>
-  string(22) "| /usr/bin/lesspipe %s"
-  ["TMUX"]=>
-  string(27) "/tmp/tmux-1000/default,76,0"
-  ["HOSTNAME"]=>
-  string(12) "4c1800347231"
-  ["SHLVL"]=>
-  string(1) "3"
-  ["TEST_PHP_SRCDIR"]=>
-  string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
-  ["HOME"]=>
-  string(13) "/home/phpfuzz"
-  ["OLDPWD"]=>
-  string(23) "/home/phpfuzz/WorkSpace"
-  ["TERM_PROGRAM_VERSION"]=>
-  string(4) "3.2a"
-  ["TEST_PHP_ARGS"]=>
-  string(4) "-j16"
-  ["LC_CTYPE"]=>
-  string(7) "C.UTF-8"
-  ["TEST_PHP_CGI_EXECUTABLE"]=>
-  string(59) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi"
-  ["MAKEFLAGS"]=>
-  string(22) " -- TEST_PHP_ARGS=-j16"
-  ["PATH_TRANSLATED"]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-  ["SCRIPT_FILENAME"]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-  ["TEST_PHP_EXECUTABLE"]=>
-  string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
-  ["_"]=>
-  string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
-  ["TEMP"]=>
-  string(4) "/tmp"
-  ["TERM"]=>
-  string(6) "screen"
-  ["PATH"]=>
-  string(60) "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-  ["TEST_PHP_CGI_EXECUTABLE_ESCAPED"]=>
-  string(61) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'"
-  ["MAKELEVEL"]=>
-  string(1) "1"
-  ["TEST_PHP_EXTRA_ARGS"]=>
-  string(1345) " -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'  -d "opcache.cache_id=worker15" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0" -d "sendmail_path=\"exit 1\"" -d "date.timezone=Europe/Amsterdam""
-  ["MAKEOVERRIDES"]=>
-  string(26) "${-*-command-variables-*-}"
-  ["LS_COLORS"]=>
-  string(1508) "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
-  ["TERM_PROGRAM"]=>
-  string(4) "tmux"
-  ["TEST_PHPDBG_EXECUTABLE"]=>
-  string(61) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg"
-  ["SHELL"]=>
-  string(7) "/bin/sh"
-  ["TEST_PHP_EXECUTABLE_ESCAPED"]=>
-  string(57) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'"
-  ["REDIRECT_STATUS"]=>
-  string(1) "1"
-  ["LESSCLOSE"]=>
-  string(23) "/usr/bin/lesspipe %s %s"
-  ["REQUEST_METHOD"]=>
-  string(3) "GET"
-  ["PWD"]=>
-  string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
-  ["SKIP_ONLINE_TESTS"]=>
-  string(1) "1"
-  ["CC"]=>
-  string(8) "clang-15"
-  ["TMUX_PANE"]=>
-  string(2) "%0"
-  ["TEST_PHPDBG_EXECUTABLE_ESCAPED"]=>
-  string(63) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'"
-  ["PHP_SELF"]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-  ["SCRIPT_NAME"]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-  ["DOCUMENT_ROOT"]=>
-  string(0) ""
-  ["REQUEST_TIME_FLOAT"]=>
-  float(1726086546.384352)
-  ["REQUEST_TIME"]=>
-  int(1726086546)
-  ["argv"]=>
-  array(1) {
-    [0]=>
-    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-  }
-  ["argc"]=>
-  int(1)
-}
-array(1) {
-  [0]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php"
-}
-Calling function: str_ends_with with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Calling function: debug_print_backtrace with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
--9.2233720368548E+18, Array
-Error calling function debug_print_backtrace: debug_print_backtrace(): Argument #2 ($limit) must be of type int, array given
-Calling function: interface_exists with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
--9.2233720368548E+18, Array
-Error calling function interface_exists: interface_exists(): Argument #2 ($autoload) must be of type bool, array given
-Calling function: expm1 with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
-Error calling function expm1: expm1(): Argument #1 ($num) must be of type float, array given
-Calling function: libxml_set_streams_context with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
-Error calling function libxml_set_streams_context: libxml_set_streams_context(): Argument #1 ($context) must be of type resource, array given
-Calling function: iterator_count with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
+int(-9223372036854775808)
+int(-9223372036854775808)
+Calling function: usort with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: usort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+Error calling function usort: usort(): Argument #1 ($array) must be of type array, float given
+Calling function: is_a with arguments: -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18
+Calling function: array_intersect_key with arguments: -9.2233720368548E+18, -9223372036854775808
+Error calling function array_intersect_key: array_intersect_key(): Argument #1 ($array) must be of type array, float given
+Calling function: lcg_value with arguments: 
+
+Deprecated: Function lcg_value() is deprecated since 8.4, use \Random\Randomizer::getFloat() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+Calling function: file with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
+Error calling function file: file(): Argument #3 ($context) must be of type resource or null, int given
+Calling function: stripcslashes with arguments: -9223372036854775808
+Calling function: diskfreespace with arguments: -9223372036854775808
+
+Warning: diskfreespace(): No such file or directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+Calling function: date_offset_get with arguments: -9223372036854775808
+Error calling function date_offset_get: date_offset_get(): Argument #1 ($object) must be of type DateTimeInterface, int given
+Calling function: count_chars with arguments: -9223372036854775808, -9223372036854775808
+Error calling function count_chars: count_chars(): Argument #2 ($mode) must be between 0 and 4 (inclusive)
+Calling function: get_headers with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function get_headers: get_headers(): Argument #3 ($context) must be of type resource or null, float given
+Calling function: fsockopen with arguments: -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18
+
+Warning: fsockopen(): Argument #3 ($error_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+
+Warning: fsockopen(): Argument #4 ($error_message) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+Error calling function fsockopen: fsockopen(): Argument #6 must be -1 or between 0 and 140634761579744
+Calling function: xmlwriter_start_element with arguments: -9.2233720368548E+18, -9223372036854775808
+Error calling function xmlwriter_start_element: xmlwriter_start_element(): Argument #1 ($writer) must be of type XMLWriter, float given
+Calling function: hash_copy with arguments: -9223372036854775808
+Error calling function hash_copy: hash_copy(): Argument #1 ($context) must be of type HashContext, int given
+Calling function: memory_reset_peak_usage with arguments: 
+Calling function: array_uintersect_assoc with arguments: -9223372036854775808, -9223372036854775808
+Error calling function array_uintersect_assoc: array_uintersect_assoc(): Argument #2 must be a valid callback, no array or string given
+Calling function: date_add with arguments: -9223372036854775808, -9.2233720368548E+18
+Error calling function date_add: date_add(): Argument #1 ($object) must be of type DateTime, int given
+Calling function: disk_total_space with arguments: -9223372036854775808
+
+Warning: disk_total_space(): No such file or directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused764.php on line 41
+Calling function: function_exists with arguments: -9223372036854775808
+Calling function: log10 with arguments: -9.2233720368548E+18
 Calling function: pdo_drivers with arguments: 
-Calling function: spl_autoload_register with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array, Array, Array
-Error calling function spl_autoload_register: spl_autoload_register(): Argument #1 ($callback) must be a valid callback or null, array callback must have exactly two members
-Calling function: fwrite with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array, Array, Array
-Error calling function fwrite: fwrite(): Argument #1 ($stream) must be of type resource, array given
-Calling function: is_integer with arguments: -9.2233720368548E+18
-Calling function: xml_set_default_handler with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
--9.2233720368548E+18, Array
-Error calling function xml_set_default_handler: xml_set_default_handler(): Argument #1 ($parser) must be of type XMLParser, float given
-Calling function: sys_getloadavg with arguments: 
-Calling function: date_sunrise with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array, -9.2233720368548E+18, Array, -9.2233720368548E+18, Array, -9.2233720368548E+18
-
-Deprecated: Function date_sunrise() is deprecated since 8.1, use date_sun_info() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-Error calling function date_sunrise: date_sunrise(): Argument #1 ($timestamp) must be of type int, array given
-Calling function: fpassthru with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
-Error calling function fpassthru: fpassthru(): Argument #1 ($stream) must be of type resource, array given
-Calling function: array_sum with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: A non-numeric value encountered in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: A non-numeric value encountered in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-
-Warning: array_sum(): Addition is not supported on type array in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 41
-Calling function: session_save_path with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused696.php on line 38
-Array
-Error calling function session_save_path: session_save_path(): Argument #1 ($path) must be of type ?string, array given
-Calling function: gc_enabled with arguments: 
-Calling function: sys_get_temp_dir with arguments: 
-Calling function: mktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: fdiv with arguments: -9.2233720368548E+18, -9223372036854775808
+Calling function: mt_rand with arguments: -9223372036854775808, -9.2233720368548E+18
+Calling function: current with arguments: -9223372036854775808
+Error calling function current: current(): Argument #1 ($array) must be of type array, int given
+Calling function: xmlwriter_write_attribute with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
+Error calling function xmlwriter_write_attribute: xmlwriter_write_attribute(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: mktime with arguments: -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in

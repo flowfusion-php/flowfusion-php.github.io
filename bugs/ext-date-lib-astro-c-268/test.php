@@ -61,45 +61,16 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump(hexdec("012345"));
-var_dump(hexdec("12345"));
-var_dump(hexdec("q12345"));
-var_dump(hexdec("12345+?!"));
-var_dump(hexdec("12345q"));
-var_dump((float)hexdec("1234500001"));
-var_dump((float)hexdec("17fffffff"));
+for ($i = 10000000000000000; $i < 10000000000000006; $i++) {
+    var_dump(json_decode("[$i]"));
+}
+echo "Done\n";
+$fusion = $i;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo "--- testing: $longVal << $otherVal ---\n";
-      try {
-        var_dump($longVal<<$otherVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo "--- testing: $otherVal << $longVal ---\n";
-      try {
-        var_dump($otherVal<<$longVal);
-      } catch (ArithmeticError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
+echo "*** Testing chmod() : error conditions ***\n";
+// testing chmod with a non-existing file
+$filename = "___nonExisitingFile___";
+var_dump(chmod($fusion, 0777));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

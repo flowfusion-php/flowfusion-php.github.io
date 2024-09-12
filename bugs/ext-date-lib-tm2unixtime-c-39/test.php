@@ -65,24 +65,68 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+$validIdentical = array (
+MAX_32Bit, array(MAX_32Bit),
+MIN_32Bit, array(MIN_32Bit),
+MAX_64Bit, array(MAX_64Bit),
+MIN_64Bit, array(MIN_64Bit),
 );
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(ceil($longVal));
+$invalidIdentical = array (
+MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
+MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
+MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
+MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
+);
+$failed = false;
+// test for valid values
+for ($i = 0; $i < count($validIdentical); $i +=2) {
+   $typeToTestVal = $validIdentical[$i];
+   $compares = $validIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         // do nothing
+      }
+      else {
+         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
+         $failed = true;
+      }
+   }
 }
-$fusion = $longVal;
+// test for invalid values
+for ($i = 0; $i < count($invalidIdentical); $i +=2) {
+   $typeToTestVal = $invalidIdentical[$i];
+   $compares = $invalidIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
+         $failed = true;
+      }
+   }
+}
+if ($failed == false) {
+   echo "Test Passed\n";
+}
+$fusion = $typeToTestVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing mail() : basic functionality ***\n";
-// Initialise all required variables
-$to = 'user@example.com';
-$subject = 'Test Subject';
-$message = 'A Message';
-echo "-- failure --\n";
-var_dump( mail($to, $subject, $fusion) );
+$filename = tempnam(__DIR__, "phpbug");
+$stream = fopen($filename, "w"); // w or a
+$retval = stream_get_contents($stream, 1, 1);
+fclose($stream);
+var_dump($retval);
+unlink($filename);
+$filename = tempnam(__DIR__, "phpbug2");
+$stream = fopen($filename, "a");
+$retval = stream_get_contents($stream, 1, 1);
+var_dump($fusion);
+fclose($stream);
+unlink($filename);
+$filename = tempnam(__DIR__, "phpbug3");
+$stream = fopen($filename, "a");
+fseek($stream, 1);
+$retval = stream_get_contents($stream, 1);
+var_dump($retval);
+fclose($stream);
+unlink($filename);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

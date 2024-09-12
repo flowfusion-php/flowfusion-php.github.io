@@ -1,16 +1,8 @@
 --TEST--
-Test ceil function : 64bit long tests+Test mail() function : basic functionality
---INI--
-sendmail_path="exit 1"
-opcache.file_update_protection=0
-date.timezone=Europe/Amsterdam
+Test === operator : max int 64bit range+Bug#54946 stream_get_contents infinite loop
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
-<?php
-if(substr(PHP_OS, 0, 3) == "WIN")
-  die("skip Won't run on Windows");
 ?>
 --FILE--
 <?php
@@ -80,60 +72,80 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+$validIdentical = array (
+MAX_32Bit, array(MAX_32Bit),
+MIN_32Bit, array(MIN_32Bit),
+MAX_64Bit, array(MAX_64Bit),
+MIN_64Bit, array(MIN_64Bit),
 );
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(ceil($longVal));
+$invalidIdentical = array (
+MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
+MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
+MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
+MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
+);
+$failed = false;
+// test for valid values
+for ($i = 0; $i < count($validIdentical); $i +=2) {
+   $typeToTestVal = $validIdentical[$i];
+   $compares = $validIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         // do nothing
+      }
+      else {
+         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
+         $failed = true;
+      }
+   }
 }
-$fusion = $longVal;
+// test for invalid values
+for ($i = 0; $i < count($invalidIdentical); $i +=2) {
+   $typeToTestVal = $invalidIdentical[$i];
+   $compares = $invalidIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
+         $failed = true;
+      }
+   }
+}
+if ($failed == false) {
+   echo "Test Passed\n";
+}
+$fusion = $typeToTestVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing mail() : basic functionality ***\n";
-// Initialise all required variables
-$to = 'user@example.com';
-$subject = 'Test Subject';
-$message = 'A Message';
-echo "-- failure --\n";
-var_dump( mail($to, $subject, $fusion) );
+$filename = tempnam(__DIR__, "phpbug");
+$stream = fopen($filename, "w"); // w or a
+$retval = stream_get_contents($stream, 1, 1);
+fclose($stream);
+var_dump($retval);
+unlink($filename);
+$filename = tempnam(__DIR__, "phpbug2");
+$stream = fopen($filename, "a");
+$retval = stream_get_contents($stream, 1, 1);
+var_dump($fusion);
+fclose($stream);
+unlink($filename);
+$filename = tempnam(__DIR__, "phpbug3");
+$stream = fopen($filename, "a");
+fseek($stream, 1);
+$retval = stream_get_contents($stream, 1);
+var_dump($retval);
+fclose($stream);
+unlink($filename);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
---- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
---- testing: -9223372036854775808 ---
-float(-9.223372036854776E+18)
---- testing: 2147483647 ---
-float(2147483647)
---- testing: -2147483648 ---
-float(-2147483648)
---- testing: 9223372034707292160 ---
-float(9.223372034707292E+18)
---- testing: -9223372034707292160 ---
-float(-9.223372034707292E+18)
---- testing: 2147483648 ---
-float(2147483648)
---- testing: -2147483649 ---
-float(-2147483649)
---- testing: 4294967294 ---
-float(4294967294)
---- testing: 4294967295 ---
-float(4294967295)
---- testing: 4294967293 ---
-float(4294967293)
---- testing: 9223372036854775806 ---
-float(9.223372036854776E+18)
---- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
---- testing: -9223372036854775807 ---
-float(-9.223372036854776E+18)
---- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-*** Testing mail() : basic functionality ***
--- failure --
-bool(false)
+--EXPECTF--
+Test Passed
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
+string(0) ""
+
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
+string(0) ""
+
+Notice: stream_get_contents(): Read of 8192 bytes failed with errno=9 Bad file descriptor in %s on line %d
+string(0) ""

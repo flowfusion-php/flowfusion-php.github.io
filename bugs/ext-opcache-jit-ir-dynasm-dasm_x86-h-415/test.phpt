@@ -1,12 +1,12 @@
 --TEST--
-Plain prop satisfies interface get hook by-reference+Test unlink() function : usage variations - unlink deleted file
+Test  rand() - basic function test rand()+By-value get may be implemented as by-reference
 --INI--
-session.sid_length=32
-session.upload_progress.enabled=1
+opcache.optimization_level=-1
+session.gc_probability=0
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1202
+opcache.jit=1001
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,46 +71,77 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+$default_max = getrandmax();
+echo "\nrand() tests with default min and max value (i.e 0 thru ", $default_max, ")\n";
+for ($i = 0; $i < 100; $i++) {
+    $res = rand();
+// By default RAND_MAX is 32768 although no constant is defined for it for user space apps
+    if ($res < 0 || $res > $default_max) {
+        break;
+    }
+}
+if ($i != 100) {
+    echo "FAILED: res = ", $res, " min = 0 max = ", $default_max, "\n";
+} else {
+    echo "PASSED: range min = 0 max = ", $default_max, "\n";
+}
+echo "\nrand() tests with defined min and max value\n";
+$min = array(10,
+             100,
+             10.5e3,
+             0x10,
+             0400);
+$max = array(100,
+             1000,
+             10.5e5,
+             0x10000,
+             0700);
+for ($x = 0; $x < count($min); $x++) {
+    for ($i = 0; $i < 100; $i++) {
+        $res = rand($min[$x], $max[$x]);
+        if (!is_int($res) || $res < intval($min[$x]) || $res > intval($max[$x])) {
+            echo "FAILED: res = ",  $res, " min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
+            break;
+        }
+    }
+    if ($i == 100) {
+        echo "PASSED: range min = ", intval($min[$x]), " max = ", intval($max[$x]), "\n";
+    }
+}
+$fusion = $max;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
+function test(I $i) {
+    $ref = &$fusion->prop;
+    $ref = 42;
+}
 $a = new A();
+test($a);
 var_dump($a);
-$fusion = $this;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/* Try deleting a file which is already deleted */
-$file_path = __DIR__;
-// temp file used
-$filename = "$file_path/unlink_variation4.tmp";
-echo "*** Testing unlink() on deleted file ***\n";
-// create temp file
-$fusion = fopen($filename, "w");
-fclose($fp);
-// delete temp file
-var_dump( unlink($filename) );  // expected: true
-var_dump( file_exists($filename) );  // confirm file deleted
-// delete deleted file
-var_dump( unlink($filename) );  // expected: false
-echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
+rand() tests with default min and max value (i.e 0 thru %i)
+PASSED: range min = 0 max = %i
+
+rand() tests with defined min and max value
+PASSED: range min = 10 max = 100
+PASSED: range min = 100 max = 1000
+PASSED: range min = 10500 max = 1050000
+PASSED: range min = 16 max = 65536
+PASSED: range min = 256 max = 448
 object(A)#1 (1) {
-  ["prop"]=>
+  ["_prop":"A":private]=>
   int(42)
 }
-*** Testing unlink() on deleted file ***
-bool(true)
-bool(false)
-
-Warning: unlink(%s/unlink_variation4.tmp): %s in %s on line %d
-bool(false)
-Done
