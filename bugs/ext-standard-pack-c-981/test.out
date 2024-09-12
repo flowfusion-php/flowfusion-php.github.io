@@ -1,11 +1,4 @@
-Deprecated: PHP Startup: Disabling session.use_only_cookies INI setting is deprecated in Unknown on line 0
-DOMElement::append(): Argument #2 must be less than or equal to 2147483647 bytes long
-DOMElement::prepend(): Argument #2 must be less than or equal to 2147483647 bytes long
-DOMElement::after(): Argument #2 must be less than or equal to 2147483647 bytes long
-DOMElement::before(): Argument #2 must be less than or equal to 2147483647 bytes long
-DOMElement::replaceWith(): Argument #2 must be less than or equal to 2147483647 bytes long
-DOMElement::replaceChildren(): Argument #2 must be less than or equal to 2147483647 bytes long
-int(1)
-int(0)
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/pack.c:981:36: runtime error: signed integer overflow: 1073741824 * 2 cannot be represented in type 'int'
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/pack.c:981:36 in
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3199: int zend_jit_script(zend_script *): Assertion `0' failed.
+Aborted (core dumped)
+
+Termsig=6

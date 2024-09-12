@@ -1,5 +1,5 @@
 --TEST--
-Test strftime() function : usage variation - Checking time related formats which was not supported on Windows before VC14.+Star width and precision in sprintf()
+Bug #49490 (XPath namespace prefix conflict).+Test gmstrftime() function : usage variation - Checking newline and tab formats which was not supported on Windows before VC14.
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -31,7 +31,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -54,7 +54,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -64,134 +64,54 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing strftime() : usage variation ***\n";
+$doc = new DOMDocument();
+$doc->loadXML('<prefix:root xmlns:prefix="urn:a" />');
+$xp = new DOMXPath($doc);
+$xp->registerNamespace('prefix', 'urn:b');
+echo($xp->query('//prefix:root', null, false)->length . "\n");
+$fusion = $doc;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing gmstrftime() : usage variation ***\n";
 // Initialise function arguments not being substituted (if any)
+$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MIN);
 setlocale(LC_ALL, "C");
 date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(8, 8, 8, 8, 8, PHP_INT_MIN);
 //array of values to iterate over
 $inputs = array(
-      'Time in a.m/p.m notation' => "%r",
-      'Time in 24 hour notation' => "%R",
-      'Current time %H:%M:%S format' => "%T",
+      'Newline character' => "%n",
+      'Tab character' => "%t"
 );
 // loop through each element of the array for timestamp
 foreach($inputs as $key =>$value) {
       echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $timestamp) );
-}
-$fusion = $value;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$f = 1.23456789012345678;
-$fusionx = 1.23456789012345678e100;
-var_dump($f, $fx);
-printf("%.*f\n", 10, $f);
-printf("%.*G\n", 10, $f);
-printf("%.*g\n", -1, $fx);
-printf("%.*G\n", -1, $fx);
-printf("%.*h\n", -1, $fx);
-printf("%.*H\n", -1, $fx);
-printf("%.*s\n", 3, "foobar");
-echo "\n";
-printf("%*f\n", 10, $f);
-printf("%*G\n", 10, $f);
-printf("%*s\n", 10, "foobar");
-echo "\n";
-printf("%*.*f\n", 10, 3, $f);
-printf("%*.*G\n", 10, 3, $f);
-printf("%*.*s\n", 10, 3, "foobar");
-echo "\n";
-printf("%1$.*2\$f\n", $f, 10);
-printf("%.*2\$f\n", $f, 10);
-printf("%2$.*f\n", 10, $f);
-printf("%1$*2\$f\n", $f, 10);
-printf("%*2\$f\n", $f, 10);
-printf("%2$*f\n", 10, $f);
-printf("%1$*2$.*3\$f\n", $f, 10, 3);
-printf("%*2$.*3\$f\n", $f, 10, 3);
-printf("%3$*.*f\n", 10, 3, $f);
-echo "\n";
-try {
-    printf("%.*G\n", "foo", 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*G\n", -100, 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*s\n", -1, "Foo");
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%*G\n", -1, $f);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
+      var_dump( gmstrftime($fusion) );
+      var_dump( gmstrftime($value, $timestamp) );
+};
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+dom
 --EXPECTF--
-*** Testing strftime() : usage variation ***
+0
+*** Testing gmstrftime() : usage variation ***
 
---Time in a.m/p.m notation--
+--Newline character--
 
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(%d) "%d:%d:%d %s"
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "
+"
 
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(11) "08:08:08 AM"
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "
+"
 
---Time in 24 hour notation--
+--Tab character--
 
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(%d) "%d:%d"
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "	"
 
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(5) "08:08"
-
---Current time %H:%M:%S format--
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(%d) "%d:%d:%d"
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
-string(8) "08:08:08"
-float(1.2345678901234567)
-float(1.2345678901234569E+100)
-1.2345678901
-1.23456789
-1.2345678901234569e+100
-1.2345678901234569E+100
-1.2345678901234569e+100
-1.2345678901234569E+100
-foo
-
-  1.234568
-   1.23457
-    foobar
-
-     1.235
-      1.23
-       foo
-
-1.2345678901
-1.2345678901
-1.2345678901
-  1.234568
-  1.234568
-  1.234568
-     1.235
-     1.235
-     1.235
-
-Precision must be an integer
-Precision must be between -1 and 2147483647
-Precision -1 is only supported for %g, %G, %h and %H
-Width must be greater than zero and less than 2147483647
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "	"

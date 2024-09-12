@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,76 +61,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing strftime() : usage variation ***\n";
+$doc = new DOMDocument();
+$doc->loadXML('<prefix:root xmlns:prefix="urn:a" />');
+$xp = new DOMXPath($doc);
+$xp->registerNamespace('prefix', 'urn:b');
+echo($xp->query('//prefix:root', null, false)->length . "\n");
+$fusion = $doc;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "*** Testing gmstrftime() : usage variation ***\n";
 // Initialise function arguments not being substituted (if any)
+$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MIN);
 setlocale(LC_ALL, "C");
 date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(8, 8, 8, 8, 8, PHP_INT_MIN);
 //array of values to iterate over
 $inputs = array(
-      'Time in a.m/p.m notation' => "%r",
-      'Time in 24 hour notation' => "%R",
-      'Current time %H:%M:%S format' => "%T",
+      'Newline character' => "%n",
+      'Tab character' => "%t"
 );
 // loop through each element of the array for timestamp
 foreach($inputs as $key =>$value) {
       echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $timestamp) );
-}
-$fusion = $value;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$f = 1.23456789012345678;
-$fusionx = 1.23456789012345678e100;
-var_dump($f, $fx);
-printf("%.*f\n", 10, $f);
-printf("%.*G\n", 10, $f);
-printf("%.*g\n", -1, $fx);
-printf("%.*G\n", -1, $fx);
-printf("%.*h\n", -1, $fx);
-printf("%.*H\n", -1, $fx);
-printf("%.*s\n", 3, "foobar");
-echo "\n";
-printf("%*f\n", 10, $f);
-printf("%*G\n", 10, $f);
-printf("%*s\n", 10, "foobar");
-echo "\n";
-printf("%*.*f\n", 10, 3, $f);
-printf("%*.*G\n", 10, 3, $f);
-printf("%*.*s\n", 10, 3, "foobar");
-echo "\n";
-printf("%1$.*2\$f\n", $f, 10);
-printf("%.*2\$f\n", $f, 10);
-printf("%2$.*f\n", 10, $f);
-printf("%1$*2\$f\n", $f, 10);
-printf("%*2\$f\n", $f, 10);
-printf("%2$*f\n", 10, $f);
-printf("%1$*2$.*3\$f\n", $f, 10, 3);
-printf("%*2$.*3\$f\n", $f, 10, 3);
-printf("%3$*.*f\n", 10, 3, $f);
-echo "\n";
-try {
-    printf("%.*G\n", "foo", 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*G\n", -100, 1.5);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%.*s\n", -1, "Foo");
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    printf("%*G\n", -1, $f);
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
+      var_dump( gmstrftime($fusion) );
+      var_dump( gmstrftime($value, $timestamp) );
+};
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

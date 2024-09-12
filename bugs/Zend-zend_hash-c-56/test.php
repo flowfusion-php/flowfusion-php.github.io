@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,38 +61,22 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$foos = str_repeat('<foo/>' . PHP_EOL, 65535);
-$xml = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-$foos
-<bar/>
-</root>
-XML;
-$dom = new DOMDocument();
-$dom->loadXML($xml, LIBXML_BIGLINES);
-var_dump($dom->getElementsByTagName('bar')->item(0)->getLineNo());
-$fusion = $foos;
+(1 ? 2 : 3) ? 4 : 5; // ok
+1 ? 2 : (3 ? 4 : 5); // ok
+1 ?: 2 ?: 3;   // ok
+(1 ?: 2) ?: 3; // ok
+1 ?: (2 ?: 3); // ok
+(1 ?: 2) ? 3 : 4; // ok
+1 ?: (2 ? 3 : 4); // ok
+(1 ? 2 : 3) ?: 4; // ok
+1 ? 2 : (3 ?: 4); // ok
+?>
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
-}
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+$obj = new stdClass;
+$obj->r = new ReflectionObject($obj);
+var_dump($obj);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

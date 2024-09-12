@@ -1,9 +1,8 @@
 --TEST--
-Test number_format function : 64bit long tests+Bug #48276 (date("Y") prints wrong year on Big Endian machines)
+Test % operator : 64bit long tests+Bug #66084 simplexml_load_string() mangles empty node name, json variant
 --INI--
-date.timezone=UTC
-opcache.file_cache_only=1
-session.save_handler=whatever
+opcache.validate_timestamps=1
+session.save_handler=files
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -39,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -62,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -76,226 +75,589 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$numbers = array(
+$longVals = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
-    // floats rounded as int
-    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$precisions = array(
-    5,
-    0,
-    -1,
-    -5,
-    -10,
-    -11,
-    -17,
-    -19,
-    -20,
-    PHP_INT_MIN,
-);
-foreach ($numbers as $number) {
-    echo "--- testing: ";
-    var_dump($number);
-    foreach ($precisions as $precision) {
-        echo "... with precision " . $precision . ": ";
-        var_dump(number_format($number, $precision));
-    }
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo "--- testing: $longVal % $otherVal ---\n";
+      try {
+        var_dump($longVal%$otherVal);
+      } catch (DivisionByZeroError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo "--- testing: $otherVal % $longVal ---\n";
+      try {
+        var_dump($otherVal%$longVal);
+      } catch (DivisionByZeroError $e) {
+        echo "Exception: " . $e->getMessage() . "\n";
+      }
+   }
 }
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(date("Y", 1245623227));
+echo json_encode(simplexml_load_string('<a><b/><c><x/></c></a>')->c), "\n";
+echo json_encode(simplexml_load_string('<a><b/><c><x/></c></a>')), "\n";
+echo json_encode(simplexml_load_string('<a><b/><d/><c><x/></c></a>')), "\n";
+echo json_encode(simplexml_load_string('<a><b/><c><d/><x/></c></a>')), "\n";
+echo json_encode(simplexml_load_string('<a><b/><c><d><x/></d></c></a>')), "\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+simplexml
 --EXPECT--
---- testing: int(9223372036854775807)
-... with precision 5: string(31) "9,223,372,036,854,775,807.00000"
-... with precision 0: string(25) "9,223,372,036,854,775,807"
-... with precision -1: string(25) "9,223,372,036,854,775,810"
-... with precision -5: string(25) "9,223,372,036,854,800,000"
-... with precision -10: string(25) "9,223,372,040,000,000,000"
-... with precision -11: string(25) "9,223,372,000,000,000,000"
-... with precision -17: string(25) "9,200,000,000,000,000,000"
-... with precision -19: string(26) "10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(-9223372036854775808)
-... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
-... with precision 0: string(26) "-9,223,372,036,854,775,808"
-... with precision -1: string(26) "-9,223,372,036,854,775,810"
-... with precision -5: string(26) "-9,223,372,036,854,800,000"
-... with precision -10: string(26) "-9,223,372,040,000,000,000"
-... with precision -11: string(26) "-9,223,372,000,000,000,000"
-... with precision -17: string(26) "-9,200,000,000,000,000,000"
-... with precision -19: string(27) "-10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(2147483647)
-... with precision 5: string(19) "2,147,483,647.00000"
-... with precision 0: string(13) "2,147,483,647"
-... with precision -1: string(13) "2,147,483,650"
-... with precision -5: string(13) "2,147,500,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(-2147483648)
-... with precision 5: string(20) "-2,147,483,648.00000"
-... with precision 0: string(14) "-2,147,483,648"
-... with precision -1: string(14) "-2,147,483,650"
-... with precision -5: string(14) "-2,147,500,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(9223372034707292160)
-... with precision 5: string(31) "9,223,372,034,707,292,160.00000"
-... with precision 0: string(25) "9,223,372,034,707,292,160"
-... with precision -1: string(25) "9,223,372,034,707,292,160"
-... with precision -5: string(25) "9,223,372,034,707,300,000"
-... with precision -10: string(25) "9,223,372,030,000,000,000"
-... with precision -11: string(25) "9,223,372,000,000,000,000"
-... with precision -17: string(25) "9,200,000,000,000,000,000"
-... with precision -19: string(26) "10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(-9223372034707292160)
-... with precision 5: string(32) "-9,223,372,034,707,292,160.00000"
-... with precision 0: string(26) "-9,223,372,034,707,292,160"
-... with precision -1: string(26) "-9,223,372,034,707,292,160"
-... with precision -5: string(26) "-9,223,372,034,707,300,000"
-... with precision -10: string(26) "-9,223,372,030,000,000,000"
-... with precision -11: string(26) "-9,223,372,000,000,000,000"
-... with precision -17: string(26) "-9,200,000,000,000,000,000"
-... with precision -19: string(27) "-10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(2147483648)
-... with precision 5: string(19) "2,147,483,648.00000"
-... with precision 0: string(13) "2,147,483,648"
-... with precision -1: string(13) "2,147,483,650"
-... with precision -5: string(13) "2,147,500,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(-2147483649)
-... with precision 5: string(20) "-2,147,483,649.00000"
-... with precision 0: string(14) "-2,147,483,649"
-... with precision -1: string(14) "-2,147,483,650"
-... with precision -5: string(14) "-2,147,500,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(4294967294)
-... with precision 5: string(19) "4,294,967,294.00000"
-... with precision 0: string(13) "4,294,967,294"
-... with precision -1: string(13) "4,294,967,290"
-... with precision -5: string(13) "4,295,000,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(4294967295)
-... with precision 5: string(19) "4,294,967,295.00000"
-... with precision 0: string(13) "4,294,967,295"
-... with precision -1: string(13) "4,294,967,300"
-... with precision -5: string(13) "4,295,000,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(4294967293)
-... with precision 5: string(19) "4,294,967,293.00000"
-... with precision 0: string(13) "4,294,967,293"
-... with precision -1: string(13) "4,294,967,290"
-... with precision -5: string(13) "4,295,000,000"
-... with precision -10: string(1) "0"
-... with precision -11: string(1) "0"
-... with precision -17: string(1) "0"
-... with precision -19: string(1) "0"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(9223372036854775806)
-... with precision 5: string(31) "9,223,372,036,854,775,806.00000"
-... with precision 0: string(25) "9,223,372,036,854,775,806"
-... with precision -1: string(25) "9,223,372,036,854,775,810"
-... with precision -5: string(25) "9,223,372,036,854,800,000"
-... with precision -10: string(25) "9,223,372,040,000,000,000"
-... with precision -11: string(25) "9,223,372,000,000,000,000"
-... with precision -17: string(25) "9,200,000,000,000,000,000"
-... with precision -19: string(26) "10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: float(9.223372036854776E+18)
-... with precision 5: string(31) "9,223,372,036,854,775,808.00000"
-... with precision 0: string(25) "9,223,372,036,854,775,808"
-... with precision -1: string(25) "9,223,372,036,854,775,808"
-... with precision -5: string(25) "9,223,372,036,854,800,384"
-... with precision -10: string(25) "9,223,372,040,000,000,000"
-... with precision -11: string(25) "9,223,372,000,000,000,000"
-... with precision -17: string(25) "9,200,000,000,000,000,000"
-... with precision -19: string(26) "10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: int(-9223372036854775807)
-... with precision 5: string(32) "-9,223,372,036,854,775,807.00000"
-... with precision 0: string(26) "-9,223,372,036,854,775,807"
-... with precision -1: string(26) "-9,223,372,036,854,775,810"
-... with precision -5: string(26) "-9,223,372,036,854,800,000"
-... with precision -10: string(26) "-9,223,372,040,000,000,000"
-... with precision -11: string(26) "-9,223,372,000,000,000,000"
-... with precision -17: string(26) "-9,200,000,000,000,000,000"
-... with precision -19: string(27) "-10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: float(-9.223372036854776E+18)
-... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
-... with precision 0: string(26) "-9,223,372,036,854,775,808"
-... with precision -1: string(26) "-9,223,372,036,854,775,810"
-... with precision -5: string(26) "-9,223,372,036,854,800,000"
-... with precision -10: string(26) "-9,223,372,040,000,000,000"
-... with precision -11: string(26) "-9,223,372,000,000,000,000"
-... with precision -17: string(26) "-9,200,000,000,000,000,000"
-... with precision -19: string(27) "-10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: float(9.223372036854775E+18)
-... with precision 5: string(31) "9,223,372,036,854,774,784.00000"
-... with precision 0: string(25) "9,223,372,036,854,774,784"
-... with precision -1: string(25) "9,223,372,036,854,774,780"
-... with precision -5: string(25) "9,223,372,036,854,800,000"
-... with precision -10: string(25) "9,223,372,040,000,000,000"
-... with precision -11: string(25) "9,223,372,000,000,000,000"
-... with precision -17: string(25) "9,200,000,000,000,000,000"
-... with precision -19: string(26) "10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
---- testing: float(-9.223372036854775E+18)
-... with precision 5: string(32) "-9,223,372,036,854,774,784.00000"
-... with precision 0: string(26) "-9,223,372,036,854,774,784"
-... with precision -1: string(26) "-9,223,372,036,854,774,780"
-... with precision -5: string(26) "-9,223,372,036,854,800,000"
-... with precision -10: string(26) "-9,223,372,040,000,000,000"
-... with precision -11: string(26) "-9,223,372,000,000,000,000"
-... with precision -17: string(26) "-9,200,000,000,000,000,000"
-... with precision -19: string(27) "-10,000,000,000,000,000,000"
-... with precision -20: string(1) "0"
-... with precision -9223372036854775808: string(1) "0"
-string(4) "2009"
+--- testing: 9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775807 % 1 ---
+int(0)
+--- testing: 9223372036854775807 % -1 ---
+int(0)
+--- testing: 9223372036854775807 % 7 ---
+int(0)
+--- testing: 9223372036854775807 % 9 ---
+int(7)
+--- testing: 9223372036854775807 % 65 ---
+int(7)
+--- testing: 9223372036854775807 % -44 ---
+int(7)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9223372036854775808 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775808 % 1 ---
+int(0)
+--- testing: -9223372036854775808 % -1 ---
+int(0)
+--- testing: -9223372036854775808 % 7 ---
+int(-1)
+--- testing: -9223372036854775808 % 9 ---
+int(-8)
+--- testing: -9223372036854775808 % 65 ---
+int(-8)
+--- testing: -9223372036854775808 % -44 ---
+int(-8)
+--- testing: -9223372036854775808 % 2147483647 ---
+int(-2)
+--- testing: -9223372036854775808 % 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483647 % 1 ---
+int(0)
+--- testing: 2147483647 % -1 ---
+int(0)
+--- testing: 2147483647 % 7 ---
+int(1)
+--- testing: 2147483647 % 9 ---
+int(1)
+--- testing: 2147483647 % 65 ---
+int(62)
+--- testing: 2147483647 % -44 ---
+int(23)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: -2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483648 % 1 ---
+int(0)
+--- testing: -2147483648 % -1 ---
+int(0)
+--- testing: -2147483648 % 7 ---
+int(-2)
+--- testing: -2147483648 % 9 ---
+int(-2)
+--- testing: -2147483648 % 65 ---
+int(-63)
+--- testing: -2147483648 % -44 ---
+int(-24)
+--- testing: -2147483648 % 2147483647 ---
+int(-1)
+--- testing: -2147483648 % 9223372036854775807 ---
+int(-2147483648)
+--- testing: 9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372034707292160 % 1 ---
+int(0)
+--- testing: 9223372034707292160 % -1 ---
+int(0)
+--- testing: 9223372034707292160 % 7 ---
+int(6)
+--- testing: 9223372034707292160 % 9 ---
+int(6)
+--- testing: 9223372034707292160 % 65 ---
+int(10)
+--- testing: 9223372034707292160 % -44 ---
+int(28)
+--- testing: 9223372034707292160 % 2147483647 ---
+int(1)
+--- testing: 9223372034707292160 % 9223372036854775807 ---
+int(9223372034707292160)
+--- testing: -9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372034707292160 % 1 ---
+int(0)
+--- testing: -9223372034707292160 % -1 ---
+int(0)
+--- testing: -9223372034707292160 % 7 ---
+int(-6)
+--- testing: -9223372034707292160 % 9 ---
+int(-6)
+--- testing: -9223372034707292160 % 65 ---
+int(-10)
+--- testing: -9223372034707292160 % -44 ---
+int(-28)
+--- testing: -9223372034707292160 % 2147483647 ---
+int(-1)
+--- testing: -9223372034707292160 % 9223372036854775807 ---
+int(-9223372034707292160)
+--- testing: 2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483648 % 1 ---
+int(0)
+--- testing: 2147483648 % -1 ---
+int(0)
+--- testing: 2147483648 % 7 ---
+int(2)
+--- testing: 2147483648 % 9 ---
+int(2)
+--- testing: 2147483648 % 65 ---
+int(63)
+--- testing: 2147483648 % -44 ---
+int(24)
+--- testing: 2147483648 % 2147483647 ---
+int(1)
+--- testing: 2147483648 % 9223372036854775807 ---
+int(2147483648)
+--- testing: -2147483649 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483649 % 1 ---
+int(0)
+--- testing: -2147483649 % -1 ---
+int(0)
+--- testing: -2147483649 % 7 ---
+int(-3)
+--- testing: -2147483649 % 9 ---
+int(-3)
+--- testing: -2147483649 % 65 ---
+int(-64)
+--- testing: -2147483649 % -44 ---
+int(-25)
+--- testing: -2147483649 % 2147483647 ---
+int(-2)
+--- testing: -2147483649 % 9223372036854775807 ---
+int(-2147483649)
+--- testing: 4294967294 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967294 % 1 ---
+int(0)
+--- testing: 4294967294 % -1 ---
+int(0)
+--- testing: 4294967294 % 7 ---
+int(2)
+--- testing: 4294967294 % 9 ---
+int(2)
+--- testing: 4294967294 % 65 ---
+int(59)
+--- testing: 4294967294 % -44 ---
+int(2)
+--- testing: 4294967294 % 2147483647 ---
+int(0)
+--- testing: 4294967294 % 9223372036854775807 ---
+int(4294967294)
+--- testing: 4294967295 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967295 % 1 ---
+int(0)
+--- testing: 4294967295 % -1 ---
+int(0)
+--- testing: 4294967295 % 7 ---
+int(3)
+--- testing: 4294967295 % 9 ---
+int(3)
+--- testing: 4294967295 % 65 ---
+int(60)
+--- testing: 4294967295 % -44 ---
+int(3)
+--- testing: 4294967295 % 2147483647 ---
+int(1)
+--- testing: 4294967295 % 9223372036854775807 ---
+int(4294967295)
+--- testing: 4294967293 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967293 % 1 ---
+int(0)
+--- testing: 4294967293 % -1 ---
+int(0)
+--- testing: 4294967293 % 7 ---
+int(1)
+--- testing: 4294967293 % 9 ---
+int(1)
+--- testing: 4294967293 % 65 ---
+int(58)
+--- testing: 4294967293 % -44 ---
+int(1)
+--- testing: 4294967293 % 2147483647 ---
+int(2147483646)
+--- testing: 4294967293 % 9223372036854775807 ---
+int(4294967293)
+--- testing: 9223372036854775806 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775806 % 1 ---
+int(0)
+--- testing: 9223372036854775806 % -1 ---
+int(0)
+--- testing: 9223372036854775806 % 7 ---
+int(6)
+--- testing: 9223372036854775806 % 9 ---
+int(6)
+--- testing: 9223372036854775806 % 65 ---
+int(6)
+--- testing: 9223372036854775806 % -44 ---
+int(6)
+--- testing: 9223372036854775806 % 2147483647 ---
+int(0)
+--- testing: 9223372036854775806 % 9223372036854775807 ---
+int(9223372036854775806)
+--- testing: 9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: 9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: 9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: 9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775807 % 1 ---
+int(0)
+--- testing: -9223372036854775807 % -1 ---
+int(0)
+--- testing: -9223372036854775807 % 7 ---
+int(0)
+--- testing: -9223372036854775807 % 9 ---
+int(-7)
+--- testing: -9223372036854775807 % 65 ---
+int(-7)
+--- testing: -9223372036854775807 % -44 ---
+int(-7)
+--- testing: -9223372036854775807 % 2147483647 ---
+int(-1)
+--- testing: -9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: -9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: -9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: -9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: 0 % 9223372036854775807 ---
+int(0)
+--- testing: 0 % -9223372036854775808 ---
+int(0)
+--- testing: 0 % 2147483647 ---
+int(0)
+--- testing: 0 % -2147483648 ---
+int(0)
+--- testing: 0 % 9223372034707292160 ---
+int(0)
+--- testing: 0 % -9223372034707292160 ---
+int(0)
+--- testing: 0 % 2147483648 ---
+int(0)
+--- testing: 0 % -2147483649 ---
+int(0)
+--- testing: 0 % 4294967294 ---
+int(0)
+--- testing: 0 % 4294967295 ---
+int(0)
+--- testing: 0 % 4294967293 ---
+int(0)
+--- testing: 0 % 9223372036854775806 ---
+int(0)
+--- testing: 0 % 9.2233720368548E+18 ---
+int(0)
+--- testing: 0 % -9223372036854775807 ---
+int(0)
+--- testing: 0 % -9.2233720368548E+18 ---
+int(0)
+--- testing: 1 % 9223372036854775807 ---
+int(1)
+--- testing: 1 % -9223372036854775808 ---
+int(1)
+--- testing: 1 % 2147483647 ---
+int(1)
+--- testing: 1 % -2147483648 ---
+int(1)
+--- testing: 1 % 9223372034707292160 ---
+int(1)
+--- testing: 1 % -9223372034707292160 ---
+int(1)
+--- testing: 1 % 2147483648 ---
+int(1)
+--- testing: 1 % -2147483649 ---
+int(1)
+--- testing: 1 % 4294967294 ---
+int(1)
+--- testing: 1 % 4294967295 ---
+int(1)
+--- testing: 1 % 4294967293 ---
+int(1)
+--- testing: 1 % 9223372036854775806 ---
+int(1)
+--- testing: 1 % 9.2233720368548E+18 ---
+int(1)
+--- testing: 1 % -9223372036854775807 ---
+int(1)
+--- testing: 1 % -9.2233720368548E+18 ---
+int(1)
+--- testing: -1 % 9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9223372036854775808 ---
+int(-1)
+--- testing: -1 % 2147483647 ---
+int(-1)
+--- testing: -1 % -2147483648 ---
+int(-1)
+--- testing: -1 % 9223372034707292160 ---
+int(-1)
+--- testing: -1 % -9223372034707292160 ---
+int(-1)
+--- testing: -1 % 2147483648 ---
+int(-1)
+--- testing: -1 % -2147483649 ---
+int(-1)
+--- testing: -1 % 4294967294 ---
+int(-1)
+--- testing: -1 % 4294967295 ---
+int(-1)
+--- testing: -1 % 4294967293 ---
+int(-1)
+--- testing: -1 % 9223372036854775806 ---
+int(-1)
+--- testing: -1 % 9.2233720368548E+18 ---
+int(-1)
+--- testing: -1 % -9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9.2233720368548E+18 ---
+int(-1)
+--- testing: 7 % 9223372036854775807 ---
+int(7)
+--- testing: 7 % -9223372036854775808 ---
+int(7)
+--- testing: 7 % 2147483647 ---
+int(7)
+--- testing: 7 % -2147483648 ---
+int(7)
+--- testing: 7 % 9223372034707292160 ---
+int(7)
+--- testing: 7 % -9223372034707292160 ---
+int(7)
+--- testing: 7 % 2147483648 ---
+int(7)
+--- testing: 7 % -2147483649 ---
+int(7)
+--- testing: 7 % 4294967294 ---
+int(7)
+--- testing: 7 % 4294967295 ---
+int(7)
+--- testing: 7 % 4294967293 ---
+int(7)
+--- testing: 7 % 9223372036854775806 ---
+int(7)
+--- testing: 7 % 9.2233720368548E+18 ---
+int(7)
+--- testing: 7 % -9223372036854775807 ---
+int(7)
+--- testing: 7 % -9.2233720368548E+18 ---
+int(7)
+--- testing: 9 % 9223372036854775807 ---
+int(9)
+--- testing: 9 % -9223372036854775808 ---
+int(9)
+--- testing: 9 % 2147483647 ---
+int(9)
+--- testing: 9 % -2147483648 ---
+int(9)
+--- testing: 9 % 9223372034707292160 ---
+int(9)
+--- testing: 9 % -9223372034707292160 ---
+int(9)
+--- testing: 9 % 2147483648 ---
+int(9)
+--- testing: 9 % -2147483649 ---
+int(9)
+--- testing: 9 % 4294967294 ---
+int(9)
+--- testing: 9 % 4294967295 ---
+int(9)
+--- testing: 9 % 4294967293 ---
+int(9)
+--- testing: 9 % 9223372036854775806 ---
+int(9)
+--- testing: 9 % 9.2233720368548E+18 ---
+int(9)
+--- testing: 9 % -9223372036854775807 ---
+int(9)
+--- testing: 9 % -9.2233720368548E+18 ---
+int(9)
+--- testing: 65 % 9223372036854775807 ---
+int(65)
+--- testing: 65 % -9223372036854775808 ---
+int(65)
+--- testing: 65 % 2147483647 ---
+int(65)
+--- testing: 65 % -2147483648 ---
+int(65)
+--- testing: 65 % 9223372034707292160 ---
+int(65)
+--- testing: 65 % -9223372034707292160 ---
+int(65)
+--- testing: 65 % 2147483648 ---
+int(65)
+--- testing: 65 % -2147483649 ---
+int(65)
+--- testing: 65 % 4294967294 ---
+int(65)
+--- testing: 65 % 4294967295 ---
+int(65)
+--- testing: 65 % 4294967293 ---
+int(65)
+--- testing: 65 % 9223372036854775806 ---
+int(65)
+--- testing: 65 % 9.2233720368548E+18 ---
+int(65)
+--- testing: 65 % -9223372036854775807 ---
+int(65)
+--- testing: 65 % -9.2233720368548E+18 ---
+int(65)
+--- testing: -44 % 9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9223372036854775808 ---
+int(-44)
+--- testing: -44 % 2147483647 ---
+int(-44)
+--- testing: -44 % -2147483648 ---
+int(-44)
+--- testing: -44 % 9223372034707292160 ---
+int(-44)
+--- testing: -44 % -9223372034707292160 ---
+int(-44)
+--- testing: -44 % 2147483648 ---
+int(-44)
+--- testing: -44 % -2147483649 ---
+int(-44)
+--- testing: -44 % 4294967294 ---
+int(-44)
+--- testing: -44 % 4294967295 ---
+int(-44)
+--- testing: -44 % 4294967293 ---
+int(-44)
+--- testing: -44 % 9223372036854775806 ---
+int(-44)
+--- testing: -44 % 9.2233720368548E+18 ---
+int(-44)
+--- testing: -44 % -9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9.2233720368548E+18 ---
+int(-44)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775808 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % -2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % -2147483649 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967294 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967295 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967293 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372036854775806 ---
+int(2147483647)
+--- testing: 2147483647 % 9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9223372036854775808 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % -2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -2147483649 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967294 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967295 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 4294967293 ---
+int(2147483650)
+--- testing: 9223372036854775807 % 9223372036854775806 ---
+int(1)
+--- testing: 9223372036854775807 % 9.2233720368548E+18 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % -9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9.2233720368548E+18 ---
+int(9223372036854775807)
+{"x":{}}
+{"b":{},"c":{"x":{}}}
+{"b":{},"d":{},"c":{"x":{}}}
+{"b":{},"c":{"d":{},"x":{}}}
+{"b":{},"c":{"d":{"x":{}}}}

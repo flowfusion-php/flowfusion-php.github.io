@@ -1,13 +1,15 @@
 --TEST--
-Bug #77345 (Segmentation faults stack overflow in cyclic garbage collector) (Bug #77427)+Bug #44394 (Last two bytes missing from output) with session.use_trans_id
+Bug #60227 (header() cannot detect the multi-line header with CR), CRLF+Bug #32290 (calling call_user_func_array() ends in infinite loop within child class)
 --INI--
-zend.enable_gc = 1
-session.name=PHPSESSID
-session.use_only_cookies=0
-session.trans_sid_tags="a=href,area=href,frame=src,form="
-url_rewriter.tags="a=href,area=href,frame=src,form="
-zend_test.register_passes=1
-phar.cache_list={PWD}/copyonwrite3.phar.php
+expose_php=0
+default_charset=UTF-8
+error_reporting=8191
+opcache.optimization_level=-1
+session.use_trans_sid=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1241
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -39,7 +41,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -62,7 +64,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -72,56 +74,115 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Node
-{
-    /** @var Node */
-    public $previous;
-    /** @var Node */
-    public $next;
-}
-var_dump(gc_enabled());
-var_dump('start');
-$firstNode = new Node();
-$firstNode->previous = $firstNode;
-$firstNode->next = $firstNode;
-$circularDoublyLinkedList = $firstNode;
-for ($i = 0; $i < 200000; $i++) {
-    $currentNode = $circularDoublyLinkedList;
-    $nextNode = $circularDoublyLinkedList->next;
-    $newNode = new Node();
-    $newNode->previous = $currentNode;
-    $currentNode->next = $newNode;
-    $newNode->next = $nextNode;
-    $nextNode->previous = $newNode;
-    $circularDoublyLinkedList = $nextNode;
-}
-var_dump('end');
-$script1_dataflow = $nextNode;
+header("X-foo: e\r\nfoo");
+echo 'foo';
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ini_set('session.use_trans_sid', 1);
-session_save_path(__DIR__);
-session_start();
-ob_start();
-$script1_dataflow = "<a href='a?q=1'>asd</a>";
-output_add_rewrite_var('a', 'b');
-echo $string;
-ob_flush();
-ob_end_clean();
+class TestA
+{
+    public function doSomething($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        return --$i;
+    }
+    public function doSomethingThis($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        return --$i;
+    }
+    public function doSomethingParent($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        return --$i;
+    }
+    public function doSomethingParentThis($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        return --$i;
+    }
+    public static function doSomethingStatic($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        return --$i;
+    }
+}
+class TestB extends TestA
+{
+    public function doSomething($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        $i++;
+        if ($i >= 5) return 5;
+        return call_user_func_array(array("TestA", "doSomething"), array($i));
+    }
+    public function doSomethingThis($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        $i++;
+        if ($i >= 5) return 5;
+        return call_user_func_array(array($this, "TestA::doSomethingThis"), array($i));
+    }
+    public function doSomethingParent($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        $i++;
+        if ($i >= 5) return 5;
+        return call_user_func_array(array("parent", "doSomethingParent"), array($i));
+    }
+    public function doSomethingParentThis($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        $i++;
+        if ($i >= 5) return 5;
+        return call_user_func_array(array($this, "parent::doSomethingParentThis"), array($i));
+    }
+    public static function doSomethingStatic($i)
+    {
+        echo __METHOD__ . "($i)\n";
+        $i++;
+        if ($i >= 5) return 5;
+        return call_user_func_array(array("TestA", "doSomethingStatic"), array($i));
+    }
+}
+$x = new TestB();
+echo "===A===\n";
+var_dump($x->doSomething(1));
+echo "\n===B===\n";
+var_dump($x->doSomethingThis(1));
+echo "\n===C===\n";
+var_dump($x->doSomethingParent(1));
+echo "\n===D===\n";
+var_dump($x->doSomethingParentThis(1));
+echo "\n===E===\n";
+var_dump($x->doSomethingStatic(1));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-session
---CLEAN--
-<?php
-foreach (glob(__DIR__ . '/sess_*') as $filename) {
-  unlink($filename);
-}
-?>
 --EXPECTF--
-bool(true)
-string(5) "start"
-string(3) "end"
-<a href='a?q=1&a=b&PHPSESSID=%s'>asd</a>
+Warning: Header may not contain more than a single header, new line detected in %s on line %d
+foo
+===A===
+TestB::doSomething(1)
+TestA::doSomething(2)
+int(1)
+
+===B===
+TestB::doSomethingThis(1)
+TestA::doSomethingThis(2)
+int(1)
+
+===C===
+TestB::doSomethingParent(1)
+TestA::doSomethingParent(2)
+int(1)
+
+===D===
+TestB::doSomethingParentThis(1)
+TestA::doSomethingParentThis(2)
+int(1)
+
+===E===
+TestB::doSomethingStatic(1)
+TestA::doSomethingStatic(2)
+int(1)

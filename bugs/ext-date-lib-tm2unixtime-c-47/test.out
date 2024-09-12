@@ -1,586 +1,687 @@
---- testing: 9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775807 % 1 ---
-int(0)
---- testing: 9223372036854775807 % -1 ---
-int(0)
---- testing: 9223372036854775807 % 7 ---
-int(0)
---- testing: 9223372036854775807 % 9 ---
-int(7)
---- testing: 9223372036854775807 % 65 ---
-int(7)
---- testing: 9223372036854775807 % -44 ---
-int(7)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775808 % 1 ---
-int(0)
---- testing: -9223372036854775808 % -1 ---
-int(0)
---- testing: -9223372036854775808 % 7 ---
-int(-1)
---- testing: -9223372036854775808 % 9 ---
-int(-8)
---- testing: -9223372036854775808 % 65 ---
-int(-8)
---- testing: -9223372036854775808 % -44 ---
-int(-8)
---- testing: -9223372036854775808 % 2147483647 ---
-int(-2)
---- testing: -9223372036854775808 % 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483647 % 1 ---
-int(0)
---- testing: 2147483647 % -1 ---
-int(0)
---- testing: 2147483647 % 7 ---
-int(1)
---- testing: 2147483647 % 9 ---
-int(1)
---- testing: 2147483647 % 65 ---
-int(62)
---- testing: 2147483647 % -44 ---
-int(23)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: -2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483648 % 1 ---
-int(0)
---- testing: -2147483648 % -1 ---
-int(0)
---- testing: -2147483648 % 7 ---
-int(-2)
---- testing: -2147483648 % 9 ---
-int(-2)
---- testing: -2147483648 % 65 ---
-int(-63)
---- testing: -2147483648 % -44 ---
-int(-24)
---- testing: -2147483648 % 2147483647 ---
-int(-1)
---- testing: -2147483648 % 9223372036854775807 ---
-int(-2147483648)
---- testing: 9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372034707292160 % 1 ---
-int(0)
---- testing: 9223372034707292160 % -1 ---
-int(0)
---- testing: 9223372034707292160 % 7 ---
-int(6)
---- testing: 9223372034707292160 % 9 ---
-int(6)
---- testing: 9223372034707292160 % 65 ---
-int(10)
---- testing: 9223372034707292160 % -44 ---
-int(28)
---- testing: 9223372034707292160 % 2147483647 ---
-int(1)
---- testing: 9223372034707292160 % 9223372036854775807 ---
-int(9223372034707292160)
---- testing: -9223372034707292160 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372034707292160 % 1 ---
-int(0)
---- testing: -9223372034707292160 % -1 ---
-int(0)
---- testing: -9223372034707292160 % 7 ---
-int(-6)
---- testing: -9223372034707292160 % 9 ---
-int(-6)
---- testing: -9223372034707292160 % 65 ---
-int(-10)
---- testing: -9223372034707292160 % -44 ---
-int(-28)
---- testing: -9223372034707292160 % 2147483647 ---
-int(-1)
---- testing: -9223372034707292160 % 9223372036854775807 ---
-int(-9223372034707292160)
---- testing: 2147483648 % 0 ---
-Exception: Modulo by zero
---- testing: 2147483648 % 1 ---
-int(0)
---- testing: 2147483648 % -1 ---
-int(0)
---- testing: 2147483648 % 7 ---
-int(2)
---- testing: 2147483648 % 9 ---
-int(2)
---- testing: 2147483648 % 65 ---
-int(63)
---- testing: 2147483648 % -44 ---
-int(24)
---- testing: 2147483648 % 2147483647 ---
-int(1)
---- testing: 2147483648 % 9223372036854775807 ---
-int(2147483648)
---- testing: -2147483649 % 0 ---
-Exception: Modulo by zero
---- testing: -2147483649 % 1 ---
-int(0)
---- testing: -2147483649 % -1 ---
-int(0)
---- testing: -2147483649 % 7 ---
-int(-3)
---- testing: -2147483649 % 9 ---
-int(-3)
---- testing: -2147483649 % 65 ---
-int(-64)
---- testing: -2147483649 % -44 ---
-int(-25)
---- testing: -2147483649 % 2147483647 ---
-int(-2)
---- testing: -2147483649 % 9223372036854775807 ---
-int(-2147483649)
---- testing: 4294967294 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967294 % 1 ---
-int(0)
---- testing: 4294967294 % -1 ---
-int(0)
---- testing: 4294967294 % 7 ---
-int(2)
---- testing: 4294967294 % 9 ---
-int(2)
---- testing: 4294967294 % 65 ---
-int(59)
---- testing: 4294967294 % -44 ---
-int(2)
---- testing: 4294967294 % 2147483647 ---
-int(0)
---- testing: 4294967294 % 9223372036854775807 ---
-int(4294967294)
---- testing: 4294967295 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967295 % 1 ---
-int(0)
---- testing: 4294967295 % -1 ---
-int(0)
---- testing: 4294967295 % 7 ---
-int(3)
---- testing: 4294967295 % 9 ---
-int(3)
---- testing: 4294967295 % 65 ---
-int(60)
---- testing: 4294967295 % -44 ---
-int(3)
---- testing: 4294967295 % 2147483647 ---
-int(1)
---- testing: 4294967295 % 9223372036854775807 ---
-int(4294967295)
---- testing: 4294967293 % 0 ---
-Exception: Modulo by zero
---- testing: 4294967293 % 1 ---
-int(0)
---- testing: 4294967293 % -1 ---
-int(0)
---- testing: 4294967293 % 7 ---
-int(1)
---- testing: 4294967293 % 9 ---
-int(1)
---- testing: 4294967293 % 65 ---
-int(58)
---- testing: 4294967293 % -44 ---
-int(1)
---- testing: 4294967293 % 2147483647 ---
-int(2147483646)
---- testing: 4294967293 % 9223372036854775807 ---
-int(4294967293)
---- testing: 9223372036854775806 % 0 ---
-Exception: Modulo by zero
---- testing: 9223372036854775806 % 1 ---
-int(0)
---- testing: 9223372036854775806 % -1 ---
-int(0)
---- testing: 9223372036854775806 % 7 ---
-int(6)
---- testing: 9223372036854775806 % 9 ---
-int(6)
---- testing: 9223372036854775806 % 65 ---
-int(6)
---- testing: 9223372036854775806 % -44 ---
-int(6)
---- testing: 9223372036854775806 % 2147483647 ---
-int(0)
---- testing: 9223372036854775806 % 9223372036854775807 ---
-int(9223372036854775806)
---- testing: 9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: 9.2233720368548E+18 % 1 ---
-int(0)
---- testing: 9.2233720368548E+18 % -1 ---
-int(0)
---- testing: 9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: 9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: 9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: 9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: 9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 % 0 ---
-Exception: Modulo by zero
---- testing: -9223372036854775807 % 1 ---
-int(0)
---- testing: -9223372036854775807 % -1 ---
-int(0)
---- testing: -9223372036854775807 % 7 ---
-int(0)
---- testing: -9223372036854775807 % 9 ---
-int(-7)
---- testing: -9223372036854775807 % 65 ---
-int(-7)
---- testing: -9223372036854775807 % -44 ---
-int(-7)
---- testing: -9223372036854775807 % 2147483647 ---
-int(-1)
---- testing: -9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: -9.2233720368548E+18 % 0 ---
-Exception: Modulo by zero
---- testing: -9.2233720368548E+18 % 1 ---
-int(0)
---- testing: -9.2233720368548E+18 % -1 ---
-int(0)
---- testing: -9.2233720368548E+18 % 7 ---
-int(-1)
---- testing: -9.2233720368548E+18 % 9 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 65 ---
-int(-8)
---- testing: -9.2233720368548E+18 % -44 ---
-int(-8)
---- testing: -9.2233720368548E+18 % 2147483647 ---
-int(-2)
---- testing: -9.2233720368548E+18 % 9223372036854775807 ---
-int(-1)
---- testing: 0 % 9223372036854775807 ---
-int(0)
---- testing: 0 % -9223372036854775808 ---
-int(0)
---- testing: 0 % 2147483647 ---
-int(0)
---- testing: 0 % -2147483648 ---
-int(0)
---- testing: 0 % 9223372034707292160 ---
-int(0)
---- testing: 0 % -9223372034707292160 ---
-int(0)
---- testing: 0 % 2147483648 ---
-int(0)
---- testing: 0 % -2147483649 ---
-int(0)
---- testing: 0 % 4294967294 ---
-int(0)
---- testing: 0 % 4294967295 ---
-int(0)
---- testing: 0 % 4294967293 ---
-int(0)
---- testing: 0 % 9223372036854775806 ---
-int(0)
---- testing: 0 % 9.2233720368548E+18 ---
-int(0)
---- testing: 0 % -9223372036854775807 ---
-int(0)
---- testing: 0 % -9.2233720368548E+18 ---
-int(0)
---- testing: 1 % 9223372036854775807 ---
-int(1)
---- testing: 1 % -9223372036854775808 ---
-int(1)
---- testing: 1 % 2147483647 ---
-int(1)
---- testing: 1 % -2147483648 ---
-int(1)
---- testing: 1 % 9223372034707292160 ---
-int(1)
---- testing: 1 % -9223372034707292160 ---
-int(1)
---- testing: 1 % 2147483648 ---
-int(1)
---- testing: 1 % -2147483649 ---
-int(1)
---- testing: 1 % 4294967294 ---
-int(1)
---- testing: 1 % 4294967295 ---
-int(1)
---- testing: 1 % 4294967293 ---
-int(1)
---- testing: 1 % 9223372036854775806 ---
-int(1)
---- testing: 1 % 9.2233720368548E+18 ---
-int(1)
---- testing: 1 % -9223372036854775807 ---
-int(1)
---- testing: 1 % -9.2233720368548E+18 ---
-int(1)
---- testing: -1 % 9223372036854775807 ---
-int(-1)
---- testing: -1 % -9223372036854775808 ---
-int(-1)
---- testing: -1 % 2147483647 ---
-int(-1)
---- testing: -1 % -2147483648 ---
-int(-1)
---- testing: -1 % 9223372034707292160 ---
-int(-1)
---- testing: -1 % -9223372034707292160 ---
-int(-1)
---- testing: -1 % 2147483648 ---
-int(-1)
---- testing: -1 % -2147483649 ---
-int(-1)
---- testing: -1 % 4294967294 ---
-int(-1)
---- testing: -1 % 4294967295 ---
-int(-1)
---- testing: -1 % 4294967293 ---
-int(-1)
---- testing: -1 % 9223372036854775806 ---
-int(-1)
---- testing: -1 % 9.2233720368548E+18 ---
-int(-1)
---- testing: -1 % -9223372036854775807 ---
-int(-1)
---- testing: -1 % -9.2233720368548E+18 ---
-int(-1)
---- testing: 7 % 9223372036854775807 ---
-int(7)
---- testing: 7 % -9223372036854775808 ---
-int(7)
---- testing: 7 % 2147483647 ---
-int(7)
---- testing: 7 % -2147483648 ---
-int(7)
---- testing: 7 % 9223372034707292160 ---
-int(7)
---- testing: 7 % -9223372034707292160 ---
-int(7)
---- testing: 7 % 2147483648 ---
-int(7)
---- testing: 7 % -2147483649 ---
-int(7)
---- testing: 7 % 4294967294 ---
-int(7)
---- testing: 7 % 4294967295 ---
-int(7)
---- testing: 7 % 4294967293 ---
-int(7)
---- testing: 7 % 9223372036854775806 ---
-int(7)
---- testing: 7 % 9.2233720368548E+18 ---
-int(7)
---- testing: 7 % -9223372036854775807 ---
-int(7)
---- testing: 7 % -9.2233720368548E+18 ---
-int(7)
---- testing: 9 % 9223372036854775807 ---
-int(9)
---- testing: 9 % -9223372036854775808 ---
-int(9)
---- testing: 9 % 2147483647 ---
-int(9)
---- testing: 9 % -2147483648 ---
-int(9)
---- testing: 9 % 9223372034707292160 ---
-int(9)
---- testing: 9 % -9223372034707292160 ---
-int(9)
---- testing: 9 % 2147483648 ---
-int(9)
---- testing: 9 % -2147483649 ---
-int(9)
---- testing: 9 % 4294967294 ---
-int(9)
---- testing: 9 % 4294967295 ---
-int(9)
---- testing: 9 % 4294967293 ---
-int(9)
---- testing: 9 % 9223372036854775806 ---
-int(9)
---- testing: 9 % 9.2233720368548E+18 ---
-int(9)
---- testing: 9 % -9223372036854775807 ---
-int(9)
---- testing: 9 % -9.2233720368548E+18 ---
-int(9)
---- testing: 65 % 9223372036854775807 ---
-int(65)
---- testing: 65 % -9223372036854775808 ---
-int(65)
---- testing: 65 % 2147483647 ---
-int(65)
---- testing: 65 % -2147483648 ---
-int(65)
---- testing: 65 % 9223372034707292160 ---
-int(65)
---- testing: 65 % -9223372034707292160 ---
-int(65)
---- testing: 65 % 2147483648 ---
-int(65)
---- testing: 65 % -2147483649 ---
-int(65)
---- testing: 65 % 4294967294 ---
-int(65)
---- testing: 65 % 4294967295 ---
-int(65)
---- testing: 65 % 4294967293 ---
-int(65)
---- testing: 65 % 9223372036854775806 ---
-int(65)
---- testing: 65 % 9.2233720368548E+18 ---
-int(65)
---- testing: 65 % -9223372036854775807 ---
-int(65)
---- testing: 65 % -9.2233720368548E+18 ---
-int(65)
---- testing: -44 % 9223372036854775807 ---
-int(-44)
---- testing: -44 % -9223372036854775808 ---
-int(-44)
---- testing: -44 % 2147483647 ---
-int(-44)
---- testing: -44 % -2147483648 ---
-int(-44)
---- testing: -44 % 9223372034707292160 ---
-int(-44)
---- testing: -44 % -9223372034707292160 ---
-int(-44)
---- testing: -44 % 2147483648 ---
-int(-44)
---- testing: -44 % -2147483649 ---
-int(-44)
---- testing: -44 % 4294967294 ---
-int(-44)
---- testing: -44 % 4294967295 ---
-int(-44)
---- testing: -44 % 4294967293 ---
-int(-44)
---- testing: -44 % 9223372036854775806 ---
-int(-44)
---- testing: -44 % 9.2233720368548E+18 ---
-int(-44)
---- testing: -44 % -9223372036854775807 ---
-int(-44)
---- testing: -44 % -9.2233720368548E+18 ---
-int(-44)
---- testing: 2147483647 % 9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775808 ---
-int(2147483647)
---- testing: 2147483647 % 2147483647 ---
-int(0)
---- testing: 2147483647 % -2147483648 ---
-int(2147483647)
---- testing: 2147483647 % 9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % -9223372034707292160 ---
-int(2147483647)
---- testing: 2147483647 % 2147483648 ---
-int(2147483647)
---- testing: 2147483647 % -2147483649 ---
-int(2147483647)
---- testing: 2147483647 % 4294967294 ---
-int(2147483647)
---- testing: 2147483647 % 4294967295 ---
-int(2147483647)
---- testing: 2147483647 % 4294967293 ---
-int(2147483647)
---- testing: 2147483647 % 9223372036854775806 ---
-int(2147483647)
---- testing: 2147483647 % 9.2233720368548E+18 ---
-int(2147483647)
---- testing: 2147483647 % -9223372036854775807 ---
-int(2147483647)
---- testing: 2147483647 % -9.2233720368548E+18 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9223372036854775808 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % 2147483647 ---
-int(1)
---- testing: 9223372036854775807 % -2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % 9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % -9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 % 2147483648 ---
-int(2147483647)
---- testing: 9223372036854775807 % -2147483649 ---
-int(1)
---- testing: 9223372036854775807 % 4294967294 ---
-int(1)
---- testing: 9223372036854775807 % 4294967295 ---
-int(2147483647)
---- testing: 9223372036854775807 % 4294967293 ---
-int(2147483650)
---- testing: 9223372036854775807 % 9223372036854775806 ---
-int(1)
---- testing: 9223372036854775807 % 9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 % -9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 % -9.2233720368548E+18 ---
-int(9223372036854775807)
-Bar
-Bar
-object(PDO)#3 (0) {
-}
-object(MyPDO)#2 (0) {
-}
-NULL
+The empty string is not a valid token
+The token must not contain any ASCII whitespace
+Dom\TokenList::add(): Argument #1 must not contain any null bytes
+Dom\TokenList::add(): Argument #1 must be of type string, int given
+<?xml version="1.0" encoding="UTF-8"?>
+<root/>
 string(11) "random_var:"
-array(1) {
-  [0]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused199.php"
-}
-array(0) {
+object(Dom\XMLDocument)#1 (32) {
+  ["xmlEncoding"]=>
+  string(5) "UTF-8"
+  ["xmlStandalone"]=>
+  bool(false)
+  ["xmlVersion"]=>
+  string(3) "1.0"
+  ["formatOutput"]=>
+  bool(false)
+  ["implementation"]=>
+  string(22) "(object value omitted)"
+  ["URL"]=>
+  string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+  ["documentURI"]=>
+  string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+  ["characterSet"]=>
+  string(5) "UTF-8"
+  ["charset"]=>
+  string(5) "UTF-8"
+  ["inputEncoding"]=>
+  string(5) "UTF-8"
+  ["doctype"]=>
+  NULL
+  ["documentElement"]=>
+  string(22) "(object value omitted)"
+  ["firstElementChild"]=>
+  string(22) "(object value omitted)"
+  ["lastElementChild"]=>
+  string(22) "(object value omitted)"
+  ["childElementCount"]=>
+  int(1)
+  ["body"]=>
+  NULL
+  ["head"]=>
+  NULL
+  ["title"]=>
+  string(0) ""
+  ["nodeType"]=>
+  int(9)
+  ["nodeName"]=>
+  string(9) "#document"
+  ["baseURI"]=>
+  string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+  ["isConnected"]=>
+  bool(true)
+  ["ownerDocument"]=>
+  NULL
+  ["parentNode"]=>
+  NULL
+  ["parentElement"]=>
+  NULL
+  ["childNodes"]=>
+  string(22) "(object value omitted)"
+  ["firstChild"]=>
+  string(22) "(object value omitted)"
+  ["lastChild"]=>
+  string(22) "(object value omitted)"
+  ["previousSibling"]=>
+  NULL
+  ["nextSibling"]=>
+  NULL
+  ["nodeValue"]=>
+  NULL
+  ["textContent"]=>
+  NULL
 }
 int(9223372036854775807)
-Calling function: xml_set_processing_instruction_handler with arguments: Array, Array
-Error calling function xml_set_processing_instruction_handler: xml_set_processing_instruction_handler(): Argument #1 ($parser) must be of type XMLParser, array given
-Calling function: fgets with arguments: Array, Array
-Error calling function fgets: fgets(): Argument #1 ($stream) must be of type resource, array given
-Calling function: strtolower with arguments: Array
-Error calling function strtolower: strtolower(): Argument #1 ($string) must be of type string, array given
-Calling function: ltrim with arguments: Array, Array
-Error calling function ltrim: ltrim(): Argument #1 ($string) must be of type string, array given
-Calling function: xmlwriter_write_cdata with arguments: Array, Array
-Error calling function xmlwriter_write_cdata: xmlwriter_write_cdata(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: get_class_methods with arguments: Array
-Error calling function get_class_methods: get_class_methods(): Argument #1 ($object_or_class) must be an object or a valid class name, array given
-Calling function: preg_grep with arguments: 9223372036854775807, Array, 9223372036854775807
-Calling function: ctype_alpha with arguments: 9223372036854775807
-Calling function: image_type_to_extension with arguments: 9223372036854775807, 9223372036854775807
-Calling function: atan2 with arguments: Array, Array
-Error calling function atan2: atan2(): Argument #1 ($y) must be of type float, array given
-Calling function: fileinode with arguments: Array
-Error calling function fileinode: fileinode(): Argument #1 ($filename) must be of type string, array given
-Calling function: sscanf with arguments: Array, 9223372036854775807, Array
-Error calling function sscanf: sscanf(): Argument #1 ($string) must be of type string, array given
-Calling function: stream_context_set_params with arguments: Array, Array
-Error calling function stream_context_set_params: stream_context_set_params(): Argument #1 ($context) must be of type resource, array given
-Calling function: mktime with arguments: Array, Array, Array, Array, Array, Array
-Error calling function mktime: mktime(): Argument #1 ($hour) must be of type int, array given
-Calling function: ctype_space with arguments: Array
-Calling function: dns_get_mx with arguments: 9223372036854775807, Array, 9223372036854775807
-Calling function: ob_get_length with arguments: 
-Calling function: gmmktime with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
+array(15) {
+  ["_GET"]=>
+  array(0) {
+  }
+  ["_POST"]=>
+  array(0) {
+  }
+  ["_COOKIE"]=>
+  array(0) {
+  }
+  ["_FILES"]=>
+  array(0) {
+  }
+  ["argv"]=>
+  array(1) {
+    [0]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+  }
+  ["argc"]=>
+  int(1)
+  ["_SERVER"]=>
+  array(43) {
+    ["LESSOPEN"]=>
+    string(22) "| /usr/bin/lesspipe %s"
+    ["TMUX"]=>
+    string(27) "/tmp/tmux-1000/default,76,0"
+    ["HOSTNAME"]=>
+    string(12) "4c1800347231"
+    ["SHLVL"]=>
+    string(1) "3"
+    ["TEST_PHP_SRCDIR"]=>
+    string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+    ["HOME"]=>
+    string(13) "/home/phpfuzz"
+    ["OLDPWD"]=>
+    string(23) "/home/phpfuzz/WorkSpace"
+    ["TERM_PROGRAM_VERSION"]=>
+    string(4) "3.2a"
+    ["TEST_PHP_ARGS"]=>
+    string(4) "-j16"
+    ["LC_CTYPE"]=>
+    string(7) "C.UTF-8"
+    ["TEST_PHP_CGI_EXECUTABLE"]=>
+    string(59) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi"
+    ["MAKEFLAGS"]=>
+    string(22) " -- TEST_PHP_ARGS=-j16"
+    ["PATH_TRANSLATED"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    ["SCRIPT_FILENAME"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    ["TEST_PHP_EXECUTABLE"]=>
+    string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+    ["_"]=>
+    string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+    ["TEMP"]=>
+    string(4) "/tmp"
+    ["TERM"]=>
+    string(6) "screen"
+    ["PATH"]=>
+    string(60) "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ["TEST_PHP_CGI_EXECUTABLE_ESCAPED"]=>
+    string(61) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'"
+    ["MAKELEVEL"]=>
+    string(1) "1"
+    ["TEST_PHP_EXTRA_ARGS"]=>
+    string(1278) " -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'  -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0""
+    ["MAKEOVERRIDES"]=>
+    string(26) "${-*-command-variables-*-}"
+    ["LS_COLORS"]=>
+    string(1508) "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+    ["TERM_PROGRAM"]=>
+    string(4) "tmux"
+    ["TEST_PHPDBG_EXECUTABLE"]=>
+    string(61) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg"
+    ["SHELL"]=>
+    string(7) "/bin/sh"
+    ["TEST_PHP_EXECUTABLE_ESCAPED"]=>
+    string(57) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'"
+    ["REDIRECT_STATUS"]=>
+    string(1) "1"
+    ["LESSCLOSE"]=>
+    string(23) "/usr/bin/lesspipe %s %s"
+    ["REQUEST_METHOD"]=>
+    string(3) "GET"
+    ["PWD"]=>
+    string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+    ["SKIP_ONLINE_TESTS"]=>
+    string(1) "1"
+    ["CC"]=>
+    string(8) "clang-15"
+    ["TMUX_PANE"]=>
+    string(2) "%0"
+    ["TEST_PHPDBG_EXECUTABLE_ESCAPED"]=>
+    string(63) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'"
+    ["PHP_SELF"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    ["SCRIPT_NAME"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    ["DOCUMENT_ROOT"]=>
+    string(0) ""
+    ["REQUEST_TIME_FLOAT"]=>
+    float(1726002702.338441)
+    ["REQUEST_TIME"]=>
+    int(1726002702)
+    ["argv"]=>
+    array(1) {
+      [0]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    }
+    ["argc"]=>
+    int(1)
+  }
+  ["dom"]=>
+  object(Dom\XMLDocument)#1 (32) {
+    ["implementation"]=>
+    string(22) "(object value omitted)"
+    ["xmlEncoding"]=>
+    string(5) "UTF-8"
+    ["xmlStandalone"]=>
+    bool(false)
+    ["xmlVersion"]=>
+    string(3) "1.0"
+    ["formatOutput"]=>
+    bool(false)
+    ["URL"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["documentURI"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["characterSet"]=>
+    string(5) "UTF-8"
+    ["charset"]=>
+    string(5) "UTF-8"
+    ["inputEncoding"]=>
+    string(5) "UTF-8"
+    ["doctype"]=>
+    NULL
+    ["documentElement"]=>
+    string(22) "(object value omitted)"
+    ["firstElementChild"]=>
+    string(22) "(object value omitted)"
+    ["lastElementChild"]=>
+    string(22) "(object value omitted)"
+    ["childElementCount"]=>
+    int(1)
+    ["body"]=>
+    NULL
+    ["head"]=>
+    NULL
+    ["title"]=>
+    string(0) ""
+    ["nodeType"]=>
+    int(9)
+    ["nodeName"]=>
+    string(9) "#document"
+    ["baseURI"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["isConnected"]=>
+    bool(true)
+    ["ownerDocument"]=>
+    NULL
+    ["parentNode"]=>
+    NULL
+    ["parentElement"]=>
+    NULL
+    ["childNodes"]=>
+    string(22) "(object value omitted)"
+    ["firstChild"]=>
+    string(22) "(object value omitted)"
+    ["lastChild"]=>
+    string(22) "(object value omitted)"
+    ["previousSibling"]=>
+    NULL
+    ["nextSibling"]=>
+    NULL
+    ["nodeValue"]=>
+    NULL
+    ["textContent"]=>
+    NULL
+  }
+  ["list"]=>
+  object(Dom\TokenList)#3 (2) {
+    ["length"]=>
+    int(0)
+    ["value"]=>
+    string(0) ""
+  }
+  ["e"]=>
+  object(TypeError)#4 (7) {
+    ["message":protected]=>
+    string(67) "Dom\TokenList::add(): Argument #1 must be of type string, int given"
+    ["string":"Error":private]=>
+    string(0) ""
+    ["code":protected]=>
+    int(0)
+    ["file":protected]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    ["line":protected]=>
+    int(82)
+    ["trace":"Error":private]=>
+    array(1) {
+      [0]=>
+      array(6) {
+        ["file"]=>
+        string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+        ["line"]=>
+        int(82)
+        ["function"]=>
+        string(3) "add"
+        ["class"]=>
+        string(13) "Dom\TokenList"
+        ["type"]=>
+        string(2) "->"
+        ["args"]=>
+        array(1) {
+          [0]=>
+          int(0)
+        }
+      }
+    }
+    ["previous":"Error":private]=>
+    NULL
+  }
+  ["fusion"]=>
+  array(15) {
+    [0]=>
+    int(9223372036854775807)
+    [1]=>
+    int(-9223372036854775808)
+    [2]=>
+    int(2147483647)
+    [3]=>
+    int(-2147483648)
+    [4]=>
+    int(9223372034707292160)
+    [5]=>
+    int(-9223372034707292160)
+    [6]=>
+    int(2147483648)
+    [7]=>
+    int(-2147483649)
+    [8]=>
+    int(4294967294)
+    [9]=>
+    int(4294967295)
+    [10]=>
+    int(4294967293)
+    [11]=>
+    int(9223372036854775806)
+    [12]=>
+    float(9.223372036854776E+18)
+    [13]=>
+    int(-9223372036854775807)
+    [14]=>
+    float(-9.223372036854776E+18)
+  }
+  ["v1"]=>
+  object(Dom\XMLDocument)#1 (32) {
+    ["implementation"]=>
+    string(22) "(object value omitted)"
+    ["xmlEncoding"]=>
+    string(5) "UTF-8"
+    ["xmlStandalone"]=>
+    bool(false)
+    ["xmlVersion"]=>
+    string(3) "1.0"
+    ["formatOutput"]=>
+    bool(false)
+    ["URL"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["documentURI"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["characterSet"]=>
+    string(5) "UTF-8"
+    ["charset"]=>
+    string(5) "UTF-8"
+    ["inputEncoding"]=>
+    string(5) "UTF-8"
+    ["doctype"]=>
+    NULL
+    ["documentElement"]=>
+    string(22) "(object value omitted)"
+    ["firstElementChild"]=>
+    string(22) "(object value omitted)"
+    ["lastElementChild"]=>
+    string(22) "(object value omitted)"
+    ["childElementCount"]=>
+    int(1)
+    ["body"]=>
+    NULL
+    ["head"]=>
+    NULL
+    ["title"]=>
+    string(0) ""
+    ["nodeType"]=>
+    int(9)
+    ["nodeName"]=>
+    string(9) "#document"
+    ["baseURI"]=>
+    string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+    ["isConnected"]=>
+    bool(true)
+    ["ownerDocument"]=>
+    NULL
+    ["parentNode"]=>
+    NULL
+    ["parentElement"]=>
+    NULL
+    ["childNodes"]=>
+    string(22) "(object value omitted)"
+    ["firstChild"]=>
+    string(22) "(object value omitted)"
+    ["lastChild"]=>
+    string(22) "(object value omitted)"
+    ["previousSibling"]=>
+    NULL
+    ["nextSibling"]=>
+    NULL
+    ["nodeValue"]=>
+    NULL
+    ["textContent"]=>
+    NULL
+  }
+  ["definedVars"]=>
+  array(11) {
+    ["_GET"]=>
+    array(0) {
+    }
+    ["_POST"]=>
+    array(0) {
+    }
+    ["_COOKIE"]=>
+    array(0) {
+    }
+    ["_FILES"]=>
+    array(0) {
+    }
+    ["argv"]=>
+    array(1) {
+      [0]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+    }
+    ["argc"]=>
+    int(1)
+    ["_SERVER"]=>
+    array(43) {
+      ["LESSOPEN"]=>
+      string(22) "| /usr/bin/lesspipe %s"
+      ["TMUX"]=>
+      string(27) "/tmp/tmux-1000/default,76,0"
+      ["HOSTNAME"]=>
+      string(12) "4c1800347231"
+      ["SHLVL"]=>
+      string(1) "3"
+      ["TEST_PHP_SRCDIR"]=>
+      string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+      ["HOME"]=>
+      string(13) "/home/phpfuzz"
+      ["OLDPWD"]=>
+      string(23) "/home/phpfuzz/WorkSpace"
+      ["TERM_PROGRAM_VERSION"]=>
+      string(4) "3.2a"
+      ["TEST_PHP_ARGS"]=>
+      string(4) "-j16"
+      ["LC_CTYPE"]=>
+      string(7) "C.UTF-8"
+      ["TEST_PHP_CGI_EXECUTABLE"]=>
+      string(59) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi"
+      ["MAKEFLAGS"]=>
+      string(22) " -- TEST_PHP_ARGS=-j16"
+      ["PATH_TRANSLATED"]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["SCRIPT_FILENAME"]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["TEST_PHP_EXECUTABLE"]=>
+      string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+      ["_"]=>
+      string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+      ["TEMP"]=>
+      string(4) "/tmp"
+      ["TERM"]=>
+      string(6) "screen"
+      ["PATH"]=>
+      string(60) "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ["TEST_PHP_CGI_EXECUTABLE_ESCAPED"]=>
+      string(61) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'"
+      ["MAKELEVEL"]=>
+      string(1) "1"
+      ["TEST_PHP_EXTRA_ARGS"]=>
+      string(1278) " -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'  -d "opcache.cache_id=worker4" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0""
+      ["MAKEOVERRIDES"]=>
+      string(26) "${-*-command-variables-*-}"
+      ["LS_COLORS"]=>
+      string(1508) "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+      ["TERM_PROGRAM"]=>
+      string(4) "tmux"
+      ["TEST_PHPDBG_EXECUTABLE"]=>
+      string(61) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg"
+      ["SHELL"]=>
+      string(7) "/bin/sh"
+      ["TEST_PHP_EXECUTABLE_ESCAPED"]=>
+      string(57) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'"
+      ["REDIRECT_STATUS"]=>
+      string(1) "1"
+      ["LESSCLOSE"]=>
+      string(23) "/usr/bin/lesspipe %s %s"
+      ["REQUEST_METHOD"]=>
+      string(3) "GET"
+      ["PWD"]=>
+      string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+      ["SKIP_ONLINE_TESTS"]=>
+      string(1) "1"
+      ["CC"]=>
+      string(8) "clang-15"
+      ["TMUX_PANE"]=>
+      string(2) "%0"
+      ["TEST_PHPDBG_EXECUTABLE_ESCAPED"]=>
+      string(63) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'"
+      ["PHP_SELF"]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["SCRIPT_NAME"]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["DOCUMENT_ROOT"]=>
+      string(0) ""
+      ["REQUEST_TIME_FLOAT"]=>
+      float(1726002702.338441)
+      ["REQUEST_TIME"]=>
+      int(1726002702)
+      ["argv"]=>
+      array(1) {
+        [0]=>
+        string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      }
+      ["argc"]=>
+      int(1)
+    }
+    ["dom"]=>
+    object(Dom\XMLDocument)#1 (32) {
+      ["implementation"]=>
+      string(22) "(object value omitted)"
+      ["xmlEncoding"]=>
+      string(5) "UTF-8"
+      ["xmlStandalone"]=>
+      bool(false)
+      ["xmlVersion"]=>
+      string(3) "1.0"
+      ["formatOutput"]=>
+      bool(false)
+      ["URL"]=>
+      string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+      ["documentURI"]=>
+      string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+      ["characterSet"]=>
+      string(5) "UTF-8"
+      ["charset"]=>
+      string(5) "UTF-8"
+      ["inputEncoding"]=>
+      string(5) "UTF-8"
+      ["doctype"]=>
+      NULL
+      ["documentElement"]=>
+      string(22) "(object value omitted)"
+      ["firstElementChild"]=>
+      string(22) "(object value omitted)"
+      ["lastElementChild"]=>
+      string(22) "(object value omitted)"
+      ["childElementCount"]=>
+      int(1)
+      ["body"]=>
+      NULL
+      ["head"]=>
+      NULL
+      ["title"]=>
+      string(0) ""
+      ["nodeType"]=>
+      int(9)
+      ["nodeName"]=>
+      string(9) "#document"
+      ["baseURI"]=>
+      string(43) "/home/phpfuzz/WorkSpace/flowfusion/php-src/"
+      ["isConnected"]=>
+      bool(true)
+      ["ownerDocument"]=>
+      NULL
+      ["parentNode"]=>
+      NULL
+      ["parentElement"]=>
+      NULL
+      ["childNodes"]=>
+      string(22) "(object value omitted)"
+      ["firstChild"]=>
+      string(22) "(object value omitted)"
+      ["lastChild"]=>
+      string(22) "(object value omitted)"
+      ["previousSibling"]=>
+      NULL
+      ["nextSibling"]=>
+      NULL
+      ["nodeValue"]=>
+      NULL
+      ["textContent"]=>
+      NULL
+    }
+    ["list"]=>
+    object(Dom\TokenList)#3 (2) {
+      ["length"]=>
+      int(0)
+      ["value"]=>
+      string(0) ""
+    }
+    ["e"]=>
+    object(TypeError)#4 (7) {
+      ["message":protected]=>
+      string(67) "Dom\TokenList::add(): Argument #1 must be of type string, int given"
+      ["string":"Error":private]=>
+      string(0) ""
+      ["code":protected]=>
+      int(0)
+      ["file":protected]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["line":protected]=>
+      int(82)
+      ["trace":"Error":private]=>
+      array(1) {
+        [0]=>
+        array(6) {
+          ["file"]=>
+          string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+          ["line"]=>
+          int(82)
+          ["function"]=>
+          string(3) "add"
+          ["class"]=>
+          string(13) "Dom\TokenList"
+          ["type"]=>
+          string(2) "->"
+          ["args"]=>
+          array(1) {
+            [0]=>
+            int(0)
+          }
+        }
+      }
+      ["previous":"Error":private]=>
+      NULL
+    }
+    ["fusion"]=>
+    object(TypeError)#4 (7) {
+      ["message":protected]=>
+      string(67) "Dom\TokenList::add(): Argument #1 must be of type string, int given"
+      ["string":"Error":private]=>
+      string(0) ""
+      ["code":protected]=>
+      int(0)
+      ["file":protected]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+      ["line":protected]=>
+      int(82)
+      ["trace":"Error":private]=>
+      array(1) {
+        [0]=>
+        array(6) {
+          ["file"]=>
+          string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused305.php"
+          ["line"]=>
+          int(82)
+          ["function"]=>
+          string(3) "add"
+          ["class"]=>
+          string(13) "Dom\TokenList"
+          ["type"]=>
+          string(2) "->"
+          ["args"]=>
+          array(1) {
+            [0]=>
+            int(0)
+          }
+        }
+      }
+      ["previous":"Error":private]=>
+      NULL
+    }
+  }
+  ["otherVals"]=>
+  array(9) {
+    [0]=>
+    int(0)
+    [1]=>
+    int(1)
+    [2]=>
+    int(-1)
+    [3]=>
+    int(7)
+    [4]=>
+    int(9)
+    [5]=>
+    int(65)
+    [6]=>
+    int(-44)
+    [7]=>
+    int(2147483647)
+    [8]=>
+    int(9223372036854775807)
+  }
+  ["otherVal"]=>
+  int(9223372036854775807)
+}
+Calling function: date_parse with arguments: Error calling function date_parse: Object of class Dom\XMLDocument could not be converted to string
+Calling function: stream_filter_register with arguments: Error calling function stream_filter_register: Object of class Dom\XMLDocument could not be converted to string
+Calling function: array_uintersect with arguments: Error calling function array_uintersect: Object of class Dom\XMLDocument could not be converted to string
+Calling function: var_dump with arguments: Error calling function var_dump: Object of class Dom\XMLDocument could not be converted to string
+Calling function: mktime with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:47:6: runtime error: signed integer overflow: 9223372036854775807 + 153722867280912930 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:47:6 in

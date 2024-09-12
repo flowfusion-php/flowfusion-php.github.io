@@ -1,12 +1,13 @@
 --TEST--
-Bug #47745 (FILTER_VALIDATE_INT doesn't allow minimum integer)+Bug #72685: Same string is UTF-8 validated repeatedly
+Behavior of failing compound assignment+Exception thrown during SCCP evaluation
 --INI--
-zend_test.observer.observe_all=1
-memory_limit=2G
---SKIPIF--
-<?php
-if (getenv('SKIP_PERF_SENSITIVE')) die("skip performance sensitive test");
-?>
+opcache.optimization_level=0
+opcache.preload={PWD}/preload_user.inc
+expose_php=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0251
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +39,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +62,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,26 +72,219 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = (string)(-PHP_INT_MAX-1);
-var_dump(intval($s));
-var_dump(filter_var($s, FILTER_VALIDATE_INT));
-$script1_dataflow = $s;
+try {
+    $a = 1;
+    $a %= 0;
+} catch (Error $e) { var_dump($a); }
+try {
+    $a = 1;
+    $a >>= -1;
+} catch (Error $e) { var_dump($a); }
+try {
+    $a = 1;
+    $a <<= -1;
+} catch (Error $e) { var_dump($a); }
+set_error_handler(function($type, $msg) { throw new Exception($msg); });
+try {
+    $a = [];
+    $a .= "foo";
+} catch (Throwable $e) { var_dump($a); }
+try {
+    $a = "foo";
+    $a .= [];
+} catch (Throwable $e) { var_dump($a); }
+$x = new stdClass;
+try { $x += 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x += new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x += new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x -= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x -= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x -= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x *= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x *= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x *= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x /= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x /= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x /= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x %= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x %= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x %= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x **= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x **= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x **= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x ^= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x ^= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x ^= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x &= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x &= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x &= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x |= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x |= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x |= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x <<= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x <<= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x <<= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = new stdClass;
+try { $x >>= 1; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = 1;
+try { $x >>= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
+$x = "foo";
+try { $x >>= new stdClass; }
+catch (Throwable $e) {}
+var_dump($x);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$input_size = 64 * 1024;
-$str = str_repeat('a', $input_size);
-$start = microtime(true);
-$pos = 0;
-while (preg_match('/\G\w/u', $str, $m, 0, $script1_dataflow)) ++$pos;
-$end = microtime(true);
-var_dump(($end - $start) < 0.5); // large margin, more like 0.05 in debug build
+var_dump(version_compare('1.2', '2.1', '??'));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-filter
 --EXPECTF--
-int(-%d)
-int(-%d)
-bool(true)
+int(1)
+int(1)
+int(1)
+array(0) {
+}
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+object(stdClass)#%d (0) {
+}
+int(1)
+string(3) "foo"
+Fatal error: Uncaught ValueError: version_compare(): Argument #3 ($operator) must be a valid comparison operator in %s:%d
+Stack trace:
+#0 %s(%d): version_compare('1.2', '2.1', '??')
+#1 {main}
+  thrown in %s on line %d

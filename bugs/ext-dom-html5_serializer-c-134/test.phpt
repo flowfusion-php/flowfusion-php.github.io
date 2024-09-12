@@ -1,5 +1,16 @@
 --TEST--
-Dom\HTMLDocument::createFromString() - normal document, no error+Template cloning
+Test parse_str() function : basic functionality+JIT UCALL: 002
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+;opcache.jit_debug=257
+opcache.memory_consumption=7
+error_reporting=E_ALL & ~E_DEPRECATED
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1144
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -31,7 +42,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -54,7 +65,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -64,49 +75,67 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// The closing p tag breaks libxml2's HTML parser, but doesn't break the HTML5 parser due to the script context parsing rules.
-$html = <<<HTML
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>foo</title>
-    </head>
-    <body>
-        <script>
-        var foo = "</p>";
-        </script>
-        <p test="<script>">bar <!-- hi --></p>
-    </body>
-</html>
-HTML;
-$dom = Dom\HTMLDocument::createFromString($html);
-echo $dom->saveHtml(), "\n";
-$fusion = $dom;
+echo "*** Testing parse_str() : basic functionality ***\n";
+echo "\nBasic test WITH undefined var for result arg\n";
+$s1 = "first=val1&second=val2&third=val3";
+var_dump(parse_str($s1, $res1));
+var_dump($res1);
+echo "\nBasic test WITH existing non-array var for result arg\n";
+$res2 =99;
+$s1 = "first=val1&second=val2&third=val3";
+var_dump(parse_str($s1, $res2));
+var_dump($res2);
+echo "\nBasic test with an existing array as results array\n";
+$res3_array = array(1,2,3,4);
+var_dump(parse_str($s1, $res3_array));
+var_dump($res3_array);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = Dom\HTMLDocument::createFromString('<template>x</template>', LIBXML_NOERROR);
-$a = $dom->head->firstChild->cloneNode(false);
-echo $dom->saveXML($a), "\n";
-echo $dom->saveHTML($a), "\n";
+function foo() {
+    var_dump("hello");
+}
+foo();
+var_dump("world!");
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-dom
-dom
+opcache
 --EXPECT--
-<!DOCTYPE html><html><head>
-        <meta charset="utf-8">
-        <title>foo</title>
-    </head>
-    <body>
-        <script>
-        var foo = "</p>";
-        </script>
-        <p test="<script>">bar <!-- hi --></p>
-    
-</body></html>
-<template xmlns="http://www.w3.org/1999/xhtml"></template>
-<template></template>
+*** Testing parse_str() : basic functionality ***
+
+Basic test WITH undefined var for result arg
+NULL
+array(3) {
+  ["first"]=>
+  string(4) "val1"
+  ["second"]=>
+  string(4) "val2"
+  ["third"]=>
+  string(4) "val3"
+}
+
+Basic test WITH existing non-array var for result arg
+NULL
+array(3) {
+  ["first"]=>
+  string(4) "val1"
+  ["second"]=>
+  string(4) "val2"
+  ["third"]=>
+  string(4) "val3"
+}
+
+Basic test with an existing array as results array
+NULL
+array(3) {
+  ["first"]=>
+  string(4) "val1"
+  ["second"]=>
+  string(4) "val2"
+  ["third"]=>
+  string(4) "val3"
+}
+string(5) "hello"
+string(6) "world!"

@@ -1,8 +1,14 @@
 --TEST--
-Test exceptions thrown from __toString() in various contexts+Stdin and escaped args being passed to run command
+SPL: iterator_to_array() and exceptions from delayed destruct+phpdbg_watch null pointer access
 --INI--
-ary[b] = 2
-error_log_mode=0600
+session.use_trans_sid=1
+opcache.jit_buffer_size=0
+--SKIPIF--
+<?php
+if (getenv('SKIP_ASAN')) {
+    die("skip intentionally causes segfaults");
+}
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -34,7 +40,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -57,7 +63,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -67,166 +73,138 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BadStr {
-    public function __toString() {
-        throw new Exception("Exception");
+class MyArrayIterator extends ArrayIterator
+{
+    static protected $fail = 0;
+    public $state;
+    static function fail($state, $method)
+    {
+        if (self::$fail == $state)
+        {
+            throw new Exception("State $state: $method()");
+        }
+    }
+    function __construct()
+    {
+        $this->state = MyArrayIterator::$fail;
+        self::fail(0, __FUNCTION__);
+        parent::__construct(array(1, 2));
+        self::fail(1, __FUNCTION__);
+    }
+    function rewind(): void
+    {
+        self::fail(2, __FUNCTION__);
+        parent::rewind();
+    }
+    function valid(): bool
+    {
+        self::fail(3, __FUNCTION__);
+        return parent::valid();
+    }
+    function current(): mixed
+    {
+        self::fail(4, __FUNCTION__);
+        return parent::current();
+    }
+    function key(): string|int|null
+    {
+        self::fail(5, __FUNCTION__);
+        return parent::key();
+    }
+    function next(): void
+    {
+        self::fail(6, __FUNCTION__);
+        parent::next();
+    }
+    function __destruct()
+    {
+        self::fail(7, __FUNCTION__);
+    }
+    static function test($func, $skip = null)
+    {
+        echo "===$func===\n";
+        self::$fail = 0;
+        while(self::$fail < 10)
+        {
+            try
+            {
+                var_dump($func(new MyArrayIterator()));
+                break;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage() . "\n";
+            }
+            if (isset($skip[self::$fail]))
+            {
+                self::$fail = $skip[self::$fail];
+            }
+            else
+            {
+                self::$fail++;
+            }
+            try {
+                $e = null;
+            } catch (Exception $e) {
+            }
+        }
     }
 }
-$str = "a";
-$num = 42;
-$badStr = new BadStr;
-try { $x = $str . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $str .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-try { $x = $num . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $num; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $num .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($num);
-try { $x = $badStr .= $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = $badStr .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = "x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$str}x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = (string) $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = include $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { echo $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-${""} = 42;
-try { unset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(${""});
-unset(${""});
-try { $x = ${$badStr}; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = isset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-$obj = new stdClass;
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($obj);
-try { $str[0] = $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-$obj = new DateInterval('P1D');
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(!isset($obj->{""}));
-try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
-try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
-try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
-$fusion = $badStr;
+MyArrayIterator::test('iterator_to_array');
+MyArrayIterator::test('iterator_count', array(3 => 6));
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+echo "*** Testing array_multisort() : Testing with anonymous arguments ***\n";
+var_dump(array_multisort(array(1,3,2,4)));
+$xconnect=$GLOBALS[array_rand($GLOBALS)];
+echo "Done\n";
+$a = [];
+$a[0] = 1;
+$a[0] = 2;
+$fusion = [0 => 3, 1 => 4];
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-@unlink("run_002_tmp.fixture");
-?>
 --PHPDBG--
-ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
 b 6
-r <run_002_tmp.fixture
-r arg1 '_ \' arg2 "' < run_002_tmp.fixture
-y
+r
+w a $a
 c
 q
 --EXPECTF--
-Exception
-Exception
-Exception
-string(1) "a"
-Exception
-Exception
-Exception
-int(42)
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-int(42)
-Exception
-Exception
-Exception
-object(stdClass)#2 (0) {
-}
-Exception
-string(1) "a"
-Exception
-bool(true)
-Exception
-Exception
-Exception
-[Successful compilation of %s]
-prompt> 10
-prompt> [Breakpoint #0 added at %s:6]
-prompt> array(1) {
+===iterator_to_array===
+State 0: __construct()
+State 1: __construct()
+State 2: rewind()
+State 3: valid()
+State 4: current()
+State 5: key()
+State 6: next()
+State 7: __destruct()
+array(2) {
   [0]=>
-  string(%d) "%s"
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> Do you really want to restart execution? (type y or n): array(3) {
-  [0]=>
-  string(%d) "%s"
+  int(1)
   [1]=>
-  string(4) "arg1"
-  [2]=>
-  string(10) "_ ' arg2 ""
+  int(2)
 }
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> ok
-[Script ended normally]
-prompt> 
+===iterator_count===
+State 0: __construct()
+State 1: __construct()
+State 2: rewind()
+State 3: valid()
+State 6: next()
+State 7: __destruct()
+int(2)
+[Successful compilation of %s]
+prompt> [Breakpoint #0 added at %s:%d]
+prompt> *** Testing array_multisort() : Testing with anonymous arguments ***
+bool(true)
+Done
+[Breakpoint #0 at %s:%d, hits: 1]
+>00006: $a = [];
+ 00007: $a[0] = 1;
+ 00008: $a[0] = 2;
+prompt> prompt> [Script ended normally]
+prompt>

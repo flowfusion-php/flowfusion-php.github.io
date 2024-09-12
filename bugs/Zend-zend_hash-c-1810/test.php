@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,51 +61,63 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function test( array $array )
+class Foo
 {
-    $closure = function() use ( $array ) {
-        print_r( $array );
-        yield "hi";
-    };
-    return $closure();
-}
-function test2( array $array )
-{
-    $closure = function() use ( $array ) {
-        print_r( $array );
-        yield "hi";
-    };
-    return $closure; // if you return the $closure and call it outside this function it works.
-}
-$generator = test(array( 1, 2, 3 ) );
-foreach($generator as $something) {
-}
-$generator = test2(array( 1, 2, 3 ) );
-foreach($generator() as $something) {
-}
-$generator = test2(array( 1, 2, 3 ) );
-echo "okey\n";
-$fusion = $generator;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
+    private function getFoo()
     {
-        $this->things[] = $this;
+        return 'Foo';
     }
-    public function __destruct()
+    private function getBar()
     {
-        $fusion->things[] = null;
+        return 'Bar';
     }
-    private $things = [];
+    private function getBaz()
+    {
+        return 'Baz';
+    }
 }
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
+class Bar extends Foo
+{
+    public function getFoo($extraArgument)
+    {
+        return $extraArgument;
+    }
+    protected function getBar($extraArgument)
+    {
+        return $extraArgument;
+    }
+    private function getBaz($extraArgument)
+    {
+        return $extraArgument;
+    }
 }
 echo "OK\n";
+$fusion = $extraArgument;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$array = array();
+for ($i=0; $i < 550; $fusion++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

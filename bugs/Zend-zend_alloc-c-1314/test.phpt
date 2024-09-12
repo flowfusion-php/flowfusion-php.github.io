@@ -1,9 +1,8 @@
 --TEST--
-Test preg_grep() function : error conditions - bad regular expressions+Bug #71818 (Memory leak when array altered in destructor)
+Test gmstrftime() function : usage variation - Checking newline and tab formats which was not supported on Windows before VC14.+POST Method test and arrays - 2
 --INI--
-zend.enable_gc = 1
-open_basedir=/dev
-opcache.preload_user=root
+session.use_strict_mode=0
+auto_globals_jit=0
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +34,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +57,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,79 +67,55 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * Function is implemented in ext/pcre/php_pcre.c
- */
-/*
- * Testing how preg_grep reacts to being passed bad regexes
- */
-$values = [
-    'abcdef', //Regex without delimiter
-    '/[a-zA-Z]', //Regex without closing delimiter
-    '[a-zA-Z]/', //Regex without opening delimiter
-    '/[a-zA-Z]/F',
-    [
-        '[a-z]', //Array of Regexes
-        '[A-Z]',
-        '[0-9]',
-    ],
-    '/[a-zA-Z]/', //Regex string
-];
-$array = [123, 'abc', 'test'];
-foreach ($values as $value) {
-    try {
-        var_dump(preg_grep($value, $array));
-    } catch (TypeError $e) {
-        echo $e->getMessage(), "\n";
-    }
-}
-$value = new stdclass(); //Object
-try {
-    var_dump(preg_grep($value, $array));
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-$fusion = $array;
+echo "*** Testing gmstrftime() : usage variation ***\n";
+// Initialise function arguments not being substituted (if any)
+$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MAX);
+setlocale(LC_ALL, "C");
+date_default_timezone_set("Asia/Calcutta");
+//array of values to iterate over
+$inputs = array(
+      'Newline character' => "%n",
+      'Tab character' => "%t"
+);
+// loop through each element of the array for timestamp
+foreach($inputs as $key =>$value) {
+      echo "\n--$key--\n";
+      var_dump( gmstrftime($value) );
+      var_dump( gmstrftime($value, $timestamp) );
+};
+$fusion = $inputs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
-}
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+var_dump($fusion['a']);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--POST--
+a[]=1&a[]=1
 --EXPECTF--
-Warning: preg_grep(): Delimiter must not be alphanumeric, backslash, or NUL byte in %spreg_grep_error1.php on line %d
-bool(false)
+*** Testing gmstrftime() : usage variation ***
 
-Warning: preg_grep(): No ending delimiter '/' found in %spreg_grep_error1.php on line %d
-bool(false)
+--Newline character--
 
-Warning: preg_grep(): Unknown modifier '/' in %spreg_grep_error1.php on line %d
-bool(false)
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "
+"
 
-Warning: preg_grep(): Unknown modifier 'F' in %spreg_grep_error1.php on line %d
-bool(false)
-preg_grep(): Argument #1 ($pattern) must be of type string, array given
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "
+"
+
+--Tab character--
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "	"
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(1) "	"
 array(2) {
+  [0]=>
+  string(1) "1"
   [1]=>
-  string(3) "abc"
-  [2]=>
-  string(4) "test"
+  string(1) "1"
 }
-preg_grep(): Argument #1 ($pattern) must be of type string, stdClass given

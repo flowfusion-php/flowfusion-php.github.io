@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,15 +61,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$min_value = 10;
-$max_value = 20;
-$correct_order = rand($min_value, $max_value);
-$incorrect_order = rand($max_value, $min_value);
-var_dump($correct_order >= $min_value);
-var_dump($correct_order <= $max_value);
-var_dump($incorrect_order >= $min_value);
-var_dump($incorrect_order <= $max_value);
-$fusion = $max_value;
+$rc = new ReflectionClass(XMLReader::class);
+$prop = $rc->getProperty("nodeType");
+var_dump($prop->isVirtual());
+var_dump($prop->getSettableType());
+var_dump($prop->getHooks());
+var_dump($prop->getRawValue(new XMLReader));
+var_dump($prop->getValue(new XMLReader));
+$reader = XMLReader::XML("<root>hi</root>");
+var_dump(json_encode($reader));
+var_export($reader); echo "\n";
+var_dump(get_object_vars($reader));
+$fusion = $rc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -89,7 +92,7 @@ for ($i = 0; $i < 100000; ++$i) {
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
