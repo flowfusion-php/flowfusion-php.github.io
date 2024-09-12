@@ -1,69 +1,156 @@
-mail(/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/gh7875.mail.log): Failed to open stream: Permission denied
-bool(false)
-string(11) "random_var:"
-array(0) {
-}
-array(1) {
-  [0]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused455.php"
-}
-object(ErrorException)#1 (8) {
-  ["message":protected]=>
-  string(118) "mail(/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/gh7875.mail.log): Failed to open stream: Permission denied"
-  ["string":"Exception":private]=>
-  string(0) ""
-  ["code":protected]=>
-  int(0)
-  ["file":protected]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused455.php"
-  ["line":protected]=>
-  int(74)
-  ["trace":"Exception":private]=>
-  array(2) {
-    [0]=>
-    array(2) {
-      ["function"]=>
-      string(23) "exception_error_handler"
-      ["args"]=>
-      array(4) {
-        [0]=>
-        int(2)
-        [1]=>
-        string(118) "mail(/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/gh7875.mail.log): Failed to open stream: Permission denied"
-        [2]=>
-        string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused455.php"
-        [3]=>
-        int(74)
-      }
-    }
-    [1]=>
-    array(4) {
-      ["file"]=>
-      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused455.php"
-      ["line"]=>
-      int(74)
-      ["function"]=>
-      string(4) "mail"
-      ["args"]=>
-      array(4) {
-        [0]=>
-        string(21) "recipient@example.com"
-        [1]=>
-        string(7) "Subject"
-        [2]=>
-        string(4) "Body"
-        [3]=>
-        array(0) {
-        }
-      }
-    }
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php]
+prompt> ok
+1string(11) "random_var:"
+float(1725082355.601155)
+float(1725082355.601156)
+array(12) {
+  ["_GET"]=>
+  array(0) {
   }
-  ["previous":"Exception":private]=>
-  NULL
-  ["severity":protected]=>
-  int(2)
+  ["_POST"]=>
+  array(0) {
+  }
+  ["_COOKIE"]=>
+  array(0) {
+  }
+  ["_FILES"]=>
+  array(0) {
+  }
+  ["argv"]=>
+  array(1) {
+    [0]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php"
+  }
+  ["argc"]=>
+  int(1)
+  ["i"]=>
+  int(100001)
+  ["m0"]=>
+  float(1725082355.601155)
+  ["m1"]=>
+  float(1725082355.601156)
+  ["d"]=>
+  float(9.5367431640625E-7)
+  ["v1"]=>
+  float(1725082355.601155)
+  ["definedVars"]=>
+  array(10) {
+    ["_GET"]=>
+    array(0) {
+    }
+    ["_POST"]=>
+    array(0) {
+    }
+    ["_COOKIE"]=>
+    array(0) {
+    }
+    ["_FILES"]=>
+    array(0) {
+    }
+    ["argv"]=>
+    array(1) {
+      [0]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php"
+    }
+    ["argc"]=>
+    int(1)
+    ["i"]=>
+    int(100001)
+    ["m0"]=>
+    float(1725082355.601155)
+    ["m1"]=>
+    float(1725082355.601156)
+    ["d"]=>
+    float(9.5367431640625E-7)
+  }
 }
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var->var >= op_array->last_var || (ssa_var_info[__var].type & (1 << 10)) == (__type & (1 << 10))' failed.
-Aborted (core dumped)
+Calling function: session_create_id with arguments: 1725082355.6012
 
-Termsig=6
+Warning: session_create_id(): Prefix cannot contain special characters. Only the A-Z, a-z, 0-9, "-", and "," characters are allowed in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Calling function: ob_list_handlers with arguments: 
+Calling function: next with arguments: 1725082355.6012
+
+Warning: next(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Error calling function next: next(): Argument #1 ($array) must be of type array, float given
+Calling function: password_get_info with arguments: 1725082355.6012
+Calling function: phpdbg_break_method with arguments: 1725082355.6012, 1725082355.6012
+[Breakpoint #0 added at 1725082355.6012::1725082355.6012]
+Calling function: is_string with arguments: 1725082355.6012
+Calling function: compact with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array, 1725082355.6012
+Error calling function compact: Cannot call compact() dynamically
+Calling function: phpdbg_clear with arguments: 
+Calling function: ctype_alpha with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array
+
+Deprecated: ctype_alpha(): Argument of type array will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Calling function: array_diff_ukey with arguments: 1725082355.6012, 1725082355.6012
+Error calling function array_diff_ukey: array_diff_ukey(): Argument #2 must be a valid callback, no array or string given
+Calling function: http_response_code with arguments: 1725082355.6012
+
+Deprecated: Implicit conversion from float 1725082355.601155 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+
+Warning: http_response_code(): Cannot set response code - headers already sent (output started at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php:74) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Calling function: mt_rand with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+1725082355.6012, Array
+
+Deprecated: Implicit conversion from float 1725082355.601155 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Error calling function mt_rand: mt_rand(): Argument #2 ($max) must be of type int, array given
+Calling function: in_array with arguments: 1725082355.6012, 1725082355.6012, 1725082355.6012
+Error calling function in_array: in_array(): Argument #2 ($haystack) must be of type array, float given
+Calling function: setrawcookie with arguments: 1725082355.6012, 1725082355.6012, 1725082355.6012, 1725082355.6012, 1725082355.6012, 1725082355.6012, 1725082355.6012
+
+Deprecated: Implicit conversion from float 1725082355.601156 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+
+Warning: Cannot modify header information - headers already sent by (output started at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php:74) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Calling function: stream_context_get_default with arguments: 1725082355.6012
+Error calling function stream_context_get_default: stream_context_get_default(): Argument #1 ($options) must be of type ?array, float given
+Calling function: fwrite with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array, 1725082355.6012, Array
+Error calling function fwrite: fwrite(): Argument #1 ($stream) must be of type resource, array given
+Calling function: http_response_code with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array
+Error calling function http_response_code: http_response_code(): Argument #1 ($response_code) must be of type int, array given
+Calling function: array_udiff_assoc with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array, Array
+Error calling function array_udiff_assoc: array_udiff_assoc(): Argument #2 must be a valid callback, array callback must have exactly two members
+Calling function: stream_context_create with arguments: 1725082355.6012, 1725082355.6012
+Error calling function stream_context_create: stream_context_create(): Argument #1 ($options) must be of type ?array, float given
+Calling function: strval with arguments: 1725082355.6012
+Calling function: password_verify with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+1725082355.6012, Array
+Error calling function password_verify: password_verify(): Argument #2 ($hash) must be of type string, array given
+Calling function: xml_parse with arguments: 1725082355.6012, 1725082355.6012, 1725082355.6012
+Error calling function xml_parse: xml_parse(): Argument #1 ($parser) must be of type XMLParser, float given
+Calling function: ord with arguments: 1725082355.6012
+Calling function: ctype_punct with arguments: 1725082355.6012
+
+Deprecated: ctype_punct(): Argument of type float will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 41
+Calling function: highlight_file with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array, 1725082355.6012
+Error calling function highlight_file: highlight_file(): Argument #1 ($filename) must be of type string, array given
+Calling function: is_bool with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array
+Calling function: date_add with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused355.php on line 38
+Array, Array
+Error calling function date_add: date_add(): Argument #1 ($object) must be of type DateTime, array given
+/home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:649:13: runtime error: member access within misaligned address 0x000000000021 for type 'const zval' (aka 'const struct _zval_struct'), which requires 8 byte alignment
+0x000000000021: note: pointer points here
+<memory cannot be printed>
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:649:13 in

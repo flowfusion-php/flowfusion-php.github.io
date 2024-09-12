@@ -1,13 +1,19 @@
 --TEST--
-Capturing array in user error handler during index conversion+Bug #54459 (Range function accuracy)
+Manually call __construct() - element variation+GH-14639 (Member access within null pointer in ext/spl/spl_observer.c)
 --INI--
-precision=14
-opcache.jit_buffer_size=1M
-session.upload_progress.enabled=1
+memory_limit=2M
+zend_test.observer.enabled=0
+memory_limit=128000000
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0253
+opcache.jit=1152
+--SKIPIF--
+<?php
+if (getenv("USE_ZEND_ALLOC") === "0") {
+    die("skip Zend MM disabled");
+}
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -39,7 +45,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -62,7 +68,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -72,231 +78,42 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-set_error_handler(function($code, $msg) {
-    echo "Err: $msg\n";
-    $GLOBALS[''] = $GLOBALS['y'];
-});
-function x(&$s){
-    $s[100000000000000000000] = 1;
-}
-x($y);
-var_dump($y);
-$fusion = $GLOBALS;
+$element = new DOMElement('foo', 'my value');
+var_dump($element->nodeName, $element->textContent);
+$element->__construct('foo2', 'my new value');
+var_dump($element->nodeName, $element->textContent);
+$doc = new DOMDocument();
+$doc->loadXML(<<<XML
+<?xml version="1.0"?>
+<container/>
+XML);
+$doc->documentElement->appendChild($element);
+echo $doc->saveXML();
+$element->__construct('foo3', 'my new new value');
+$doc->documentElement->appendChild($element);
+echo $doc->saveXML();
+$fusion = $doc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (range(90, 100, .1) as $i => $fusion){
-  echo $i, ' = ', $v, PHP_EOL;
-}
-foreach (range("90", "100", .1) as $i => $v){
-  echo $i, ' = ', $v, PHP_EOL;
+$b = new SplObjectStorage();
+for ($i = 10000; $i > 0; $i--) {
+    $object = new StdClass();
+    $fusion->a = str_repeat("a", 2);
+    $b->attach($object);
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Err: Implicit conversion from float 1.0E+20 to int loses precision
-array(0) {
-}
-0 = 90
-1 = 90.1
-2 = 90.2
-3 = 90.3
-4 = 90.4
-5 = 90.5
-6 = 90.6
-7 = 90.7
-8 = 90.8
-9 = 90.9
-10 = 91
-11 = 91.1
-12 = 91.2
-13 = 91.3
-14 = 91.4
-15 = 91.5
-16 = 91.6
-17 = 91.7
-18 = 91.8
-19 = 91.9
-20 = 92
-21 = 92.1
-22 = 92.2
-23 = 92.3
-24 = 92.4
-25 = 92.5
-26 = 92.6
-27 = 92.7
-28 = 92.8
-29 = 92.9
-30 = 93
-31 = 93.1
-32 = 93.2
-33 = 93.3
-34 = 93.4
-35 = 93.5
-36 = 93.6
-37 = 93.7
-38 = 93.8
-39 = 93.9
-40 = 94
-41 = 94.1
-42 = 94.2
-43 = 94.3
-44 = 94.4
-45 = 94.5
-46 = 94.6
-47 = 94.7
-48 = 94.8
-49 = 94.9
-50 = 95
-51 = 95.1
-52 = 95.2
-53 = 95.3
-54 = 95.4
-55 = 95.5
-56 = 95.6
-57 = 95.7
-58 = 95.8
-59 = 95.9
-60 = 96
-61 = 96.1
-62 = 96.2
-63 = 96.3
-64 = 96.4
-65 = 96.5
-66 = 96.6
-67 = 96.7
-68 = 96.8
-69 = 96.9
-70 = 97
-71 = 97.1
-72 = 97.2
-73 = 97.3
-74 = 97.4
-75 = 97.5
-76 = 97.6
-77 = 97.7
-78 = 97.8
-79 = 97.9
-80 = 98
-81 = 98.1
-82 = 98.2
-83 = 98.3
-84 = 98.4
-85 = 98.5
-86 = 98.6
-87 = 98.7
-88 = 98.8
-89 = 98.9
-90 = 99
-91 = 99.1
-92 = 99.2
-93 = 99.3
-94 = 99.4
-95 = 99.5
-96 = 99.6
-97 = 99.7
-98 = 99.8
-99 = 99.9
-100 = 100
-0 = 90
-1 = 90.1
-2 = 90.2
-3 = 90.3
-4 = 90.4
-5 = 90.5
-6 = 90.6
-7 = 90.7
-8 = 90.8
-9 = 90.9
-10 = 91
-11 = 91.1
-12 = 91.2
-13 = 91.3
-14 = 91.4
-15 = 91.5
-16 = 91.6
-17 = 91.7
-18 = 91.8
-19 = 91.9
-20 = 92
-21 = 92.1
-22 = 92.2
-23 = 92.3
-24 = 92.4
-25 = 92.5
-26 = 92.6
-27 = 92.7
-28 = 92.8
-29 = 92.9
-30 = 93
-31 = 93.1
-32 = 93.2
-33 = 93.3
-34 = 93.4
-35 = 93.5
-36 = 93.6
-37 = 93.7
-38 = 93.8
-39 = 93.9
-40 = 94
-41 = 94.1
-42 = 94.2
-43 = 94.3
-44 = 94.4
-45 = 94.5
-46 = 94.6
-47 = 94.7
-48 = 94.8
-49 = 94.9
-50 = 95
-51 = 95.1
-52 = 95.2
-53 = 95.3
-54 = 95.4
-55 = 95.5
-56 = 95.6
-57 = 95.7
-58 = 95.8
-59 = 95.9
-60 = 96
-61 = 96.1
-62 = 96.2
-63 = 96.3
-64 = 96.4
-65 = 96.5
-66 = 96.6
-67 = 96.7
-68 = 96.8
-69 = 96.9
-70 = 97
-71 = 97.1
-72 = 97.2
-73 = 97.3
-74 = 97.4
-75 = 97.5
-76 = 97.6
-77 = 97.7
-78 = 97.8
-79 = 97.9
-80 = 98
-81 = 98.1
-82 = 98.2
-83 = 98.3
-84 = 98.4
-85 = 98.5
-86 = 98.6
-87 = 98.7
-88 = 98.8
-89 = 98.9
-90 = 99
-91 = 99.1
-92 = 99.2
-93 = 99.3
-94 = 99.4
-95 = 99.5
-96 = 99.6
-97 = 99.7
-98 = 99.8
-99 = 99.9
-100 = 100
+--EXTENSIONS--
+dom
+--EXPECTF--
+string(3) "foo"
+string(8) "my value"
+string(4) "foo2"
+string(12) "my new value"
+<?xml version="1.0"?>
+<container><foo2>my new value</foo2></container>
+<?xml version="1.0"?>
+<container><foo2>my new value</foo2><foo3>my new new value</foo3></container>
+Fatal error: Allowed memory size of %d bytes exhausted%s(tried to allocate %d bytes) in %s on line %d

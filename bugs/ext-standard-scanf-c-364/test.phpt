@@ -1,17 +1,8 @@
 --TEST--
-Trying declare interface with repeated name of inherited method+Glob wrapper bypasses open_basedir
+Bug #69751: Change Error message of sprintf/printf for missing/typo position specifier.+Static variable with recursive initializer
 --INI--
-open_basedir=/does_not_exist
-memory_limit=512M
-session.gc_maxlifetime=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1242
---SKIPIF--
-<?php
-if (!in_array("glob", stream_get_wrappers())) echo "skip";
-?>
+memory_limit=2G
+highlight.html    = #000000
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -43,7 +34,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -66,7 +57,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -76,40 +67,49 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-interface a {
-    function b();
+try {
+    sprintf('%$s, %2$s %1$s', "a", "b");
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
 }
-interface b {
-    function b();
+try {
+    sprintf('%3$s, %2$s %1$s', "a", "b");
+} catch (ArgumentCountError $e) {
+    echo $e->getMessage(), "\n";
 }
-interface c extends a, b {
+try {
+    sprintf('%2147483648$s, %2$s %1$s', "a", "b");
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
 }
-echo "done!\n";
+$fusion = $s;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach ( [ __DIR__, "glob://".__DIR__ ] as $spec) {
-  echo "** Opening $spec\n";
-  $dir = opendir($spec);
-  if (!$dir) {
-    echo "Failed to open $spec\n";
-    continue;
-  }
-  if (false === readdir($dir)) {
-    echo "No files in $spec\n";
-    continue;
-  }
+function foo($i) {
+    static $fusion = $i <= 10 ? foo($i + 1) : "Done $i";
+    var_dump($a);
+    return $i;
 }
+foo(0);
+foo(5);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-done!
-** Opening %s
-
-Warning: opendir(): open_basedir restriction in effect. File(%s) is not within the allowed path(s): (/does_not_exist) in %s%eglob-wrapper.php on line 5
-
-Warning: opendir(%s): Failed to open directory: Operation not permitted in %s%eglob-wrapper.php on line 5
-Failed to open %s
-** Opening glob://%s
-No files in glob://%s
+Argument number specifier must be greater than zero and less than %d
+4 arguments are required, 3 given
+Argument number specifier must be greater than zero and less than %d
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"
+string(7) "Done 11"

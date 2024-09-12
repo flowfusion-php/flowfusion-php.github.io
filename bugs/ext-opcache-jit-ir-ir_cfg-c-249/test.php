@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,30 +61,27 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-interface foobar {
-    function __construct();
+function my_autoload($name)
+{
+    require $name . '.class.inc';
+    var_dump(class_exists($name));
 }
-abstract class bar implements foobar {
-    public function __construct($x = 1) {
-    }
-}
-final class foo extends bar implements foobar {
-    public function __construct($x = 1, $y = 2) {
-    }
-}
-new foo;
-print "ok!";
-$fusion = $y;
+spl_autoload_register("spl_autoload");
+spl_autoload_register("my_autoload");
+$obj = new testclass;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-register_shutdown_function(function() {
-    new stdClass;
-});
-$ary = [];
-while (true) {
-    $fusion[] = new stdClass;
+echo "Start\n";
+function boo()
+{
+    echo "Shutdown\n";
 }
+register_shutdown_function("boo");
+set_time_limit(1);
+/* infinite loop to simulate long processing */
+for (;;) {}
+echo "End\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

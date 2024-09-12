@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -65,41 +65,37 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
+$numbers = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
+    // floats rounded as int
+    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-      echo "--- testing: $longVal % $otherVal ---\n";
-      try {
-        var_dump($longVal%$otherVal);
-      } catch (DivisionByZeroError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-      echo "--- testing: $otherVal % $longVal ---\n";
-      try {
-        var_dump($otherVal%$longVal);
-      } catch (DivisionByZeroError $e) {
-        echo "Exception: " . $e->getMessage() . "\n";
-      }
-   }
+$precisions = array(
+    5,
+    0,
+    -1,
+    -5,
+    -10,
+    -11,
+    -17,
+    -19,
+    -20,
+    PHP_INT_MIN,
+);
+foreach ($numbers as $number) {
+    echo "--- testing: ";
+    var_dump($number);
+    foreach ($precisions as $precision) {
+        echo "... with precision " . $precision . ": ";
+        var_dump(number_format($number, $precision));
+    }
 }
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo json_encode(simplexml_load_string('<a><b/><c><x/></c></a>')->c), "\n";
-echo json_encode(simplexml_load_string('<a><b/><c><x/></c></a>')), "\n";
-echo json_encode(simplexml_load_string('<a><b/><d/><c><x/></c></a>')), "\n";
-echo json_encode(simplexml_load_string('<a><b/><c><d/><x/></c></a>')), "\n";
-echo json_encode(simplexml_load_string('<a><b/><c><d><x/></d></c></a>')), "\n";
+var_dump(date("Y", 1245623227));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,23 +61,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$array = array('cat', 'hat', 'sat');
-$iterator = new ArrayIterator($array);
-# Simple regex
-$regexIterator = new RegexIterator($iterator, '/.at/');
-var_dump($regexIterator->getRegex());
-# Empty regular expression
-$regexIterator = new RegexIterator($iterator, '//');
-var_dump($regexIterator->getRegex());
-# "Complex" email regular expression
-$regexIterator = new RegexIterator($iterator, '|\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|');
-var_dump($regexIterator->getRegex());
-$fusion = $iterator;
+$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527ç§ã¯ã¬ã©ã¹ãé£ã¹ããã¾ã.magic");
+    var_dump($finfo);
+$fusion = $finfo;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$finfo = finfo_open(FILEINFO_NONE, __DIR__ . DIRECTORY_SEPARATOR . "bug71527.magic");
-    var_dump($fusion);
+class foo extends ArrayIterator {
+    public function __construct( ) {
+        parent::__construct(array(
+            'test3'=>'test999'));
+    }
+}
+$h = new foo;
+$i = new RegexIterator($h, '/^test(.*)/', RegexIterator::REPLACE);
+$i->replacement = "42";
+var_dump($fusion->replacement);
+foreach ($i as $name=>$value) {
+    var_dump($name, $value);
+}
+var_dump($i->replacement);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

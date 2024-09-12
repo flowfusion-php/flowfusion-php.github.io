@@ -1,114 +1,239 @@
-array(3) {
-  [0]=>
-  int(7)
-  [1]=>
-  int(8)
-  [2]=>
-  int(9)
-}
-int(7)
-ArrayIterator::__construct(): Argument #1 ($array) must be of type array, int given
-NULL
+--- testing: 9223372036854775807 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775808 ---
+int(-9223372036854775807)
+--- testing: 2147483647 ---
+int(2147483648)
+--- testing: -2147483648 ---
+int(-2147483647)
+--- testing: 9223372034707292160 ---
+int(9223372034707292161)
+--- testing: -9223372034707292160 ---
+int(-9223372034707292159)
+--- testing: 2147483648 ---
+int(2147483649)
+--- testing: -2147483649 ---
+int(-2147483648)
+--- testing: 4294967294 ---
+int(4294967295)
+--- testing: 4294967295 ---
+int(4294967296)
+--- testing: 4294967293 ---
+int(4294967294)
+--- testing: 9223372036854775806 ---
+int(9223372036854775807)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
+int(-9223372036854775806)
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
+*** Testing strftime() : usage variation ***
 
-getTimezone():
-string(13) "Europe/London"
+Warning: Undefined variable $key in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 93
 
-getTimestamp():
-int(1356625448)
+----
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 94
+string(2) "20"
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 95
+string(2) "20"
+
+Warning: Undefined variable $key in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 93
+
+----
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 94
+string(8) "08/29/24"
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 95
+string(8) "08/08/08"
+
+Warning: Undefined variable $key in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 93
+
+----
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 94
+string(4) "2024"
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 95
+string(4) "2008"
+
+Warning: Undefined variable $key in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 93
+
+----
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 94
+string(2) "24"
+
+Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 95
+string(2) "08"
 string(11) "random_var:"
-object(RecursiveArrayIterator)#1 (1) {
-  ["storage":"ArrayIterator":private]=>
-  array(5) {
-    [0]=>
-    array(3) {
-      [0]=>
-      int(7)
-      [1]=>
-      int(8)
-      [2]=>
-      int(9)
-    }
-    [1]=>
-    int(1)
-    [2]=>
-    int(2)
-    [3]=>
-    int(3)
-    [4]=>
-    array(3) {
-      [0]=>
-      int(4)
-      [1]=>
-      int(5)
-      [2]=>
-      int(6)
-    }
-  }
+array(15) {
+  [0]=>
+  int(9223372036854775807)
+  [1]=>
+  int(-9223372036854775808)
+  [2]=>
+  int(2147483647)
+  [3]=>
+  int(-2147483648)
+  [4]=>
+  int(9223372034707292160)
+  [5]=>
+  int(-9223372034707292160)
+  [6]=>
+  int(2147483648)
+  [7]=>
+  int(-2147483649)
+  [8]=>
+  int(4294967294)
+  [9]=>
+  int(4294967295)
+  [10]=>
+  int(4294967293)
+  [11]=>
+  int(9223372036854775806)
+  [12]=>
+  float(9.223372036854776E+18)
+  [13]=>
+  int(-9223372036854775807)
+  [14]=>
+  float(-9.223372036854776E+18)
 }
-array(0) {
+float(-9.223372036854776E+18)
+array(15) {
+  [0]=>
+  int(9223372036854775807)
+  [1]=>
+  int(-9223372036854775808)
+  [2]=>
+  int(2147483647)
+  [3]=>
+  int(-2147483648)
+  [4]=>
+  int(9223372034707292160)
+  [5]=>
+  int(-9223372034707292160)
+  [6]=>
+  int(2147483648)
+  [7]=>
+  int(-2147483649)
+  [8]=>
+  int(4294967294)
+  [9]=>
+  int(4294967295)
+  [10]=>
+  int(4294967293)
+  [11]=>
+  int(9223372036854775806)
+  [12]=>
+  float(9.223372036854776E+18)
+  [13]=>
+  int(-9223372036854775807)
+  [14]=>
+  float(-9.223372036854776E+18)
 }
-object(TypeError)#7 (7) {
-  ["message":protected]=>
-  string(83) "ArrayIterator::__construct(): Argument #1 ($array) must be of type array, int given"
-  ["string":"Error":private]=>
-  string(0) ""
-  ["code":protected]=>
-  int(0)
-  ["file":protected]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused740.php"
-  ["line":protected]=>
-  int(72)
-  ["trace":"Error":private]=>
-  array(3) {
-    [0]=>
-    array(4) {
-      ["function"]=>
-      string(11) "__construct"
-      ["class"]=>
-      string(13) "ArrayIterator"
-      ["type"]=>
-      string(2) "->"
-      ["args"]=>
-      array(2) {
-        [0]=>
-        int(7)
-        [1]=>
-        int(0)
-      }
-    }
-    [1]=>
-    array(4) {
-      ["function"]=>
-      string(11) "getChildren"
-      ["class"]=>
-      string(22) "RecursiveArrayIterator"
-      ["type"]=>
-      string(2) "->"
-      ["args"]=>
-      array(0) {
-      }
-    }
-    [2]=>
-    array(6) {
-      ["file"]=>
-      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused740.php"
-      ["line"]=>
-      int(72)
-      ["function"]=>
-      string(15) "callGetChildren"
-      ["class"]=>
-      string(25) "RecursiveIteratorIterator"
-      ["type"]=>
-      string(2) "->"
-      ["args"]=>
-      array(0) {
-      }
-    }
-  }
-  ["previous":"Error":private]=>
-  NULL
-}
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var->var >= op_array->last_var || (ssa_var_info[__var].type & (1 << 10)) == (__type & (1 << 10))' failed.
-Aborted (core dumped)
+Calling function: constant with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+Error calling function constant: constant(): Argument #1 ($name) must be of type string, array given
+Calling function: pfsockopen with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
 
-Termsig=6
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, -9.2233720368548E+18, Array, -9.2233720368548E+18, Array
+
+Warning: pfsockopen(): Argument #3 ($error_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 41
+
+Warning: pfsockopen(): Argument #4 ($error_message) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 41
+Error calling function pfsockopen: pfsockopen(): Argument #1 ($hostname) must be of type string, array given
+Calling function: xmlwriter_output_memory with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, Array
+Error calling function xmlwriter_output_memory: xmlwriter_output_memory(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: array_udiff_uassoc with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+-9.2233720368548E+18, Array
+Error calling function array_udiff_uassoc: array_udiff_uassoc() expects at least 3 arguments, 2 given
+Calling function: get_current_user with arguments: 
+Calling function: readfile with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+-9.2233720368548E+18, Array, -9.2233720368548E+18
+Error calling function readfile: readfile(): Argument #2 ($use_include_path) must be of type bool, array given
+Calling function: str_ends_with with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, Array
+Error calling function str_ends_with: str_ends_with(): Argument #1 ($haystack) must be of type string, array given
+Calling function: array_any with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, -9.2233720368548E+18
+Error calling function array_any: array_any(): Argument #2 ($callback) must be a valid callback, no array or string given
+Calling function: hebrev with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, Array
+Error calling function hebrev: hebrev(): Argument #1 ($string) must be of type string, array given
+Calling function: convert_uuencode with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+Error calling function convert_uuencode: convert_uuencode(): Argument #1 ($string) must be of type string, array given
+Calling function: dechex with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+Error calling function dechex: dechex(): Argument #1 ($num) must be of type int, array given
+Calling function: xml_parser_free with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+Error calling function xml_parser_free: xml_parser_free(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: stream_socket_recvfrom with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+-9.2233720368548E+18, Array, -9.2233720368548E+18, Array
+
+Warning: stream_socket_recvfrom(): Argument #4 ($address) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 41
+Error calling function stream_socket_recvfrom: stream_socket_recvfrom(): Argument #1 ($socket) must be of type resource, float given
+Calling function: spl_object_id with arguments: -9.2233720368548E+18
+Error calling function spl_object_id: spl_object_id(): Argument #1 ($object) must be of type object, float given
+Calling function: getrandmax with arguments: 
+Calling function: shuffle with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+
+Warning: shuffle(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 41
+Calling function: array_unshift with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, -9.2233720368548E+18
+
+Warning: array_unshift(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 41
+Calling function: get_included_files with arguments: 
+Calling function: session_module_name with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array
+Error calling function session_module_name: session_module_name(): Argument #1 ($module) must be of type ?string, array given
+Calling function: xml_set_processing_instruction_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, -9.2233720368548E+18
+Error calling function xml_set_processing_instruction_handler: xml_set_processing_instruction_handler(): Argument #1 ($parser) must be of type XMLParser, array given
+Calling function: opcache_invalidate with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+Array, Array
+Error calling function opcache_invalidate: opcache_invalidate(): Argument #1 ($filename) must be of type string, array given
+Calling function: mt_rand with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused617.php on line 38
+-9.2233720368548E+18, Array
+Error calling function mt_rand: mt_rand(): Argument #2 ($max) must be of type int, array given
+Calling function: date_sun_info with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:403:46: runtime error: signed integer overflow: -9223372036854763200 - 21208 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:403:46 in

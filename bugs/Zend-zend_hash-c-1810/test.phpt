@@ -1,8 +1,9 @@
 --TEST--
-Bug #72496 (declare public method with signature incompatible with parent private method should not throw a warning)+FR #62369 (Segfault on json_encode(deeply_nested_array)
+Bug #62991 (Segfault with generator and closure)+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
-error_reporting=E_ALL & ~E_DEPRECATED
-opcache.enable=1
+zend.enable_gc = 1
+session.cache_limiter=
+session.upload_progress.cleanup=0
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -34,7 +35,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -57,7 +58,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -67,67 +68,66 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Foo
+function test( array $array )
 {
-    private function getFoo()
-    {
-        return 'Foo';
-    }
-    private function getBar()
-    {
-        return 'Bar';
-    }
-    private function getBaz()
-    {
-        return 'Baz';
-    }
+    $closure = function() use ( $array ) {
+        print_r( $array );
+        yield "hi";
+    };
+    return $closure();
 }
-class Bar extends Foo
+function test2( array $array )
 {
-    public function getFoo($extraArgument)
+    $closure = function() use ( $array ) {
+        print_r( $array );
+        yield "hi";
+    };
+    return $closure; // if you return the $closure and call it outside this function it works.
+}
+$generator = test(array( 1, 2, 3 ) );
+foreach($generator as $something) {
+}
+$generator = test2(array( 1, 2, 3 ) );
+foreach($generator() as $something) {
+}
+$generator = test2(array( 1, 2, 3 ) );
+echo "okey\n";
+$fusion = $generator;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class MemoryLeak
+{
+    public function __construct()
     {
-        return $extraArgument;
+        $this->things[] = $this;
     }
-    protected function getBar($extraArgument)
+    public function __destruct()
     {
-        return $extraArgument;
+        $fusion->things[] = null;
     }
-    private function getBaz($extraArgument)
-    {
-        return $extraArgument;
-    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
 }
 echo "OK\n";
-$fusion = $extraArgument;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = array();
-for ($i=0; $i < 550; $fusion++) {
-    $array = array($array);
-}
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+)
+okey
 OK
-OK
-ERROR

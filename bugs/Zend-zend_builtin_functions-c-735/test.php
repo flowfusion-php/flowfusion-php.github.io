@@ -1,96 +1,76 @@
 <?php
-function fuzz_internal_interface($vars) {
-    $result = array();
-    // Get all loaded extensions
-    $extensions = get_loaded_extensions();
-    // Initialize an array to hold all internal and extension functions
-    $allInternalFunctions = array();
-    // Get all defined functions
-    $definedFunctions = get_defined_functions();
-    $internalFunctions = $definedFunctions['internal'];
-    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
-    // Iterate over each extension to get its functions
-    foreach ($extensions as $extension) {
-        $functions = get_extension_funcs($extension);
-        if ($functions !== false) {
-            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+class A {
+    public $prop {
+        get {
+            echo __METHOD__, "\n";
+            return 'prop';
+        }
+        set { echo __METHOD__, "\n"; }
+    }
+}
+class B extends A {
+    public function __get($name) {
+        echo __METHOD__, "($name)\n";
+        try {
+            $this->$name;
+        } catch (Error $e) {
+            echo $e->getMessage(), "\n";
         }
     }
-    // Filter out POSIX-related functions
-    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
-        return strpos($func, 'posix_') !== 0;
-    });
-    foreach ($vars as $i => $v1) {
-        foreach ($vars as $j => $v2) {
-            try {
-                // Pick a random internal function
-                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
-                // Get reflection of the function to determine the number of parameters
-                $reflection = new ReflectionFunction($randomFunction);
-                $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
-                $args = [];
-                for ($k = 0; $k < $numParams; $k++) {
-                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
-                }
-                // Print out the function being called and arguments
-                echo "Calling function: $randomFunction with arguments: ";
-                echo implode(', ', $args) . "
-";
-                // Call the function with prepared arguments
-                $result[$randomFunction][] = $reflection->invokeArgs($args);
-            } catch (\Throwable $e) {
-                // Handle any exceptions or errors
-                echo "Error calling function $randomFunction: " . $e->getMessage() . "
-";
-            }
+    public function __set($name, $value) {
+        echo __METHOD__, "($name, $value)\n";
+        try {
+            $this->$name = $value;
+        } catch (Error $e) {
+            echo $e->getMessage(), "\n";
         }
     }
-    return $result;
-}
-function var_fusion($var1, $var2, $var3) {
-    $result = array();
-    $vars = [$var1, $var2, $var3];
-    try {
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-        fuzz_internal_interface($vars);
-    } catch (ReflectionException $e) {
-        echo("Error: " . $e->getMessage());
+    public function __isset($name) {
+        echo __METHOD__, "($name)\n";
+        try {
+            var_dump(isset($this->$name));
+        } catch (Error $e) {
+            echo $e->getMessage(), "\n";
+        }
     }
-    return $result;
+    public function __unset($name) {
+        echo "Never reached\n";
+    }
 }
-    
-function my_error_handler($error, $errmsg='', $errfile='', $errline=0, $errcontext='')
-{
-    echo "$errmsg\n";
-    $errcontext = '';
+$b = new B;
+$b->prop;
+var_dump(isset($b->prop));
+$b->prop = 1;
+try {
+    unset($b->prop);
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-set_error_handler('my_error_handler');
-function test()
-{
-    echo "Undefined index here: '{$data['HTTP_HEADER']}'\n";
-}
-test();
-$fusion = $errmsg;
+$script1_dataflow = $value;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function json_decode_invalid_utf8($str) {
-    var_dump(json_decode($str));
-    var_dump(json_decode($str, true, 512, JSON_INVALID_UTF8_IGNORE));
-    $json = json_decode($str, true, 512, JSON_INVALID_UTF8_SUBSTITUTE);
-    if (is_array($json)) {
-        var_dump(array_map(function($item) { return bin2hex($item); }, $json));
-    } else {
-        var_dump(bin2hex($fusion));
-    }
+echo "===EmptyIterator===\n";
+foreach(new LimitIterator(new InfiniteIterator(new EmptyIterator()), 0, 3) as $key=>$val)
+{
+    echo "$key=>$val\n";
 }
-json_decode_invalid_utf8("\"a\xb0b\"");
-json_decode_invalid_utf8("\"a\xd0\xf2b\"");
-json_decode_invalid_utf8("\"\x61\xf0\x80\x80\x41\"");
-json_decode_invalid_utf8("[\"\xc1\xc1\",\"a\"]");
-echo "Done\n";
+echo "===InfiniteIterator===\n";
+$it = new ArrayIterator(array(0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D'));
+$it = new InfiniteIterator($it);
+$it = new LimitIterator($it, 2, 5);
+foreach($it as $val=>$key)
+{
+    echo "$val=>$script1_dataflow\n";
+}
+echo "===Infinite/LimitIterator===\n";
+$it = new ArrayIterator(array(0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D'));
+$it = new LimitIterator($it, 1, 2);
+$it = new InfiniteIterator($it);
+$it = new LimitIterator($it, 2, 5);
+foreach($it as $val=>$key)
+{
+    echo "$val=>$key\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+get_class_vars('B');
 ?>

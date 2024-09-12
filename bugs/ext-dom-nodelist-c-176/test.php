@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,30 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$a = array('foo' => 'original.foo');
-$ref = &$a;
-$foo = 'test';
-extract($a, EXTR_OVERWRITE|EXTR_REFS);
-$foo = 'changed.foo';
-var_dump($a['foo']);
-$fusion = $ref;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function test($fusion) {
-    $a = false;
-    switch($x["y"]) {
-        case "a":
-            $a = true;
-            break;
-        case "b":
-            break;
-        case "c":
-            break;
-    }
-    return $a;
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(log1p($longVal));
 }
-var_dump(test(["y" => "a"]));
+$fusion = $longVals;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$dom = Dom\XMLDocument::createFromString('<root><a/><b/><c/></root>');
+$children = $dom->documentElement->childNodes;
+$test_values = [-1, 0, 1, 2, 3, 1.0, 1.1, true, null, "0", "1", "", "foo"];
+foreach ($fusion as $value) {
+    echo "--- ", json_encode($value), " ---\n";
+    try {
+        var_dump($children[$value] ? $children[$value]->nodeName : "N/A", isset($children[$value]), empty($children[$value]));
+    } catch (Error $e) {
+        echo $e->getMessage(), "\n";
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

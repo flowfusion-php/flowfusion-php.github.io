@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,88 +61,43 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-header("X-foo: e\r\nfoo");
-echo 'foo';
+class Node
+{
+    /** @var Node */
+    public $previous;
+    /** @var Node */
+    public $next;
+}
+var_dump(gc_enabled());
+var_dump('start');
+$firstNode = new Node();
+$firstNode->previous = $firstNode;
+$firstNode->next = $firstNode;
+$circularDoublyLinkedList = $firstNode;
+for ($i = 0; $i < 200000; $i++) {
+    $currentNode = $circularDoublyLinkedList;
+    $nextNode = $circularDoublyLinkedList->next;
+    $newNode = new Node();
+    $newNode->previous = $currentNode;
+    $currentNode->next = $newNode;
+    $newNode->next = $nextNode;
+    $nextNode->previous = $newNode;
+    $circularDoublyLinkedList = $nextNode;
+}
+var_dump('end');
+$script1_dataflow = $nextNode;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class TestA
-{
-    public function doSomething($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        return --$i;
-    }
-    public function doSomethingThis($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        return --$i;
-    }
-    public function doSomethingParent($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        return --$i;
-    }
-    public function doSomethingParentThis($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        return --$i;
-    }
-    public static function doSomethingStatic($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        return --$i;
-    }
-}
-class TestB extends TestA
-{
-    public function doSomething($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        $i++;
-        if ($i >= 5) return 5;
-        return call_user_func_array(array("TestA", "doSomething"), array($i));
-    }
-    public function doSomethingThis($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        $i++;
-        if ($i >= 5) return 5;
-        return call_user_func_array(array($this, "TestA::doSomethingThis"), array($i));
-    }
-    public function doSomethingParent($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        $i++;
-        if ($i >= 5) return 5;
-        return call_user_func_array(array("parent", "doSomethingParent"), array($i));
-    }
-    public function doSomethingParentThis($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        $i++;
-        if ($i >= 5) return 5;
-        return call_user_func_array(array($this, "parent::doSomethingParentThis"), array($i));
-    }
-    public static function doSomethingStatic($i)
-    {
-        echo __METHOD__ . "($i)\n";
-        $i++;
-        if ($i >= 5) return 5;
-        return call_user_func_array(array("TestA", "doSomethingStatic"), array($i));
-    }
-}
-$x = new TestB();
-echo "===A===\n";
-var_dump($x->doSomething(1));
-echo "\n===B===\n";
-var_dump($x->doSomethingThis(1));
-echo "\n===C===\n";
-var_dump($x->doSomethingParent(1));
-echo "\n===D===\n";
-var_dump($x->doSomethingParentThis(1));
-echo "\n===E===\n";
-var_dump($x->doSomethingStatic(1));
+ini_set('session.use_trans_sid', 1);
+session_save_path(__DIR__);
+session_start();
+ob_start();
+$script1_dataflow = "<a href='a?q=1'>asd</a>";
+output_add_rewrite_var('a', 'b');
+echo $string;
+ob_flush();
+ob_end_clean();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
