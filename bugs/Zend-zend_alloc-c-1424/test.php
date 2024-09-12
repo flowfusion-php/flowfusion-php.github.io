@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,41 +61,33 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing mail() : variation ***\n";
-// Initialise all required variables
-$to = 'user@example.com';
-$subject = 'Test Subject';
-$message = 'A Message';
-var_dump( mail($to, $subject, $message) );
-$fusion = $message;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class foo {
-    public function test() {
-        call_user_func(array('FOO', 'ABC'));
-        call_user_func(array($this, 'ABC'));
-        foo::XYZ();
-        self::WWW();
-        call_user_func('FOO::ABC');
-    }
-    function __call($a, $b) {
-        print "__call:\n";
-        var_dump($a);
-    }
-    static public function __callStatic($a, $b) {
-        print "__callstatic:\n";
-        var_dump($a);
-    }
+try {
+    $dll = new SplDoublyLinkedList();
+    var_dump($dll->add([],2));
+} catch (TypeError $e) {
+    echo "Exception: ".$e->getMessage()."\n";
 }
-$x = new foo;
-$x->test();
-$fusion::A();
-foo::B();
-$f = 'FOO';
-$f::C();
-$f::$f();
-foo::$f();
+$fusion = $e;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
+    }
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

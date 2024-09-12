@@ -1,17 +1,5 @@
 --TEST--
-Bug #50174 (Incorrectly matched docComment)+JIT ASSIGN: Assign with INTERNED string(no RC)
---INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.protect_memory=1
-;opcache.jit_debug=257
-expose_php=On
-post_max_size=1
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0241
+Bug #81642 (DOMChildNode::replaceWith() bug when replacing a node with itself)+Test writing Element::$innerHTML on XML documents - error cases
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -43,7 +31,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -66,7 +54,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -76,59 +64,85 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class TestClass
-{
-    /** const comment */
-    const C = 0;
-    function x() {}
-}
-$rm = new ReflectionMethod('TestClass', 'x');
-var_dump($rm->getDocComment());
-class TestClass2
-{
-    /** const comment */
-    const C = 0;
-    public $x;
-}
-$rp = new ReflectionProperty('TestClass2', 'x');
-var_dump($rp->getDocComment());
-$fusion = $x;
+// Replace with itself
+$doc = new DOMDocument();
+$doc->appendChild($target = $doc->createElement('test'));
+$target->replaceWith($target);
+var_dump($doc->saveXML());
+// Replace with itself + another element
+$doc = new DOMDocument();
+$doc->appendChild($target = $doc->createElement('test'));
+$target->replaceWith($target, $doc->createElement('foo'));
+var_dump($doc->saveXML());
+// Replace with text node
+$doc = new DOMDocument();
+$doc->appendChild($target = $doc->createElement('test'));
+$target->replaceWith($target, 'foo');
+var_dump($doc->saveXML());
+// Replace with text node variant 2
+$doc = new DOMDocument();
+$doc->appendChild($target = $doc->createElement('test'));
+$target->replaceWith('bar', $target, 'foo');
+var_dump($doc->saveXML());
+$fusion = $doc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class A {
-    public $fusion = "string";
-    function __set($propName, $propValue)
-    {
-        $oldType = \gettype($this->$propName);
-        $newType = \gettype($propValue);
-        if ($propValue === 'false')
-        {
-            $newType   = 'boolean';
-            $propValue = \false;
-        }
-        elseif ($propValue === 'true')
-        {
-            $newType   = 'boolean';
-            $propValue = \true;
-        }
-        if ($oldType !== $newType)
-        {
-            $tmp = $propValue;
-            \settype($tmp, $newType);
-        }
-        $this->propName = $propValue;
+$dom = DOM\XMLDocument::createFromString(<<<XML
+<!DOCTYPE root [
+    <!ENTITY foo "content">
+]>
+<root/>
+XML);
+$child = $dom->documentElement->appendChild($dom->createElementNS('urn:a', 'child'));
+$original = $dom->saveXML();
+function test($child, $html) {
+    global $dom, $original;
+    try {
+        $child->innerHTML = $html;
+    } catch (DOMException $e) {
+        echo $e->getMessage(), "\n";
     }
+    var_dump($dom->saveXML() === $original);
 }
-$a = new A;
-$a->result = "okey";
-echo $a->result;
+test($child, '&foo;');
+test($child, '</root>');
+test($child, '</root><foo/><!--');
+test($fusion, '--></root><!--');
+test($child, '<');
+test($child, '<!ENTITY foo "content">');
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-opcache
+dom
+dom
 --EXPECT--
-bool(false)
-bool(false)
-okey
+string(30) "<?xml version="1.0"?>
+<test/>
+"
+string(37) "<?xml version="1.0"?>
+<test/>
+<foo/>
+"
+string(34) "<?xml version="1.0"?>
+<test/>
+foo
+"
+string(38) "<?xml version="1.0"?>
+bar
+<test/>
+foo
+"
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)

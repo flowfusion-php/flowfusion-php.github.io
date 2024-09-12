@@ -1,12 +1,8 @@
 --TEST--
-Test stripos() function : usage variations - heredoc string containing special chars for 'haystack' argument+Bug #74873 (Minor BC break: PCRE_JIT changes output of preg_match())
+unset() CV 1 (unset() global variable)+A script with die() must end "normally"
 --INI--
-max_execution_time=10
-opcache.revalidate_freq=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1143
+session.save_handler=user
+exif.decode_unicode_intel=UCS-2LE
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +34,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +57,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,41 +67,27 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/* Test stripos() function by passing heredoc string containing special chars for haystack
- *  and with various needles & offsets
-*/
-echo "*** Testing stripos() function: with heredoc strings ***\n";
-echo "-- With heredoc string containing special chars --\n";
-$special_chars_str = <<<EOD
-Ex'ple of h'doc st'g, contains
-$#%^*&*_("_")!#@@!$#$^^&$*(special)
-chars.
-EOD;
-var_dump( stripos($special_chars_str, "Ex'ple", 0) );
-var_dump( stripos($special_chars_str, "!@@!", 23) );
-var_dump( stripos($special_chars_str, '_') );
-var_dump( stripos($special_chars_str, '("_")') );
-var_dump( stripos($special_chars_str, "$*") );
-var_dump( stripos($special_chars_str, "$*", 10) );
-var_dump( stripos($special_chars_str, "(special)") );
-echo "*** Done ***";
-$fusion = $special_chars_str;
+$x = "ok\n";
+echo $x;
+unset($x);
+echo $x;
+$script1_dataflow = $x;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(preg_match('/\S+/', 'foo bar', $fusion, 0, 99999));
+(function($script1_dataflow) {
+	die();
+})($argv);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-*** Testing stripos() function: with heredoc strings ***
--- With heredoc string containing special chars --
-int(0)
-bool(false)
-int(38)
-int(39)
-int(55)
-int(55)
-int(57)
-*** Done ***
-bool(false)
+--PHPDBG--
+r
+q
+--EXPECTF--
+ok
+
+Warning: Undefined variable $x in %s on line %d
+[Successful compilation of %s]
+prompt> [Script ended normally]
+prompt> 

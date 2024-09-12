@@ -1,86 +1,56 @@
 --- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775808 ---
-float(-9.223372036854776E+18)
+float(NAN)
 --- testing: 2147483647 ---
-float(2147483647)
+float(46340.950001051984)
 --- testing: -2147483648 ---
-float(-2147483648)
+float(NAN)
 --- testing: 9223372034707292160 ---
-float(9.223372034707292E+18)
+float(3037000499.622496)
 --- testing: -9223372034707292160 ---
-float(-9.223372034707292E+18)
+float(NAN)
 --- testing: 2147483648 ---
-float(2147483648)
+float(46340.95001184158)
 --- testing: -2147483649 ---
-float(-2147483649)
+float(NAN)
 --- testing: 4294967294 ---
-float(4294967294)
+float(65535.99998474121)
 --- testing: 4294967295 ---
-float(4294967295)
+float(65535.999992370605)
 --- testing: 4294967293 ---
-float(4294967293)
+float(65535.99997711182)
 --- testing: 9223372036854775806 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775807 ---
-float(-9.223372036854776E+18)
+float(NAN)
 --- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-*** Test copy() function: Trying to create a copy of source file as a dir ***
-Size of source before copy operation => int(300)
-Size of destination before copy operation => int(4096)
+float(NAN)
+*** Testing linkinfo() and is_link() on deleted link ***
 
--- Now applying copy() operation --
+Warning: Undefined variable $data in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 92
 
-Warning: copy(): The second argument to copy() function cannot be a directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused59.php on line 95
+Deprecated: fwrite(): Passing null to parameter #2 ($data) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 92
+bool(true)
+bool(true)
+
+Warning: linkinfo(): No such file or directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 101
+int(-1)
 bool(false)
-bool(true)
-bool(true)
-bool(true)
-bool(false)
-bool(true)
-bool(true)
-int(300)
-int(4096)
-*** Done ***
+Done
 string(11) "random_var:"
 float(-9.223372036854776E+18)
-string(71) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11"
-string(75) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp"
-Calling function: ctype_space with arguments: -9.2233720368548E+18
+float(-9.223372036854776E+18)
+string(54) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused"
+Calling function: lchgrp with arguments: -9.2233720368548E+18, -9.2233720368548E+18
 
-Deprecated: ctype_space(): Argument of type float will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused59.php on line 41
-Calling function: ftruncate with arguments: -9.2233720368548E+18, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11
-Error calling function ftruncate: ftruncate(): Argument #1 ($stream) must be of type resource, float given
-Calling function: getimagesize with arguments: -9.2233720368548E+18, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-
-Warning: getimagesize(): Argument #2 ($image_info) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused59.php on line 41
-
-Notice: getimagesize(): Error reading from -9.2233720368548E+18! in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused59.php on line 41
-Calling function: is_infinite with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11
-Error calling function is_infinite: is_infinite(): Argument #1 ($num) must be of type float, string given
-Calling function: defined with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11
-Calling function: getservbyname with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Calling function: ctype_xdigit with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Calling function: base_convert with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Error calling function base_convert: base_convert(): Argument #2 ($from_base) must be of type int, string given
-Calling function: fileinode with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Calling function: microtime with arguments: -9.2233720368548E+18
-Calling function: stristr with arguments: -9.2233720368548E+18, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11, -9.2233720368548E+18
-Calling function: rawurldecode with arguments: -9.2233720368548E+18
-Calling function: ob_end_clean with arguments: 
-
-Notice: ob_end_clean(): Failed to delete buffer. No buffer to delete in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused59.php on line 41
-Calling function: get_object_vars with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11
-Error calling function get_object_vars: get_object_vars(): Argument #1 ($object) must be of type object, string given
-Calling function: date_timezone_get with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11
-Error calling function date_timezone_get: date_timezone_get(): Argument #1 ($object) must be of type DateTimeInterface, string given
-Calling function: gc_enabled with arguments: 
-Calling function: disk_free_space with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Calling function: fputcsv with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/copy_variation11.tmp
-Error calling function fputcsv: fputcsv(): Argument #1 ($stream) must be of type resource, string given
-Calling function: mktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Warning: lchgrp(): Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 41
+Calling function: array_unique with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function array_unique: array_unique(): Argument #1 ($array) must be of type array, float given
+Calling function: stream_set_read_buffer with arguments: -9.2233720368548E+18, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused
+Error calling function stream_set_read_buffer: stream_set_read_buffer(): Argument #1 ($stream) must be of type resource, float given
+Calling function: gmmktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in

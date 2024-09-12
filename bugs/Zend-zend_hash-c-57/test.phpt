@@ -1,5 +1,14 @@
 --TEST--
-Bug #53347 Segfault accessing static method+FR #62369 (Segfault on json_encode(deeply_nested_array)
+Bug #74596 (SIGSEGV with opcache.revalidate_path enabled)+FR #62369 (Segfault on json_encode(deeply_nested_array)
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.validate_timestamps=0
+opcache.file_cache_only=0
+opcache.revalidate_path=1
+session.sid_bits_per_character="4"
+zend.assertions=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -31,7 +40,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -54,7 +63,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -64,19 +73,39 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class ezcConsoleOutput
-{
-    protected static $color = array( 'gray' => 30 );
-    public static function isValidFormatCode( $type, $key )
-    {
-        return isset( self::${$type}[$key] );
+file_put_contents(__DIR__ . "/bug74596_1.php", <<<CODE
+<?php
+class A {
+    public function __construct() {
+        \$a = true;
+        if (\$a) {
+            echo 1 + 2;
+        } else {
+            echo 2 + 3;
+        }
     }
 }
-var_dump( ezcConsoleOutput::isValidFormatCode( 'color', 'gray' ) );
-$fusion = $color;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+?>
+CODE
+);
+file_put_contents(__DIR__ . "/bug74596_2.php", "ok\n");
+class ufilter extends php_user_filter
+{
+    function filter($in, $out, &$consumed, $closing): int
+    {
+        include_once __DIR__ . "/bug74596_1.php";
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            stream_bucket_append($out, $bucket);
+        }
+        return PSFS_PASS_ON;
+    }
+}
+stream_filter_register("ufilter", "ufilter");
+include "php://filter/read=ufilter/resource=" . __DIR__ . "/bug74596_2.php";
+$script1_dataflow = $bucket;
+$script1_connect=$script1_dataflow;
 $array = array();
-for ($i=0; $fusion < 550; $i++) {
+for ($i=0; $script1_dataflow < 550; $i++) {
     $array = array($array);
 }
 json_encode($array, 0, 551);
@@ -97,12 +126,19 @@ switch (json_last_error()) {
         echo 'ERROR' . PHP_EOL;
     break;
 }
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+$script2_connect=$array;
+$random_var=$GLOBALS[array_rand($GLOBALS)];
+var_dump('random_var:',$random_var);
+var_fusion($script1_connect, $script2_connect, $random_var);
+?>
+--EXTENSIONS--
+opcache
+--CLEAN--
+<?php
+unlink(__DIR__ . "/bug74596_1.php");
+unlink(__DIR__ . "/bug74596_2.php");
 ?>
 --EXPECT--
-bool(true)
+ok
 OK
 ERROR

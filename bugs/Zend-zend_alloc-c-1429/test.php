@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,29 +61,48 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once "open_basedir.inc";
-$initdir = getcwd();
-test_open_basedir_before("tempnam");
-var_dump(tempnam("../bad", "test"));
-var_dump(tempnam("..", "test"));
-var_dump(tempnam("../", "test"));
-var_dump(tempnam("/", "test"));
-var_dump(tempnam("../bad/.", "test"));
-var_dump(tempnam("./../.", "test"));
-var_dump(tempnam("", "test"));
-//absolute test
-$file = tempnam($initdir."/test/ok", "test");
-var_dump($file);
-var_dump(unlink($file));
-//relative test
-$file = tempnam(".", "test");
-var_dump($file);
-var_dump(unlink($file));
-$file = tempnam("../ok", "test");
-var_dump($file);
-var_dump(unlink($file));
-test_open_basedir_after("tempnam");
-$fusion = $file;
+date_default_timezone_set('Europe/Oslo');
+// <day> is equivalent to 1 <day> and will *not* forward if the current day
+// (November 1st) is the same day of week.
+$day = strtotime( "Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "1 Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "2 Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "3 Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n\n";
+// forward one week, then behaves like above for week days
+$day = strtotime( "Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "+1 week Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "+2 week Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "+3 week Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n\n";
+// First, second, etc skip to the first/second weekday *after* the current day.
+// This makes "first thursday" equivalent to "+1 week thursday" - but only
+// if the current day-of-week is the one mentioned in the phrase.
+$day = strtotime( "Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "first Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "second Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "third Thursday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n\n";
+// Now the same where the current day-of-week does not match the one in the
+// phrase.
+$day = strtotime( "Friday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "first Friday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "second Friday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n";
+$day = strtotime( "third Friday Nov 2007" );
+echo date( DateTime::ISO8601, $day ), "\n\n";
+$fusion = $day;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -103,7 +122,7 @@ for ($i = 0; $i < 100000; ++$i) {
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
