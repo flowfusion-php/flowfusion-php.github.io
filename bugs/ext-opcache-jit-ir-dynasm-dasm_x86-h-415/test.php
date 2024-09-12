@@ -61,69 +61,6 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function f1()
-{
-    echo "f1 called\n";
-}
-function f2()
-{
-    echo "f2 called\n";
-}
-function f3()
-{
-    echo "f3 called\n";
-}
-class c1
-{
-    static function assert($file, $line, $unused, $desc)
-    {
-        echo "Class assertion failed $line, \"$desc\"\n";
-    }
-}
-echo "Initial values: assert_options(ASSERT_CALLBACK) => [".assert_options(ASSERT_CALLBACK)."]\n";
-echo "Initial values: ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n";
-var_dump($r2=assert(0 != 0));
-echo"\n";
-echo "Change callback function using ini.set and test return value\n";
-var_dump($rv = ini_set("assert.callback","f2"));
-echo "assert_options(ASSERT_CALLBACK) => [".assert_options(ASSERT_CALLBACK)."]\n";
-echo "ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n";
-var_dump($r2=assert(0 != 0));
-echo"\n";
-echo "Change callback function using assert_options and test return value\n";
-var_dump($rv=assert_options(ASSERT_CALLBACK, "f3"));
-echo "assert_options(ASSERT_CALLBACK) => [".assert_options(ASSERT_CALLBACK)."]\n";
-echo "ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n";
-var_dump($r2=assert(0 != 0));
-echo"\n";
-echo "Reset the name of the callback routine to a class method\n";
-var_dump($rc=assert_options(ASSERT_CALLBACK, "c1"));
-echo "assert_options(ASSERT_CALLBACK) => [".assert_options(ASSERT_CALLBACK)."]\n";
-echo "ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n";
-try {
-    var_dump($r2=assert(0 != 0));
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-echo"\n";
-echo "Reset callback options to use a class method\n";
-var_dump($rc = assert_options(ASSERT_CALLBACK,array("c1","assert")));
-var_dump($rao=assert_options(ASSERT_CALLBACK));
-echo "ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n\n";
-var_dump($r2=assert(0 != 0));
-echo"\n";
-echo "Reset callback options to use an object method\n";
-$o = new c1();
-var_dump($rc=assert_options(ASSERT_CALLBACK,array(&$o,"assert")));
-var_dump($rao=assert_options(ASSERT_CALLBACK));
-echo "ini.get(\"assert.callback\") => [".ini_get("assert.callback")."]\n\n";
-var_dump($r2=assert(0 != 0));
-echo"\n";
-echo "Set callback to something silly\n";
-assert_options(ASSERT_CALLBACK, 3.141);
-var_dump($rao = assert_options(ASSERT_CALLBACK));
-$fusion = $o;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
@@ -133,7 +70,23 @@ class A implements I {
     }
 }
 $a = new A();
-var_dump($fusion);
+var_dump($a);
+$fusion = $this;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/* Try deleting a file which is already deleted */
+$file_path = __DIR__;
+// temp file used
+$filename = "$file_path/unlink_variation4.tmp";
+echo "*** Testing unlink() on deleted file ***\n";
+// create temp file
+$fusion = fopen($filename, "w");
+fclose($fp);
+// delete temp file
+var_dump( unlink($filename) );  // expected: true
+var_dump( file_exists($filename) );  // confirm file deleted
+// delete deleted file
+var_dump( unlink($filename) );  // expected: false
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

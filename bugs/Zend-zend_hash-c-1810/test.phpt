@@ -1,9 +1,9 @@
 --TEST--
-Check that reference detection works properly+Bug #71818 (Memory leak when array altered in destructor)
+Test interaction with cache slots+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
 zend.enable_gc = 1
-expose_php=On
-precision=12
+allow_url_include=0
+opcache.interned_strings_buffer=16
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,30 +68,85 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$v00 = $v01 = $v32 = $v33 = 0;
-test(p32: $v32, p33: $v33, p00: $v00, p01: $v01);
-echo "$v00 $v01 $v32 $v33\n";
-$v = [0 => 0, 1 => 0, 32 => 0, 33 => 0];
-test(p32: $v[32], p33: $v[33], p00: $v[0], p01: $v[1]);
-echo "$v[0] $v[1] $v[32] $v[33]\n";
-function test(
-    &$p00 = null, $p01 = null, &$p02 = null, $p03 = null, &$p04 = null, $p05 = null,
-    &$p06 = null, $p07 = null, &$p08 = null, $p09 = null, &$p10 = null, $p11 = null,
-    &$p12 = null, $p13 = null, &$p14 = null, $p15 = null, &$p16 = null, $p17 = null,
-    &$p18 = null, $p19 = null, &$p20 = null, $p21 = null, &$p22 = null, $p23 = null,
-    &$p24 = null, $p25 = null, &$p26 = null, $p27 = null, &$p28 = null, $p29 = null,
-    &$p30 = null, $p31 = null, &$p32 = null, $p33 = null, &$p34 = null, $p35 = null
-) {
-    $p00++;
-    $p32++;
+class Test {
+    public readonly string $prop;
+    public readonly array $prop2;
+    public readonly object $prop3;
+    public function setProp(string $prop) {
+        $this->prop = $prop;
+    }
+    public function initAndAppendProp2() {
+        $this->prop2 = [];
+        $this->prop2[] = 1;
+    }
+    public function initProp3() {
+        $this->prop3 = new stdClass;
+        $this->prop3->foo = 1;
+    }
+    public function replaceProp3() {
+        $ref =& $this->prop3;
+        $ref = new stdClass;
+    }
 }
-$v00 = $v01 = $v32 = $v33 = 0;
-test(p32: $v32, p33: $v33, p00: $v00, p01: $v01);
-echo "$v00 $v01 $v32 $v33\n";
-$v = [0 => 0, 1 => 0, 32 => 0, 33 => 0];
-test(p32: $v[32], p33: $v[33], p00: $v[0], p01: $v[1]);
-echo "$v[0] $v[1] $v[32] $v[33]\n";
-$fusion = $p00;
+$test = new Test;
+$test->setProp("a");
+var_dump($test->prop);
+try {
+    $test->setProp("b");
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+var_dump($test->prop);
+echo "\n";
+$test = new Test;
+try {
+    $test->initAndAppendProp2();
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $test->initAndAppendProp2();
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+var_dump($test->prop2);
+echo "\n";
+$test = new Test;
+$test->initProp3();
+$test->replaceProp3();
+var_dump($test->prop3);
+$test->replaceProp3();
+var_dump($test->prop3);
+echo "\n";
+// Test variations using closure rebinding, so we have unknown property_info in JIT.
+$test = new Test;
+(function() { $this->prop2 = []; })->call($test);
+$appendProp2 = (function() {
+    $this->prop2[] = 1;
+})->bindTo($test, Test::class);
+try {
+    $appendProp2();
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $appendProp2();
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
+var_dump($test->prop2);
+echo "\n";
+$test = new Test;
+$replaceProp3 = (function() {
+    $ref =& $this->prop3;
+    $ref = new stdClass;
+})->bindTo($test, Test::class);
+$test->initProp3();
+$replaceProp3();
+var_dump($test->prop3);
+$replaceProp3();
+var_dump($test->prop3);
+$fusion = $test;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -115,9 +170,36 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-1 0 1 0
-1 0 1 0
-1 0 1 0
-1 0 1 0
+--EXPECTF--
+string(1) "a"
+Cannot modify readonly property Test::$prop
+string(1) "a"
+
+Cannot indirectly modify readonly property Test::$prop2
+Cannot modify readonly property Test::$prop2
+array(0) {
+}
+
+object(stdClass)#%d (1) {
+  ["foo"]=>
+  int(1)
+}
+object(stdClass)#%d (1) {
+  ["foo"]=>
+  int(1)
+}
+
+Cannot indirectly modify readonly property Test::$prop2
+Cannot indirectly modify readonly property Test::$prop2
+array(0) {
+}
+
+object(stdClass)#%d (1) {
+  ["foo"]=>
+  int(1)
+}
+object(stdClass)#%d (1) {
+  ["foo"]=>
+  int(1)
+}
 OK

@@ -1,2 +1,39 @@
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: -9223372036854775808 + -75 cannot be represented in type 'long long'
+Deprecated: Directive 'allow_url_include' is deprecated in Unknown on line 0
+$date1 at init: 2009-03-27
+$date2 at init: 2009-03-01
+$date1 after first diff: 2009-03-27
+$diff->days after first diff: 26
+$date1 after sub: 2009-03-25
+$date1 after second diff (called at $date1): 2009-03-25
+$diff->days after second diff: 24
+$date1 after third diff (called at $date2): 2009-03-25
+$diff->days after third diff: 24
+-292277022657-01-27T14:23:20+05:53
+Sun, 27 Jan -292277022657 14:23:20 +0553
+-292277022657-01-27T14:23:20+05:53
+Sun, 27 Jan -292277022657 14:23:20 +0553
+-292277022657
+-57
+-292277022657
+-9223372036854775808
+
+2147483648-01-01T05:29:59+05:30
+Wed, 01 Jan 2147483648 05:29:59 +0530
+2147483648-01-01T05:29:59+05:30
+Wed, 01 Jan 2147483648 05:29:59 +0530
+2147483648
+48
+2147483648
+67767976233532799
+
+2147483648-01-01T05:30:00+05:30
+Wed, 01 Jan 2147483648 05:30:00 +0530
+2147483648-01-01T05:30:00+05:30
+Wed, 01 Jan 2147483648 05:30:00 +0530
+2147483648
+48
+2147483648
+67767976233532800
+
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32: runtime error: signed integer overflow: 9223372036854775807 + 19800 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/unixtime2tm.c:141:32 in

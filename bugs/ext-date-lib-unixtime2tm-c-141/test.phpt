@@ -1,10 +1,9 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+Bug #54597 (incorrect years for DateTime objects created with 4-digit years)
+Bug #49059 (DateTime::diff() repeats previous sub() operation)+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"
 --INI--
 date.timezone = UTC
-date.timezone=Europe/London
-serialize_precision=14
-opcache.memory_consumption=64
+max_input_vars=5
+allow_url_include=1
 --SKIPIF--
 <?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
@@ -71,24 +70,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+date_default_timezone_set('Asia/Calcutta');
+$date1 = date_create("2009-03-27");
+$date2 = date_create("2009-03-01");
+print "\$date1 at init: " . $date1->format("Y-m-d") . "\n";
+print "\$date2 at init: " . $date2->format("Y-m-d") . "\n";
+$diff = $date1->diff($date2);
+print "\$date1 after first diff: " . $date1->format("Y-m-d") . "\n";
+print "\$diff->days after first diff: " . $diff->days . "\n";
+$date1 = $date1->sub(new DateInterval("P2D"));
+print "\$date1 after sub: " . $date1->format("Y-m-d") . "\n";
+$diff = $date1->diff($date2);
+print "\$date1 after second diff (called at \$date1): " .
+$date1->format("Y-m-d") . "\n";
+print "\$diff->days after second diff: " . $diff->days . "\n";
+$diff = $date2->diff($date1);
+print "\$date1 after third diff (called at \$date2): " .
+$date1->format("Y-m-d") . "\n";
+print "\$diff->days after third diff: " . $diff->days . "\n";
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$tz = new DateTimeZone("Europe/Amsterdam");
-$dateObject = new DateTime( 'January 0099', $tz );
-echo $dateObject->format( 'Y' ), "\n";
-$dateObject = new DateTime( 'January 1, 0099', $tz );
-echo $dateObject->format( 'Y' ), "\n";
-$dateObject = new DateTime( '0099-01', $tz );
-echo $dateObject->format( 'Y' ), "\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
+$date1 at init: 2009-03-27
+$date2 at init: 2009-03-01
+$date1 after first diff: 2009-03-27
+$diff->days after first diff: 26
+$date1 after sub: 2009-03-25
+$date1 after second diff (called at $date1): 2009-03-25
+$diff->days after second diff: 24
+$date1 after third diff (called at $date2): 2009-03-25
+$diff->days after third diff: 24
 -292277022657-01-27T08:29:52+00:00
 Sun, 27 Jan -292277022657 08:29:52 +0000
 -292277022657-01-27T08:29:52+00:00
@@ -124,6 +143,3 @@ Sun, 04 Dec 292277026596 15:30:07 +0000
 96
 292277026596
 9223372036854775807
-0099
-0099
-0099

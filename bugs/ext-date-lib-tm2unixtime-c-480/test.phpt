@@ -1,10 +1,5 @@
 --TEST--
-Test ArrayObject::uksort() function : basic functionality+strtotime() and mysql timestamps (64 bit)
---INI--
-opcache.max_accelerated_files=10
-opcache.enable_cli=1
---SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
+Test gmstrftime() function : usage variation - Passing date related format strings to format argument.+is_callable() with trampoline should not caused UAF
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -69,62 +64,70 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/* Sort the entries by key using user defined function.
- * Source code: ext/spl/spl_array.c
- * Alias to functions:
- */
-echo "*** Testing ArrayObject::uksort() : basic functionality ***\n";
-// Reverse sorter
-function cmp($value1, $value2) {
-  if($value1 == $value2) {
-    return 0;
-  }
-  else if($value1 < $value2) {
-    return 1;
-  }
-  else
-    return -1;
-}
-$ao = new ArrayObject(array(3=>0, 2=>1, 5=>2, 6=>3, 1=>4));
-$ao->uksort('cmp');
-var_dump($ao);
-$fusion = $value2;
+echo "*** Testing gmstrftime() : usage variation ***\n";
+// Initialise function arguments not being substituted (if any)
+$timestamp = gmmktime(PHP_INT_MAX, 8, 8, 8, 8, 2008);
+setlocale(LC_ALL, "en_US");
+date_default_timezone_set("Asia/Calcutta");
+//array of values to iterate over
+$inputs = array(
+      'Year as decimal number without a century' => "%y",
+      'Year as decimal number including the century' => "%Y",
+      'Time zone offset' => "%Z",
+      'Time zone offset' => "%z",
+);
+// loop through each element of the array for timestamp
+foreach($inputs as $key =>$value) {
+      echo "\n--$key--\n";
+      var_dump( gmstrftime($value) );
+      var_dump( gmstrftime($value, $timestamp) );
+};
+$fusion = $timestamp;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-date_default_timezone_set('UTC');
-/* Format: YYYYMMDDHHMMSS */
-$d[] = '19970523091528';
-$d[] = '20001231185859';
-$d[] = '20800410101010'; // overflow..
-foreach($d as $date) {
-    $time = strtotime($date);
-    if (is_integer($time)) {
-        var_dump(date('r', $time));
-    } else {
-        var_dump($fusion);
+class B {}
+class A extends B {
+    public function bar($func) {
+        var_dump(is_callable(array('B', 'foo')));
+    }
+    public function __call($func, $args) {
     }
 }
+class X {
+    public static function __callStatic($func, $fusion) {
+    }
+}
+$a = new A();
+// Extra X::foo() wrapper to force use of allocated trampoline.
+X::foo($a->bar('foo'));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-*** Testing ArrayObject::uksort() : basic functionality ***
-object(ArrayObject)#1 (1) {
-  ["storage":"ArrayObject":private]=>
-  array(5) {
-    [6]=>
-    int(3)
-    [5]=>
-    int(2)
-    [3]=>
-    int(0)
-    [2]=>
-    int(1)
-    [1]=>
-    int(4)
-  }
-}
-string(31) "Fri, 23 May 1997 09:15:28 +0000"
-string(31) "Sun, 31 Dec 2000 18:58:59 +0000"
-string(31) "Wed, 10 Apr 2080 10:10:10 +0000"
+--EXPECTF--
+*** Testing gmstrftime() : usage variation ***
+
+--Year as decimal number without a century--
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(%d) "%d"
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(2) "08"
+
+--Year as decimal number including the century--
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(%d) "%d"
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(4) "2008"
+
+--Time zone offset--
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(%s) "%s"
+
+Deprecated: Function gmstrftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in %s on line %d
+string(%s) "%s"
+bool(false)

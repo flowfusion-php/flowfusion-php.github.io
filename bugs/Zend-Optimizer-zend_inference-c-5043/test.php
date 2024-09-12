@@ -61,58 +61,38 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo 'Bitwise ops:' . \PHP_EOL;
-$var = '1.0'|3;
-var_dump($var);
-$var = '1.0'&3;
-var_dump($var);
-$var = '1.0'^3;
-var_dump($var);
-$var = '1.0' << 3;
-var_dump($var);
-$var = '1.0' >> 3;
-var_dump($var);
-$var = 3 << '1.0';
-var_dump($var);
-$var = 3 >> '1.0';
-var_dump($var);
-echo 'Modulo:' . \PHP_EOL;
-$var = '6.0' % 2;
-var_dump($var);
-$var = 9 % '2.0';
-var_dump($var);
-/* Float string array keys are never normalized to an integer value */
-/* Strings are handled differently and always warn on non integer keys */
-echo 'Function calls:' . \PHP_EOL;
-function foo(int $a) {
-    return $a;
-}
-var_dump(foo('1.0'));
-var_dump(chr('60.0'));
-echo 'Function returns:' . \PHP_EOL;
-function bar(): int {
-    return '3.0';
-}
-var_dump(bar());
-echo 'Typed property assignment:' . \PHP_EOL;
-class Test {
-    public int $a;
-}
-$instance = new Test();
-$instance->a = '1.0';
-var_dump($instance->a);
-$fusion = $instance;
+$pharconfig = 0;
+require_once 'files/phar_oo_test.inc';
+$phar = new Phar($fname);
+$phar->setInfoClass('SplFileObject');
+$phar['f.php'] = 'hi';
+var_dump(isset($phar['f.php']));
+echo $phar['f.php'];
+echo "\n";
+unset($phar['f.php']);
+var_dump(isset($phar['f.php']));
+$fusion = $pharconfig;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-echo "*** Testing session_set_save_handler() : variation ***\n";
-require_once "save_handler.inc";
-$fusion = __DIR__ . '/session_set_save_handler_variation3';
-@mkdir($path);
-var_dump(session_status());
-session_save_path($path);
-var_dump(session_set_save_handler("open", "close", "read", "write", "destroy", "gc"));
-var_dump(session_destroy());
-ob_end_flush();
+class DBStatement extends PDOStatement {
+    public $dbh;
+    protected function __construct($dbh) {
+        $this->dbh = $dbh;
+        throw new Exception("Blah");
+    }
+}
+$pdo = new PDO('sqlite::memory:', null, null);
+$pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('DBStatement',
+    array($fusion)));
+$pdo->exec("CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    message TEXT,
+    time INTEGER)");
+try {
+    $pdoStatement = $pdo->query("select * from messages");
+} catch (Exception $e) {
+    var_dump($e->getMessage());
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
