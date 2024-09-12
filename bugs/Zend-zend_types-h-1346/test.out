@@ -1,0 +1,58 @@
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused848.php]
+prompt> halloarray(2) {
+  ["/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused848.php"]=>
+  array(5) {
+    [72]=>
+    int(1)
+    [74]=>
+    int(2)
+    [75]=>
+    int(2)
+    [76]=>
+    int(3)
+    [77]=>
+    int(4)
+  }
+  ["A::b"]=>
+  array(3) {
+    [65]=>
+    int(1)
+    [66]=>
+    int(2)
+    [69]=>
+    int(2)
+  }
+}
+
+Warning: Undefined variable $c in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused848.php on line 78
+# Ghost:
+string(11) "initializer"
+string(14) "C::__construct"
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused848.php on line 85
+[Uncaught TypeError in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused848.php on line 85: Cannot assign null to property C::$b of type int]
+>00085:         set(int $value) { $this->b = $fusion; }
+ 00086:     }
+ 00087:     public int $c {
+prompt> AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==982279==ERROR: AddressSanitizer: SEGV on unknown address 0x008dffff800e (pc 0x5606f3a38938 bp 0x7ffc765de930 sp 0x7ffc765de900 T0)
+==982279==The signal is caused by a READ memory access.
+    #0 0x5606f3a38938 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1346:2
+    #1 0x5606f3a388b3 in zval_delref_p /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1382:9
+    #2 0x5606f3a3859b in zval_ptr_dtor_nogc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:35:35
+    #3 0x5606f3a364c6 in zho_it_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_property_hooks.c:212:2
+    #4 0x5606f3832c3f in iter_wrapper_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_iterators.c:66:2
+    #5 0x5606f398d9fb in zend_objects_store_free_object_storage /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:118:6
+    #6 0x5606f2f43944 in zend_shutdown_executor_values /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:425:2
+    #7 0x5606f2f44d6e in shutdown_executor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:442:2
+    #8 0x5606f3abc213 in zend_deactivate /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1338:2
+    #9 0x5606f266d41f in php_request_shutdown /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:1954:2
+    #10 0x5606f3c16896 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg.c:1683:4
+    #11 0x7f29c1fe5d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #12 0x7f29c1fe5e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #13 0x5606f0803244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg+0x1c03244) (BuildId: ef3bd3e5370cbcf2c198549ad1d3b385ae63f864)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1346:2 in zend_gc_delref
+==982279==ABORTING
