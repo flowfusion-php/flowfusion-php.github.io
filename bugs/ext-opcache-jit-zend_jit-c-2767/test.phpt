@@ -1,22 +1,13 @@
 --TEST--
-Bug GH-8461 007 (JIT does not account for function re-compile)+JIT FETCH_DIM_R: 016
+Bug GH-11854 (DateTime:createFromFormat stopped parsing DateTime with extra space)+JIT: FETCH_OBJ 005
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit=1255
-opcache.file_update_protection=0
-opcache.revalidate_freq=0
-opcache.protect_memory=1
-opcache.preload={PWD}/gh8461-007.inc
+date.timezone=UTC
 opcache.enable=1
 opcache.enable_cli=1
 opcache.file_update_protection=0
-opcache.jit=1235
-variables_order=E
---SKIPIF--
-<?php
-if (PHP_OS_FAMILY === "Windows") die("skip Windows does not support preloading");
-?>
+opcache.jit=tracing
+opcache.preload={PWD}/preload_loadable_classes_3.inc
+opcache.interned_strings_buffer=500
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -81,19 +72,14 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-for ($i = 0; $i < 100; $i++) {
-    UniqueListLast::bar();
-}
-for ($i = 0; $i < 100; $i++) {
-    new UniqueListLast();
-}
-for ($i = 0; $i < 10; $i++) {
-    test();
-}
-print "OK";
+$dateTime = DateTime::createFromFormat("D M d H:i:s Y", "Wed Aug  2 08:37:50 2023");
+var_dump($dateTime);
+$fusion = $dateTime;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-[4][-1];
-?>
+for ($i = 0; $fusion < 3; $i++) {
+	$a =& $b;
+	$a->p;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
@@ -102,6 +88,16 @@ var_fusion($v1,$v2,$v3);
 --EXTENSIONS--
 opcache
 --EXPECTF--
-OK
-Warning: Undefined array key -1 in %sfetch_dim_r_016.php on line 2
-DONE
+object(DateTime)#1 (3) {
+  ["date"]=>
+  string(26) "2023-08-02 08:37:50.000000"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(3) "UTC"
+}
+Warning: Attempt to read property "p" on null in %sfetch_obj_005.php on line 4
+
+Warning: Attempt to read property "p" on null in %sfetch_obj_005.php on line 4
+
+Warning: Attempt to read property "p" on null in %sfetch_obj_005.php on line 4

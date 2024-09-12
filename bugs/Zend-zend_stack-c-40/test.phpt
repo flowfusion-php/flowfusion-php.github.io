@@ -1,12 +1,17 @@
 --TEST--
-Bug #61728 (PHP crash when calling ob_start in request_shutdown phase)+GH-11189: Exceeding memory limit in zend_hash_do_resize leaves the array in an invalid state (packed array)
+Test match default breakpoint with variable assignment+Test pow() function : usage variations - different data types as $base argument
 --INI--
-memory_limit=2M
-zend_test.print_stderr_mshutdown=1
-date.timezone = Europe/Berlin
+opcache.enable_cli=0
+precision = 14
+session.hash_function=0
+opcache.interned_strings_buffer=500
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=tracing
 --SKIPIF--
 <?php
-if (getenv("USE_ZEND_ALLOC") === "0") die("skip ZMM is disabled");
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
 ?>
 --FILE--
 <?php
@@ -72,56 +77,98 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function output_html($ext) {
-    return strlen($ext);
-}
-class MySessionHandler implements SessionHandlerInterface {
-    function open ($save_path, $session_name): bool {
-        return true;
-    }
-    function close(): bool {
-        return true;
-    }
-    function read ($id): string {
-        return '';
-    }
-    function write ($id, $sess_data): bool {
-        ob_start("output_html");
-        echo "laruence";
-        ob_end_flush();
-        return true;
-    }
-    function destroy ($id): bool {
-        return true;
-    }
-    function gc ($maxlifetime): int {
-        return 1;
-    }
-}
-session_set_save_handler(new MySessionHandler());
-session_start();
-$script1_dataflow = $save_path;
+$foo = match (0) {
+    0 => 'foo',
+    default => 'bar', // breakpoint #0
+};
+$foo = match (1) {
+    0 => 'foo',
+    default => 'bar', // breakpoint #1
+};
+$fusion = $foo;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start(function() {
-    global $a;
-    for ($i = count($a); $i > 0; --$script1_dataflow) {
-        $a[] = 2;
-    }
-    fwrite(STDOUT, "Success");
-});
-$a = [];
-// trigger OOM in a resize operation
-while (1) {
-    $a[] = 1;
+class classA
+{
 }
+// resource variable
+$fp = fopen(__FILE__, "r");
+$inputs = [
+    // int data
+    0,
+    1,
+    12345,
+    -2345,
+    PHP_INT_MAX,
+    // float data
+    10.5,
+    -10.5,
+    12.3456789e10,
+    12.3456789e-10,
+    0.5,
+    // null data
+    null,
+    // boolean data
+    true,
+    false,
+    // empty data
+    "",
+    [],
+    // string data
+    "abcxyz",
+    "10.5",
+    "2",
+    "6.3e-2",
+    // object data
+    new classA(),
+    // resource variable
+    $fp,
+];
+// loop through each element of $inputs to check the behaviour of pow()
+foreach ($inputs as $input) {
+    try {
+        var_dump(pow($fusion, 3));
+    } catch (Error $e) {
+        echo $e->getMessage(), "\n";
+    }
+}
+fclose($fp);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-session
+--PHPDBG--
+b 5
+b 10
+r
+q
 --EXPECTF--
-8
-Success
-Fatal error: Allowed memory size of %s bytes exhausted%s(tried to allocate %s bytes) in %s on line %d
+[Successful compilation of %s.php]
+prompt> [Breakpoint #0 added at %s.php:5]
+prompt> [Breakpoint #1 added at %s.php:10]
+prompt> [Breakpoint #1 at %s.php:10, hits: 1]
+>00010:     default => 'bar', // breakpoint #1
+ 00011: };
+ 00012: 
+prompt>
+int(0)
+int(1)
+int(1881365963625)
+int(-12895213625)
+float(7.846377169233351E+56)
+float(1157.625)
+float(-1157.625)
+float(1.8816763717891549E+33)
+float(1.8816763717891545E-27)
+float(0.125)
+int(0)
+int(1)
+int(0)
+Unsupported operand types: string ** int
+Unsupported operand types: array ** int
+Unsupported operand types: string ** int
+float(1157.625)
+int(8)
+float(0.000250047)
+Unsupported operand types: classA ** int
+Unsupported operand types: resource ** int

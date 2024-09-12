@@ -1,9 +1,8 @@
 --TEST--
-Bug #68215 (Behavior of foreach has changed)+Test === operator : max int 64bit range
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+Test array_merge_recursive() function : basic functionality - array with default keys+Conflicting constants in composing classes with different visibility modifiers should result in a fatal error, since this indicates that the code is incompatible.
+--INI--
+magic_quotes_gpc=1
+serialize_precision=10
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,134 +67,110 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$arr = array(
-    'a' => array(
-        'a' => 'apple',
-        'b' => 'banana',
-        'c' => 'cranberry',
-        'd' => 'mango',
-        'e' => 'pineapple'
-    ),
-    'b' => array(
-        'a' => 'apple',
-        'b' => 'banana',
-        'c' => 'cranberry',
-        'd' => 'mango',
-        'e' => 'pineapple'
-    ),
-    'c' => 'cranberry',
-    'd' => 'mango',
-    'e' => 'pineapple'
-);
-function test(&$child, $entry)
-{
-    $i = 1;
-    foreach ($child AS $key => $fruit)
-    {
-        if (!is_numeric($key))
-        {
-            $child[$i] = $fruit;
-            unset($child[$key]);
-            $i++;
-        }
-    }
-}
-$i = 1;
-foreach ($arr AS $key => $fruit)
-{
-    $arr[$i] = $fruit;
-    if (is_array($fruit))
-    {
-        test($arr[$i], $fruit);
-    }
-    unset($arr[$key]);
-    $i++;
-}
-var_dump($arr);
+echo "*** Testing array_merge_recursive() : array with default keys ***\n";
+// Initialise the arrays
+$arr1 = array(1, array(1, 2));
+$arr2 = array(3, array("hello", 'world'));
+$arr3 = array(array(6, 7), array("str1", 'str2'));
+// Calling array_merge_recursive() without arguments
+echo "-- Without arguments --\n";
+var_dump( array_merge_recursive() );
+// Calling array_merge_recursive() with default arguments
+echo "-- With default argument --\n";
+var_dump( array_merge_recursive($arr1) );
+// Calling array_merge_recursive() with more arguments
+echo "-- With more arguments --\n";
+var_dump( array_merge_recursive($arr1,$arr2) );
+var_dump( array_merge_recursive($arr1,$arr2,$arr3) );
+echo "Done";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$validIdentical = array (
-MAX_32Bit, array(MAX_32Bit),
-MIN_32Bit, array(MIN_32Bit),
-MAX_64Bit, array(MAX_64Bit),
-MIN_64Bit, array(MIN_64Bit),
-);
-$invalidIdentical = array (
-MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
-MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
-);
-$failed = false;
-// test for valid values
-for ($i = 0; $i < count($validIdentical); $i +=2) {
-   $typeToTestVal = $validIdentical[$i];
-   $compares = $validIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         // do nothing
-      }
-      else {
-         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
-         $failed = true;
-      }
-   }
+trait TestTrait {
+  public const Constant = 42;
 }
-// test for invalid values
-for ($i = 0; $i < count($invalidIdentical); $i +=2) {
-   $typeToTestVal = $invalidIdentical[$i];
-   $compares = $invalidIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
-         $failed = true;
-      }
-   }
+echo "PRE-CLASS-GUARD\n";
+class ComposingClass {
+    use TestTrait;
+    private const Constant = 42;
 }
-if ($failed == false) {
-   echo "Test Passed\n";
-}
+echo "POST-CLASS-GUARD\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-array(5) {
+--EXPECTF--
+*** Testing array_merge_recursive() : array with default keys ***
+-- Without arguments --
+array(0) {
+}
+-- With default argument --
+array(2) {
+  [0]=>
+  int(1)
   [1]=>
-  array(5) {
+  array(2) {
+    [0]=>
+    int(1)
     [1]=>
-    string(5) "apple"
-    [2]=>
-    string(6) "banana"
-    [3]=>
-    string(9) "cranberry"
-    [4]=>
-    string(5) "mango"
-    [5]=>
-    string(9) "pineapple"
+    int(2)
+  }
+}
+-- With more arguments --
+array(4) {
+  [0]=>
+  int(1)
+  [1]=>
+  array(2) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
   }
   [2]=>
-  array(5) {
-    [1]=>
-    string(5) "apple"
-    [2]=>
-    string(6) "banana"
-    [3]=>
-    string(9) "cranberry"
-    [4]=>
-    string(5) "mango"
-    [5]=>
-    string(9) "pineapple"
-  }
+  int(3)
   [3]=>
-  string(9) "cranberry"
-  [4]=>
-  string(5) "mango"
-  [5]=>
-  string(9) "pineapple"
+  array(2) {
+    [0]=>
+    string(5) "hello"
+    [1]=>
+    string(5) "world"
+  }
 }
-Test Passed
+array(6) {
+  [0]=>
+  int(1)
+  [1]=>
+  array(2) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+  }
+  [2]=>
+  int(3)
+  [3]=>
+  array(2) {
+    [0]=>
+    string(5) "hello"
+    [1]=>
+    string(5) "world"
+  }
+  [4]=>
+  array(2) {
+    [0]=>
+    int(6)
+    [1]=>
+    int(7)
+  }
+  [5]=>
+  array(2) {
+    [0]=>
+    string(4) "str1"
+    [1]=>
+    string(4) "str2"
+  }
+}
+Done
+PRE-CLASS-GUARD
+
+Fatal error: ComposingClass and TestTrait define the same constant (Constant) in the composition of ComposingClass. However, the definition differs and is considered incompatible. Class was composed in %s on line %d

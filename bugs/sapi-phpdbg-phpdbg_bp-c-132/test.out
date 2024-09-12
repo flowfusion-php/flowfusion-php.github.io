@@ -1,176 +1,178 @@
-[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php]
-prompt> 10
-prompt> [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php:6]
-prompt> Exception
-Exception
-Exception
-string(1) "a"
-Exception
-Exception
-Exception
-int(42)
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-int(42)
-Exception
-Exception
-Exception
-object(stdClass)#2 (0) {
-}
-Exception
-string(1) "a"
-Exception
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php]
+prompt> [Pending breakpoint #0 added at breakpoints_005.php:4]
+prompt> --- testing: 9223372036854775807 ---
 bool(true)
-Exception
-Exception
-Exception
-object(BadStr)#1 (0) {
-}
-string(10) "stdin
-data"
-ok
+--- testing: -9223372036854775808 ---
+bool(true)
+--- testing: 2147483647 ---
+bool(true)
+--- testing: -2147483648 ---
+bool(true)
+--- testing: 9223372034707292160 ---
+bool(true)
+--- testing: -9223372034707292160 ---
+bool(true)
+--- testing: 2147483648 ---
+bool(true)
+--- testing: -2147483649 ---
+bool(true)
+--- testing: 4294967294 ---
+bool(true)
+--- testing: 4294967295 ---
+bool(true)
+--- testing: 4294967293 ---
+bool(true)
+--- testing: 9223372036854775806 ---
+bool(true)
+--- testing: 9.2233720368548E+18 ---
+bool(true)
+--- testing: -9223372036854775807 ---
+bool(true)
+--- testing: -9.2233720368548E+18 ---
+bool(true)
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 80
+NULL
 string(11) "random_var:"
 array(0) {
 }
-object(DateInterval)#4 (10) {
-  ["y"]=>
-  int(0)
-  ["m"]=>
-  int(0)
-  ["d"]=>
-  int(1)
-  ["h"]=>
-  int(0)
-  ["i"]=>
-  int(0)
-  ["s"]=>
-  int(0)
-  ["f"]=>
-  float(0)
-  ["invert"]=>
-  int(0)
-  ["days"]=>
-  bool(false)
-  ["from_string"]=>
-  bool(false)
+float(-9.223372036854776E+18)
+array(0) {
 }
-object(DateInterval)#4 (10) {
-  ["y"]=>
-  int(0)
-  ["m"]=>
-  int(0)
-  ["d"]=>
-  int(1)
-  ["h"]=>
-  int(0)
-  ["i"]=>
-  int(0)
-  ["s"]=>
-  int(0)
-  ["f"]=>
-  float(0)
-  ["invert"]=>
-  int(0)
-  ["days"]=>
-  bool(false)
-  ["from_string"]=>
-  bool(false)
-}
-Calling function: simplexml_load_string with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Calling function: preg_match_all with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 Array, Array, Array, Array, Array
-Error calling function simplexml_load_string: simplexml_load_string(): Argument #1 ($data) must be of type string, array given
-Calling function: array_flip with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Array
-Calling function: xmlwriter_end_document with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Array
-Error calling function xmlwriter_end_document: xmlwriter_end_document(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: prev with arguments: Error calling function prev: Object of class DateInterval could not be converted to string
-Calling function: get_required_files with arguments: 
-Calling function: lstat with arguments: Error calling function lstat: Object of class DateInterval could not be converted to string
-Calling function: strpos with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Error calling function strpos: Object of class DateInterval could not be converted to string
-Calling function: session_unset with arguments: 
-Calling function: iconv_mime_decode_headers with arguments: Error calling function iconv_mime_decode_headers: Object of class DateInterval could not be converted to string
-Calling function: hash_equals with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Warning: preg_match_all(): Argument #3 ($matches) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 41
+Error calling function preg_match_all: preg_match_all(): Argument #1 ($pattern) must be of type string, array given
+Calling function: deg2rad with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array
+Error calling function deg2rad: deg2rad(): Argument #1 ($num) must be of type float, array given
+Calling function: krsort with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 Array, Array
-Error calling function hash_equals: hash_equals(): Argument #1 ($known_string) must be of type string, array given
-Calling function: is_writeable with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Array
-Error calling function is_writeable: is_writeable(): Argument #1 ($filename) must be of type string, array given
-Calling function: header with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Error calling function header: Object of class DateInterval could not be converted to string
-Calling function: stream_wrapper_unregister with arguments: Error calling function stream_wrapper_unregister: Object of class DateInterval could not be converted to string
+Warning: krsort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 41
+Error calling function krsort: krsort(): Argument #2 ($flags) must be of type int, array given
+Calling function: addslashes with arguments: -9.2233720368548E+18
+Calling function: stream_filter_register with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: date_interval_create_from_date_string with arguments: -9.2233720368548E+18
+
+Warning: date_interval_create_from_date_string(): Unknown or bad format (-9.2233720368548E+18) at position 15 (8): Unexpected character in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 41
+Calling function: hexdec with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array
+Error calling function hexdec: hexdec(): Argument #1 ($hex_string) must be of type string, array given
 Calling function: phpdbg_clear with arguments: 
-Calling function: json_last_error_msg with arguments: 
-Calling function: stream_get_wrappers with arguments: 
-Calling function: ctype_punct with arguments: Error calling function ctype_punct: Object of class DateInterval could not be converted to string
-Calling function: stream_is_local with arguments: Error calling function stream_is_local: Object of class DateInterval could not be converted to string
-Calling function: chmod with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Array, Array
-Error calling function chmod: chmod(): Argument #1 ($filename) must be of type string, array given
-Calling function: sqrt with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
+Calling function: decoct with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
 Array
-Error calling function sqrt: sqrt(): Argument #1 ($num) must be of type float, array given
+Error calling function decoct: decoct(): Argument #1 ($num) must be of type int, array given
+Calling function: spl_autoload_extensions with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array
+Error calling function spl_autoload_extensions: spl_autoload_extensions(): Argument #1 ($file_extensions) must be of type ?string, array given
+Calling function: date_format with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, -9.2233720368548E+18
+Error calling function date_format: date_format(): Argument #1 ($object) must be of type DateTimeInterface, array given
+Calling function: simplexml_import_dom with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, Array
+Error calling function simplexml_import_dom: simplexml_import_dom(): Argument #1 ($node) must be of type object, array given
+Calling function: str_split with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+-9.2233720368548E+18, Array
+Error calling function str_split: str_split(): Argument #2 ($length) must be of type int, array given
+Calling function: convert_uuencode with arguments: -9.2233720368548E+18
+Calling function: error_log with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+-9.2233720368548E+18, Array, -9.2233720368548E+18, Array
+Error calling function error_log: error_log(): Argument #2 ($message_type) must be of type int, array given
 Calling function: xmlwriter_start_attribute with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Error calling function xmlwriter_start_attribute: Object of class DateInterval could not be converted to string
-Calling function: xmlwriter_start_element with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 38
-Error calling function xmlwriter_start_element: Object of class DateInterval could not be converted to string
-Calling function: get_defined_constants with arguments: Error calling function get_defined_constants: Object of class DateInterval could not be converted to string
-Calling function: opcache_invalidate with arguments: Error calling function opcache_invalidate: Object of class DateInterval could not be converted to string
-Calling function: stream_bucket_make_writeable with arguments: Error calling function stream_bucket_make_writeable: Object of class DateInterval could not be converted to string
-Calling function: ob_get_clean with arguments: 
-Calling function: timezone_abbreviations_list with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, Array
+Error calling function xmlwriter_start_attribute: xmlwriter_start_attribute(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: array_fill_keys with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, -9.2233720368548E+18
+Calling function: getprotobynumber with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array
+Error calling function getprotobynumber: getprotobynumber(): Argument #1 ($protocol) must be of type int, array given
+Calling function: class_uses with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, Array
+Error calling function class_uses: class_uses(): Argument #2 ($autoload) must be of type bool, array given
+Calling function: preg_grep with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, -9.2233720368548E+18, Array
+Error calling function preg_grep: preg_grep(): Argument #1 ($pattern) must be of type string, array given
+Calling function: stream_set_timeout with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, Array, Array
+Error calling function stream_set_timeout: stream_set_timeout(): Argument #1 ($stream) must be of type resource, array given
+Calling function: str_replace with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+-9.2233720368548E+18, Array, -9.2233720368548E+18, Array
+
+Warning: str_replace(): Argument #4 ($count) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 41
+Error calling function str_replace: str_replace(): Argument #2 ($replace) must be of type string when argument #1 ($search) is a string
+Calling function: system with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: system(): Argument #2 ($result_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 41
+sh: 0: Illegal option -9
+Calling function: dir with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+-9.2233720368548E+18, Array
+Error calling function dir: dir(): Argument #2 ($context) must be of type resource or null, array given
+Calling function: realpath_cache_get with arguments: 
+Calling function: dirname with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array, -9.2233720368548E+18
+Error calling function dirname: dirname(): Argument #1 ($path) must be of type string, array given
+Calling function: stream_resolve_include_path with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused362.php on line 38
+Array
+Error calling function stream_resolve_include_path: stream_resolve_include_path(): Argument #1 ($filename) must be of type string, array given
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==768858==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000093a8 (pc 0x5602f8a9eef5 bp 0x7ffd4d74a470 sp 0x7ffd4d749cc0 T0)
-==768858==The signal is caused by a READ memory access.
-    #0 0x5602f8a9eef5 in phpdbg_export_breakpoints_to_string /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:9
-    #1 0x5602f8be2be5 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg.c:1616:6
-    #2 0x7fa8aa94cd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #3 0x7fa8aa94ce3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #4 0x5602f5803244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg+0x1c03244) (BuildId: 0101ecdee31c0d9dd2714f78b3d7003aaa2e9448)
+==3630317==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x5561cd56a707 bp 0x7ffe776fe080 sp 0x7ffe776fdf50 T0)
+==3630317==The signal is caused by a READ memory access.
+==3630317==Hint: this fault was caused by a dereference of a high value address (see register values below).  Dissassemble the provided pc to learn which register was used.
+    #0 0x5561cd56a707 in phpdbg_export_breakpoints_to_string /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132
+    #1 0x5561cd50a00d in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg.c:1619
+    #2 0x7f459e2a0d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #3 0x7f459e2a0e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #4 0x5561cb206574 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg+0x2a06574)
 
 AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132:9 in phpdbg_export_breakpoints_to_string
-==768858==ABORTING
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:132 in phpdbg_export_breakpoints_to_string
+==3630317==ABORTING

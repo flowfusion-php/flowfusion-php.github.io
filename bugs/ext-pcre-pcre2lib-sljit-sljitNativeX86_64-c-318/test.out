@@ -1,0 +1,65 @@
+Warning: Warning A in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused642.php on line 65
+
+Warning: Warning B in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused642.php on line 70
+
+Warning: Warning C in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused642.php on line 67
+
+Warning: Warning D in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused642.php on line 72
+=================================================================
+==1335818==ERROR: AddressSanitizer: stack-buffer-underflow on address 0x7f62bd49adf0 at pc 0x5585162fe582 bp 0x7ffc9cc41940 sp 0x7ffc9cc41930
+WRITE of size 1 at 0x7f62bd49adf0 thread T0
+    #0 0x5585162fe581 in generate_far_jump_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_64.c:318
+    #1 0x5585162f48c0 in generate_near_jump_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_common.c:545
+    #2 0x5585162f6277 in sljit_generate_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_common.c:636
+    #3 0x558516407218 in jit_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/pcre2_jit_compile.c:14318
+    #4 0x558516408621 in php_pcre2_jit_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/pcre2_jit_compile.c:14473
+    #5 0x5585165d39e8 in pcre_get_compiled_regex_cache_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:810
+    #6 0x5585165d454d in pcre_get_compiled_regex_cache /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:896
+    #7 0x5585165d8ec9 in php_do_pcre_match /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1115
+    #8 0x5585165dd15b in zif_preg_match /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1467
+    #9 0x5585179be243 in ZEND_DO_ICALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1275
+    #10 0x558517d98445 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57212
+    #11 0x558517dc8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #12 0x55851781b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #13 0x558517474e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #14 0x5585182fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #15 0x558518300966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #16 0x7f62c4777d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #17 0x7f62c4777e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #18 0x5585160064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+Address 0x7f62bd49adf0 is a wild pointer.
+SUMMARY: AddressSanitizer: stack-buffer-underflow /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_64.c:318 in generate_far_jump_code
+Shadow bytes around the buggy address:
+  0x0fecd7a8b560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecd7a8b570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecd7a8b580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecd7a8b590: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecd7a8b5a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fecd7a8b5b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[f1]f1
+  0x0fecd7a8b5c0: f1 f1 f1 f1 00 f2 f2 f2 00 00 f2 f2 00 00 00 00
+  0x0fecd7a8b5d0: 00 00 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00
+  0x0fecd7a8b5e0: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 f2 f2
+  0x0fecd7a8b5f0: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0fecd7a8b600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==1335818==ABORTING

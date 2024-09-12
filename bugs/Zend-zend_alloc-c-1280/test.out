@@ -1,0 +1,111 @@
+array(3) {
+  [0]=>
+  array(7) {
+    ["file"]=>
+    string(66) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php"
+    ["line"]=>
+    int(71)
+    ["function"]=>
+    string(5) "start"
+    ["class"]=>
+    string(5) "Fiber"
+    ["object"]=>
+    object(Fiber)#3 (0) {
+    }
+    ["type"]=>
+    string(2) "->"
+    ["args"]=>
+    array(0) {
+    }
+  }
+  [1]=>
+  array(4) {
+    ["file"]=>
+    string(66) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php"
+    ["line"]=>
+    int(73)
+    ["function"]=>
+    string(1) "g"
+    ["args"]=>
+    array(0) {
+    }
+  }
+  [2]=>
+  array(2) {
+    ["function"]=>
+    string(9) "{closure}"
+    ["args"]=>
+    array(0) {
+    }
+  }
+}
+
+Warning: Undefined variable $i in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 95
+
+Warning: Undefined variable $i in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused93.php on line 95
+=================================================================
+==936238==ERROR: AddressSanitizer: stack-buffer-underflow on address 0x7fe3b4006f40 at pc 0x55849b468eba bp 0x7ffe5a38b500 sp 0x7ffe5a38b4f0
+WRITE of size 8 at 0x7fe3b4006f40 thread T0
+    #0 0x55849b468eb9 in zend_mm_alloc_small_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1280
+    #1 0x55849b469938 in zend_mm_alloc_small /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1315
+    #2 0x55849b46a4c5 in zend_mm_alloc_heap /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1383
+    #3 0x55849b47c975 in _emalloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:2615
+    #4 0x55849bce8459 in zend_objects_new /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:189
+    #5 0x55849b6463bf in _object_and_properties_init /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:1771
+    #6 0x55849b6467e7 in object_init_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:1794
+    #7 0x55849b875e1f in ZEND_NEW_SPEC_CONST_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:10537
+    #8 0x55849bba322b in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58125
+    #9 0x55849b576e3d in zend_call_function /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:957
+    #10 0x55849b579254 in zend_call_known_function /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:1051
+    #11 0x55849bce4f07 in zend_call_known_instance_method /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:853
+    #12 0x55849bce4f65 in zend_call_known_instance_method_with_0_params /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:859
+    #13 0x55849bce81d2 in zend_objects_destroy_object /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:173
+    #14 0x55849bc51cd1 in zend_gc_collect_cycles /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_gc.c:1899
+    #15 0x55849bc3a255 in gc_possible_root_when_full /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_gc.c:644
+    #16 0x55849bc3a86d in gc_possible_root /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_gc.c:694
+    #17 0x55849b7464e9 in zend_object_release /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.h:77
+    #18 0x55849bb95bb5 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57081
+    #19 0x55849bbc8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #20 0x55849b61b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #21 0x55849b274e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #22 0x55849c0fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #23 0x55849c100966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #24 0x7fe3bb4eed8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #25 0x7fe3bb4eee3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #26 0x558499e064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+Address 0x7fe3b4006f40 is a wild pointer.
+SUMMARY: AddressSanitizer: stack-buffer-underflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1280 in zend_mm_alloc_small_slow
+Shadow bytes around the buggy address:
+  0x0ffcf67f8d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcf67f8da0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcf67f8db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1
+  0x0ffcf67f8dc0: f1 f1 f1 f1 00 f2 f2 f2 00 00 f2 f2 00 00 00 00
+  0x0ffcf67f8dd0: 00 00 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00
+=>0x0ffcf67f8de0: 00 00 00 00 00 00 00 00[f1]f1 f1 f1 00 00 f2 f2
+  0x0ffcf67f8df0: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0ffcf67f8e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcf67f8e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcf67f8e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcf67f8e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==936238==ABORTING

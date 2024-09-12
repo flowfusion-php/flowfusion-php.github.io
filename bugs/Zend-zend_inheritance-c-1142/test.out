@@ -1,0 +1,30 @@
+int(2)
+
+Warning: Undefined variable $x in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused165.php on line 70
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==31079==ERROR: AddressSanitizer: SEGV on unknown address 0x0000413c7964 (pc 0x555f0a9386bd bp 0x7ffd11c35d00 sp 0x7ffd11c35c60 T0)
+==31079==The signal is caused by a WRITE memory access.
+    #0 0x555f0a9386bd in do_inheritance_check_on_method_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:1142
+    #1 0x555f0a93984d in do_inheritance_check_on_method /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:1205
+    #2 0x555f0a952da1 in zend_add_trait_method /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:1968
+    #3 0x555f0a957031 in zend_traits_copy_functions /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:2109
+    #4 0x555f0a95c64f in zend_do_traits_method_binding /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:2313
+    #5 0x555f0a962a18 in zend_do_bind_traits /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:2574
+    #6 0x555f0a97013a in zend_do_link_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:3141
+    #7 0x555f0a099cf2 in zend_bind_class_in_slot /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1254
+    #8 0x555f0a09a350 in do_bind_class /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_compile.c:1288
+    #9 0x555f0a425dc1 in ZEND_DECLARE_CLASS_SPEC_CONST_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:5473
+    #10 0x555f0a79dfe7 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57657
+    #11 0x555f0a7c8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #12 0x555f0a21b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #13 0x555f09e74e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #14 0x555f0acfce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #15 0x555f0ad00966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #16 0x7f41fc646d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #17 0x7f41fc646e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #18 0x555f08a064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_inheritance.c:1142 in do_inheritance_check_on_method_ex
+==31079==ABORTING

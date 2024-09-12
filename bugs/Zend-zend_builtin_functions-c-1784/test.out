@@ -1,0 +1,38 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==787886==ERROR: AddressSanitizer: SEGV on unknown address 0x000002020308 (pc 0x561846127cde bp 0x7ffe48aaafe0 sp 0x7ffe48aaad60 T0)
+==787886==The signal is caused by a READ memory access.
+    #0 0x561846127cde in zend_fetch_debug_backtrace /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:1784
+    #1 0x56184660737f in zend_default_exception_new /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_exceptions.c:265
+    #2 0x561846046616 in _object_and_properties_init /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:1780
+    #3 0x5618460467e7 in object_init_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:1794
+    #4 0x561846275e1f in ZEND_NEW_SPEC_CONST_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:10537
+    #5 0x5618465a322b in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58125
+    #6 0x561845f76e3d in zend_call_function /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:957
+    #7 0x561845f79254 in zend_call_known_function /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute_API.c:1051
+    #8 0x5618466e4f07 in zend_call_known_instance_method /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:853
+    #9 0x5618466e4f65 in zend_call_known_instance_method_with_0_params /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:859
+    #10 0x5618466e81d2 in zend_objects_destroy_object /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:173
+    #11 0x56184671eea5 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:184
+    #12 0x5618460012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #13 0x56184609b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #14 0x5618460c4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #15 0x5618460012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #16 0x561846000fa8 in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #17 0x5618460019bd in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84
+    #18 0x561846698033 in zend_generator_throw_exception /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_generators.c:470
+    #19 0x5618466a4e0c in zim_Generator_throw /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_generators.c:972
+    #20 0x5618461c9905 in ZEND_DO_FCALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1867
+    #21 0x561846598a99 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57248
+    #22 0x5618465c8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #23 0x56184601b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #24 0x561845c74e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #25 0x561846afce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #26 0x561846b00966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #27 0x7f4ba523ed8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #28 0x7f4ba523ee3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #29 0x5618448064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:1784 in zend_fetch_debug_backtrace
+==787886==ABORTING

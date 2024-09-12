@@ -1,0 +1,110 @@
+--TEST--
+Bug GH-9735 002 (Fiber stack variables do not participate in cycle collector)+Bug #42737 (preg_split('//u') triggers a E_NOTICE with newlines)
+--INI--
+pgsql.ignore_notice=0
+opcache.optimization_level=0x7FFEBFFF
+--FILE--
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try{
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+class C {
+    public function __destruct() {
+        echo __METHOD__, "\n";
+    }
+}
+function f() {
+    Fiber::suspend();
+}
+$fiber = new Fiber(function () {
+    $c = new C();
+    $fiber = Fiber::getCurrent();
+    f();
+});
+print "1\n";
+$fiber->start();
+gc_collect_cycles();
+print "2\n";
+$fiber = null;
+gc_collect_cycles();
+print "3\n";
+$fusion = $fiber;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = chr(13).chr(10);
+$array = preg_split('//u', $string, - 1, PREG_SPLIT_NO_EMPTY);
+var_dump(array_map('ord', $array));
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>
+--EXPECT--
+1
+2
+C::__destruct
+3
+array(2) {
+  [0]=>
+  int(13)
+  [1]=>
+  int(10)
+}

@@ -61,15 +61,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$x = "ok\n";
-echo $x;
-unset($x);
-echo $x;
-$script1_dataflow = $x;
+define('TEST_TEST', 1);
+class TestClass2 {
+    function __construct() {}
+}
+class TestClass extends TestClass2 {
+    var $test = [
+        TEST_TEST => 'test'
+    ];
+}
+var_dump(new TestClass());
+$fusion = $test;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-(function($script1_dataflow) {
-	die();
-})($argv);
+echo "*** Testing gmmktime() : basic functionality ***\n";
+// Initialise all required variables
+$hour = 8;
+$min = 8;
+$sec = 8;
+$mon = 8;
+$day = 8;
+$year = 2008;
+// Calling gmmktime() with all possible arguments
+var_dump( gmmktime($hour, $min, $sec, $fusion, $day, $year) );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

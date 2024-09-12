@@ -61,84 +61,25 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BadStr {
-    public function __toString() {
-        throw new Exception("Exception");
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(is_finite($longVal));
 }
-$str = "a";
-$num = 42;
-$badStr = new BadStr;
-try { $x = $str . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $str .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-try { $x = $num . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $num; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $num .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($num);
-try { $x = $badStr .= $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = $badStr .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = "x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$str}x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = (string) $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = include $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { echo $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-${""} = 42;
-try { unset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(${""});
-unset(${""});
-try { $x = ${$badStr}; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = isset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-$obj = new stdClass;
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($obj);
-try { $str[0] = $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-$obj = new DateInterval('P1D');
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(!isset($obj->{""}));
-try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
-try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
-try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
-$fusion = $badStr;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+function foo($bar) {
+	var_dump($fusion);
+}
+foo("test");
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

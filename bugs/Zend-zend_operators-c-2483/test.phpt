@@ -1,8 +1,8 @@
 --TEST--
-unset() CV 1 (unset() global variable)+A script with die() must end "normally"
+Bug #78986: Opcache segfaults when inheriting ctor from immutable into mutable class+Test gmmktime() function : basic functionality
 --INI--
-session.save_handler=user
-exif.decode_unicode_intel=UCS-2LE
+magic_quotes_gpc=1
+pcre.recursion_limit=100000
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,27 +67,42 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$x = "ok\n";
-echo $x;
-unset($x);
-echo $x;
-$script1_dataflow = $x;
+define('TEST_TEST', 1);
+class TestClass2 {
+    function __construct() {}
+}
+class TestClass extends TestClass2 {
+    var $test = [
+        TEST_TEST => 'test'
+    ];
+}
+var_dump(new TestClass());
+$fusion = $test;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-(function($script1_dataflow) {
-	die();
-})($argv);
+echo "*** Testing gmmktime() : basic functionality ***\n";
+// Initialise all required variables
+$hour = 8;
+$min = 8;
+$sec = 8;
+$mon = 8;
+$day = 8;
+$year = 2008;
+// Calling gmmktime() with all possible arguments
+var_dump( gmmktime($hour, $min, $sec, $fusion, $day, $year) );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---PHPDBG--
-r
-q
---EXPECTF--
-ok
-
-Warning: Undefined variable $x in %s on line %d
-[Successful compilation of %s]
-prompt> [Script ended normally]
-prompt> 
+--EXTENSIONS--
+opcache
+--EXPECT--
+object(TestClass)#1 (1) {
+  ["test"]=>
+  array(1) {
+    [1]=>
+    string(4) "test"
+  }
+}
+*** Testing gmmktime() : basic functionality ***
+int(1218182888)

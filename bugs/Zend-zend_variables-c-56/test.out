@@ -1,390 +1,262 @@
-*** Test fscanf(): different unsigned format types with resource ***
+PRE-CLASS-GUARD
+POST-CLASS-GUARD
+POST-CLASS-GUARD2
 
--- iteration 1 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
+Warning: Undefined variable $hello in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused498.php on line 83
 
--- iteration 2 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 3 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 4 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 5 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 6 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 7 --
-Bad scan conversion character " "
-Bad scan conversion character " "
-bool(false)
-
--- iteration 8 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 9 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 10 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 11 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 12 --
-array(1) {
-  [0]=>
-  NULL
-}
-array(1) {
-  [0]=>
-  NULL
-}
-bool(false)
-
--- iteration 13 --
-array(0) {
-}
-array(0) {
-}
-bool(false)
-
-*** Done ***
-Fatal error: Allowed memory size of 134217728 bytes exhausted at /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:291 (tried to allocate 96 bytes) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused223.php on line 117
+Fatal error: Allowed memory size of 134217728 bytes exhausted at /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:291 (tried to allocate 96 bytes) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused498.php on line 86
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==2333109==ERROR: AddressSanitizer: stack-overflow on address 0x7ffe23150fe8 (pc 0x55c77cc53fe7 bp 0x7ffe23151040 sp 0x7ffe23150ff0 T0)
-    #0 0x55c77cc53fe7 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:56:2
-    #1 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #2 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #3 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #4 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #5 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #6 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #7 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #8 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #9 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #10 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #11 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #12 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #13 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #14 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #15 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #16 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #17 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #18 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #19 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #20 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #21 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #22 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #23 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #24 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #25 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #26 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #27 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #28 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #29 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #30 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #31 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #32 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #33 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #34 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #35 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #36 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #37 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #38 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #39 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #40 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #41 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #42 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #43 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #44 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #45 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #46 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #47 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #48 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #49 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #50 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #51 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #52 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #53 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #54 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #55 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #56 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #57 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #58 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #59 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #60 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #61 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #62 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #63 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #64 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #65 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #66 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #67 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #68 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #69 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #70 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #71 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #72 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #73 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #74 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #75 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #76 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #77 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #78 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #79 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #80 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #81 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #82 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #83 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #84 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #85 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #86 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #87 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #88 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #89 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #90 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #91 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #92 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #93 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #94 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #95 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #96 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #97 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #98 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #99 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #100 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #101 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #102 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #103 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #104 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #105 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #106 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #107 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #108 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #109 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #110 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #111 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #112 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #113 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #114 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #115 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #116 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #117 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #118 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #119 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #120 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #121 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #122 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #123 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #124 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #125 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #126 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #127 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #128 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #129 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #130 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #131 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #132 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #133 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #134 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #135 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #136 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #137 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #138 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #139 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #140 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #141 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #142 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #143 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #144 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #145 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #146 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #147 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #148 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #149 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #150 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #151 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #152 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #153 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #154 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #155 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #156 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #157 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #158 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #159 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #160 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #161 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #162 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #163 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #164 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #165 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #166 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #167 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #168 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #169 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #170 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #171 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #172 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #173 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #174 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #175 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #176 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #177 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #178 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #179 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #180 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #181 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #182 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #183 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #184 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #185 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #186 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #187 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #188 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #189 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #190 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #191 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #192 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #193 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #194 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #195 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #196 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #197 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #198 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #199 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #200 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #201 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #202 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #203 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #204 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #205 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #206 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #207 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #208 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #209 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #210 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #211 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #212 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #213 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #214 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #215 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #216 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #217 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #218 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #219 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #220 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #221 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #222 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #223 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #224 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #225 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #226 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #227 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #228 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #229 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #230 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #231 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #232 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #233 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #234 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #235 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #236 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #237 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #238 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #239 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #240 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #241 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #242 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #243 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
-    #244 0x55c77c909afe in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
-    #245 0x55c77c908654 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1831:5
-    #246 0x55c77cc54239 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+==2728257==ERROR: AddressSanitizer: stack-overflow on address 0x7ffd63adeff8 (pc 0x556d14a010c6 bp 0x7ffd63adf010 sp 0x7ffd63adf000 T0)
+    #0 0x556d14a010c6 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:56
+    #1 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #2 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #3 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #4 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #5 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #6 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #7 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #8 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #9 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #10 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #11 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #12 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #13 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #14 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #15 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #16 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #17 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #18 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #19 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #20 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #21 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #22 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #23 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #24 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #25 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #26 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #27 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #28 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #29 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #30 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #31 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #32 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #33 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #34 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #35 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #36 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #37 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #38 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #39 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #40 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #41 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #42 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #43 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #44 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #45 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #46 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #47 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #48 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #49 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #50 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #51 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #52 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #53 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #54 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #55 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #56 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #57 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #58 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #59 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #60 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #61 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #62 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #63 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #64 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #65 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #66 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #67 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #68 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #69 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #70 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #71 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #72 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #73 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #74 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #75 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #76 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #77 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #78 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #79 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #80 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #81 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #82 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #83 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #84 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #85 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #86 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #87 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #88 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #89 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #90 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #91 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #92 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #93 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #94 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #95 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #96 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #97 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #98 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #99 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #100 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #101 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #102 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #103 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #104 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #105 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #106 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #107 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #108 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #109 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #110 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #111 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #112 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #113 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #114 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #115 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #116 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #117 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #118 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #119 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #120 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #121 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #122 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #123 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #124 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #125 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #126 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #127 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #128 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #129 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #130 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #131 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #132 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #133 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #134 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #135 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #136 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #137 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #138 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #139 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #140 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #141 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #142 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #143 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #144 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #145 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #146 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #147 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #148 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #149 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #150 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #151 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #152 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #153 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #154 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #155 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #156 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #157 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #158 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #159 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #160 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #161 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #162 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #163 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #164 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #165 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #166 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #167 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #168 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #169 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #170 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #171 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #172 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #173 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #174 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #175 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #176 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #177 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #178 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #179 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #180 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #181 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #182 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #183 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #184 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #185 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #186 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #187 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #188 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #189 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #190 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #191 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #192 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #193 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #194 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #195 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #196 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #197 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #198 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #199 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #200 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #201 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #202 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #203 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #204 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #205 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #206 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #207 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #208 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #209 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #210 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #211 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #212 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #213 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #214 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #215 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #216 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #217 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #218 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #219 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #220 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #221 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #222 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #223 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #224 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #225 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #226 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #227 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #228 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #229 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #230 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #231 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #232 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #233 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #234 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #235 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #236 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #237 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #238 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #239 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #240 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #241 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #242 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #243 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #244 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #245 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
+    #246 0x556d14a012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #247 0x556d14a9b67a in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #248 0x556d14ac4a70 in zend_array_destroy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1832
 
-SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:56:2 in rc_dtor_func
-==2333109==ABORTING
+SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:56 in rc_dtor_func
+==2728257==ABORTING

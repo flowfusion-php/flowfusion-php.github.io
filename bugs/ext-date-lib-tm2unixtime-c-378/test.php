@@ -61,96 +61,32 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$arr = array(
-    'a' => array(
-        'a' => 'apple',
-        'b' => 'banana',
-        'c' => 'cranberry',
-        'd' => 'mango',
-        'e' => 'pineapple'
-    ),
-    'b' => array(
-        'a' => 'apple',
-        'b' => 'banana',
-        'c' => 'cranberry',
-        'd' => 'mango',
-        'e' => 'pineapple'
-    ),
-    'c' => 'cranberry',
-    'd' => 'mango',
-    'e' => 'pineapple'
-);
-function test(&$child, $entry)
-{
-    $i = 1;
-    foreach ($child AS $key => $fruit)
-    {
-        if (!is_numeric($key))
-        {
-            $child[$i] = $fruit;
-            unset($child[$key]);
-            $i++;
-        }
-    }
-}
-$i = 1;
-foreach ($arr AS $key => $fruit)
-{
-    $arr[$i] = $fruit;
-    if (is_array($fruit))
-    {
-        test($arr[$i], $fruit);
-    }
-    unset($arr[$key]);
-    $i++;
-}
-var_dump($arr);
+echo "*** Testing array_merge_recursive() : array with default keys ***\n";
+// Initialise the arrays
+$arr1 = array(1, array(1, 2));
+$arr2 = array(3, array("hello", 'world'));
+$arr3 = array(array(6, 7), array("str1", 'str2'));
+// Calling array_merge_recursive() without arguments
+echo "-- Without arguments --\n";
+var_dump( array_merge_recursive() );
+// Calling array_merge_recursive() with default arguments
+echo "-- With default argument --\n";
+var_dump( array_merge_recursive($arr1) );
+// Calling array_merge_recursive() with more arguments
+echo "-- With more arguments --\n";
+var_dump( array_merge_recursive($arr1,$arr2) );
+var_dump( array_merge_recursive($arr1,$arr2,$arr3) );
+echo "Done";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$validIdentical = array (
-MAX_32Bit, array(MAX_32Bit),
-MIN_32Bit, array(MIN_32Bit),
-MAX_64Bit, array(MAX_64Bit),
-MIN_64Bit, array(MIN_64Bit),
-);
-$invalidIdentical = array (
-MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
-MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
-);
-$failed = false;
-// test for valid values
-for ($i = 0; $i < count($validIdentical); $i +=2) {
-   $typeToTestVal = $validIdentical[$i];
-   $compares = $validIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         // do nothing
-      }
-      else {
-         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
-         $failed = true;
-      }
-   }
+trait TestTrait {
+  public const Constant = 42;
 }
-// test for invalid values
-for ($i = 0; $i < count($invalidIdentical); $i +=2) {
-   $typeToTestVal = $invalidIdentical[$i];
-   $compares = $invalidIdentical[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal === $compareVal) {
-         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
-         $failed = true;
-      }
-   }
+echo "PRE-CLASS-GUARD\n";
+class ComposingClass {
+    use TestTrait;
+    private const Constant = 42;
 }
-if ($failed == false) {
-   echo "Test Passed\n";
-}
+echo "POST-CLASS-GUARD\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

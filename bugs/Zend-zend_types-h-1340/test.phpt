@@ -1,5 +1,12 @@
 --TEST--
-Bug #22538 (filtered stream doesn't update file pointer)+FR #62369 (Segfault on json_encode(deeply_nested_array)
+Test chop() function : basic functionality+Typed class constants (composition; traits)
+--INI--
+max_execution_time=2
+opcache.interned_strings_buffer=500
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=tracing
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,70 +71,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function my_stream_copy_to_stream($fin, $fout) {
-    while (!feof($fin)) {
-        fwrite($fout, fread($fin, 4096));
-    }
-}
-$size = 65536;
-do {
-    $path1 = sprintf("%s/%s%da", __DIR__, uniqid(), time());
-    $path2 = sprintf("%s/%s%db", __DIR__, uniqid(), time());
-} while ($path1 == $path2);
-$fp = fopen($path1, "w") or die("Cannot open $path1\n");
-$str = "abcdefghijklmnopqrstuvwxyz\n";
-$str_len = strlen($str);
-$cnt = $size;
-while (($cnt -= $str_len) > 0) {
-    fwrite($fp, $str);
-}
-$cnt = $size - ($str_len + $cnt);
-fclose($fp);
-$fin = fopen($path1, "r") or die("Cannot open $path1\n");
-$fout = fopen($path2, "w") or die("Cannot open $path2\n");
-stream_filter_append($fout, "string.rot13");
-my_stream_copy_to_stream($fin, $fout);
-fclose($fout);
-fclose($fin);
-var_dump($cnt);
-var_dump(filesize($path2));
-var_dump(md5_file($path1));
-var_dump(md5_file($path2));
-unlink($path1);
-unlink($path2);
-$script1_dataflow = $path1;
+/*
+ * Testing chop(): basic functionality
+*/
+echo "*** Testing chop() : basic functionality ***\n";
+// Initialize all required variables
+$str = "hello world\t\n\r\0\x0B  ";
+$charlist = 'dl ';
+// Calling chop() with default arguments
+var_dump( chop($str) );
+// Calling chop() with all arguments
+var_dump( chop($str, $charlist) );
+// Calling chop() with the charlist not present at the end of input string
+var_dump( chop($str, '!') );
+echo "Done\n";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = array();
-for ($i=0; $script1_dataflow < 550; $i++) {
-    $array = array($array);
+const G = new stdClass();
+enum E {
+    case Case1;
 }
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
+trait T {
+    public const int CONST1 = 1;
+    public const ?array CONST2 = [];
+    public const E CONST3 = E::Case1;
+    public const stdClass CONST4 = G;
 }
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
+class C {
+    use T;
+    public const int CONST1 = 1;
+    public const ?array CONST2 = [];
+    public const E CONST3 = E::Case1;
+    public const stdClass CONST4 = G;
 }
+var_dump(C::CONST1);
+var_dump(C::CONST2);
+var_dump(C::CONST3);
+var_dump(C::CONST4);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-int(65529)
-int(65529)
-string(32) "e10e3d1ae81b084b822e8592d019b57a"
-string(32) "931f0fbf8a72312e3bab9965b1d1081c"
-OK
-ERROR
+--EXPECTF--
+*** Testing chop() : basic functionality ***
+string(11) "hello world"
+string(16) "hello world	
+
+%0"
+string(18) "hello world	
+
+%0  "
+Done
+int(1)
+array(0) {
+}
+enum(E::Case1)
+object(stdClass)#1 (0) {
+}

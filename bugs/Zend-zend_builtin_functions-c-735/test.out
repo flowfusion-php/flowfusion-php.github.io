@@ -1,52 +1,26 @@
-A::$prop::get
-A::$prop::get
-bool(true)
-A::$prop::set
-Cannot unset hooked property B::$prop
-
-Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 111
-===EmptyIterator===
-===InfiniteIterator===
-2=>
-3=>
-0=>
-1=>
-2=>
-===Infinite/LimitIterator===
-1=>B
-2=>C
-1=>B
-2=>C
-1=>B
-string(11) "random_var:"
-array(0) {
+C::__toString
+object(D)#2 (0) {
+  ["prop"]=>
+  uninitialized(string)
 }
-string(1) "B"
-array(1) {
-  [0]=>
-  string(68) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php"
-}
-Calling function: timezone_identifiers_list with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==3329460==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55a2ce53e8b2 bp 0x7ffcd36c7d70 sp 0x7ffcd36c7d60 T0)
+==3329460==The signal is caused by a READ memory access.
+==3329460==Hint: this fault was caused by a dereference of a high value address (see register values below).  Dissassemble the provided pc to learn which register was used.
+    #0 0x55a2ce53e8b2 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1342
+    #1 0x55a2ce548407 in zend_assign_to_variable /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.h:173
+    #2 0x55a2ce93ba78 in ZEND_ASSIGN_SPEC_CV_VAR_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:48062
+    #3 0x55a2ce9c4189 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61163
+    #4 0x55a2ce9c8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #5 0x55a2ce41b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #6 0x55a2ce074e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #7 0x55a2ceefce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #8 0x55a2cef00966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #9 0x7f83d7542d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #10 0x7f83d7542e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #11 0x55a2ccc064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
-Array, Array
-Error calling function timezone_identifiers_list: timezone_identifiers_list(): Argument #1 ($timezoneGroup) must be of type int, array given
-Calling function: inet_pton with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
-Array
-Error calling function inet_pton: inet_pton(): Argument #1 ($ip) must be of type string, array given
-Calling function: getimagesizefromstring with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
-Array, Array
-
-Warning: getimagesizefromstring(): Argument #2 ($image_info) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 41
-Error calling function getimagesizefromstring: getimagesizefromstring(): Argument #1 ($string) must be of type string, array given
-Calling function: feof with arguments: B
-Error calling function feof: feof(): Argument #1 ($stream) must be of type resource, string given
-Calling function: method_exists with arguments: B, B
-Calling function: get_class_vars with arguments: B
-/home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:735:12: runtime error: applying non-zero offset 4294967248 to null pointer
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:735:12 in
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1342 in zend_gc_delref
+==3329460==ABORTING

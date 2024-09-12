@@ -1,0 +1,76 @@
+=================================================================
+==511159==ERROR: AddressSanitizer: heap-use-after-free on address 0x60d0000c3380 at pc 0x55e43e84e565 bp 0x7ffc69a775f0 sp 0x7ffc69a775e0
+READ of size 8 at 0x60d0000c3380 thread T0
+    #0 0x55e43e84e564 in php_dom_object_get_data /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:269
+    #1 0x55e43e85be6d in php_dom_create_object /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:1173
+    #2 0x55e43e91599b in php_dom_get_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/dom_iterators.c:332
+    #3 0x55e43fba13bb in zend_fe_reset_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.c:4945
+    #4 0x55e43fe9e0a9 in ZEND_FE_RESET_R_SPEC_CV_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:39959
+    #5 0x55e43ffbde65 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:60599
+    #6 0x55e43ffc8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #7 0x55e43fa1b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #8 0x55e43f674e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #9 0x55e4404fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #10 0x55e440500966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #11 0x7fcf68b0dd8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #12 0x7fcf68b0de3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #13 0x55e43e2064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+0x60d0000c3380 is located 0 bytes inside of 136-byte region [0x60d0000c3380,0x60d0000c3408)
+freed by thread T0 here:
+    #0 0x7fcf6980c537 in __interceptor_free ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:127
+    #1 0x55e43e403f3e in php_libxml_node_free /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/libxml/libxml.c:237
+    #2 0x55e43e405994 in php_libxml_node_free_list /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/libxml/libxml.c:378
+    #3 0x55e43e414ad8 in php_libxml_node_free_resource /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/libxml/libxml.c:1424
+    #4 0x55e43e414e90 in php_libxml_node_decrement_resource /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/libxml/libxml.c:1453
+    #5 0x55e43e8589cd in dom_objects_free_storage /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:981
+    #6 0x55e44011f72a in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:200
+    #7 0x55e43fa012c3 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57
+    #8 0x55e43fb42d85 in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44
+    #9 0x55e43fbca466 in ZEND_DO_FCALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1894
+    #10 0x55e43ff98a99 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57248
+    #11 0x55e43ffc8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #12 0x55e43fa1b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #13 0x55e43f674e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #14 0x55e4404fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #15 0x55e440500966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #16 0x7fcf68b0dd8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+
+previously allocated by thread T0 here:
+    #0 0x7fcf6980c887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x7fcf694ca53e  (/lib/x86_64-linux-gnu/libxml2.so.2+0x3b53e)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:269 in php_dom_object_get_data
+Shadow bytes around the buggy address:
+  0x0c1a80010620: fa fa 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c1a80010630: 00 00 00 fa fa fa fa fa fa fa fa fa 00 00 00 00
+  0x0c1a80010640: 00 00 00 00 00 00 00 00 00 00 00 00 00 fa fa fa
+  0x0c1a80010650: fa fa fa fa fa fa 00 00 00 00 00 00 00 00 00 00
+  0x0c1a80010660: 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa fa
+=>0x0c1a80010670:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c1a80010680: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1a80010690: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1a800106a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1a800106b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1a800106c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==511159==ABORTING

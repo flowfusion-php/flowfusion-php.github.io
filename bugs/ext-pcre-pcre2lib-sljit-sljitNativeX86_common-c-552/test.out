@@ -1,0 +1,60 @@
+NULL
+object(Fiber)#1 (0) {
+}
+=================================================================
+==792220==ERROR: AddressSanitizer: stack-buffer-underflow on address 0x7fd2ba683df2 at pc 0x555e7a2f4b1b bp 0x7ffde708e980 sp 0x7ffde708e970
+WRITE of size 1 at 0x7fd2ba683df2 thread T0
+    #0 0x555e7a2f4b1a in generate_near_jump_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_common.c:552
+    #1 0x555e7a2f6277 in sljit_generate_code /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_common.c:636
+    #2 0x555e7a407218 in jit_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/pcre2_jit_compile.c:14318
+    #3 0x555e7a408621 in php_pcre2_jit_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/pcre2_jit_compile.c:14473
+    #4 0x555e7a5d39e8 in pcre_get_compiled_regex_cache_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:810
+    #5 0x555e7a5d454d in pcre_get_compiled_regex_cache /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:896
+    #6 0x555e7a5d8ec9 in php_do_pcre_match /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1115
+    #7 0x555e7a5dd1ae in zif_preg_match_all /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1474
+    #8 0x555e7b9be243 in ZEND_DO_ICALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1275
+    #9 0x555e7bd98445 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57212
+    #10 0x555e7bdc8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #11 0x555e7b81b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #12 0x555e7b474e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #13 0x555e7c2fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #14 0x555e7c300966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #15 0x7fd2c195fd8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #16 0x7fd2c195fe3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #17 0x555e7a0064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+Address 0x7fd2ba683df2 is a wild pointer.
+SUMMARY: AddressSanitizer: stack-buffer-underflow /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/pcre2lib/sljit/sljitNativeX86_common.c:552 in generate_near_jump_code
+Shadow bytes around the buggy address:
+  0x0ffad74c8760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffad74c8770: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffad74c8780: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffad74c8790: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffad74c87a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ffad74c87b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[f1]f1
+  0x0ffad74c87c0: f1 f1 f1 f1 00 f2 f2 f2 00 00 f2 f2 00 00 00 00
+  0x0ffad74c87d0: 00 00 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00
+  0x0ffad74c87e0: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 f2 f2
+  0x0ffad74c87f0: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0ffad74c8800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==792220==ABORTING

@@ -1,8 +1,9 @@
 --TEST--
-Test exceptions thrown from __toString() in various contexts+Stdin and escaped args being passed to run command
---INI--
-ary[b] = 2
-error_log_mode=0600
+Test is_finite function : 64bit long tests+Test breakpoint into function context
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,166 +68,74 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BadStr {
-    public function __toString() {
-        throw new Exception("Exception");
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(is_finite($longVal));
 }
-$str = "a";
-$num = 42;
-$badStr = new BadStr;
-try { $x = $str . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $str .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-try { $x = $num . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $num; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $num .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($num);
-try { $x = $badStr .= $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = $badStr .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = "x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$str}x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = (string) $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = include $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { echo $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-${""} = 42;
-try { unset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(${""});
-unset(${""});
-try { $x = ${$badStr}; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = isset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-$obj = new stdClass;
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($obj);
-try { $str[0] = $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-$obj = new DateInterval('P1D');
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(!isset($obj->{""}));
-try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
-try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
-try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
-$fusion = $badStr;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+function foo($bar) {
+	var_dump($fusion);
+}
+foo("test");
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-@unlink("run_002_tmp.fixture");
-?>
 --PHPDBG--
-ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
-b 6
-r <run_002_tmp.fixture
-r arg1 '_ \' arg2 "' < run_002_tmp.fixture
-y
+b breakpoints_005.php:4
+r
+ev $bar
 c
 q
 --EXPECTF--
-Exception
-Exception
-Exception
-string(1) "a"
-Exception
-Exception
-Exception
-int(42)
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-object(BadStr)#1 (0) {
-}
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-Exception
-int(42)
-Exception
-Exception
-Exception
-object(stdClass)#2 (0) {
-}
-Exception
-string(1) "a"
-Exception
+--- testing: 9223372036854775807 ---
 bool(true)
-Exception
-Exception
-Exception
+--- testing: -9223372036854775808 ---
+bool(true)
+--- testing: 2147483647 ---
+bool(true)
+--- testing: -2147483648 ---
+bool(true)
+--- testing: 9223372034707292160 ---
+bool(true)
+--- testing: -9223372034707292160 ---
+bool(true)
+--- testing: 2147483648 ---
+bool(true)
+--- testing: -2147483649 ---
+bool(true)
+--- testing: 4294967294 ---
+bool(true)
+--- testing: 4294967295 ---
+bool(true)
+--- testing: 4294967293 ---
+bool(true)
+--- testing: 9223372036854775806 ---
+bool(true)
+--- testing: 9.2233720368548E+18 ---
+bool(true)
+--- testing: -9223372036854775807 ---
+bool(true)
+--- testing: -9.2233720368548E+18 ---
+bool(true)
 [Successful compilation of %s]
-prompt> 10
-prompt> [Breakpoint #0 added at %s:6]
-prompt> array(1) {
-  [0]=>
-  string(%d) "%s"
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> Do you really want to restart execution? (type y or n): array(3) {
-  [0]=>
-  string(%d) "%s"
-  [1]=>
-  string(4) "arg1"
-  [2]=>
-  string(10) "_ ' arg2 ""
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> ok
+prompt> [Breakpoint #0 added at %s:4]
+prompt> [Breakpoint #0 at %s:4, hits: 1]
+>00004: 	var_dump($bar);
+ 00005: }
+ 00006: 
+prompt> test
+prompt> string(4) "test"
 [Script ended normally]
 prompt> 

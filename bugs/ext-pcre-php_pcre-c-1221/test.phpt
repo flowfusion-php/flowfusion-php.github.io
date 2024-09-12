@@ -1,12 +1,12 @@
 --TEST--
-Bug #47745 (FILTER_VALIDATE_INT doesn't allow minimum integer)+Bug #72685: Same string is UTF-8 validated repeatedly
+Bug #70332 (Wrong behavior while returning reference on object)+Attribute flags type is not validated at compile time.
 --INI--
-zend_test.observer.observe_all=1
-memory_limit=2G
---SKIPIF--
-<?php
-if (getenv('SKIP_PERF_SENSITIVE')) die("skip performance sensitive test");
-?>
+mbstring.http_output=ISO-8859-15
+opcache.preload={PWD}/bug78761_preload.php
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=tracing
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,26 +71,29 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = (string)(-PHP_INT_MAX-1);
-var_dump(intval($s));
-var_dump(filter_var($s, FILTER_VALIDATE_INT));
-$script1_dataflow = $s;
+function & test($arg) {
+    return $arg;
+}
+$arg = new Stdclass();
+$arg->name = array();
+test($arg)->name[1] = "xxxx";
+print_r($arg);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$input_size = 64 * 1024;
-$str = str_repeat('a', $input_size);
-$start = microtime(true);
-$pos = 0;
-while (preg_match('/\G\w/u', $str, $m, 0, $script1_dataflow)) ++$pos;
-$end = microtime(true);
-var_dump(($end - $start) < 0.5); // large margin, more like 0.05 in debug build
+#[Attribute("foo")]
+class A1 { }
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-filter
---EXPECTF--
-int(-%d)
-int(-%d)
-bool(true)
+--EXPECT--
+stdClass Object
+(
+    [name] => Array
+        (
+            [1] => xxxx
+        )
+
+)
+===DONE===

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<root>Node0Node1Node2Node3Node4Node5Node6Node7Node8Node9</root>
+
+Warning: main(): Unable to create or locate filter "sample.filter" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused583.php on line 80
+
+Warning: main(): Unable to create filter (sample.filter) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused583.php on line 80
+Undefined constant "FOO"
+string(11) "random_var:"
+array(0) {
+}
+int(10)
+=================================================================
+==1047908==ERROR: AddressSanitizer: heap-use-after-free on address 0x60c000008ef8 at pc 0x56339aafe611 bp 0x7ffd5a4b8c70 sp 0x7ffd5a4b8c60
+READ of size 8 at 0x60c000008ef8 thread T0
+    #0 0x56339aafe610 in dom_text_whole_text_read /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/text.c:80
+    #1 0x56339aa50ae4 in dom_get_debug_info_helper /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:418
+    #2 0x56339aa50e49 in dom_get_debug_info /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:439
+    #3 0x56339c31ada7 in zend_std_get_properties_for /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_object_handlers.c:1986
+    #4 0x56339c31b448 in zend_get_properties_for /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_object_handlers.c:2015
+    #5 0x56339b6bc20a in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:164
+    #6 0x56339b6bdc9d in zif_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:229
+    #7 0x56339bdbe243 in ZEND_DO_ICALL_SPEC_RETVAL_UNUSED_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:1275
+    #8 0x56339c198445 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:57212
+    #9 0x56339c1c8b5e in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:61604
+    #10 0x56339bc1b1aa in zend_execute_scripts /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1881
+    #11 0x56339b874e27 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2507
+    #12 0x56339c6fce6b in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:966
+    #13 0x56339c700966 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1340
+    #14 0x7fd3baf08d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f)
+    #15 0x7fd3baf08e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f)
+    #16 0x56339a4064f4 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x2a064f4)
+
+0x60c000008ef8 is located 56 bytes inside of 120-byte region [0x60c000008ec0,0x60c000008f38)
+freed by thread T0 here:
+    #0 0x7fd3bbc07537 in __interceptor_free ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:127
+    #1 0x7fd3bb8efe1f in xmlAddChild (/lib/x86_64-linux-gnu/libxml2.so.2+0x65e1f)
+
+previously allocated by thread T0 here:
+    #0 0x7fd3bbc07887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x7fd3bb8ed91b in xmlNewDocText (/lib/x86_64-linux-gnu/libxml2.so.2+0x6391b)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/text.c:80 in dom_text_whole_text_read
+Shadow bytes around the buggy address:
+  0x0c187fff9180: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+  0x0c187fff9190: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x0c187fff91a0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c187fff91b0: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+  0x0c187fff91c0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+=>0x0c187fff91d0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd[fd]
+  0x0c187fff91e0: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+  0x0c187fff91f0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x0c187fff9200: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c187fff9210: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+  0x0c187fff9220: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==1047908==ABORTING
