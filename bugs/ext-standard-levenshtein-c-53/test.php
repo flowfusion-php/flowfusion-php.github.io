@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,53 +61,63 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$values = [
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-];
-foreach ($values as $var) {
-    $var--;
-    var_dump($var);
-}
-echo "Done\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * testing array_fill() by passing different types of array  values for 'val' argument
- */
-echo "*** Testing array_fill() : usage variations ***\n";
-// Initialise function arguments not being substituted
-$start_key = 0;
-$num = 2;
-//array of different types of array values for 'val' argument
-$values = array(
-  /* 1  */  array(),
-            array(1 , 2 , 3 , 4),
-            array(1 => "Hi" , 2 => "Hello"),
-            array("Saffron" , "White" , "Green"),
-  /* 5  */  array('color' => 'red' , 'item' => 'pen'),
-            array( 'color' => 'red' , 2 => 'green ' ),
-            array("colour" => "red" , "item" => "pen"),
-            array( TRUE => "red" , FALSE => "green" ),
-            array( true => "red" , FALSE => "green" ),
-  /* 10 */  array( 1 => "Hi" , "color" => "red" , 'item' => 'pen'),
-            array( NULL => "Hi", '1' => "Hello" , "1" => "Green"),
-            array( ""=>1, "color" => "green"),
-  /* 13 */  array('Saffron' , 'White' , 'Green')
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-// loop through each element of the values array for 'val' argument
-// check the working of array_fill()
-echo "--- Testing array_fill() with different types of array values for 'val' argument ---\n";
-$counter = 1;
-for($i = 0; $i < count($values); $i++)
-{
-  echo "-- Iteration $counter --\n";
-  $val = $values[$i];
-  var_dump( array_fill($start_key , $num , $val) );
-  $counter++;
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal ^ $otherVal ---\n";
+      var_dump($longVal^$otherVal);
+   }
 }
-echo "Done";
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+       echo "--- testing: $otherVal ^ $longVal ---\n";
+      var_dump($otherVal^$longVal);
+   }
+}
+$fusion = $longVal;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$xml = <<< XML
+<?xml version="1.0" ?>
+<books>
+ <book>
+  <title>The Grapes of Wrath</title>
+  <author>John Steinbeck</author>
+ </book>
+ <book>
+  <title>The Pearl</title>
+  <author>John Steinbeck</author>
+ </book>
+</books>
+XML;
+$output = __DIR__.'/DOMNode_C14NFile_basic.tmp';
+$doc = new DOMDocument();
+$doc->loadXML($xml);
+$node = $doc->getElementsByTagName('title')->item(0);
+var_dump($node->C14NFile($output));
+$content = file_get_contents($output);
+var_dump($fusion);
+try {
+    var_dump($node->C14NFile($output, false, false, []));
+} catch (\ValueError $e) {
+    echo $e->getMessage() . \PHP_EOL;
+}
+try {
+    var_dump($node->C14NFile($output, false, false, ['query' => []]));
+} catch (\TypeError $e) {
+    echo $e->getMessage() . \PHP_EOL;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

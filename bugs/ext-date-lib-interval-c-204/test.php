@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,23 +61,58 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-date_default_timezone_set('UTC');
-$date = new DateTime('-1500-01-01');
-var_dump($date->format('r'));
-$date->setDate(-2147483648, 1, 1);
-var_dump($date->format('r'));
-var_dump($date->format('c'));
-$fusion = $date;
+$thisTestDir = __DIR__ . '/' .basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptLocFile = __DIR__."/".$filename;
+$newpath = "rubbish";
+set_include_path($newpath);
+runtest();
+$newpath = "";
+set_include_path($newpath);
+runtest();
+set_include_path("");
+runtest();
+set_include_path(";;  ; ;c:\\rubbish");
+runtest();
+chdir(__DIR__);
+function runtest() {
+   global $scriptLocFile, $filename;
+   file_put_contents($filename, "File written in working directory", FILE_USE_INCLUDE_PATH);
+   if(file_exists($scriptLocFile)) {
+      echo "Fail - this is PHP52 behaviour\n";
+      unlink($scriptLocFile);
+   }else {
+      $line = file_get_contents($filename);
+      echo "$line\n";
+      unlink($filename);
+   }
+}
+$fusion = $filename;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ini_set('date.timezone', 'America/Los_Angeles');
-$nowTime = new DateTime();
-$nowTime->setTimestamp(1667416695);
-$dateTime = new DateTime();
-$dateTime->setTimestamp(1671904800);
-$dateTime->setTimezone(new DateTimeZone('America/New_York'));
-echo $dateTime->diff($fusion)->format('%R %a %H %I %S'), "\n";
+class A
+{
+    protected $bar = array('baz');
+    function bar()
+    {
+        array_pop($this->bar);
+        $vars = get_object_vars($vars);
+        $this->bar[] = array('buz');
+        print_r($vars);
+    }
+    function foo() {
+        array_pop($this->bar);
+        $dummy = &$vars->bar;
+        $vars = get_object_vars($fusion);
+        $this->bar[] = array('buz');
+        print_r($vars);
+    }
+}
+(new A())->bar();
+(new A())->foo();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

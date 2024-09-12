@@ -1,5 +1,5 @@
 --TEST--
-Lazy objects: final classes can be initialized lazily+Clone ArrayObject using other with STD_PROP_LIST
+Lazy objects: ReflectionClass::isUninitializedLazyObject()+SPL: RecursiveIteratorIterator, getCallChildren
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,77 +64,69 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-final class C {
+class C {
     public int $a;
-    public function __construct() {
-        var_dump(__METHOD__);
-        $this->a = 1;
-    }
+}
+function test(string $name, object $obj) {
+    $reflector = new ReflectionClass(C::class);
+    printf("# %s\n", $name);
+    var_dump($reflector->isUninitializedLazyObject($obj));
+    var_dump($obj->a);
+    var_dump($reflector->isUninitializedLazyObject($obj));
 }
 $reflector = new ReflectionClass(C::class);
-print "# Ghost:\n";
 $obj = $reflector->newLazyGhost(function ($obj) {
     var_dump("initializer");
-    $obj->__construct();
+    $obj->a = 1;
 });
-var_dump($obj);
-var_dump($obj->a);
-var_dump($obj);
-print "# Proxy:\n";
+test('Ghost', $obj);
 $obj = $reflector->newLazyProxy(function ($obj) {
     var_dump("initializer");
-    return new C();
+    $obj = new C();
+    $obj->a = 1;
+    return $obj;
 });
-var_dump($obj);
-var_dump($obj->a);
-var_dump($obj);
+test('Proxy', $obj);
 $fusion = $obj;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$a = new ArrayObject([1, 2, 3], ArrayObject::STD_PROP_LIST);
-$b = new ArrayObject($fusion);
-$c = clone $b;
-var_dump($c);
+//line 681 ...
+  $array = array(array(7,8,9),1,2,3,array(4,5,6));
+$recursiveArrayIterator = new RecursiveArrayIterator($fusion);
+$test = new RecursiveIteratorIterator($recursiveArrayIterator);
+var_dump($test->current());
+$test->next();
+var_dump($test->current());
+try {
+  $output = $test->callGetChildren();
+} catch (TypeError $exception) {
+  $output = null;
+  echo $exception->getMessage() . "\n";
+}
+var_dump($output);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-# Ghost:
-lazy ghost object(C)#%d (0) {
-  ["a"]=>
-  uninitialized(int)
-}
+--EXPECT--
+# Ghost
+bool(true)
 string(11) "initializer"
-string(14) "C::__construct"
 int(1)
-object(C)#%d (1) {
-  ["a"]=>
-  int(1)
-}
-# Proxy:
-lazy proxy object(C)#%d (0) {
-  ["a"]=>
-  uninitialized(int)
-}
+bool(false)
+# Proxy
+bool(true)
 string(11) "initializer"
-string(14) "C::__construct"
 int(1)
-lazy proxy object(C)#%d (1) {
-  ["instance"]=>
-  object(C)#%d (1) {
-    ["a"]=>
-    int(1)
-  }
+bool(false)
+array(3) {
+  [0]=>
+  int(7)
+  [1]=>
+  int(8)
+  [2]=>
+  int(9)
 }
-object(ArrayObject)#3 (1) {
-  ["storage":"ArrayObject":private]=>
-  array(3) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-  }
-}
+int(7)
+ArrayIterator::__construct(): Argument #1 ($array) must be of type array, int given
+NULL

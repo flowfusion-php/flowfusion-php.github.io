@@ -1,12 +1,12 @@
 --TEST--
-DateTime::diff() days -- fall type3 type3+Plain prop satisfies interface get hook by-reference
+By-value get may be implemented as by-reference+foreach() & undefined var
 --INI--
-session.auto_start = 0
-// have to put the absolute path here.
+opcache.max_accelerated_files=10
+error_reporting=E_ALL^E_NOTICE
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1004
+opcache.jit=0101
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,67 +71,37 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require 'examine_diff.inc';
-define('PHPT_DATETIME_SHOW', PHPT_DATETIME_SHOW_DAYS);
-require 'DateTime_data-fall-type3-type3.inc';
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
     public $prop { get; }
 }
 class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
+function test(I $i) {
+    $ref = &$i->prop;
+    $ref = 42;
+}
 $a = new A();
+test($a);
 var_dump($a);
+$fusion = $ref;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+foreach($fusion as $val);
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CREDITS--
-Daniel Convissor <danielc@php.net>
---EXPECT--
-test_time_fall_type3_prev_type3_prev: DAYS: **33**
-test_time_fall_type3_prev_type3_dt: DAYS: **0**
-test_time_fall_type3_prev_type3_redodt: DAYS: **0**
-test_time_fall_type3_prev_type3_redost: DAYS: **0**
-test_time_fall_type3_prev_type3_st: DAYS: **0**
-test_time_fall_type3_prev_type3_post: DAYS: **2**
-test_time_fall_type3_dt_type3_prev: DAYS: **0**
-test_time_fall_type3_dt_type3_dt: DAYS: **0**
-test_time_fall_type3_dt_type3_redodt: DAYS: **0**
-test_time_fall_type3_dt_type3_redost: DAYS: **0**
-test_time_fall_type3_dt_type3_st: DAYS: **0**
-test_time_fall_type3_dt_type3_post: DAYS: **1**
-test_time_fall_type3_redodt_type3_prev: DAYS: **0**
-test_time_fall_type3_redodt_type3_dt: DAYS: **0**
-test_time_fall_type3_redodt_type3_redodt: DAYS: **0**
-test_time_fall_type3_redodt_type3_redost: DAYS: **0**
-test_time_fall_type3_redodt_type3_st: DAYS: **0**
-test_time_fall_type3_redodt_type3_post: DAYS: **1**
-test_time_fall_type3_redost_type3_prev: DAYS: **0**
-test_time_fall_type3_redost_type3_dt: DAYS: **0**
-test_time_fall_type3_redost_type3_redodt: DAYS: **0**
-test_time_fall_type3_redost_type3_redost: DAYS: **0**
-test_time_fall_type3_redost_type3_st: DAYS: **0**
-test_time_fall_type3_redost_type3_post: DAYS: **1**
-test_time_fall_type3_st_type3_prev: DAYS: **0**
-test_time_fall_type3_st_type3_dt: DAYS: **0**
-test_time_fall_type3_st_type3_redodt: DAYS: **0**
-test_time_fall_type3_st_type3_redost: DAYS: **0**
-test_time_fall_type3_st_type3_st: DAYS: **0**
-test_time_fall_type3_st_type3_post: DAYS: **1**
-test_time_fall_type3_post_type3_prev: DAYS: **2**
-test_time_fall_type3_post_type3_dt: DAYS: **1**
-test_time_fall_type3_post_type3_redodt: DAYS: **1**
-test_time_fall_type3_post_type3_redost: DAYS: **1**
-test_time_fall_type3_post_type3_st: DAYS: **1**
-test_time_fall_type3_post_type3_post: DAYS: **0**
-test_time_fall_type3_dtsec_type3_stsec: DAYS: **0**
-test_time_fall_type3_stsec_type3_dtsec: DAYS: **0**
+--EXPECTF--
 object(A)#1 (1) {
-  ["prop"]=>
+  ["_prop":"A":private]=>
   int(42)
 }
+Warning: Undefined variable $a in %s on line %d
+
+Warning: foreach() argument must be of type array|object, null given in %s on line %d
+Done

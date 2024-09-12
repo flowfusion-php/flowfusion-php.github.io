@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
 </pre>
         </div>
 
@@ -64,92 +64,21 @@
 
         <div class="keywords">
             <div class="section-title">Keywords:</div>
-            <pre>['null pointer']</pre>
+            <pre>['core dumped']</pre>
         </div>
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>this bug has been detected for 1 times</pre>
+            <pre>this bug has been detected for 7 times</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php]
-prompt&gt; [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php:19]
-prompt&gt; RecursiveArrayIteratorIterator::rewind
-RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;a
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(1)
-RecursiveArrayIteratorIterator::callHasChildren(1) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;ba
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;bba
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-1=&gt;bbb
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;bcaa
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(2)
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(1)
-RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(throw)
-[Uncaught Exception in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php on line 145: Thrown in callGetChildren()]
-&gt;00145:             throw new Exception(&quot;Thrown in callGetChildren()&quot;);
- 00146:         }
- 00147:         echo __METHOD__ . &quot;(ok:{$this-&gt;over})\n&quot;;
-prompt&gt; RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-3=&gt;d
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::valid
-MyRecursiveArrayIterator::valid = false
-[Uncaught Error in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php on line 187: Cannot use a scalar value as an array]
-&gt;00187:         $fusion[] = $value;
- 00188:     } else {
- 00189:         doCoolStuff($value);
-prompt&gt; [Added watchpoint #0 for $value]
-prompt&gt; prompt&gt; /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_watch.c:915:17: runtime error: member access within null pointer of type &#x27;phpdbg_watch_element&#x27; (aka &#x27;struct _phpdbg_watch_element&#x27;)
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_watch.c:915:17 in
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0&#x27; failed.
+Aborted (core dumped)
+
+Termsig=6
             </pre>
         </div>
 
@@ -186,7 +115,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -209,7 +138,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -219,136 +148,75 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class MyRecursiveArrayIterator extends RecursiveArrayIterator
-{
-    function getChildren(): ?RecursiveArrayIterator
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return $this-&gt;current();
-    }
-    function valid(): bool
-    {
-        if (!parent::valid())
-        {
-            echo __METHOD__ . &quot; = false\n&quot;;
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-}
-class RecursiveArrayIteratorIterator extends RecursiveIteratorIterator
-{
-    private $max_depth;
-    private $over = 0;
-    private $skip = false;
-    function __construct($it, $max_depth)
-    {
-        $this-&gt;max_depth = $max_depth;
-        parent::__construct($it, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
-    }
-    function rewind(): void
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        $this-&gt;skip = false;
-        parent::rewind();
-    }
-    function valid(): bool
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        if ($this-&gt;skip)
-        {
-            $this-&gt;skip = false;
-            $this-&gt;next();
-        }
-        return parent::valid();
-    }
-    function current(): mixed
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return parent::current();
-    }
-    function key(): int
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return parent::key();
-    }
-    function next(): void
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        parent::next();
-    }
-    function callHasChildren(): bool
-    {
-        $this-&gt;skip = false;
-        $has = parent::callHasChildren();
-        $res = $this-&gt;getDepth() &lt; $this-&gt;max_depth &amp;&amp; $has;
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;) = &quot;.($res?&quot;yes&quot;:&quot;no&quot;).&quot;/&quot;.($has?&quot;yes&quot;:&quot;no&quot;).&quot;\n&quot;;
-        if ($has &amp;&amp; !$res)
-        {
-            $this-&gt;over++;
-            if ($this-&gt;over == 2) {
-                $this-&gt;skip = true;
-            }
-        }
-        return $res;
-    }
-    function callGetChildren(): MyRecursiveArrayIterator
-    {
-        if ($this-&gt;over == 2)
-        {
-            echo __METHOD__ . &quot;(throw)\n&quot;;
-            throw new Exception(&quot;Thrown in callGetChildren()&quot;);
-        }
-        echo __METHOD__ . &quot;(ok:{$this-&gt;over})\n&quot;;
-        return new MyRecursiveArrayIterator($this-&gt;current());
-    }
-    function beginChildren(): void
-    {
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
-    }
-    function endChildren(): void
-    {
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
-    }
-}
-try
-{
-    foreach(new RecursiveArrayIteratorIterator(new MyRecursiveArrayIterator(array(&quot;a&quot;, array(&quot;ba&quot;, array(&quot;bba&quot;, &quot;bbb&quot;), array(array(&quot;bcaa&quot;), array(&quot;bcba&quot;))), array(&quot;ca&quot;), &quot;d&quot;)), 2) as $k=&gt;$v)
-    {
-        if (is_array($v)) $v = join(&#x27;&#x27;,$v);
-        echo &quot;$k=&gt;$v\n&quot;;
-    }
-}
-catch(UnexpectedValueException $e)
-{
-    echo $e-&gt;getMessage() . &quot;\n&quot;;
-}
-$fusion = $k;
+require __DIR__ . &#x27;/test_utils.inc&#x27;;
+$dom = DOM\XMLDocument::createFromString(&lt;&lt;&lt;XML
+&lt;container&gt;
+    &lt;div class=&quot;only-child1&quot;&gt;
+        &lt;p&gt;Lonely&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;only-child2&quot;&gt;
+        &lt;p&gt;With 2&lt;/p&gt;
+        &lt;p&gt;With 2&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/container&gt;
+XML);
+test_helper($dom, &#x27;.only-child1 p:only-child&#x27;);
+test_helper($dom, &#x27;.only-child2 p:only-child&#x27;);
+$fusion = $dom;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-// Generate some mock data
-$example = [1, 23, 23423, 256436, 3463, 4363, 457];
-foreach (range(1, 1000) as $val) {
-    $example[] = mt_rand(1, 10000);
-}
-// Stuff to debug
-function doCoolStuff($value)
-{
-    $value++;
-    return mt_rand(1, 1000);
-}
-$lower = [];
-foreach ($example as $key =&gt; $value) {
-    if ($value &lt; 100) {
-        $fusion[] = $value;
-    } else {
-        doCoolStuff($value);
+class MyClass {
+    public static function dump(string $var) {
+        var_dump($var);
     }
 }
+class MyDOMXPath extends DOMXPath {
+    public function registerCycle() {
+        $this-&gt;registerPhpFunctions([&quot;cycle&quot; =&gt; array($this, &quot;dummy&quot;)]);
+    }
+    public function dummy(string $var) {
+        echo &quot;dummy: $var\n&quot;;
+    }
+}
+$fusion = new DOMDocument();
+$doc-&gt;loadHTML(&#x27;&lt;a href=&quot;https://php.net&quot;&gt;hello&lt;/a&gt;&#x27;);
+echo &quot;--- Legit cases: none ---\n&quot;;
+$xpath = new DOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+try {
+    $xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+} catch (Error $e) {
+    echo $e-&gt;getMessage(), &quot;\n&quot;;
+}
+echo &quot;--- Legit cases: all ---\n&quot;;
+$xpath-&gt;registerPHPFunctions(null);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;MyClass::dump&#x27;, string(@href))]&quot;);
+echo &quot;--- Legit cases: set ---\n&quot;;
+$xpath = new DOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+$xpath-&gt;registerPhpFunctions([]);
+$xpath-&gt;registerPHPFunctions([&quot;xyz&quot; =&gt; MyClass::dump(...), &quot;mydump&quot; =&gt; function (string $x) {
+    var_dump($x);
+}]);
+$xpath-&gt;registerPhpFunctions(str_repeat(&quot;var_dump&quot;, mt_rand(1, 1) /* defeat SCCP */));
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;mydump&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;xyz&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+try {
+    $xpath-&gt;evaluate(&quot;//a[php:function(&#x27;notinset&#x27;, string(@href))]&quot;);
+} catch (Throwable $e) {
+    echo $e-&gt;getMessage(), &quot;\n&quot;;
+}
+echo &quot;--- Legit cases: set with cycle ---\n&quot;;
+$xpath = new MyDOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+$xpath-&gt;registerCycle();
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;cycle&#x27;, string(@href))]&quot;);
+echo &quot;--- Legit cases: reset to null ---\n&quot;;
+$xpath-&gt;registerPhpFunctions(null);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -360,13 +228,14 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-SPL: RecursiveIteratorIterator and catch getChildren+Bug #73927 (phpdbg fails with windows error prompt at &quot;watch array&quot;)
---SKIPIF--
-&lt;?php
-if (getenv(&#x27;SKIP_ASAN&#x27;)) {
-    die(&quot;skip intentionally causes segfaults&quot;);
-}
-?&gt;
+CSS Selectors - Pseudo classes: only-child+registerPHPFunctions() with callables - legit cases
+--INI--
+session.use_cookies=1
+opcache.validate_timestamps=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1243
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -398,7 +267,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -421,7 +290,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -431,223 +300,99 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class MyRecursiveArrayIterator extends RecursiveArrayIterator
-{
-    function getChildren(): ?RecursiveArrayIterator
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return $this-&gt;current();
-    }
-    function valid(): bool
-    {
-        if (!parent::valid())
-        {
-            echo __METHOD__ . &quot; = false\n&quot;;
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-}
-class RecursiveArrayIteratorIterator extends RecursiveIteratorIterator
-{
-    private $max_depth;
-    private $over = 0;
-    private $skip = false;
-    function __construct($it, $max_depth)
-    {
-        $this-&gt;max_depth = $max_depth;
-        parent::__construct($it, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
-    }
-    function rewind(): void
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        $this-&gt;skip = false;
-        parent::rewind();
-    }
-    function valid(): bool
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        if ($this-&gt;skip)
-        {
-            $this-&gt;skip = false;
-            $this-&gt;next();
-        }
-        return parent::valid();
-    }
-    function current(): mixed
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return parent::current();
-    }
-    function key(): int
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        return parent::key();
-    }
-    function next(): void
-    {
-        echo __METHOD__ . &quot;\n&quot;;
-        parent::next();
-    }
-    function callHasChildren(): bool
-    {
-        $this-&gt;skip = false;
-        $has = parent::callHasChildren();
-        $res = $this-&gt;getDepth() &lt; $this-&gt;max_depth &amp;&amp; $has;
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;) = &quot;.($res?&quot;yes&quot;:&quot;no&quot;).&quot;/&quot;.($has?&quot;yes&quot;:&quot;no&quot;).&quot;\n&quot;;
-        if ($has &amp;&amp; !$res)
-        {
-            $this-&gt;over++;
-            if ($this-&gt;over == 2) {
-                $this-&gt;skip = true;
-            }
-        }
-        return $res;
-    }
-    function callGetChildren(): MyRecursiveArrayIterator
-    {
-        if ($this-&gt;over == 2)
-        {
-            echo __METHOD__ . &quot;(throw)\n&quot;;
-            throw new Exception(&quot;Thrown in callGetChildren()&quot;);
-        }
-        echo __METHOD__ . &quot;(ok:{$this-&gt;over})\n&quot;;
-        return new MyRecursiveArrayIterator($this-&gt;current());
-    }
-    function beginChildren(): void
-    {
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
-    }
-    function endChildren(): void
-    {
-        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
-    }
-}
-try
-{
-    foreach(new RecursiveArrayIteratorIterator(new MyRecursiveArrayIterator(array(&quot;a&quot;, array(&quot;ba&quot;, array(&quot;bba&quot;, &quot;bbb&quot;), array(array(&quot;bcaa&quot;), array(&quot;bcba&quot;))), array(&quot;ca&quot;), &quot;d&quot;)), 2) as $k=&gt;$v)
-    {
-        if (is_array($v)) $v = join(&#x27;&#x27;,$v);
-        echo &quot;$k=&gt;$v\n&quot;;
-    }
-}
-catch(UnexpectedValueException $e)
-{
-    echo $e-&gt;getMessage() . &quot;\n&quot;;
-}
-$fusion = $k;
+require __DIR__ . &#x27;/test_utils.inc&#x27;;
+$dom = DOM\XMLDocument::createFromString(&lt;&lt;&lt;XML
+&lt;container&gt;
+    &lt;div class=&quot;only-child1&quot;&gt;
+        &lt;p&gt;Lonely&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;only-child2&quot;&gt;
+        &lt;p&gt;With 2&lt;/p&gt;
+        &lt;p&gt;With 2&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/container&gt;
+XML);
+test_helper($dom, &#x27;.only-child1 p:only-child&#x27;);
+test_helper($dom, &#x27;.only-child2 p:only-child&#x27;);
+$fusion = $dom;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-// Generate some mock data
-$example = [1, 23, 23423, 256436, 3463, 4363, 457];
-foreach (range(1, 1000) as $val) {
-    $example[] = mt_rand(1, 10000);
-}
-// Stuff to debug
-function doCoolStuff($value)
-{
-    $value++;
-    return mt_rand(1, 1000);
-}
-$lower = [];
-foreach ($example as $key =&gt; $value) {
-    if ($value &lt; 100) {
-        $fusion[] = $value;
-    } else {
-        doCoolStuff($value);
+class MyClass {
+    public static function dump(string $var) {
+        var_dump($var);
     }
 }
+class MyDOMXPath extends DOMXPath {
+    public function registerCycle() {
+        $this-&gt;registerPhpFunctions([&quot;cycle&quot; =&gt; array($this, &quot;dummy&quot;)]);
+    }
+    public function dummy(string $var) {
+        echo &quot;dummy: $var\n&quot;;
+    }
+}
+$fusion = new DOMDocument();
+$doc-&gt;loadHTML(&#x27;&lt;a href=&quot;https://php.net&quot;&gt;hello&lt;/a&gt;&#x27;);
+echo &quot;--- Legit cases: none ---\n&quot;;
+$xpath = new DOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+try {
+    $xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+} catch (Error $e) {
+    echo $e-&gt;getMessage(), &quot;\n&quot;;
+}
+echo &quot;--- Legit cases: all ---\n&quot;;
+$xpath-&gt;registerPHPFunctions(null);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;MyClass::dump&#x27;, string(@href))]&quot;);
+echo &quot;--- Legit cases: set ---\n&quot;;
+$xpath = new DOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+$xpath-&gt;registerPhpFunctions([]);
+$xpath-&gt;registerPHPFunctions([&quot;xyz&quot; =&gt; MyClass::dump(...), &quot;mydump&quot; =&gt; function (string $x) {
+    var_dump($x);
+}]);
+$xpath-&gt;registerPhpFunctions(str_repeat(&quot;var_dump&quot;, mt_rand(1, 1) /* defeat SCCP */));
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;mydump&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;xyz&#x27;, string(@href))]&quot;);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
+try {
+    $xpath-&gt;evaluate(&quot;//a[php:function(&#x27;notinset&#x27;, string(@href))]&quot;);
+} catch (Throwable $e) {
+    echo $e-&gt;getMessage(), &quot;\n&quot;;
+}
+echo &quot;--- Legit cases: set with cycle ---\n&quot;;
+$xpath = new MyDOMXPath($doc);
+$xpath-&gt;registerNamespace(&quot;php&quot;, &quot;http://php.net/xpath&quot;);
+$xpath-&gt;registerCycle();
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;cycle&#x27;, string(@href))]&quot;);
+echo &quot;--- Legit cases: reset to null ---\n&quot;;
+$xpath-&gt;registerPhpFunctions(null);
+$xpath-&gt;evaluate(&quot;//a[php:function(&#x27;var_dump&#x27;, string(@href))]&quot;);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
---PHPDBG--
-b 19
-r
-c
-w $value
-w $lower[]
-q
---EXPECTF--
-RecursiveArrayIteratorIterator::rewind
-RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;a
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(1)
-RecursiveArrayIteratorIterator::callHasChildren(1) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;ba
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;bba
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-1=&gt;bbb
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(ok:0)
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::beginChildren(2)
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-0=&gt;bcaa
-RecursiveArrayIteratorIterator::next
-RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
-RecursiveArrayIteratorIterator::valid
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(2)
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::endChildren(1)
-RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
-RecursiveArrayIteratorIterator::callGetChildren(throw)
-RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
-RecursiveArrayIteratorIterator::current
-RecursiveArrayIteratorIterator::key
-3=&gt;d
-RecursiveArrayIteratorIterator::next
-MyRecursiveArrayIterator::valid = false
-RecursiveArrayIteratorIterator::valid
-MyRecursiveArrayIterator::valid = false
-[Successful compilation of %s]
-prompt&gt; [Breakpoint #0 added at %s:%d]
-prompt&gt; [Breakpoint #0 at %s:%d, hits: 1]
-&gt;00019:     if ($value &lt; 100) {
- 00020:         $lower[] = $value;
- 00021:     } else {
-prompt&gt; [Breakpoint #0 at %s:%d, hits: 2]
-&gt;00019:     if ($value &lt; 100) {
- 00020:         $lower[] = $value;
- 00021:     } else {
-prompt&gt; [Added watchpoint #0 for $value]
-prompt&gt; [Added watchpoint #1 for $lower[0]]
-prompt&gt; [$lower[0] has been removed, removing watchpoint]
-[$value has been removed, removing watchpoint]
+--EXTENSIONS--
+dom
+dom
+--EXPECT--
+--- Selector: .only-child1 p:only-child ---
+&lt;p&gt;Lonely&lt;/p&gt;
+--- Selector: .only-child2 p:only-child ---
+--- Legit cases: none ---
+No callbacks were registered
+--- Legit cases: all ---
+string(15) &quot;https://php.net&quot;
+string(15) &quot;https://php.net&quot;
+--- Legit cases: set ---
+string(15) &quot;https://php.net&quot;
+string(15) &quot;https://php.net&quot;
+string(15) &quot;https://php.net&quot;
+No callback handler &quot;notinset&quot; registered
+--- Legit cases: set with cycle ---
+dummy: https://php.net
+--- Legit cases: reset to null ---
+string(15) &quot;https://php.net&quot;
 
             </pre>
         </div>
@@ -662,8 +407,8 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
-export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -674,12 +419,11 @@ export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
-export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
@@ -692,30 +436,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27; -qIb  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker1&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=1&quot; -d &quot;opcache.validate_timestamps=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1243&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused624.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

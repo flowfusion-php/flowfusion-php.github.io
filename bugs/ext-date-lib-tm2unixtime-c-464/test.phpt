@@ -1,8 +1,9 @@
 --TEST--
-Bug #52342 (DateTime setIsoDate results in wrong timestamp)+Test base_convert() function : strange literals
+Bug #30096 (gmmktime does not return the correct time)+Bug #79716 (Invalid date time created (with day "00"))
 --INI--
-session.serialize_handler=blah
-session.cookie_httponly="0"
+error_reporting=2047
+opcache.jit=0
+opcache.preload={PWD}/preload_ind.inc
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -34,7 +35,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -57,7 +58,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -67,51 +68,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-date_default_timezone_set('Europe/Berlin');
-$from = new DateTime();
-$from->setTime(0, 0, 0);
-$from->setISODate(PHP_INT_MAX, 28, 1); //Montag der 28ten Woche 2010
-echo $from->format('d.m.Y H:i'), "\n"; //A
-echo $from->getTimestamp(), "\n"; //B
-echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
-$from->add(new DateInterval('P0D'));
-echo $from->getTimestamp(), "\n"; //B
-echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
+echo "no dst --> dst\n";
+$ts = -1;
+gm_date_check(01,00,00,03,27,2005);
+gm_date_check(02,00,00,03,27,2005);
+gm_date_check(03,00,00,03,27,2005);
+gm_date_check(04,00,00,03,27,2005);
+echo "\ndst --> no dst\n";
+$ts = -1;
+gm_date_check(01,00,00,10,30,2005);
+gm_date_check(02,00,00,10,30,2005);
+gm_date_check(03,00,00,10,30,2005);
+gm_date_check(04,00,00,10,30,2005);
+function gm_date_check($hour, $minute, $second, $month, $day, $year) {
+    global $ts, $tsold;
+    echo "gmmktime($hour,$minute,$second,$month,$day,$tsold): ";
+    $tsold = $ts;
+    $ts = gmmktime($hour, $minute, $second, $month, $day, $tsold);
+    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
+    if ($tsold > 0) {
+        echo " | Diff: " . ($ts - $tsold);
+    }
+    echo "\n";
+}
+$fusion = $minute;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo 'Binary to decimal:', \PHP_EOL;
-var_dump(base_convert('0b', 2, 10));
-var_dump(base_convert('0B', 2, 10));
-var_dump(base_convert('', 2, 10));
-echo 'Octal to decimal:', \PHP_EOL;
-var_dump(base_convert('0o', 8, 10));
-var_dump(base_convert('0O', 8, 10));
-var_dump(base_convert('0', 8, 10));
-var_dump(base_convert('', 8, 10));
-echo 'Hexadecimal to decimal:', \PHP_EOL;
-var_dump(base_convert('0x', 16, 10));
-var_dump(base_convert('0X', 16, 10));
-var_dump(base_convert('', 16, 10));
+$fusion = new \DateTimeImmutable(
+    '2770-01-00 15:00:00.000000',
+    new \DateTimeZone('UTC')
+);
+\var_dump($datetime->format('j') === '0');
+\var_dump($datetime);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-12.07.2010 00:00
-1278885600
-12.07.2010 00:00
-1278885600
-12.07.2010 00:00
-Binary to decimal:
-string(1) "0"
-string(1) "0"
-string(1) "0"
-Octal to decimal:
-string(1) "0"
-string(1) "0"
-string(1) "0"
-string(1) "0"
-Hexadecimal to decimal:
-string(1) "0"
-string(1) "0"
-string(1) "0"
+--EXPECTF--
+no dst --> dst
+gmmktime(1,0,0,3,27,2005): 1111885200 | gmdate('r', 1111885200):Sun, 27 Mar 2005 01:00:00 +0000
+gmmktime(2,0,0,3,27,2005): 1111888800 | gmdate('r', 1111888800):Sun, 27 Mar 2005 02:00:00 +0000 | Diff: 3600
+gmmktime(3,0,0,3,27,2005): 1111892400 | gmdate('r', 1111892400):Sun, 27 Mar 2005 03:00:00 +0000 | Diff: 3600
+gmmktime(4,0,0,3,27,2005): 1111896000 | gmdate('r', 1111896000):Sun, 27 Mar 2005 04:00:00 +0000 | Diff: 3600
+
+dst --> no dst
+gmmktime(1,0,0,10,30,2005): 1130634000 | gmdate('r', 1130634000):Sun, 30 Oct 2005 01:00:00 +0000
+gmmktime(2,0,0,10,30,2005): 1130637600 | gmdate('r', 1130637600):Sun, 30 Oct 2005 02:00:00 +0000 | Diff: 3600
+gmmktime(3,0,0,10,30,2005): 1130641200 | gmdate('r', 1130641200):Sun, 30 Oct 2005 03:00:00 +0000 | Diff: 3600
+gmmktime(4,0,0,10,30,2005): 1130644800 | gmdate('r', 1130644800):Sun, 30 Oct 2005 04:00:00 +0000 | Diff: 3600
+bool(false)
+object(DateTimeImmutable)#%d (%d) {
+  ["date"]=>
+  string(26) "2769-12-31 15:00:00.000000"
+  ["timezone_type"]=>
+  int(3)
+  ["timezone"]=>
+  string(3) "UTC"
+}

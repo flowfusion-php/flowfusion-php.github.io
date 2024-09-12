@@ -1,29 +1,12 @@
-# Ghost:
-lazy ghost object(C)#3 (0) {
-  ["a"]=>
-  uninitialized(int)
-}
+# Ghost
+bool(true)
 string(11) "initializer"
-string(14) "C::__construct"
 int(1)
-object(C)#3 (1) {
-  ["a"]=>
-  int(1)
-}
-# Proxy:
-lazy proxy object(C)#4 (0) {
-  ["a"]=>
-  uninitialized(int)
-}
+bool(false)
+# Proxy
+bool(true)
 string(11) "initializer"
-string(14) "C::__construct"
 int(1)
-lazy proxy object(C)#4 (1) {
-  ["instance"]=>
-  object(C)#3 (1) {
-    ["a"]=>
-    int(1)
-  }
-}
+bool(false)
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_array.c:79:7: runtime error: member access within null pointer of type 'HashTable' (aka 'struct _zend_array')
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_array.c:79:7 in

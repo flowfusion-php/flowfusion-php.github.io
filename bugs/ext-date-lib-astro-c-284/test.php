@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,116 +61,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function t() {
-    echo "!";
-    return true;
-}
-function f() {
-    echo "!";
-    return false;
-}
-$a = 0.0;
-$b = 0.0;
-$c = 1.0;
-$d = NAN;
-var_dump($a === $b);
-var_dump($a === $c);
-var_dump($a === $d);
-var_dump($a !== $b);
-var_dump($a !== $c);
-var_dump($a !== $d);
-var_dump($a === $b ? 1 : 0);
-var_dump($a === $c ? 1 : 0);
-var_dump($a === $d ? 1 : 0);
-var_dump($a !== $b ? 1 : 0);
-var_dump($a !== $c ? 1 : 0);
-var_dump($a !== $d ? 1 : 0);
-if ($a === $b) {
-    echo "1\n";
-}
-if ($a === $c) {
-    echo "2\n";
-}
-if ($a === $d) {
-    echo "3\n";
-}
-if ($a !== $b) {
-    echo "4\n";
-}
-if ($a !== $c) {
-    echo "5\n";
-}
-if ($a !== $d) {
-    echo "6\n";
-}
-if ($a === $b) {
-} else {
-    echo "7\n";
-}
-if ($a === $c) {
-} else {
-    echo "8\n";
-}
-if ($a === $d) {
-} else {
-    echo "9\n";
-}
-if ($a !== $b) {
-} else {
-    echo "A\n";
-}
-if ($a !== $c) {
-} else {
-    echo "B\n";
-}
-if ($a !== $d) {
-} else {
-    echo "C\n";
-}
-var_dump($a === $b && t());
-var_dump($a === $c && t());
-var_dump($a === $d && t());
-var_dump($a !== $b && t());
-var_dump($a !== $c && t());
-var_dump($a !== $d && t());
-var_dump($a === $b || f());
-var_dump($a === $c || f());
-var_dump($a === $d || f());
-var_dump($a !== $b || f());
-var_dump($a !== $c || f());
-var_dump($a !== $d || f());
-$a=NAN;
-var_dump($a === $d);
-var_dump($a !== $d);
-var_dump($a === $d ? 1 : 0);
-var_dump($a !== $d ? 1 : 0);
-$script1_dataflow = $d;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Dtor {
-    public function __destruct() {
-        throw new Exception(2);
-    }
-}
-function test() {
-    try {
-        throw new Exception(1);
-    } finally {
+// 0/0 NAN value
+$f1 = fdiv(0, 0);
+var_dump($f1);
+// INF/INF NAN value
+$f2 = fdiv(10.0**400, 9.0**400);
+var_dump($f2);
+// -INF + +INF NAN value
+$f3 = (-10.0**400) + (9.0**400);
+var_dump($f3);
+$fs = [$f1, $f2, $f3, 5.5];
+foreach ($fs as $s) {
+    foreach ($fs as $e) {
+        echo "range($s, $e);\n";
         try {
-            foreach ([new Dtor] as $script1_dataflow) {
-                unset($v);
-                return 42;
-            }
-        } catch (Exception $e) {
+            var_dump( range($s, $e) );
+        } catch (\ValueError $e) {
+            echo $e->getMessage(), PHP_EOL;
         }
     }
 }
-try {
-    test();
-} catch (Exception $e) {
-    echo $e, "\n";
+$fusion = $f2;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$xml = <<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "XXE_URI">]>
+<foo>&xxe;</foo>
+EOT;
+$dir = str_replace('\\', '/', __DIR__);
+$xml = str_replace('XXE_URI', $fusion . '/libxml_disable_entity_loader_payload.txt', $xml);
+function parseXML1($xml) {
+  $doc = new DOMDocument();
+  $doc->loadXML($xml, 0);
+  return $doc->saveXML();
 }
+function parseXML2($xml) {
+  return simplexml_load_string($xml);
+}
+function parseXML3($xml) {
+  $p = xml_parser_create();
+  xml_parse_into_struct($p, $xml, $vals, $index);
+  xml_parser_free($p);
+  return var_export($vals, true);
+}
+function parseXML4($xml) {
+  // This is the only time we enable external entity loading.
+  return simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOENT);
+}
+var_dump(strpos(parseXML1($xml), 'SECRET_DATA') === false);
+var_dump(strpos(parseXML2($xml), 'SECRET_DATA') === false);
+var_dump(strpos(parseXML3($xml), 'SECRET_DATA') === false);
+var_dump(strpos(parseXML4($xml), 'SECRET_DATA') === false);
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

@@ -1,14 +1,10 @@
 --TEST--
-JIT CMP: 006 Undefined variable checks+GH-8086 (Mail() function not working correctly in PHP 8.x)
+Test array_map() function : usage variations - callback pass semantics+Lazy objects: Foreach initializes object
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.protect_memory=1
-sendmail_path={MAIL:gh8086.out}
-mail.mixed_lf_and_crlf=on
-bcmath.scale=0
-opcache.preload={PWD}/preload_parse_error.inc
+date.timezone=Europe/Amsterdam
+default_charset=
+max_input_vars=5
+opcache.memory_consumption=64
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -40,7 +36,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -63,7 +59,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -73,64 +69,112 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function test1($c) {
-    if ($c) {
-        $x = 1;
-    }
-    var_dump($x == 1);
+/*
+ * Test array_map() with a pass-by-value callback forced to behave as a pass-by-reference function.
+ */
+$arr1 = array('original.0', 'original.1');
+$arr2 = array('original.0', 'original.1');
+function callback($a) {
+   $a = "changed";
 }
-function test2($c) {
-    if ($c) {
-        $x = 1.0;
-    }
-    var_dump($x == 1.0);
-}
-function test3($c) {
-    if (!$c) {
-        $x = 1;
-    }
-    if ($c) {
-        $y = 1;
-    }
-    var_dump($x == $y);
-}
-function test4($c) {
-    if (!$c) {
-        $x = 1.0;
-    }
-    if ($c) {
-        $y = 1.0;
-    }
-    var_dump($x == $y);
-}
-test1(false);
-test2(false);
-test3(false);
-test4(false);
+array_map('callback', $arr1);
+var_dump($arr1);
+$ref  =& $arr2[0];
+array_map("callback", $arr2);
+var_dump($arr2);
+$fusion = $arr2;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(mail('user@example.com', 'Test Subject', 'A Message', 'KHeaders'));
-$mail = file_get_contents('gh8086.out');
-var_dump(preg_match_all('/(?<!\r)\n/', $mail));
+#[AllowDynamicProperties]
+class C {
+    public int $a;
+    public int $b {
+        get { return $this->b; }
+        set(int $value) { $this->b = $value; }
+    }
+    public int $c {
+        get { return $this->a + 2; }
+    }
+    public function __construct() {
+        var_dump(__METHOD__);
+        $this->a = 1;
+        $fusion->b = 2;
+        $this->d = 4;
+    }
+}
+$reflector = new ReflectionClass(C::class);
+print "# Ghost:\n";
+$obj = $reflector->newLazyGhost(function ($obj) {
+    var_dump("initializer");
+    $obj->__construct();
+});
+foreach ($obj as $prop => $value) {
+    var_dump($prop, $value);
+}
+print "# Proxy:\n";
+$obj = $reflector->newLazyProxy(function ($obj) {
+    var_dump("initializer");
+    return new C();
+});
+foreach ($obj as $prop => $value) {
+    var_dump($prop, $value);
+}
+print "# Ghost (init exception):\n";
+$obj = $reflector->newLazyGhost(function ($obj) {
+    throw new \Exception();
+});
+try {
+    var_dump(json_encode($obj));
+} catch (\Exception $e) {
+    printf("%s: %s\n", $e::class, $e->getMessage());
+}
+print "# Proxy (init exception):\n";
+$obj = $reflector->newLazyProxy(function ($obj) {
+    throw new \Exception();
+});
+try {
+    var_dump(json_encode($obj));
+} catch (\Exception $e) {
+    printf("%s: %s\n", $e::class, $e->getMessage());
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-unlink('gh8086.out');
-?>
---EXPECTF--
-Warning: Undefined variable $x in %s on line %d
-bool(false)
-
-Warning: Undefined variable $x in %s on line %d
-bool(false)
-
-Warning: Undefined variable $y in %s on line %d
-bool(false)
-
-Warning: Undefined variable $y in %s on line %d
-bool(false)
-bool(true)
-int(5)
+--EXPECT--
+array(2) {
+  [0]=>
+  string(10) "original.0"
+  [1]=>
+  string(10) "original.1"
+}
+array(2) {
+  [0]=>
+  &string(10) "original.0"
+  [1]=>
+  string(10) "original.1"
+}
+# Ghost:
+string(11) "initializer"
+string(14) "C::__construct"
+string(1) "a"
+int(1)
+string(1) "b"
+int(2)
+string(1) "c"
+int(3)
+string(1) "d"
+int(4)
+# Proxy:
+string(11) "initializer"
+string(14) "C::__construct"
+string(1) "a"
+int(1)
+string(1) "b"
+int(2)
+string(1) "c"
+int(3)
+# Ghost (init exception):
+Exception: 
+# Proxy (init exception):
+Exception:

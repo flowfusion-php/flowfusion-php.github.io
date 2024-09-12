@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,37 +61,19 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$doc = Dom\XMLDocument::createFromString('<root><child/><br xmlns="http://www.w3.org/1999/xhtml"/></root>');
-echo $doc->saveXml($doc, LIBXML_NOEMPTYTAG), "\n";
-$doc->formatOutput = true;
-echo $doc->saveXml($doc, LIBXML_NOEMPTYTAG), "\n";
-$fusion = $doc;
+$dyadic = 0.00000000000045474735088646411895751953125;
+var_dump(printf ("%1.41f\n",unserialize(serialize($dyadic))));
+$fusion = $dyadic;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$dom = DOM\XMLDocument::createFromString(<<<XML
-<!DOCTYPE root [
-    <!ENTITY foo "content">
-]>
-<root/>
-XML);
-$child = $dom->documentElement->appendChild($dom->createElementNS('urn:a', 'child'));
-$original = $dom->saveXML();
-function test($child, $html) {
-    global $dom, $original;
-    try {
-        $child->innerHTML = $html;
-    } catch (DOMException $e) {
-        echo $e->getMessage(), "\n";
-    }
-    var_dump($dom->saveXML() === $original);
+chdir(__DIR__);
+try {
+var_dump(new Phar('bug77143.phar',0,'project.phar'));
+echo "OK\n";
+} catch(UnexpectedValueException $e) {
+    echo $fusion->getMessage();
 }
-test($child, '&foo;');
-test($child, '</root>');
-test($fusion, '</root><foo/><!--');
-test($child, '--></root><!--');
-test($child, '<');
-test($child, '<!ENTITY foo "content">');
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

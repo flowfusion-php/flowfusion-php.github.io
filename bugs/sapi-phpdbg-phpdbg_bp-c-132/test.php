@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,86 +61,97 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BadStr {
-    public function __toString() {
-        throw new Exception("Exception");
+class MyArrayIterator extends ArrayIterator
+{
+    static protected $fail = 0;
+    public $state;
+    static function fail($state, $method)
+    {
+        if (self::$fail == $state)
+        {
+            throw new Exception("State $state: $method()");
+        }
+    }
+    function __construct()
+    {
+        $this->state = MyArrayIterator::$fail;
+        self::fail(0, __FUNCTION__);
+        parent::__construct(array(1, 2));
+        self::fail(1, __FUNCTION__);
+    }
+    function rewind(): void
+    {
+        self::fail(2, __FUNCTION__);
+        parent::rewind();
+    }
+    function valid(): bool
+    {
+        self::fail(3, __FUNCTION__);
+        return parent::valid();
+    }
+    function current(): mixed
+    {
+        self::fail(4, __FUNCTION__);
+        return parent::current();
+    }
+    function key(): string|int|null
+    {
+        self::fail(5, __FUNCTION__);
+        return parent::key();
+    }
+    function next(): void
+    {
+        self::fail(6, __FUNCTION__);
+        parent::next();
+    }
+    function __destruct()
+    {
+        self::fail(7, __FUNCTION__);
+    }
+    static function test($func, $skip = null)
+    {
+        echo "===$func===\n";
+        self::$fail = 0;
+        while(self::$fail < 10)
+        {
+            try
+            {
+                var_dump($func(new MyArrayIterator()));
+                break;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage() . "\n";
+            }
+            if (isset($skip[self::$fail]))
+            {
+                self::$fail = $skip[self::$fail];
+            }
+            else
+            {
+                self::$fail++;
+            }
+            try {
+                $e = null;
+            } catch (Exception $e) {
+            }
+        }
     }
 }
-$str = "a";
-$num = 42;
-$badStr = new BadStr;
-try { $x = $str . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $str .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-try { $x = $num . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $num; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $num .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($num);
-try { $x = $badStr .= $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = $badStr .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = "x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$str}x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = (string) $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = include $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { echo $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-${""} = 42;
-try { unset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(${""});
-unset(${""});
-try { $x = ${$badStr}; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = isset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-$obj = new stdClass;
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($obj);
-try { $str[0] = $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-$obj = new DateInterval('P1D');
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(!isset($obj->{""}));
-try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
-try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
-try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
-$fusion = $badStr;
+MyArrayIterator::test('iterator_to_array');
+MyArrayIterator::test('iterator_count', array(3 => 6));
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
+echo "*** Testing array_multisort() : Testing with anonymous arguments ***\n";
+var_dump(array_multisort(array(1,3,2,4)));
+$xconnect=$GLOBALS[array_rand($GLOBALS)];
+echo "Done\n";
+$a = [];
+$a[0] = 1;
+$a[0] = 2;
+$fusion = [0 => 3, 1 => 4];
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

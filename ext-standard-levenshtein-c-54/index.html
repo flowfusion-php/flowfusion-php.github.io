@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
 </pre>
         </div>
 
@@ -69,280 +69,577 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>this bug has been detected for 146 times</pre>
+            <pre>this bug has been detected for 1 times</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
---- testing: int(9223372036854775807)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,807.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,807&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,810&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372036854775808)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,808&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(2147483647)
-... with precision 5: string(19) &quot;2,147,483,647.00000&quot;
-... with precision 0: string(13) &quot;2,147,483,647&quot;
-... with precision -1: string(13) &quot;2,147,483,650&quot;
-... with precision -5: string(13) &quot;2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-2147483648)
-... with precision 5: string(20) &quot;-2,147,483,648.00000&quot;
-... with precision 0: string(14) &quot;-2,147,483,648&quot;
-... with precision -1: string(14) &quot;-2,147,483,650&quot;
-... with precision -5: string(14) &quot;-2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(9223372034707292160)
-... with precision 5: string(31) &quot;9,223,372,034,707,292,160.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,034,707,292,160&quot;
-... with precision -1: string(25) &quot;9,223,372,034,707,292,160&quot;
-... with precision -5: string(25) &quot;9,223,372,034,707,300,000&quot;
-... with precision -10: string(25) &quot;9,223,372,030,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372034707292160)
-... with precision 5: string(32) &quot;-9,223,372,034,707,292,160.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,034,707,292,160&quot;
-... with precision -1: string(26) &quot;-9,223,372,034,707,292,160&quot;
-... with precision -5: string(26) &quot;-9,223,372,034,707,300,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,030,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(2147483648)
-... with precision 5: string(19) &quot;2,147,483,648.00000&quot;
-... with precision 0: string(13) &quot;2,147,483,648&quot;
-... with precision -1: string(13) &quot;2,147,483,650&quot;
-... with precision -5: string(13) &quot;2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-2147483649)
-... with precision 5: string(20) &quot;-2,147,483,649.00000&quot;
-... with precision 0: string(14) &quot;-2,147,483,649&quot;
-... with precision -1: string(14) &quot;-2,147,483,650&quot;
-... with precision -5: string(14) &quot;-2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967294)
-... with precision 5: string(19) &quot;4,294,967,294.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,294&quot;
-... with precision -1: string(13) &quot;4,294,967,290&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967295)
-... with precision 5: string(19) &quot;4,294,967,295.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,295&quot;
-... with precision -1: string(13) &quot;4,294,967,300&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967293)
-... with precision 5: string(19) &quot;4,294,967,293.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,293&quot;
-... with precision -1: string(13) &quot;4,294,967,290&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(9223372036854775806)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,806.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,806&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,810&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(9.223372036854776E+18)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,808&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,808&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,384&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372036854775807)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,807.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,807&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(-9.223372036854776E+18)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,808&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(9.223372036854775E+18)
-... with precision 5: string(31) &quot;9,223,372,036,854,774,784.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,774,784&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,774,780&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(-9.223372036854775E+18)
-... with precision 5: string(32) &quot;-9,223,372,036,854,774,784.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,774,784&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,774,780&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
-string(4) &quot;2009&quot;
+--- testing: 9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775807 % 1 ---
+int(0)
+--- testing: 9223372036854775807 % -1 ---
+int(0)
+--- testing: 9223372036854775807 % 7 ---
+int(0)
+--- testing: 9223372036854775807 % 9 ---
+int(7)
+--- testing: 9223372036854775807 % 65 ---
+int(7)
+--- testing: 9223372036854775807 % -44 ---
+int(7)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9223372036854775808 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775808 % 1 ---
+int(0)
+--- testing: -9223372036854775808 % -1 ---
+int(0)
+--- testing: -9223372036854775808 % 7 ---
+int(-1)
+--- testing: -9223372036854775808 % 9 ---
+int(-8)
+--- testing: -9223372036854775808 % 65 ---
+int(-8)
+--- testing: -9223372036854775808 % -44 ---
+int(-8)
+--- testing: -9223372036854775808 % 2147483647 ---
+int(-2)
+--- testing: -9223372036854775808 % 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483647 % 1 ---
+int(0)
+--- testing: 2147483647 % -1 ---
+int(0)
+--- testing: 2147483647 % 7 ---
+int(1)
+--- testing: 2147483647 % 9 ---
+int(1)
+--- testing: 2147483647 % 65 ---
+int(62)
+--- testing: 2147483647 % -44 ---
+int(23)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: -2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483648 % 1 ---
+int(0)
+--- testing: -2147483648 % -1 ---
+int(0)
+--- testing: -2147483648 % 7 ---
+int(-2)
+--- testing: -2147483648 % 9 ---
+int(-2)
+--- testing: -2147483648 % 65 ---
+int(-63)
+--- testing: -2147483648 % -44 ---
+int(-24)
+--- testing: -2147483648 % 2147483647 ---
+int(-1)
+--- testing: -2147483648 % 9223372036854775807 ---
+int(-2147483648)
+--- testing: 9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372034707292160 % 1 ---
+int(0)
+--- testing: 9223372034707292160 % -1 ---
+int(0)
+--- testing: 9223372034707292160 % 7 ---
+int(6)
+--- testing: 9223372034707292160 % 9 ---
+int(6)
+--- testing: 9223372034707292160 % 65 ---
+int(10)
+--- testing: 9223372034707292160 % -44 ---
+int(28)
+--- testing: 9223372034707292160 % 2147483647 ---
+int(1)
+--- testing: 9223372034707292160 % 9223372036854775807 ---
+int(9223372034707292160)
+--- testing: -9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372034707292160 % 1 ---
+int(0)
+--- testing: -9223372034707292160 % -1 ---
+int(0)
+--- testing: -9223372034707292160 % 7 ---
+int(-6)
+--- testing: -9223372034707292160 % 9 ---
+int(-6)
+--- testing: -9223372034707292160 % 65 ---
+int(-10)
+--- testing: -9223372034707292160 % -44 ---
+int(-28)
+--- testing: -9223372034707292160 % 2147483647 ---
+int(-1)
+--- testing: -9223372034707292160 % 9223372036854775807 ---
+int(-9223372034707292160)
+--- testing: 2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483648 % 1 ---
+int(0)
+--- testing: 2147483648 % -1 ---
+int(0)
+--- testing: 2147483648 % 7 ---
+int(2)
+--- testing: 2147483648 % 9 ---
+int(2)
+--- testing: 2147483648 % 65 ---
+int(63)
+--- testing: 2147483648 % -44 ---
+int(24)
+--- testing: 2147483648 % 2147483647 ---
+int(1)
+--- testing: 2147483648 % 9223372036854775807 ---
+int(2147483648)
+--- testing: -2147483649 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483649 % 1 ---
+int(0)
+--- testing: -2147483649 % -1 ---
+int(0)
+--- testing: -2147483649 % 7 ---
+int(-3)
+--- testing: -2147483649 % 9 ---
+int(-3)
+--- testing: -2147483649 % 65 ---
+int(-64)
+--- testing: -2147483649 % -44 ---
+int(-25)
+--- testing: -2147483649 % 2147483647 ---
+int(-2)
+--- testing: -2147483649 % 9223372036854775807 ---
+int(-2147483649)
+--- testing: 4294967294 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967294 % 1 ---
+int(0)
+--- testing: 4294967294 % -1 ---
+int(0)
+--- testing: 4294967294 % 7 ---
+int(2)
+--- testing: 4294967294 % 9 ---
+int(2)
+--- testing: 4294967294 % 65 ---
+int(59)
+--- testing: 4294967294 % -44 ---
+int(2)
+--- testing: 4294967294 % 2147483647 ---
+int(0)
+--- testing: 4294967294 % 9223372036854775807 ---
+int(4294967294)
+--- testing: 4294967295 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967295 % 1 ---
+int(0)
+--- testing: 4294967295 % -1 ---
+int(0)
+--- testing: 4294967295 % 7 ---
+int(3)
+--- testing: 4294967295 % 9 ---
+int(3)
+--- testing: 4294967295 % 65 ---
+int(60)
+--- testing: 4294967295 % -44 ---
+int(3)
+--- testing: 4294967295 % 2147483647 ---
+int(1)
+--- testing: 4294967295 % 9223372036854775807 ---
+int(4294967295)
+--- testing: 4294967293 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967293 % 1 ---
+int(0)
+--- testing: 4294967293 % -1 ---
+int(0)
+--- testing: 4294967293 % 7 ---
+int(1)
+--- testing: 4294967293 % 9 ---
+int(1)
+--- testing: 4294967293 % 65 ---
+int(58)
+--- testing: 4294967293 % -44 ---
+int(1)
+--- testing: 4294967293 % 2147483647 ---
+int(2147483646)
+--- testing: 4294967293 % 9223372036854775807 ---
+int(4294967293)
+--- testing: 9223372036854775806 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775806 % 1 ---
+int(0)
+--- testing: 9223372036854775806 % -1 ---
+int(0)
+--- testing: 9223372036854775806 % 7 ---
+int(6)
+--- testing: 9223372036854775806 % 9 ---
+int(6)
+--- testing: 9223372036854775806 % 65 ---
+int(6)
+--- testing: 9223372036854775806 % -44 ---
+int(6)
+--- testing: 9223372036854775806 % 2147483647 ---
+int(0)
+--- testing: 9223372036854775806 % 9223372036854775807 ---
+int(9223372036854775806)
+--- testing: 9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: 9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: 9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: 9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775807 % 1 ---
+int(0)
+--- testing: -9223372036854775807 % -1 ---
+int(0)
+--- testing: -9223372036854775807 % 7 ---
+int(0)
+--- testing: -9223372036854775807 % 9 ---
+int(-7)
+--- testing: -9223372036854775807 % 65 ---
+int(-7)
+--- testing: -9223372036854775807 % -44 ---
+int(-7)
+--- testing: -9223372036854775807 % 2147483647 ---
+int(-1)
+--- testing: -9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: -9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: -9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: -9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: 0 % 9223372036854775807 ---
+int(0)
+--- testing: 0 % -9223372036854775808 ---
+int(0)
+--- testing: 0 % 2147483647 ---
+int(0)
+--- testing: 0 % -2147483648 ---
+int(0)
+--- testing: 0 % 9223372034707292160 ---
+int(0)
+--- testing: 0 % -9223372034707292160 ---
+int(0)
+--- testing: 0 % 2147483648 ---
+int(0)
+--- testing: 0 % -2147483649 ---
+int(0)
+--- testing: 0 % 4294967294 ---
+int(0)
+--- testing: 0 % 4294967295 ---
+int(0)
+--- testing: 0 % 4294967293 ---
+int(0)
+--- testing: 0 % 9223372036854775806 ---
+int(0)
+--- testing: 0 % 9.2233720368548E+18 ---
+int(0)
+--- testing: 0 % -9223372036854775807 ---
+int(0)
+--- testing: 0 % -9.2233720368548E+18 ---
+int(0)
+--- testing: 1 % 9223372036854775807 ---
+int(1)
+--- testing: 1 % -9223372036854775808 ---
+int(1)
+--- testing: 1 % 2147483647 ---
+int(1)
+--- testing: 1 % -2147483648 ---
+int(1)
+--- testing: 1 % 9223372034707292160 ---
+int(1)
+--- testing: 1 % -9223372034707292160 ---
+int(1)
+--- testing: 1 % 2147483648 ---
+int(1)
+--- testing: 1 % -2147483649 ---
+int(1)
+--- testing: 1 % 4294967294 ---
+int(1)
+--- testing: 1 % 4294967295 ---
+int(1)
+--- testing: 1 % 4294967293 ---
+int(1)
+--- testing: 1 % 9223372036854775806 ---
+int(1)
+--- testing: 1 % 9.2233720368548E+18 ---
+int(1)
+--- testing: 1 % -9223372036854775807 ---
+int(1)
+--- testing: 1 % -9.2233720368548E+18 ---
+int(1)
+--- testing: -1 % 9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9223372036854775808 ---
+int(-1)
+--- testing: -1 % 2147483647 ---
+int(-1)
+--- testing: -1 % -2147483648 ---
+int(-1)
+--- testing: -1 % 9223372034707292160 ---
+int(-1)
+--- testing: -1 % -9223372034707292160 ---
+int(-1)
+--- testing: -1 % 2147483648 ---
+int(-1)
+--- testing: -1 % -2147483649 ---
+int(-1)
+--- testing: -1 % 4294967294 ---
+int(-1)
+--- testing: -1 % 4294967295 ---
+int(-1)
+--- testing: -1 % 4294967293 ---
+int(-1)
+--- testing: -1 % 9223372036854775806 ---
+int(-1)
+--- testing: -1 % 9.2233720368548E+18 ---
+int(-1)
+--- testing: -1 % -9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9.2233720368548E+18 ---
+int(-1)
+--- testing: 7 % 9223372036854775807 ---
+int(7)
+--- testing: 7 % -9223372036854775808 ---
+int(7)
+--- testing: 7 % 2147483647 ---
+int(7)
+--- testing: 7 % -2147483648 ---
+int(7)
+--- testing: 7 % 9223372034707292160 ---
+int(7)
+--- testing: 7 % -9223372034707292160 ---
+int(7)
+--- testing: 7 % 2147483648 ---
+int(7)
+--- testing: 7 % -2147483649 ---
+int(7)
+--- testing: 7 % 4294967294 ---
+int(7)
+--- testing: 7 % 4294967295 ---
+int(7)
+--- testing: 7 % 4294967293 ---
+int(7)
+--- testing: 7 % 9223372036854775806 ---
+int(7)
+--- testing: 7 % 9.2233720368548E+18 ---
+int(7)
+--- testing: 7 % -9223372036854775807 ---
+int(7)
+--- testing: 7 % -9.2233720368548E+18 ---
+int(7)
+--- testing: 9 % 9223372036854775807 ---
+int(9)
+--- testing: 9 % -9223372036854775808 ---
+int(9)
+--- testing: 9 % 2147483647 ---
+int(9)
+--- testing: 9 % -2147483648 ---
+int(9)
+--- testing: 9 % 9223372034707292160 ---
+int(9)
+--- testing: 9 % -9223372034707292160 ---
+int(9)
+--- testing: 9 % 2147483648 ---
+int(9)
+--- testing: 9 % -2147483649 ---
+int(9)
+--- testing: 9 % 4294967294 ---
+int(9)
+--- testing: 9 % 4294967295 ---
+int(9)
+--- testing: 9 % 4294967293 ---
+int(9)
+--- testing: 9 % 9223372036854775806 ---
+int(9)
+--- testing: 9 % 9.2233720368548E+18 ---
+int(9)
+--- testing: 9 % -9223372036854775807 ---
+int(9)
+--- testing: 9 % -9.2233720368548E+18 ---
+int(9)
+--- testing: 65 % 9223372036854775807 ---
+int(65)
+--- testing: 65 % -9223372036854775808 ---
+int(65)
+--- testing: 65 % 2147483647 ---
+int(65)
+--- testing: 65 % -2147483648 ---
+int(65)
+--- testing: 65 % 9223372034707292160 ---
+int(65)
+--- testing: 65 % -9223372034707292160 ---
+int(65)
+--- testing: 65 % 2147483648 ---
+int(65)
+--- testing: 65 % -2147483649 ---
+int(65)
+--- testing: 65 % 4294967294 ---
+int(65)
+--- testing: 65 % 4294967295 ---
+int(65)
+--- testing: 65 % 4294967293 ---
+int(65)
+--- testing: 65 % 9223372036854775806 ---
+int(65)
+--- testing: 65 % 9.2233720368548E+18 ---
+int(65)
+--- testing: 65 % -9223372036854775807 ---
+int(65)
+--- testing: 65 % -9.2233720368548E+18 ---
+int(65)
+--- testing: -44 % 9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9223372036854775808 ---
+int(-44)
+--- testing: -44 % 2147483647 ---
+int(-44)
+--- testing: -44 % -2147483648 ---
+int(-44)
+--- testing: -44 % 9223372034707292160 ---
+int(-44)
+--- testing: -44 % -9223372034707292160 ---
+int(-44)
+--- testing: -44 % 2147483648 ---
+int(-44)
+--- testing: -44 % -2147483649 ---
+int(-44)
+--- testing: -44 % 4294967294 ---
+int(-44)
+--- testing: -44 % 4294967295 ---
+int(-44)
+--- testing: -44 % 4294967293 ---
+int(-44)
+--- testing: -44 % 9223372036854775806 ---
+int(-44)
+--- testing: -44 % 9.2233720368548E+18 ---
+int(-44)
+--- testing: -44 % -9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9.2233720368548E+18 ---
+int(-44)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775808 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % -2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % -2147483649 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967294 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967295 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967293 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372036854775806 ---
+int(2147483647)
+--- testing: 2147483647 % 9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9223372036854775808 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % -2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -2147483649 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967294 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967295 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 4294967293 ---
+int(2147483650)
+--- testing: 9223372036854775807 % 9223372036854775806 ---
+int(1)
+--- testing: 9223372036854775807 % 9.2233720368548E+18 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % -9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9.2233720368548E+18 ---
+int(9223372036854775807)
+{&quot;x&quot;:{}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;d&quot;:{},&quot;c&quot;:{&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;d&quot;:{},&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;d&quot;:{&quot;x&quot;:{}}}}
 string(11) &quot;random_var:&quot;
-int(-9223372036854775808)
-array(10) {
-  [0]=&gt;
-  int(5)
-  [1]=&gt;
-  int(0)
-  [2]=&gt;
-  int(-1)
-  [3]=&gt;
-  int(-5)
-  [4]=&gt;
-  int(-10)
-  [5]=&gt;
-  int(-11)
-  [6]=&gt;
-  int(-17)
-  [7]=&gt;
-  int(-19)
-  [8]=&gt;
-  int(-20)
-  [9]=&gt;
-  int(-9223372036854775808)
-}
-int(-9223372036854775808)
-Calling function: spl_autoload_call with arguments: -9223372036854775808
-Calling function: linkinfo with arguments: -9223372036854775808
-Calling function: finfo_set_flags with arguments: -9223372036854775808, -9223372036854775808
-Error calling function finfo_set_flags: finfo_set_flags(): Argument #1 ($finfo) must be of type finfo, int given
-Calling function: stream_context_set_options with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array, -9223372036854775808
-Error calling function stream_context_set_options: stream_context_set_options(): Argument #1 ($context) must be of type resource, array given
-Calling function: implode with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array, Array
-Error calling function implode: implode(): Argument #1 ($separator) must be of type string, array given
-Calling function: htmlentities with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array, -9223372036854775808, Array, -9223372036854775808
-Error calling function htmlentities: htmlentities(): Argument #1 ($string) must be of type string, array given
-Calling function: strchr with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
-Calling function: array_udiff_assoc with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
--9223372036854775808, Array
-Error calling function array_udiff_assoc: array_udiff_assoc(): Argument #2 must be a valid callback, array callback must have exactly two members
-Calling function: getservbyport with arguments: -9223372036854775808, -9223372036854775808
-Calling function: strcmp with arguments: -9223372036854775808, -9223372036854775808
-Calling function: stream_bucket_append with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
--9223372036854775808, Array
-Error calling function stream_bucket_append: stream_bucket_append(): Argument #1 ($brigade) must be of type resource, int given
-Calling function: addcslashes with arguments: -9223372036854775808, -9223372036854775808
-Calling function: extension_loaded with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array
-Error calling function extension_loaded: extension_loaded(): Argument #1 ($extension) must be of type string, array given
-Calling function: time_sleep_until with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array
-Error calling function time_sleep_until: time_sleep_until(): Argument #1 ($timestamp) must be of type float, array given
-Calling function: error_log with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php on line 38
-Array, -9223372036854775808, Array, -9223372036854775808
-Error calling function error_log: error_log(): Argument #1 ($message) must be of type string, array given
-Calling function: unpack with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
-Error calling function unpack: unpack(): Argument #3 ($offset) must be contained in argument #2 ($data)
-Calling function: get_cfg_var with arguments: -9223372036854775808
-Calling function: session_commit with arguments: 
-Calling function: urldecode with arguments: -9223372036854775808
-Calling function: stream_context_get_options with arguments: -9223372036854775808
-Error calling function stream_context_get_options: stream_context_get_options(): Argument #1 ($stream_or_context) must be of type resource, int given
-Calling function: levenshtein with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type &#x27;long&#x27;
+int(9223372036854775807)
+int(9223372036854775807)
+int(1)
+Calling function: dns_get_mx with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807
+Calling function: array_splice with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
+Error calling function array_splice: array_splice(): Argument #1 ($array) must be of type array, int given
+Calling function: xml_parse_into_struct with arguments: 9223372036854775807, 1, 9223372036854775807, 1
+Error calling function xml_parse_into_struct: xml_parse_into_struct(): Argument #1 ($parser) must be of type XMLParser, int given
+Calling function: preg_split with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
+Calling function: fdatasync with arguments: 9223372036854775807
+Error calling function fdatasync: fdatasync(): Argument #1 ($stream) must be of type resource, int given
+Calling function: hash_equals with arguments: 9223372036854775807, 1
+Error calling function hash_equals: hash_equals(): Argument #1 ($known_string) must be of type string, int given
+Calling function: fflush with arguments: 1
+Error calling function fflush: fflush(): Argument #1 ($stream) must be of type resource, int given
+Calling function: get_defined_functions with arguments: 1
+Calling function: strftime with arguments: 1, 1
+Calling function: levenshtein with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: 9223372036854775807 + 9223372036854775807 cannot be represented in type &#x27;long&#x27;
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in
             </pre>
         </div>
@@ -380,7 +677,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -403,7 +700,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -417,37 +714,41 @@ define(&quot;MAX_64Bit&quot;, 9223372036854775807);
 define(&quot;MAX_32Bit&quot;, 2147483647);
 define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
 define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$numbers = array(
+$longVals = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
-    // floats rounded as int
-    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$precisions = array(
-    5,
-    0,
-    -1,
-    -5,
-    -10,
-    -11,
-    -17,
-    -19,
-    -20,
-    PHP_INT_MIN,
-);
-foreach ($numbers as $number) {
-    echo &quot;--- testing: &quot;;
-    var_dump($number);
-    foreach ($precisions as $precision) {
-        echo &quot;... with precision &quot; . $precision . &quot;: &quot;;
-        var_dump(number_format($number, $precision));
-    }
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo &quot;--- testing: $longVal % $otherVal ---\n&quot;;
+      try {
+        var_dump($longVal%$otherVal);
+      } catch (DivisionByZeroError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo &quot;--- testing: $otherVal % $longVal ---\n&quot;;
+      try {
+        var_dump($otherVal%$longVal);
+      } catch (DivisionByZeroError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
 }
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(date(&quot;Y&quot;, 1245623227));
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)-&gt;c), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;d/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;d/&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;d&gt;&lt;x/&gt;&lt;/d&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -459,11 +760,10 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test number_format function : 64bit long tests+Bug #48276 (date(&quot;Y&quot;) prints wrong year on Big Endian machines)
+Test % operator : 64bit long tests+Bug #66084 simplexml_load_string() mangles empty node name, json variant
 --INI--
-date.timezone=UTC
-opcache.file_cache_only=1
-session.save_handler=whatever
+opcache.validate_timestamps=1
+session.save_handler=files
 --SKIPIF--
 &lt;?php
 if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;);
@@ -499,7 +799,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -522,7 +822,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -536,229 +836,592 @@ define(&quot;MAX_64Bit&quot;, 9223372036854775807);
 define(&quot;MAX_32Bit&quot;, 2147483647);
 define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
 define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$numbers = array(
+$longVals = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
-    // floats rounded as int
-    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$precisions = array(
-    5,
-    0,
-    -1,
-    -5,
-    -10,
-    -11,
-    -17,
-    -19,
-    -20,
-    PHP_INT_MIN,
-);
-foreach ($numbers as $number) {
-    echo &quot;--- testing: &quot;;
-    var_dump($number);
-    foreach ($precisions as $precision) {
-        echo &quot;... with precision &quot; . $precision . &quot;: &quot;;
-        var_dump(number_format($number, $precision));
-    }
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo &quot;--- testing: $longVal % $otherVal ---\n&quot;;
+      try {
+        var_dump($longVal%$otherVal);
+      } catch (DivisionByZeroError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo &quot;--- testing: $otherVal % $longVal ---\n&quot;;
+      try {
+        var_dump($otherVal%$longVal);
+      } catch (DivisionByZeroError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
 }
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(date(&quot;Y&quot;, 1245623227));
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)-&gt;c), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;d/&gt;&lt;c&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;d/&gt;&lt;x/&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
+echo json_encode(simplexml_load_string(&#x27;&lt;a&gt;&lt;b/&gt;&lt;c&gt;&lt;d&gt;&lt;x/&gt;&lt;/d&gt;&lt;/c&gt;&lt;/a&gt;&#x27;)), &quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
+--EXTENSIONS--
+simplexml
 --EXPECT--
---- testing: int(9223372036854775807)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,807.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,807&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,810&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372036854775808)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,808&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(2147483647)
-... with precision 5: string(19) &quot;2,147,483,647.00000&quot;
-... with precision 0: string(13) &quot;2,147,483,647&quot;
-... with precision -1: string(13) &quot;2,147,483,650&quot;
-... with precision -5: string(13) &quot;2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-2147483648)
-... with precision 5: string(20) &quot;-2,147,483,648.00000&quot;
-... with precision 0: string(14) &quot;-2,147,483,648&quot;
-... with precision -1: string(14) &quot;-2,147,483,650&quot;
-... with precision -5: string(14) &quot;-2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(9223372034707292160)
-... with precision 5: string(31) &quot;9,223,372,034,707,292,160.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,034,707,292,160&quot;
-... with precision -1: string(25) &quot;9,223,372,034,707,292,160&quot;
-... with precision -5: string(25) &quot;9,223,372,034,707,300,000&quot;
-... with precision -10: string(25) &quot;9,223,372,030,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372034707292160)
-... with precision 5: string(32) &quot;-9,223,372,034,707,292,160.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,034,707,292,160&quot;
-... with precision -1: string(26) &quot;-9,223,372,034,707,292,160&quot;
-... with precision -5: string(26) &quot;-9,223,372,034,707,300,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,030,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(2147483648)
-... with precision 5: string(19) &quot;2,147,483,648.00000&quot;
-... with precision 0: string(13) &quot;2,147,483,648&quot;
-... with precision -1: string(13) &quot;2,147,483,650&quot;
-... with precision -5: string(13) &quot;2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-2147483649)
-... with precision 5: string(20) &quot;-2,147,483,649.00000&quot;
-... with precision 0: string(14) &quot;-2,147,483,649&quot;
-... with precision -1: string(14) &quot;-2,147,483,650&quot;
-... with precision -5: string(14) &quot;-2,147,500,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967294)
-... with precision 5: string(19) &quot;4,294,967,294.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,294&quot;
-... with precision -1: string(13) &quot;4,294,967,290&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967295)
-... with precision 5: string(19) &quot;4,294,967,295.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,295&quot;
-... with precision -1: string(13) &quot;4,294,967,300&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(4294967293)
-... with precision 5: string(19) &quot;4,294,967,293.00000&quot;
-... with precision 0: string(13) &quot;4,294,967,293&quot;
-... with precision -1: string(13) &quot;4,294,967,290&quot;
-... with precision -5: string(13) &quot;4,295,000,000&quot;
-... with precision -10: string(1) &quot;0&quot;
-... with precision -11: string(1) &quot;0&quot;
-... with precision -17: string(1) &quot;0&quot;
-... with precision -19: string(1) &quot;0&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(9223372036854775806)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,806.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,806&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,810&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(9.223372036854776E+18)
-... with precision 5: string(31) &quot;9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,775,808&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,775,808&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,384&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: int(-9223372036854775807)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,807.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,807&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(-9.223372036854776E+18)
-... with precision 5: string(32) &quot;-9,223,372,036,854,775,808.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,775,808&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,775,810&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(9.223372036854775E+18)
-... with precision 5: string(31) &quot;9,223,372,036,854,774,784.00000&quot;
-... with precision 0: string(25) &quot;9,223,372,036,854,774,784&quot;
-... with precision -1: string(25) &quot;9,223,372,036,854,774,780&quot;
-... with precision -5: string(25) &quot;9,223,372,036,854,800,000&quot;
-... with precision -10: string(25) &quot;9,223,372,040,000,000,000&quot;
-... with precision -11: string(25) &quot;9,223,372,000,000,000,000&quot;
-... with precision -17: string(25) &quot;9,200,000,000,000,000,000&quot;
-... with precision -19: string(26) &quot;10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
---- testing: float(-9.223372036854775E+18)
-... with precision 5: string(32) &quot;-9,223,372,036,854,774,784.00000&quot;
-... with precision 0: string(26) &quot;-9,223,372,036,854,774,784&quot;
-... with precision -1: string(26) &quot;-9,223,372,036,854,774,780&quot;
-... with precision -5: string(26) &quot;-9,223,372,036,854,800,000&quot;
-... with precision -10: string(26) &quot;-9,223,372,040,000,000,000&quot;
-... with precision -11: string(26) &quot;-9,223,372,000,000,000,000&quot;
-... with precision -17: string(26) &quot;-9,200,000,000,000,000,000&quot;
-... with precision -19: string(27) &quot;-10,000,000,000,000,000,000&quot;
-... with precision -20: string(1) &quot;0&quot;
-... with precision -9223372036854775808: string(1) &quot;0&quot;
-string(4) &quot;2009&quot;
+--- testing: 9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775807 % 1 ---
+int(0)
+--- testing: 9223372036854775807 % -1 ---
+int(0)
+--- testing: 9223372036854775807 % 7 ---
+int(0)
+--- testing: 9223372036854775807 % 9 ---
+int(7)
+--- testing: 9223372036854775807 % 65 ---
+int(7)
+--- testing: 9223372036854775807 % -44 ---
+int(7)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9223372036854775808 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775808 % 1 ---
+int(0)
+--- testing: -9223372036854775808 % -1 ---
+int(0)
+--- testing: -9223372036854775808 % 7 ---
+int(-1)
+--- testing: -9223372036854775808 % 9 ---
+int(-8)
+--- testing: -9223372036854775808 % 65 ---
+int(-8)
+--- testing: -9223372036854775808 % -44 ---
+int(-8)
+--- testing: -9223372036854775808 % 2147483647 ---
+int(-2)
+--- testing: -9223372036854775808 % 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483647 % 1 ---
+int(0)
+--- testing: 2147483647 % -1 ---
+int(0)
+--- testing: 2147483647 % 7 ---
+int(1)
+--- testing: 2147483647 % 9 ---
+int(1)
+--- testing: 2147483647 % 65 ---
+int(62)
+--- testing: 2147483647 % -44 ---
+int(23)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: -2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483648 % 1 ---
+int(0)
+--- testing: -2147483648 % -1 ---
+int(0)
+--- testing: -2147483648 % 7 ---
+int(-2)
+--- testing: -2147483648 % 9 ---
+int(-2)
+--- testing: -2147483648 % 65 ---
+int(-63)
+--- testing: -2147483648 % -44 ---
+int(-24)
+--- testing: -2147483648 % 2147483647 ---
+int(-1)
+--- testing: -2147483648 % 9223372036854775807 ---
+int(-2147483648)
+--- testing: 9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372034707292160 % 1 ---
+int(0)
+--- testing: 9223372034707292160 % -1 ---
+int(0)
+--- testing: 9223372034707292160 % 7 ---
+int(6)
+--- testing: 9223372034707292160 % 9 ---
+int(6)
+--- testing: 9223372034707292160 % 65 ---
+int(10)
+--- testing: 9223372034707292160 % -44 ---
+int(28)
+--- testing: 9223372034707292160 % 2147483647 ---
+int(1)
+--- testing: 9223372034707292160 % 9223372036854775807 ---
+int(9223372034707292160)
+--- testing: -9223372034707292160 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372034707292160 % 1 ---
+int(0)
+--- testing: -9223372034707292160 % -1 ---
+int(0)
+--- testing: -9223372034707292160 % 7 ---
+int(-6)
+--- testing: -9223372034707292160 % 9 ---
+int(-6)
+--- testing: -9223372034707292160 % 65 ---
+int(-10)
+--- testing: -9223372034707292160 % -44 ---
+int(-28)
+--- testing: -9223372034707292160 % 2147483647 ---
+int(-1)
+--- testing: -9223372034707292160 % 9223372036854775807 ---
+int(-9223372034707292160)
+--- testing: 2147483648 % 0 ---
+Exception: Modulo by zero
+--- testing: 2147483648 % 1 ---
+int(0)
+--- testing: 2147483648 % -1 ---
+int(0)
+--- testing: 2147483648 % 7 ---
+int(2)
+--- testing: 2147483648 % 9 ---
+int(2)
+--- testing: 2147483648 % 65 ---
+int(63)
+--- testing: 2147483648 % -44 ---
+int(24)
+--- testing: 2147483648 % 2147483647 ---
+int(1)
+--- testing: 2147483648 % 9223372036854775807 ---
+int(2147483648)
+--- testing: -2147483649 % 0 ---
+Exception: Modulo by zero
+--- testing: -2147483649 % 1 ---
+int(0)
+--- testing: -2147483649 % -1 ---
+int(0)
+--- testing: -2147483649 % 7 ---
+int(-3)
+--- testing: -2147483649 % 9 ---
+int(-3)
+--- testing: -2147483649 % 65 ---
+int(-64)
+--- testing: -2147483649 % -44 ---
+int(-25)
+--- testing: -2147483649 % 2147483647 ---
+int(-2)
+--- testing: -2147483649 % 9223372036854775807 ---
+int(-2147483649)
+--- testing: 4294967294 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967294 % 1 ---
+int(0)
+--- testing: 4294967294 % -1 ---
+int(0)
+--- testing: 4294967294 % 7 ---
+int(2)
+--- testing: 4294967294 % 9 ---
+int(2)
+--- testing: 4294967294 % 65 ---
+int(59)
+--- testing: 4294967294 % -44 ---
+int(2)
+--- testing: 4294967294 % 2147483647 ---
+int(0)
+--- testing: 4294967294 % 9223372036854775807 ---
+int(4294967294)
+--- testing: 4294967295 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967295 % 1 ---
+int(0)
+--- testing: 4294967295 % -1 ---
+int(0)
+--- testing: 4294967295 % 7 ---
+int(3)
+--- testing: 4294967295 % 9 ---
+int(3)
+--- testing: 4294967295 % 65 ---
+int(60)
+--- testing: 4294967295 % -44 ---
+int(3)
+--- testing: 4294967295 % 2147483647 ---
+int(1)
+--- testing: 4294967295 % 9223372036854775807 ---
+int(4294967295)
+--- testing: 4294967293 % 0 ---
+Exception: Modulo by zero
+--- testing: 4294967293 % 1 ---
+int(0)
+--- testing: 4294967293 % -1 ---
+int(0)
+--- testing: 4294967293 % 7 ---
+int(1)
+--- testing: 4294967293 % 9 ---
+int(1)
+--- testing: 4294967293 % 65 ---
+int(58)
+--- testing: 4294967293 % -44 ---
+int(1)
+--- testing: 4294967293 % 2147483647 ---
+int(2147483646)
+--- testing: 4294967293 % 9223372036854775807 ---
+int(4294967293)
+--- testing: 9223372036854775806 % 0 ---
+Exception: Modulo by zero
+--- testing: 9223372036854775806 % 1 ---
+int(0)
+--- testing: 9223372036854775806 % -1 ---
+int(0)
+--- testing: 9223372036854775806 % 7 ---
+int(6)
+--- testing: 9223372036854775806 % 9 ---
+int(6)
+--- testing: 9223372036854775806 % 65 ---
+int(6)
+--- testing: 9223372036854775806 % -44 ---
+int(6)
+--- testing: 9223372036854775806 % 2147483647 ---
+int(0)
+--- testing: 9223372036854775806 % 9223372036854775807 ---
+int(9223372036854775806)
+--- testing: 9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: 9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: 9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: 9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: 9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: 9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 % 0 ---
+Exception: Modulo by zero
+--- testing: -9223372036854775807 % 1 ---
+int(0)
+--- testing: -9223372036854775807 % -1 ---
+int(0)
+--- testing: -9223372036854775807 % 7 ---
+int(0)
+--- testing: -9223372036854775807 % 9 ---
+int(-7)
+--- testing: -9223372036854775807 % 65 ---
+int(-7)
+--- testing: -9223372036854775807 % -44 ---
+int(-7)
+--- testing: -9223372036854775807 % 2147483647 ---
+int(-1)
+--- testing: -9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 0 ---
+Exception: Modulo by zero
+--- testing: -9.2233720368548E+18 % 1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % -1 ---
+int(0)
+--- testing: -9.2233720368548E+18 % 7 ---
+int(-1)
+--- testing: -9.2233720368548E+18 % 9 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 65 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % -44 ---
+int(-8)
+--- testing: -9.2233720368548E+18 % 2147483647 ---
+int(-2)
+--- testing: -9.2233720368548E+18 % 9223372036854775807 ---
+int(-1)
+--- testing: 0 % 9223372036854775807 ---
+int(0)
+--- testing: 0 % -9223372036854775808 ---
+int(0)
+--- testing: 0 % 2147483647 ---
+int(0)
+--- testing: 0 % -2147483648 ---
+int(0)
+--- testing: 0 % 9223372034707292160 ---
+int(0)
+--- testing: 0 % -9223372034707292160 ---
+int(0)
+--- testing: 0 % 2147483648 ---
+int(0)
+--- testing: 0 % -2147483649 ---
+int(0)
+--- testing: 0 % 4294967294 ---
+int(0)
+--- testing: 0 % 4294967295 ---
+int(0)
+--- testing: 0 % 4294967293 ---
+int(0)
+--- testing: 0 % 9223372036854775806 ---
+int(0)
+--- testing: 0 % 9.2233720368548E+18 ---
+int(0)
+--- testing: 0 % -9223372036854775807 ---
+int(0)
+--- testing: 0 % -9.2233720368548E+18 ---
+int(0)
+--- testing: 1 % 9223372036854775807 ---
+int(1)
+--- testing: 1 % -9223372036854775808 ---
+int(1)
+--- testing: 1 % 2147483647 ---
+int(1)
+--- testing: 1 % -2147483648 ---
+int(1)
+--- testing: 1 % 9223372034707292160 ---
+int(1)
+--- testing: 1 % -9223372034707292160 ---
+int(1)
+--- testing: 1 % 2147483648 ---
+int(1)
+--- testing: 1 % -2147483649 ---
+int(1)
+--- testing: 1 % 4294967294 ---
+int(1)
+--- testing: 1 % 4294967295 ---
+int(1)
+--- testing: 1 % 4294967293 ---
+int(1)
+--- testing: 1 % 9223372036854775806 ---
+int(1)
+--- testing: 1 % 9.2233720368548E+18 ---
+int(1)
+--- testing: 1 % -9223372036854775807 ---
+int(1)
+--- testing: 1 % -9.2233720368548E+18 ---
+int(1)
+--- testing: -1 % 9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9223372036854775808 ---
+int(-1)
+--- testing: -1 % 2147483647 ---
+int(-1)
+--- testing: -1 % -2147483648 ---
+int(-1)
+--- testing: -1 % 9223372034707292160 ---
+int(-1)
+--- testing: -1 % -9223372034707292160 ---
+int(-1)
+--- testing: -1 % 2147483648 ---
+int(-1)
+--- testing: -1 % -2147483649 ---
+int(-1)
+--- testing: -1 % 4294967294 ---
+int(-1)
+--- testing: -1 % 4294967295 ---
+int(-1)
+--- testing: -1 % 4294967293 ---
+int(-1)
+--- testing: -1 % 9223372036854775806 ---
+int(-1)
+--- testing: -1 % 9.2233720368548E+18 ---
+int(-1)
+--- testing: -1 % -9223372036854775807 ---
+int(-1)
+--- testing: -1 % -9.2233720368548E+18 ---
+int(-1)
+--- testing: 7 % 9223372036854775807 ---
+int(7)
+--- testing: 7 % -9223372036854775808 ---
+int(7)
+--- testing: 7 % 2147483647 ---
+int(7)
+--- testing: 7 % -2147483648 ---
+int(7)
+--- testing: 7 % 9223372034707292160 ---
+int(7)
+--- testing: 7 % -9223372034707292160 ---
+int(7)
+--- testing: 7 % 2147483648 ---
+int(7)
+--- testing: 7 % -2147483649 ---
+int(7)
+--- testing: 7 % 4294967294 ---
+int(7)
+--- testing: 7 % 4294967295 ---
+int(7)
+--- testing: 7 % 4294967293 ---
+int(7)
+--- testing: 7 % 9223372036854775806 ---
+int(7)
+--- testing: 7 % 9.2233720368548E+18 ---
+int(7)
+--- testing: 7 % -9223372036854775807 ---
+int(7)
+--- testing: 7 % -9.2233720368548E+18 ---
+int(7)
+--- testing: 9 % 9223372036854775807 ---
+int(9)
+--- testing: 9 % -9223372036854775808 ---
+int(9)
+--- testing: 9 % 2147483647 ---
+int(9)
+--- testing: 9 % -2147483648 ---
+int(9)
+--- testing: 9 % 9223372034707292160 ---
+int(9)
+--- testing: 9 % -9223372034707292160 ---
+int(9)
+--- testing: 9 % 2147483648 ---
+int(9)
+--- testing: 9 % -2147483649 ---
+int(9)
+--- testing: 9 % 4294967294 ---
+int(9)
+--- testing: 9 % 4294967295 ---
+int(9)
+--- testing: 9 % 4294967293 ---
+int(9)
+--- testing: 9 % 9223372036854775806 ---
+int(9)
+--- testing: 9 % 9.2233720368548E+18 ---
+int(9)
+--- testing: 9 % -9223372036854775807 ---
+int(9)
+--- testing: 9 % -9.2233720368548E+18 ---
+int(9)
+--- testing: 65 % 9223372036854775807 ---
+int(65)
+--- testing: 65 % -9223372036854775808 ---
+int(65)
+--- testing: 65 % 2147483647 ---
+int(65)
+--- testing: 65 % -2147483648 ---
+int(65)
+--- testing: 65 % 9223372034707292160 ---
+int(65)
+--- testing: 65 % -9223372034707292160 ---
+int(65)
+--- testing: 65 % 2147483648 ---
+int(65)
+--- testing: 65 % -2147483649 ---
+int(65)
+--- testing: 65 % 4294967294 ---
+int(65)
+--- testing: 65 % 4294967295 ---
+int(65)
+--- testing: 65 % 4294967293 ---
+int(65)
+--- testing: 65 % 9223372036854775806 ---
+int(65)
+--- testing: 65 % 9.2233720368548E+18 ---
+int(65)
+--- testing: 65 % -9223372036854775807 ---
+int(65)
+--- testing: 65 % -9.2233720368548E+18 ---
+int(65)
+--- testing: -44 % 9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9223372036854775808 ---
+int(-44)
+--- testing: -44 % 2147483647 ---
+int(-44)
+--- testing: -44 % -2147483648 ---
+int(-44)
+--- testing: -44 % 9223372034707292160 ---
+int(-44)
+--- testing: -44 % -9223372034707292160 ---
+int(-44)
+--- testing: -44 % 2147483648 ---
+int(-44)
+--- testing: -44 % -2147483649 ---
+int(-44)
+--- testing: -44 % 4294967294 ---
+int(-44)
+--- testing: -44 % 4294967295 ---
+int(-44)
+--- testing: -44 % 4294967293 ---
+int(-44)
+--- testing: -44 % 9223372036854775806 ---
+int(-44)
+--- testing: -44 % 9.2233720368548E+18 ---
+int(-44)
+--- testing: -44 % -9223372036854775807 ---
+int(-44)
+--- testing: -44 % -9.2233720368548E+18 ---
+int(-44)
+--- testing: 2147483647 % 9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775808 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483647 ---
+int(0)
+--- testing: 2147483647 % -2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 2147483647 % 2147483648 ---
+int(2147483647)
+--- testing: 2147483647 % -2147483649 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967294 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967295 ---
+int(2147483647)
+--- testing: 2147483647 % 4294967293 ---
+int(2147483647)
+--- testing: 2147483647 % 9223372036854775806 ---
+int(2147483647)
+--- testing: 2147483647 % 9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 2147483647 % -9223372036854775807 ---
+int(2147483647)
+--- testing: 2147483647 % -9.2233720368548E+18 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9223372036854775808 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % 2147483647 ---
+int(1)
+--- testing: 9223372036854775807 % -2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -9223372034707292160 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 2147483648 ---
+int(2147483647)
+--- testing: 9223372036854775807 % -2147483649 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967294 ---
+int(1)
+--- testing: 9223372036854775807 % 4294967295 ---
+int(2147483647)
+--- testing: 9223372036854775807 % 4294967293 ---
+int(2147483650)
+--- testing: 9223372036854775807 % 9223372036854775806 ---
+int(1)
+--- testing: 9223372036854775807 % 9.2233720368548E+18 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 % -9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 % -9.2233720368548E+18 ---
+int(9223372036854775807)
+{&quot;x&quot;:{}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;d&quot;:{},&quot;c&quot;:{&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;d&quot;:{},&quot;x&quot;:{}}}
+{&quot;b&quot;:{},&quot;c&quot;:{&quot;d&quot;:{&quot;x&quot;:{}}}}
 
             </pre>
         </div>
@@ -773,8 +1436,8 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
-export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -785,12 +1448,11 @@ export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
-export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
@@ -803,30 +1465,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker16&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=UTC&quot; -d &quot;opcache.file_cache_only=1&quot; -d &quot;session.save_handler=whatever&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused659.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.validate_timestamps=1&quot; -d &quot;session.save_handler=files&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused333.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

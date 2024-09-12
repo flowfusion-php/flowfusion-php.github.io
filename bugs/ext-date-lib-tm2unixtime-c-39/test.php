@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -72,37 +72,38 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(sqrt($longVal));
+   var_dump(round($longVal));
 }
-$fusion = $longVals;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/* Variation 5 : Creating link, deleting it and checking linkinfo(), is_link() on it */
+/* Test copy(): Trying to copy the file to a destination, where destination is an existing dir */
 $file_path = __DIR__;
-echo "*** Testing linkinfo() and is_link() on deleted link ***\n";
-// link name used here
-$linkname  = "$file_path/symlink_link_linkinfo_is_link_link_variation5.tmp";
-// create temp dir
-$dirname = "$file_path/symlink_link_linkinfo_is_link_variation5";
-mkdir($dirname);
-// filename used here
-$filename = "$dirname/symlink_link_linkinfo_is_link_variation5.tmp";
-// create the file
-$fp = fopen($filename, "w");
-$fusion = "Hello World";
-fwrite($fp, $data);
-fclose($fp);
-var_dump( symlink($filename, $linkname) );  // create link
-// delete the link
-var_dump( unlink($linkname) );  // delete the link
-// clear the cache
+echo "*** Test copy() function: Trying to create a copy of source file as a dir ***\n";
+$file = $file_path."/copy_variation11.tmp";
+$file_handle =  fopen($file, "w");
+fwrite($file_handle, str_repeat("Hello, world...", 20));
+fclose($file_handle);
+$dir = $file_path."/copy_variation11";
+mkdir($dir);
+echo "Size of source before copy operation => ";
+var_dump( filesize($file) );  //size of source before copy
 clearstatcache();
-// try using linkinfo() & is_link() on deleted link; expected: false
-$deleted_link = $linkname;
-var_dump( linkinfo($deleted_link) );
-var_dump( is_link($deleted_link) );
-echo "Done\n";
+echo "Size of destination before copy operation => ";
+var_dump( filesize($dir) );  //size of destination before copy
+clearstatcache();
+echo "\n-- Now applying copy() operation --\n";
+var_dump( copy($file, $dir) );  //expected: bool(false)
+var_dump( file_exists($file) );  //expected: bool(true)
+var_dump( file_exists($dir) );  //expected: bool(true)
+var_dump( is_file($file) );  //expected: bool(true)
+var_dump( is_dir($file) );  //expected: bool(false)
+var_dump( is_file($fusion) ); //expected: bool(false)
+var_dump( is_dir($dir) );  //expected: bool(true)
+var_dump( filesize($file) );   //size of source after copy
+var_dump( filesize($dir) );   //size of destination after copy
+echo "*** Done ***\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

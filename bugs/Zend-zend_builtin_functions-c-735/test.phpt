@@ -1,5 +1,13 @@
 --TEST--
-Interaction of inaccessible property hooks with magic methods+SPL: InfiniteIterator
+Bug #25922 (SEGV in error_handler when context is destroyed)+json_decode() invalid UTF8
+--INI--
+error_reporting=2047
+opcache.optimization_level=2147483647
+default_charset=cp874
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1241
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -31,7 +39,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -54,7 +62,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -64,98 +72,63 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class A {
-    public $prop {
-        get {
-            echo __METHOD__, "\n";
-            return 'prop';
-        }
-        set { echo __METHOD__, "\n"; }
-    }
+function my_error_handler($error, $errmsg='', $errfile='', $errline=0, $errcontext='')
+{
+    echo "$errmsg\n";
+    $errcontext = '';
 }
-class B extends A {
-    public function __get($name) {
-        echo __METHOD__, "($name)\n";
-        try {
-            $this->$name;
-        } catch (Error $e) {
-            echo $e->getMessage(), "\n";
-        }
-    }
-    public function __set($name, $value) {
-        echo __METHOD__, "($name, $value)\n";
-        try {
-            $this->$name = $value;
-        } catch (Error $e) {
-            echo $e->getMessage(), "\n";
-        }
-    }
-    public function __isset($name) {
-        echo __METHOD__, "($name)\n";
-        try {
-            var_dump(isset($this->$name));
-        } catch (Error $e) {
-            echo $e->getMessage(), "\n";
-        }
-    }
-    public function __unset($name) {
-        echo "Never reached\n";
-    }
+set_error_handler('my_error_handler');
+function test()
+{
+    echo "Undefined index here: '{$data['HTTP_HEADER']}'\n";
 }
-$b = new B;
-$b->prop;
-var_dump(isset($b->prop));
-$b->prop = 1;
-try {
-    unset($b->prop);
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-$script1_dataflow = $value;
+test();
+$fusion = $errmsg;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "===EmptyIterator===\n";
-foreach(new LimitIterator(new InfiniteIterator(new EmptyIterator()), 0, 3) as $key=>$val)
-{
-    echo "$key=>$val\n";
+function json_decode_invalid_utf8($str) {
+    var_dump(json_decode($str));
+    var_dump(json_decode($str, true, 512, JSON_INVALID_UTF8_IGNORE));
+    $json = json_decode($str, true, 512, JSON_INVALID_UTF8_SUBSTITUTE);
+    if (is_array($json)) {
+        var_dump(array_map(function($item) { return bin2hex($item); }, $json));
+    } else {
+        var_dump(bin2hex($fusion));
+    }
 }
-echo "===InfiniteIterator===\n";
-$it = new ArrayIterator(array(0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D'));
-$it = new InfiniteIterator($it);
-$it = new LimitIterator($it, 2, 5);
-foreach($it as $val=>$key)
-{
-    echo "$val=>$script1_dataflow\n";
-}
-echo "===Infinite/LimitIterator===\n";
-$it = new ArrayIterator(array(0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D'));
-$it = new LimitIterator($it, 1, 2);
-$it = new InfiniteIterator($it);
-$it = new LimitIterator($it, 2, 5);
-foreach($it as $val=>$key)
-{
-    echo "$val=>$key\n";
-}
+json_decode_invalid_utf8("\"a\xb0b\"");
+json_decode_invalid_utf8("\"a\xd0\xf2b\"");
+json_decode_invalid_utf8("\"\x61\xf0\x80\x80\x41\"");
+json_decode_invalid_utf8("[\"\xc1\xc1\",\"a\"]");
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-A::$prop::get
-A::$prop::get
-bool(true)
-A::$prop::set
-Cannot unset hooked property B::$prop
-===EmptyIterator===
-===InfiniteIterator===
-2=>C
-3=>D
-0=>A
-1=>B
-2=>C
-===Infinite/LimitIterator===
-1=>B
-2=>C
-1=>B
-2=>C
-1=>B
+Undefined variable $data
+Trying to access array offset on null
+Undefined index here: ''
+NULL
+string(2) "ab"
+string(10) "61efbfbd62"
+NULL
+string(2) "ab"
+string(16) "61efbfbdefbfbd62"
+NULL
+string(2) "aA"
+string(22) "61efbfbdefbfbdefbfbd41"
+NULL
+array(2) {
+  [0]=>
+  string(0) ""
+  [1]=>
+  string(1) "a"
+}
+array(2) {
+  [0]=>
+  string(12) "efbfbdefbfbd"
+  [1]=>
+  string(2) "61"
+}
+Done

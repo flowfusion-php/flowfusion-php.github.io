@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,46 +61,37 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$contents = <<<EOS
-"cell1","cell2\\","cell3","cell4"
-"\\\\\\line1
-line2\\\\\\"
-EOS;
-$stream = fopen('php://memory', 'w+');
-fwrite($stream, $contents);
-rewind($stream);
-while (($data = fgetcsv($stream, PHP_INT_MAX, ',', '"', '')) !== false) {
-    print_r($data);
+function inc($x) {
+    return ++$x;
 }
-fclose($stream);
-$fusion = $data;
+function dec($x) {
+    return --$x;
+}
+var_dump(inc("abc"));
+var_dump(inc("5"));
+var_dump(inc(1.1));
+var_dump(dec("5"));
+var_dump(dec(1.1));
+$fusion = $x;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo {
-    public function __construct(array $fusion) {
-        var_dump(array_map(array($this, 'callback'), $data));
-    }
-    private function callback($value) {
-        if (!is_array($value)) {
-            return stripslashes($value);
-        }
-    return array_map(array($this, 'callback'), $value);
-    }
+$fusion = Dom\XMLDocument::createFromString('<root/>');
+try {
+    $dom->getElementsByTagName('root')[][1] = 1;
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-class Bar extends Foo {
+try {
+    $dom->getElementsByTagName('root')[true];
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-new Bar(array());
-class Foo2 {
-    public function __construct(array $data) {
-        var_dump(array_map(array($this, 'callBack'), $data));
-    }
-    private function callBack($value) {
-    }
+try {
+    isset($dom->getElementsByTagName('root')[true]);
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-class Bar2 extends Foo2 {
-}
-new Bar2(array());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
