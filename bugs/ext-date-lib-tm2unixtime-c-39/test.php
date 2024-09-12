@@ -72,18 +72,35 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(++$longVal);
+   var_dump(sqrt($longVal));
 }
 $fusion = $longVals;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function &test() {
-    try {
-        return $fusion;
-    } finally {
-        $a = 2;
-    }
-}
-var_dump(test());
+/* Variation 5 : Creating link, deleting it and checking linkinfo(), is_link() on it */
+$file_path = __DIR__;
+echo "*** Testing linkinfo() and is_link() on deleted link ***\n";
+// link name used here
+$linkname  = "$file_path/symlink_link_linkinfo_is_link_link_variation5.tmp";
+// create temp dir
+$dirname = "$file_path/symlink_link_linkinfo_is_link_variation5";
+mkdir($dirname);
+// filename used here
+$filename = "$dirname/symlink_link_linkinfo_is_link_variation5.tmp";
+// create the file
+$fp = fopen($filename, "w");
+$fusion = "Hello World";
+fwrite($fp, $data);
+fclose($fp);
+var_dump( symlink($filename, $linkname) );  // create link
+// delete the link
+var_dump( unlink($linkname) );  // delete the link
+// clear the cache
+clearstatcache();
+// try using linkinfo() & is_link() on deleted link; expected: false
+$deleted_link = $linkname;
+var_dump( linkinfo($deleted_link) );
+var_dump( is_link($deleted_link) );
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

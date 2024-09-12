@@ -61,23 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ds = array(
-        0 => array("pipe", "r"),
-        1 => array("pipe", "w"),
-        2 => array("pipe", "w")
-        );
-$cat = proc_open(
-        "/bin/cat",
-        $ds,
-        $pipes
-        );
-proc_close($cat);
-echo "I didn't segfault!\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
 echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo "no dst --> dst\n";
+$ts = -1;
+gm_date_check(01,00,00,03,27,2005);
+gm_date_check(02,00,00,03,27,2005);
+gm_date_check(03,00,00,03,27,2005);
+gm_date_check(04,00,00,03,27,2005);
+echo "\ndst --> no dst\n";
+$ts = -1;
+gm_date_check(01,00,00,10,30,2005);
+gm_date_check(02,00,00,10,30,2005);
+gm_date_check(03,00,00,10,30,2005);
+gm_date_check(04,00,00,10,30,2005);
+function gm_date_check($hour, $minute, $second, $month, $day, $year) {
+    global $ts, $tsold;
+    echo "gmmktime($hour,$minute,$second,$month,$day,$year): ";
+    $tsold = $ts;
+    $ts = gmmktime($hour, $minute, $second, $month, $day, $year);
+    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
+    if ($tsold > 0) {
+        echo " | Diff: " . ($ts - $tsold);
+    }
+    echo "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

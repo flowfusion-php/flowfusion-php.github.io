@@ -61,47 +61,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * testing the functionality of array_reverse() by giving 2-D arrays for $array argument
-*/
-echo "*** Testing array_reverse() : usage variations ***\n";
-// Initializing the 2-d arrays
-$two_dimensional_array = array(
-  // associative array
-  array('color' => 'red', 'item' => 'pen', 'place' => 'LA'),
-   // numeric array
-   array(1, 2, 3, 4, 5),
-   // combination of numeric and associative arrays
-   array('a' => 'green', 'red', 'brown', 33, 88, 'orange', 'item' => 'ball')
-);
-// calling array_reverse() with various types of 2-d arrays
-// with default arguments
-echo "-- with default argument --\n";
-var_dump( array_reverse($two_dimensional_array) );  // whole array
-var_dump( array_reverse($two_dimensional_array[1]) );  // sub array
-// with $preserve_keys argument
-echo "-- with all possible arguments --\n";
-// whole array
-var_dump( array_reverse($two_dimensional_array, true) );
-var_dump( array_reverse($two_dimensional_array, false) );
-// sub array
-var_dump( array_reverse($two_dimensional_array[1], true) );
-var_dump( array_reverse($two_dimensional_array[1], false) );
-echo "Done";
-$fusion = $preserve_keys;
+function &test() {
+    $a = ["ok"];
+    try {
+        return $a[0];
+    } finally {
+        $a[""] = 42;
+    }
+}
+var_dump(test());
+$fusion = $a;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "-Test\n";
-sscanf("2147483647", '%d', $int);
-echo "sscanf 32-bit signed int '2147483647'           (2^31)-1 = ",$int,"\n";
-sscanf("4294967295", '%u', $int);
-echo "sscanf 32-bit unsign int '4294967295'           (2^32)-1 = ",$int,"\n";
-sscanf("9223372036854775807", '%d', $fusion);
-echo "sscanf 64-bit signed int '9223372036854775807'  (2^63)-1 = ",$int,"\n";
-sscanf("18446744073709551615", '%u', $int);
-echo "sscanf 64-bit unsign int '18446744073709551615' (2^64)-1 = ",$int,"\n";
-printf("printf 64-bit signed int '9223372036854775807'  (2^63)-1 = %d\n", 9223372036854775807);
-printf("printf 64-bit signed int '18446744073709551615' (2^64)-1 = %u\n", 18446744073709551615);
-echo "Done\n";
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal | $otherVal ---\n";
+      var_dump($longVal|$otherVal);
+   }
+}
+foreach ($fusion as $otherVal) {
+   foreach($longVals as $longVal) {
+       echo "--- testing: $otherVal | $longVal ---\n";
+      var_dump($otherVal|$longVal);
+   }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

@@ -1,12 +1,12 @@
 --TEST--
-Virtual prop satisfies interface get hook by-reference+Closure use list can have trailing commas
+DateTime::diff() days -- fall type3 type3+Plain prop satisfies interface get hook by-reference
 --INI--
-opcache.preload_user=php
-implicit_flush=0
+session.auto_start = 0
+// have to put the absolute path here.
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1101
+opcache.jit=1004
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,41 +71,67 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+require 'examine_diff.inc';
+define('PHPT_DATETIME_SHOW', PHPT_DATETIME_SHOW_DAYS);
+require 'DateTime_data-fall-type3-type3.inc';
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
-    public $prop { &get; }
+    public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $ref = &$i->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
-$fusion = $i;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$b = 'test';
-$fn = function () use (
-    $b,
-    &$a,
-) {
-    $a = $fusion;
-};
-$fn();
-echo "$a\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--CREDITS--
+Daniel Convissor <danielc@php.net>
 --EXPECT--
+test_time_fall_type3_prev_type3_prev: DAYS: **33**
+test_time_fall_type3_prev_type3_dt: DAYS: **0**
+test_time_fall_type3_prev_type3_redodt: DAYS: **0**
+test_time_fall_type3_prev_type3_redost: DAYS: **0**
+test_time_fall_type3_prev_type3_st: DAYS: **0**
+test_time_fall_type3_prev_type3_post: DAYS: **2**
+test_time_fall_type3_dt_type3_prev: DAYS: **0**
+test_time_fall_type3_dt_type3_dt: DAYS: **0**
+test_time_fall_type3_dt_type3_redodt: DAYS: **0**
+test_time_fall_type3_dt_type3_redost: DAYS: **0**
+test_time_fall_type3_dt_type3_st: DAYS: **0**
+test_time_fall_type3_dt_type3_post: DAYS: **1**
+test_time_fall_type3_redodt_type3_prev: DAYS: **0**
+test_time_fall_type3_redodt_type3_dt: DAYS: **0**
+test_time_fall_type3_redodt_type3_redodt: DAYS: **0**
+test_time_fall_type3_redodt_type3_redost: DAYS: **0**
+test_time_fall_type3_redodt_type3_st: DAYS: **0**
+test_time_fall_type3_redodt_type3_post: DAYS: **1**
+test_time_fall_type3_redost_type3_prev: DAYS: **0**
+test_time_fall_type3_redost_type3_dt: DAYS: **0**
+test_time_fall_type3_redost_type3_redodt: DAYS: **0**
+test_time_fall_type3_redost_type3_redost: DAYS: **0**
+test_time_fall_type3_redost_type3_st: DAYS: **0**
+test_time_fall_type3_redost_type3_post: DAYS: **1**
+test_time_fall_type3_st_type3_prev: DAYS: **0**
+test_time_fall_type3_st_type3_dt: DAYS: **0**
+test_time_fall_type3_st_type3_redodt: DAYS: **0**
+test_time_fall_type3_st_type3_redost: DAYS: **0**
+test_time_fall_type3_st_type3_st: DAYS: **0**
+test_time_fall_type3_st_type3_post: DAYS: **1**
+test_time_fall_type3_post_type3_prev: DAYS: **2**
+test_time_fall_type3_post_type3_dt: DAYS: **1**
+test_time_fall_type3_post_type3_redodt: DAYS: **1**
+test_time_fall_type3_post_type3_redost: DAYS: **1**
+test_time_fall_type3_post_type3_st: DAYS: **1**
+test_time_fall_type3_post_type3_post: DAYS: **0**
+test_time_fall_type3_dtsec_type3_stsec: DAYS: **0**
+test_time_fall_type3_stsec_type3_dtsec: DAYS: **0**
 object(A)#1 (1) {
-  ["_prop":"A":private]=>
+  ["prop"]=>
   int(42)
 }
-test

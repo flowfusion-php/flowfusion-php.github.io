@@ -1,5 +1,5 @@
 --TEST--
-Test expm1 function : 64bit long tests+Location: headers do not override the 304 Not Modified response code
+Test atan function : 64bit long tests+Test count() function : basic functionality
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -79,48 +79,73 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(expm1($longVal));
+   var_dump(atan($longVal));
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-header('HTTP/1.1 304 Not Modified');
-header('Location: http://example.com/');
+/*
+ * Test basic functionality of count() using an array as $var argument
+ * and different values as $mode argument.
+ */
+echo "*** Testing count() : basic functionality ***\n";
+echo "\n-- One Dimensional Array: --\n";
+$array = array('zero', 'one', 'two');
+var_dump(count($array));
+echo "\n-- Two Dimensional Array: --\n";
+$array_multi = array('zero', array(1, 2, 3), 'two');
+echo "\$mode = COUNT_NORMAL:    ";
+var_dump(count($array_multi, COUNT_NORMAL));
+echo "\$mode = 0:               ";
+var_dump(count($array_multi, 0));
+echo "\$fusion = COUNT_RECURSIVE: ";
+var_dump(count($array_multi, COUNT_RECURSIVE));
+echo "\$mode = 1:               ";
+var_dump(count($array_multi, 1));
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTHEADERS--
-Status: 304 Not Modified
-Location: http://example.com/
 --EXPECT--
 --- testing: 9223372036854775807 ---
-float(INF)
+float(1.5707963267948966)
 --- testing: -9223372036854775808 ---
-float(-1)
+float(-1.5707963267948966)
 --- testing: 2147483647 ---
-float(INF)
+float(1.5707963263292353)
 --- testing: -2147483648 ---
-float(-1)
+float(-1.5707963263292353)
 --- testing: 9223372034707292160 ---
-float(INF)
+float(1.5707963267948966)
 --- testing: -9223372034707292160 ---
-float(-1)
+float(-1.5707963267948966)
 --- testing: 2147483648 ---
-float(INF)
+float(1.5707963263292353)
 --- testing: -2147483649 ---
-float(-1)
+float(-1.5707963263292353)
 --- testing: 4294967294 ---
-float(INF)
+float(1.570796326562066)
 --- testing: 4294967295 ---
-float(INF)
+float(1.570796326562066)
 --- testing: 4294967293 ---
-float(INF)
+float(1.570796326562066)
 --- testing: 9223372036854775806 ---
-float(INF)
+float(1.5707963267948966)
 --- testing: 9.2233720368548E+18 ---
-float(INF)
+float(1.5707963267948966)
 --- testing: -9223372036854775807 ---
-float(-1)
+float(-1.5707963267948966)
 --- testing: -9.2233720368548E+18 ---
-float(-1)
+float(-1.5707963267948966)
+*** Testing count() : basic functionality ***
 
+-- One Dimensional Array: --
+int(3)
+
+-- Two Dimensional Array: --
+$mode = COUNT_NORMAL:    int(3)
+$mode = 0:               int(3)
+$mode = COUNT_RECURSIVE: int(6)
+$mode = 1:               int(6)
+Done

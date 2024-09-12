@@ -61,31 +61,30 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-date_default_timezone_set("America/Toronto");
-$t = mktime(0,0,0,1,1,2922770265);
-var_dump(date("r", $t));
-echo "OK\n";
+date_default_timezone_set('Europe/Berlin');
+$from = new DateTime();
+$from->setTime(0, 0, 0);
+$from->setISODate(PHP_INT_MAX, 28, 1); //Montag der 28ten Woche 2010
+echo $from->format('d.m.Y H:i'), "\n"; //A
+echo $from->getTimestamp(), "\n"; //B
+echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
+$from->add(new DateInterval('P0D'));
+echo $from->getTimestamp(), "\n"; //B
+echo date('d.m.Y H:i', $from->getTimestamp()), "\n"; //C
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Box {
-    public $value;
-}
-class Test {
-    static ?Test $test;
-    function __destruct() {
-        global $box;
-        $box->value = null;
-    }
-}
-function test($box) {
-    $tmp = new Test;
-    var_dump($box->value = &$tmp);
-}
-$box = new Box();
-$box->value = new Test;
-Test::$test = &$box->value;
-test($box);
-// Second call tests the cache slot path
-test($box);
+echo 'Binary to decimal:', \PHP_EOL;
+var_dump(base_convert('0b', 2, 10));
+var_dump(base_convert('0B', 2, 10));
+var_dump(base_convert('', 2, 10));
+echo 'Octal to decimal:', \PHP_EOL;
+var_dump(base_convert('0o', 8, 10));
+var_dump(base_convert('0O', 8, 10));
+var_dump(base_convert('0', 8, 10));
+var_dump(base_convert('', 8, 10));
+echo 'Hexadecimal to decimal:', \PHP_EOL;
+var_dump(base_convert('0x', 16, 10));
+var_dump(base_convert('0X', 16, 10));
+var_dump(base_convert('', 16, 10));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

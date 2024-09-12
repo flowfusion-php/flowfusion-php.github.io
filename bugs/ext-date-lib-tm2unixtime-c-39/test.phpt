@@ -1,11 +1,14 @@
 --TEST--
-Test ++N operator : 64bit long tests+Bug #72215.3 (Wrong return value if var modified in finally)
---INI--
-opcache.revalidate_freq=0
-internal_encoding=ISO-8859-15
+Test sqrt function : 64bit long tests+Test symlink(), linkinfo(), link() and is_link() functions : usage variations - work on deleted link
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
+<?php
+if (PHP_OS_FAMILY === 'Windows') {
+    require_once __DIR__ . '/windows_links/common.inc';
+    skipIfSeCreateSymbolicLinkPrivilegeIsDisabled(__FILE__);
+}
 ?>
 --FILE--
 <?php
@@ -82,52 +85,84 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(++$longVal);
+   var_dump(sqrt($longVal));
 }
 $fusion = $longVals;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function &test() {
-    try {
-        return $fusion;
-    } finally {
-        $a = 2;
-    }
-}
-var_dump(test());
+/* Variation 5 : Creating link, deleting it and checking linkinfo(), is_link() on it */
+$file_path = __DIR__;
+echo "*** Testing linkinfo() and is_link() on deleted link ***\n";
+// link name used here
+$linkname  = "$file_path/symlink_link_linkinfo_is_link_link_variation5.tmp";
+// create temp dir
+$dirname = "$file_path/symlink_link_linkinfo_is_link_variation5";
+mkdir($dirname);
+// filename used here
+$filename = "$dirname/symlink_link_linkinfo_is_link_variation5.tmp";
+// create the file
+$fp = fopen($filename, "w");
+$fusion = "Hello World";
+fwrite($fp, $data);
+fclose($fp);
+var_dump( symlink($filename, $linkname) );  // create link
+// delete the link
+var_dump( unlink($linkname) );  // delete the link
+// clear the cache
+clearstatcache();
+// try using linkinfo() & is_link() on deleted link; expected: false
+$deleted_link = $linkname;
+var_dump( linkinfo($deleted_link) );
+var_dump( is_link($deleted_link) );
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
+--CLEAN--
+<?php
+$file_path = __DIR__;
+$dirname = "$file_path/symlink_link_linkinfo_is_link_variation5";
+$filename = "$dirname/symlink_link_linkinfo_is_link_variation5.tmp";
+unlink($filename);
+rmdir($dirname);
+?>
+--EXPECTF--
 --- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775808 ---
-int(-9223372036854775807)
+float(NAN)
 --- testing: 2147483647 ---
-int(2147483648)
+float(46340.950001051984)
 --- testing: -2147483648 ---
-int(-2147483647)
+float(NAN)
 --- testing: 9223372034707292160 ---
-int(9223372034707292161)
+float(3037000499.622496)
 --- testing: -9223372034707292160 ---
-int(-9223372034707292159)
+float(NAN)
 --- testing: 2147483648 ---
-int(2147483649)
+float(46340.95001184158)
 --- testing: -2147483649 ---
-int(-2147483648)
+float(NAN)
 --- testing: 4294967294 ---
-int(4294967295)
+float(65535.99998474121)
 --- testing: 4294967295 ---
-int(4294967296)
+float(65535.999992370605)
 --- testing: 4294967293 ---
-int(4294967294)
+float(65535.99997711182)
 --- testing: 9223372036854775806 ---
-int(9223372036854775807)
+float(3037000499.97605)
 --- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775807 ---
-int(-9223372036854775806)
+float(NAN)
 --- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-int(2)
+float(NAN)
+*** Testing linkinfo() and is_link() on deleted link ***
+bool(true)
+bool(true)
+
+Warning: linkinfo(): No such file or directory in %s on line %d
+int(-1)
+bool(false)
+Done

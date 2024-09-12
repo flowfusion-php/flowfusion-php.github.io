@@ -1,65 +1,56 @@
 --- testing: 9223372036854775807 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775808 ---
-int(-9223372036854775807)
+float(NAN)
 --- testing: 2147483647 ---
-int(2147483648)
+float(46340.950001051984)
 --- testing: -2147483648 ---
-int(-2147483647)
+float(NAN)
 --- testing: 9223372034707292160 ---
-int(9223372034707292161)
+float(3037000499.622496)
 --- testing: -9223372034707292160 ---
-int(-9223372034707292159)
+float(NAN)
 --- testing: 2147483648 ---
-int(2147483649)
+float(46340.95001184158)
 --- testing: -2147483649 ---
-int(-2147483648)
+float(NAN)
 --- testing: 4294967294 ---
-int(4294967295)
+float(65535.99998474121)
 --- testing: 4294967295 ---
-int(4294967296)
+float(65535.999992370605)
 --- testing: 4294967293 ---
-int(4294967294)
+float(65535.99997711182)
 --- testing: 9223372036854775806 ---
-int(9223372036854775807)
+float(3037000499.97605)
 --- testing: 9.2233720368548E+18 ---
-float(9.223372036854776E+18)
+float(3037000499.97605)
 --- testing: -9223372036854775807 ---
-int(-9223372036854775806)
+float(NAN)
 --- testing: -9.2233720368548E+18 ---
-float(-9.223372036854776E+18)
-NULL
+float(NAN)
+*** Testing linkinfo() and is_link() on deleted link ***
+
+Warning: Undefined variable $data in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 92
+
+Deprecated: fwrite(): Passing null to parameter #2 ($data) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 92
+bool(true)
+bool(true)
+
+Warning: linkinfo(): No such file or directory in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 101
+int(-1)
+bool(false)
+Done
 string(11) "random_var:"
 float(-9.223372036854776E+18)
-int(1)
 float(-9.223372036854776E+18)
-Calling function: quotemeta with arguments: -9.2233720368548E+18
-Calling function: get_resources with arguments: -9.2233720368548E+18
-Error calling function get_resources: get_resources(): Argument #1 ($type) must be a valid resource type
-Calling function: implode with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Error calling function implode: implode(): Argument #2 ($array) must be of type ?array, float given
-Calling function: popen with arguments: 1, -9.2233720368548E+18
-Error calling function popen: popen(): Argument #2 ($mode) must be one of "r", "rb", "w", or "wb"
-Calling function: pclose with arguments: 1
-Error calling function pclose: pclose(): Argument #1 ($handle) must be of type resource, int given
-Calling function: date_parse_from_format with arguments: 1, -9.2233720368548E+18
-Calling function: extension_loaded with arguments: -9.2233720368548E+18
-Calling function: similar_text with arguments: -9.2233720368548E+18, 1, -9.2233720368548E+18
+string(54) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused"
+Calling function: lchgrp with arguments: -9.2233720368548E+18, -9.2233720368548E+18
 
-Warning: similar_text(): Argument #3 ($percent) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused421.php on line 41
-Calling function: iconv_mime_decode_headers with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
-
-Warning: iconv_mime_decode_headers(): Wrong encoding, conversion from "???" to "-9.2233720368548E+18" is not allowed in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused421.php on line 41
-Calling function: md5 with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Calling function: strpbrk with arguments: -9.2233720368548E+18, 1
-Calling function: var_dump with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-float(-9.223372036854776E+18)
-float(-9.223372036854776E+18)
-Calling function: strrev with arguments: 1
-Calling function: stream_get_meta_data with arguments: 1
-Error calling function stream_get_meta_data: stream_get_meta_data(): Argument #1 ($stream) must be of type resource, int given
-Calling function: substr_replace with arguments: 1, -9.2233720368548E+18, 1, -9.2233720368548E+18
-Calling function: sprintf with arguments: -9.2233720368548E+18, -9.2233720368548E+18
-Calling function: mktime with arguments: -9.2233720368548E+18, 1, -9.2233720368548E+18, 1, -9.2233720368548E+18, 1
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 2562047788015216 cannot be represented in type 'long long'
+Warning: lchgrp(): Operation not permitted in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused201.php on line 41
+Calling function: array_unique with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function array_unique: array_unique(): Argument #1 ($array) must be of type array, float given
+Calling function: stream_set_read_buffer with arguments: -9.2233720368548E+18, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused
+Error calling function stream_set_read_buffer: stream_set_read_buffer(): Argument #1 ($stream) must be of type resource, float given
+Calling function: gmmktime with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in

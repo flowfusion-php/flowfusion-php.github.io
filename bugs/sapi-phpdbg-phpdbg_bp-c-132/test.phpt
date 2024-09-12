@@ -1,12 +1,8 @@
 --TEST--
-ZE2 Autoload and class_exists+Stdin and escaped args being passed to run command
+Test exceptions thrown from __toString() in various contexts+Stdin and escaped args being passed to run command
 --INI--
-internal_encoding=big5
-mbstring.http_output_conv_mimetypes=plain
---SKIPIF--
-<?php
-    if (class_exists('autoload_root', false)) die('skip Autoload test classes exist already');
-?>
+ary[b] = 2
+error_log_mode=0600
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,12 +67,80 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-spl_autoload_register(function ($class_name) {
-    require_once(__DIR__ . '/' . $class_name . '.inc');
-    echo 'autoload(' . $class_name . ")\n";
-});
-var_dump(class_exists('autoload_root'));
-$fusion = $class_name;
+class BadStr {
+    public function __toString() {
+        throw new Exception("Exception");
+    }
+}
+$str = "a";
+$num = 42;
+$badStr = new BadStr;
+try { $x = $str . $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = $badStr . $str; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = $str .= $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($str);
+try { $x = $num . $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = $badStr . $num; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = $num .= $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($num);
+try { $x = $badStr .= $str; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($badStr);
+try { $x = $badStr .= $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($badStr);
+try { $x = "x$badStr"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "{$badStr}x"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "$str$badStr"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "$badStr$str"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "x$badStr$str"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "x$str$badStr"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "{$str}x$badStr"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = "{$badStr}x$str"; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = (string) $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = include $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { echo $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+${""} = 42;
+try { unset(${$badStr}); }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump(${""});
+unset(${""});
+try { $x = ${$badStr}; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+try { $x = isset(${$badStr}); }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+$obj = new stdClass;
+try { $x = $obj->{$badStr} = $str; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($obj);
+try { $str[0] = $badStr; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump($str);
+$obj = new DateInterval('P1D');
+try { $x = $obj->{$badStr} = $str; }
+catch (Exception $e) { echo $e->getMessage(), "\n"; }
+var_dump(!isset($obj->{""}));
+try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
+try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
+try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
+$fusion = $badStr;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump($fusion);
 var_dump(stream_get_contents(STDIN));
@@ -99,8 +163,45 @@ y
 c
 q
 --EXPECTF--
-autoload(autoload_root)
+Exception
+Exception
+Exception
+string(1) "a"
+Exception
+Exception
+Exception
+int(42)
+Exception
+object(BadStr)#1 (0) {
+}
+Exception
+object(BadStr)#1 (0) {
+}
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+Exception
+int(42)
+Exception
+Exception
+Exception
+object(stdClass)#2 (0) {
+}
+Exception
+string(1) "a"
+Exception
 bool(true)
+Exception
+Exception
+Exception
 [Successful compilation of %s]
 prompt> 10
 prompt> [Breakpoint #0 added at %s:6]

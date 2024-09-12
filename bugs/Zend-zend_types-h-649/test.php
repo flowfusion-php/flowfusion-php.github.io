@@ -61,17 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-    static public $ar = array();
+$i = 0;
+while(100000 > $i++) {
+    $m0 = microtime(true);
+    $m1 = microtime(true);
+    $d = $m1 - $m0;
+    /*echo "$d\n";*/
+    if ($d < 0) {
+        die("failed in {$i}th iteration");
+    }
 }
-var_dump(test::$ar);
-test::$ar[] = 1;
-var_dump(test::$ar);
-echo "Done\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($argv);
-var_dump(stream_get_contents(STDIN));
 echo "ok\n";
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+include_once __DIR__.'/include.inc';
+include_once __DIR__.'/include.inc';
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

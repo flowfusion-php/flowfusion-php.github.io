@@ -1,8 +1,12 @@
 --TEST--
-ZE2 Initializing static properties to arrays+Stdin and escaped args being passed to run command
+Test bug #64370 sequential microtime(true) calls+include_once must include only once
 --INI--
-date_default_timezone_set("America/Sao_Paulo");
-default_charset=cp1252
+bcmath.scale=-2
+mbstring.http_output_conv_mimetypes=plain
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1023
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,67 +71,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-    static public $ar = array();
+$i = 0;
+while(100000 > $i++) {
+    $m0 = microtime(true);
+    $m1 = microtime(true);
+    $d = $m1 - $m0;
+    /*echo "$d\n";*/
+    if ($d < 0) {
+        die("failed in {$i}th iteration");
+    }
 }
-var_dump(test::$ar);
-test::$ar[] = 1;
-var_dump(test::$ar);
-echo "Done\n";
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($argv);
-var_dump(stream_get_contents(STDIN));
 echo "ok\n";
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+include_once __DIR__.'/include.inc';
+include_once __DIR__.'/include.inc';
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-@unlink("run_002_tmp.fixture");
-?>
 --PHPDBG--
-ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
-b 6
-r <run_002_tmp.fixture
-r arg1 '_ \' arg2 "' < run_002_tmp.fixture
-y
-c
+r
 q
 --EXPECTF--
-array(0) {
-}
-array(1) {
-  [0]=>
-  int(1)
-}
-Done
+ok
 [Successful compilation of %s]
-prompt> 10
-prompt> [Breakpoint #0 added at %s:6]
-prompt> array(1) {
-  [0]=>
-  string(%d) "%s"
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> Do you really want to restart execution? (type y or n): array(3) {
-  [0]=>
-  string(%d) "%s"
-  [1]=>
-  string(4) "arg1"
-  [2]=>
-  string(10) "_ ' arg2 ""
-}
-string(10) "stdin
-data"
-[Breakpoint #0 at %s:6, hits: 1]
->00006: echo "ok\n";
- 00007: 
-prompt> ok
+prompt> 1
 [Script ended normally]
 prompt> 

@@ -1,9 +1,9 @@
 --TEST--
-Test asinh function : 64bit long tests+Bug #81705 (type confusion/UAF on set_error_handler with concat operation)
+Test number_format function : 64bit long tests+Bug #48276 (date("Y") prints wrong year on Big Endian machines)
 --INI--
-serialize_precision=14
-opcache.preload={PWD}/preload_dynamic_def_removal.inc
-disable_functions=dl
+date.timezone=UTC
+opcache.file_cache_only=1
+session.save_handler=whatever
 --SKIPIF--
 <?php
 if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
@@ -76,62 +76,226 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
+$numbers = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
+    // floats rounded as int
+    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
 );
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(asinh($longVal));
-}
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = [0];
-$my_var = str_repeat("a", 1);
-set_error_handler(
-    function() use(&$my_var) {
-        echo("error\n");
-        $my_var = 0x123;
+$precisions = array(
+    5,
+    0,
+    -1,
+    -5,
+    -10,
+    -11,
+    -17,
+    -19,
+    -20,
+    PHP_INT_MIN,
+);
+foreach ($numbers as $number) {
+    echo "--- testing: ";
+    var_dump($number);
+    foreach ($precisions as $precision) {
+        echo "... with precision " . $precision . ": ";
+        var_dump(number_format($number, $precision));
     }
-);
-$my_var .= $GLOBALS["arr"];
-var_dump($my_var);
+}
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(date("Y", 1245623227));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
---- testing: 9223372036854775807 ---
-float(44.361419555836)
---- testing: -9223372036854775808 ---
-float(-44.361419555836)
---- testing: 2147483647 ---
-float(22.180709777453)
---- testing: -2147483648 ---
-float(-22.180709777918)
---- testing: 9223372034707292160 ---
-float(44.361419555604)
---- testing: -9223372034707292160 ---
-float(-44.361419555604)
---- testing: 2147483648 ---
-float(22.180709777918)
---- testing: -2147483649 ---
-float(-22.180709778384)
---- testing: 4294967294 ---
-float(22.873856958013)
---- testing: 4294967295 ---
-float(22.873856958245)
---- testing: 4294967293 ---
-float(22.87385695778)
---- testing: 9223372036854775806 ---
-float(44.361419555836)
---- testing: 9.2233720368548E+18 ---
-float(44.361419555836)
---- testing: -9223372036854775807 ---
-float(-44.361419555836)
---- testing: -9.2233720368548E+18 ---
-float(-44.361419555836)
-error
-string(6) "aArray"
+--- testing: int(9223372036854775807)
+... with precision 5: string(31) "9,223,372,036,854,775,807.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,807"
+... with precision -1: string(25) "9,223,372,036,854,775,810"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372036854775808)
+... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,808"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(2147483647)
+... with precision 5: string(19) "2,147,483,647.00000"
+... with precision 0: string(13) "2,147,483,647"
+... with precision -1: string(13) "2,147,483,650"
+... with precision -5: string(13) "2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-2147483648)
+... with precision 5: string(20) "-2,147,483,648.00000"
+... with precision 0: string(14) "-2,147,483,648"
+... with precision -1: string(14) "-2,147,483,650"
+... with precision -5: string(14) "-2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(9223372034707292160)
+... with precision 5: string(31) "9,223,372,034,707,292,160.00000"
+... with precision 0: string(25) "9,223,372,034,707,292,160"
+... with precision -1: string(25) "9,223,372,034,707,292,160"
+... with precision -5: string(25) "9,223,372,034,707,300,000"
+... with precision -10: string(25) "9,223,372,030,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372034707292160)
+... with precision 5: string(32) "-9,223,372,034,707,292,160.00000"
+... with precision 0: string(26) "-9,223,372,034,707,292,160"
+... with precision -1: string(26) "-9,223,372,034,707,292,160"
+... with precision -5: string(26) "-9,223,372,034,707,300,000"
+... with precision -10: string(26) "-9,223,372,030,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(2147483648)
+... with precision 5: string(19) "2,147,483,648.00000"
+... with precision 0: string(13) "2,147,483,648"
+... with precision -1: string(13) "2,147,483,650"
+... with precision -5: string(13) "2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-2147483649)
+... with precision 5: string(20) "-2,147,483,649.00000"
+... with precision 0: string(14) "-2,147,483,649"
+... with precision -1: string(14) "-2,147,483,650"
+... with precision -5: string(14) "-2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967294)
+... with precision 5: string(19) "4,294,967,294.00000"
+... with precision 0: string(13) "4,294,967,294"
+... with precision -1: string(13) "4,294,967,290"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967295)
+... with precision 5: string(19) "4,294,967,295.00000"
+... with precision 0: string(13) "4,294,967,295"
+... with precision -1: string(13) "4,294,967,300"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967293)
+... with precision 5: string(19) "4,294,967,293.00000"
+... with precision 0: string(13) "4,294,967,293"
+... with precision -1: string(13) "4,294,967,290"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(9223372036854775806)
+... with precision 5: string(31) "9,223,372,036,854,775,806.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,806"
+... with precision -1: string(25) "9,223,372,036,854,775,810"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(9.223372036854776E+18)
+... with precision 5: string(31) "9,223,372,036,854,775,808.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,808"
+... with precision -1: string(25) "9,223,372,036,854,775,808"
+... with precision -5: string(25) "9,223,372,036,854,800,384"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372036854775807)
+... with precision 5: string(32) "-9,223,372,036,854,775,807.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,807"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(-9.223372036854776E+18)
+... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,808"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(9.223372036854775E+18)
+... with precision 5: string(31) "9,223,372,036,854,774,784.00000"
+... with precision 0: string(25) "9,223,372,036,854,774,784"
+... with precision -1: string(25) "9,223,372,036,854,774,780"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(-9.223372036854775E+18)
+... with precision 5: string(32) "-9,223,372,036,854,774,784.00000"
+... with precision 0: string(26) "-9,223,372,036,854,774,784"
+... with precision -1: string(26) "-9,223,372,036,854,774,780"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+string(4) "2009"

@@ -61,43 +61,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class C {
-    public function __destruct() {
-        echo __METHOD__, "\n";
-    }
+function test( array $array )
+{
+    $closure = function() use ( $array ) {
+        print_r( $array );
+        yield "hi";
+    };
+    return $closure();
 }
-function f() {
-    // Force symbol table
-    get_defined_vars();
-    Fiber::suspend();
+function test2( array $array )
+{
+    $closure = function() use ( $array ) {
+        print_r( $array );
+        yield "hi";
+    };
+    return $closure; // if you return the $closure and call it outside this function it works.
 }
-$fiber = new Fiber(function () {
-    $c = new C();
-    $fiber = Fiber::getCurrent();
-    // Force symbol table
-    get_defined_vars();
-    f();
-});
-print "1\n";
-$fiber->start();
-gc_collect_cycles();
-print "2\n";
-$fiber = null;
-gc_collect_cycles();
-print "3\n";
-$fusion = $c;
+$generator = test(array( 1, 2, 3 ) );
+foreach($generator as $something) {
+}
+$generator = test2(array( 1, 2, 3 ) );
+foreach($generator() as $something) {
+}
+$generator = test2(array( 1, 2, 3 ) );
+echo "okey\n";
+$fusion = $generator;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
-    $foo = $bar = [];
-    for ($i = 0; $i < 3; $fusion++) {
-        $foo = [$foo, [&$bar]];
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
     }
-    ob_start(function (string $buffer) use (&$bar) {
-        $bar[][] = null;
-        return '';
-    }, 64);
-    $output($foo[0]);
-    ob_end_clean();
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];

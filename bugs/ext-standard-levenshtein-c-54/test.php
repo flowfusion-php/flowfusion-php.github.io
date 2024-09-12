@@ -65,27 +65,35 @@ define("MAX_64Bit", 9223372036854775807);
 define("MAX_32Bit", 2147483647);
 define("MIN_64Bit", -9223372036854775807 - 1);
 define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
+$numbers = array(
     MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
     MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
+    // floats rounded as int
+    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
 );
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(asinh($longVal));
-}
-$fusion = $longVal;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = [0];
-$my_var = str_repeat("a", 1);
-set_error_handler(
-    function() use(&$my_var) {
-        echo("error\n");
-        $my_var = 0x123;
+$precisions = array(
+    5,
+    0,
+    -1,
+    -5,
+    -10,
+    -11,
+    -17,
+    -19,
+    -20,
+    PHP_INT_MIN,
+);
+foreach ($numbers as $number) {
+    echo "--- testing: ";
+    var_dump($number);
+    foreach ($precisions as $precision) {
+        echo "... with precision " . $precision . ": ";
+        var_dump(number_format($number, $precision));
     }
-);
-$my_var .= $GLOBALS["arr"];
-var_dump($my_var);
+}
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(date("Y", 1245623227));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

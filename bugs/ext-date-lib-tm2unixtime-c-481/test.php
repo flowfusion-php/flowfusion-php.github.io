@@ -72,11 +72,29 @@ $longVals = array(
 );
 foreach ($longVals as $longVal) {
    echo "--- testing: $longVal ---\n";
-   var_dump(expm1($longVal));
+   var_dump(atan($longVal));
 }
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-header('HTTP/1.1 304 Not Modified');
-header('Location: http://example.com/');
+/*
+ * Test basic functionality of count() using an array as $var argument
+ * and different values as $mode argument.
+ */
+echo "*** Testing count() : basic functionality ***\n";
+echo "\n-- One Dimensional Array: --\n";
+$array = array('zero', 'one', 'two');
+var_dump(count($array));
+echo "\n-- Two Dimensional Array: --\n";
+$array_multi = array('zero', array(1, 2, 3), 'two');
+echo "\$mode = COUNT_NORMAL:    ";
+var_dump(count($array_multi, COUNT_NORMAL));
+echo "\$mode = 0:               ";
+var_dump(count($array_multi, 0));
+echo "\$fusion = COUNT_RECURSIVE: ";
+var_dump(count($array_multi, COUNT_RECURSIVE));
+echo "\$mode = 1:               ";
+var_dump(count($array_multi, 1));
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

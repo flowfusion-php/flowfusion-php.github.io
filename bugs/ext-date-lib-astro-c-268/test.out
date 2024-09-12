@@ -1,239 +1,301 @@
-*** Testing array_reverse() : usage variations ***
--- with default argument --
-array(3) {
-  [0]=>
-  array(7) {
-    ["a"]=>
-    string(5) "green"
-    [0]=>
-    string(3) "red"
-    [1]=>
-    string(5) "brown"
-    [2]=>
-    int(33)
-    [3]=>
-    int(88)
-    [4]=>
-    string(6) "orange"
-    ["item"]=>
-    string(4) "ball"
-  }
-  [1]=>
-  array(5) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-    [4]=>
-    int(5)
-  }
-  [2]=>
-  array(3) {
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-    ["place"]=>
-    string(2) "LA"
-  }
-}
-array(5) {
-  [0]=>
-  int(5)
-  [1]=>
-  int(4)
-  [2]=>
-  int(3)
-  [3]=>
-  int(2)
-  [4]=>
-  int(1)
-}
--- with all possible arguments --
-array(3) {
-  [2]=>
-  array(7) {
-    ["a"]=>
-    string(5) "green"
-    [0]=>
-    string(3) "red"
-    [1]=>
-    string(5) "brown"
-    [2]=>
-    int(33)
-    [3]=>
-    int(88)
-    [4]=>
-    string(6) "orange"
-    ["item"]=>
-    string(4) "ball"
-  }
-  [1]=>
-  array(5) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-    [4]=>
-    int(5)
-  }
-  [0]=>
-  array(3) {
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-    ["place"]=>
-    string(2) "LA"
-  }
-}
-array(3) {
-  [0]=>
-  array(7) {
-    ["a"]=>
-    string(5) "green"
-    [0]=>
-    string(3) "red"
-    [1]=>
-    string(5) "brown"
-    [2]=>
-    int(33)
-    [3]=>
-    int(88)
-    [4]=>
-    string(6) "orange"
-    ["item"]=>
-    string(4) "ball"
-  }
-  [1]=>
-  array(5) {
-    [0]=>
-    int(1)
-    [1]=>
-    int(2)
-    [2]=>
-    int(3)
-    [3]=>
-    int(4)
-    [4]=>
-    int(5)
-  }
-  [2]=>
-  array(3) {
-    ["color"]=>
-    string(3) "red"
-    ["item"]=>
-    string(3) "pen"
-    ["place"]=>
-    string(2) "LA"
-  }
-}
-array(5) {
-  [4]=>
-  int(5)
-  [3]=>
-  int(4)
-  [2]=>
-  int(3)
-  [1]=>
-  int(2)
-  [0]=>
-  int(1)
-}
-array(5) {
-  [0]=>
-  int(5)
-  [1]=>
-  int(4)
-  [2]=>
-  int(3)
-  [3]=>
-  int(2)
-  [4]=>
-  int(1)
-}
-Done
-Warning: Undefined variable $preserve_keys in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 91
--Test
-sscanf 32-bit signed int '2147483647'           (2^31)-1 = 2147483647
-sscanf 32-bit unsign int '4294967295'           (2^32)-1 = 4294967295
-sscanf 64-bit signed int '9223372036854775807'  (2^63)-1 = 4294967295
-sscanf 64-bit unsign int '18446744073709551615' (2^64)-1 = 18446744073709551615
-printf 64-bit signed int '9223372036854775807'  (2^63)-1 = 9223372036854775807
-printf 64-bit signed int '18446744073709551615' (2^64)-1 = 0
-Done
-string(11) "random_var:"
-array(0) {
-}
-array(0) {
-}
+string(2) "ok"
+
+Warning: Undefined variable $a in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused462.php on line 73
+--- testing: 9223372036854775807 | 0 ---
 int(9223372036854775807)
-Calling function: fpassthru with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array
-Error calling function fpassthru: fpassthru(): Argument #1 ($stream) must be of type resource, array given
-Calling function: zend_version with arguments: 
-Calling function: get_debug_type with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array
-Calling function: array_udiff_uassoc with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array, Array
-Error calling function array_udiff_uassoc: array_udiff_uassoc() expects at least 3 arguments, 2 given
-Calling function: libxml_get_errors with arguments: 
-Calling function: fwrite with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array, 9223372036854775807, Array
-Error calling function fwrite: fwrite(): Argument #1 ($stream) must be of type resource, array given
-Calling function: flock with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-9223372036854775807, Array, 9223372036854775807
-
-Warning: flock(): Argument #3 ($would_block) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 41
-Error calling function flock: flock(): Argument #1 ($stream) must be of type resource, int given
-Calling function: gethostbynamel with arguments: 9223372036854775807
-Calling function: fgetcsv with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807, 9223372036854775807
-Error calling function fgetcsv: fgetcsv(): Argument #1 ($stream) must be of type resource, int given
-Calling function: password_algos with arguments: 
-Calling function: pclose with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array
-Error calling function pclose: pclose(): Argument #1 ($handle) must be of type resource, array given
-Calling function: array_key_first with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array
-Calling function: xmlwriter_text with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array, Array
-Error calling function xmlwriter_text: xmlwriter_text(): Argument #1 ($writer) must be of type XMLWriter, array given
-Calling function: preg_grep with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array, Array, Array
-Error calling function preg_grep: preg_grep(): Argument #1 ($pattern) must be of type string, array given
-Calling function: ini_parse_quantity with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused514.php on line 38
-Array
-Error calling function ini_parse_quantity: ini_parse_quantity(): Argument #1 ($shorthand) must be of type string, array given
-Calling function: php_strip_whitespace with arguments: 9223372036854775807
-Calling function: atan with arguments: 9223372036854775807
-Calling function: date_sun_info with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807
+--- testing: 9223372036854775807 | 1 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 | -1 ---
+int(-1)
+--- testing: 9223372036854775807 | 7 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 | 9 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 | 65 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 | -44 ---
+int(-1)
+--- testing: 9223372036854775807 | 2147483647 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: -9223372036854775808 | 0 ---
+int(-9223372036854775808)
+--- testing: -9223372036854775808 | 1 ---
+int(-9223372036854775807)
+--- testing: -9223372036854775808 | -1 ---
+int(-1)
+--- testing: -9223372036854775808 | 7 ---
+int(-9223372036854775801)
+--- testing: -9223372036854775808 | 9 ---
+int(-9223372036854775799)
+--- testing: -9223372036854775808 | 65 ---
+int(-9223372036854775743)
+--- testing: -9223372036854775808 | -44 ---
+int(-44)
+--- testing: -9223372036854775808 | 2147483647 ---
+int(-9223372034707292161)
+--- testing: -9223372036854775808 | 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 | 0 ---
+int(2147483647)
+--- testing: 2147483647 | 1 ---
+int(2147483647)
+--- testing: 2147483647 | -1 ---
+int(-1)
+--- testing: 2147483647 | 7 ---
+int(2147483647)
+--- testing: 2147483647 | 9 ---
+int(2147483647)
+--- testing: 2147483647 | 65 ---
+int(2147483647)
+--- testing: 2147483647 | -44 ---
+int(-1)
+--- testing: 2147483647 | 2147483647 ---
+int(2147483647)
+--- testing: 2147483647 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: -2147483648 | 0 ---
+int(-2147483648)
+--- testing: -2147483648 | 1 ---
+int(-2147483647)
+--- testing: -2147483648 | -1 ---
+int(-1)
+--- testing: -2147483648 | 7 ---
+int(-2147483641)
+--- testing: -2147483648 | 9 ---
+int(-2147483639)
+--- testing: -2147483648 | 65 ---
+int(-2147483583)
+--- testing: -2147483648 | -44 ---
+int(-44)
+--- testing: -2147483648 | 2147483647 ---
+int(-1)
+--- testing: -2147483648 | 9223372036854775807 ---
+int(-1)
+--- testing: 9223372034707292160 | 0 ---
+int(9223372034707292160)
+--- testing: 9223372034707292160 | 1 ---
+int(9223372034707292161)
+--- testing: 9223372034707292160 | -1 ---
+int(-1)
+--- testing: 9223372034707292160 | 7 ---
+int(9223372034707292167)
+--- testing: 9223372034707292160 | 9 ---
+int(9223372034707292169)
+--- testing: 9223372034707292160 | 65 ---
+int(9223372034707292225)
+--- testing: 9223372034707292160 | -44 ---
+int(-44)
+--- testing: 9223372034707292160 | 2147483647 ---
+int(9223372036854775807)
+--- testing: 9223372034707292160 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: -9223372034707292160 | 0 ---
+int(-9223372034707292160)
+--- testing: -9223372034707292160 | 1 ---
+int(-9223372034707292159)
+--- testing: -9223372034707292160 | -1 ---
+int(-1)
+--- testing: -9223372034707292160 | 7 ---
+int(-9223372034707292153)
+--- testing: -9223372034707292160 | 9 ---
+int(-9223372034707292151)
+--- testing: -9223372034707292160 | 65 ---
+int(-9223372034707292095)
+--- testing: -9223372034707292160 | -44 ---
+int(-44)
+--- testing: -9223372034707292160 | 2147483647 ---
+int(-9223372032559808513)
+--- testing: -9223372034707292160 | 9223372036854775807 ---
+int(-1)
+--- testing: 2147483648 | 0 ---
+int(2147483648)
+--- testing: 2147483648 | 1 ---
+int(2147483649)
+--- testing: 2147483648 | -1 ---
+int(-1)
+--- testing: 2147483648 | 7 ---
+int(2147483655)
+--- testing: 2147483648 | 9 ---
+int(2147483657)
+--- testing: 2147483648 | 65 ---
+int(2147483713)
+--- testing: 2147483648 | -44 ---
+int(-44)
+--- testing: 2147483648 | 2147483647 ---
+int(4294967295)
+--- testing: 2147483648 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: -2147483649 | 0 ---
+int(-2147483649)
+--- testing: -2147483649 | 1 ---
+int(-2147483649)
+--- testing: -2147483649 | -1 ---
+int(-1)
+--- testing: -2147483649 | 7 ---
+int(-2147483649)
+--- testing: -2147483649 | 9 ---
+int(-2147483649)
+--- testing: -2147483649 | 65 ---
+int(-2147483649)
+--- testing: -2147483649 | -44 ---
+int(-1)
+--- testing: -2147483649 | 2147483647 ---
+int(-2147483649)
+--- testing: -2147483649 | 9223372036854775807 ---
+int(-1)
+--- testing: 4294967294 | 0 ---
+int(4294967294)
+--- testing: 4294967294 | 1 ---
+int(4294967295)
+--- testing: 4294967294 | -1 ---
+int(-1)
+--- testing: 4294967294 | 7 ---
+int(4294967295)
+--- testing: 4294967294 | 9 ---
+int(4294967295)
+--- testing: 4294967294 | 65 ---
+int(4294967295)
+--- testing: 4294967294 | -44 ---
+int(-2)
+--- testing: 4294967294 | 2147483647 ---
+int(4294967295)
+--- testing: 4294967294 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: 4294967295 | 0 ---
+int(4294967295)
+--- testing: 4294967295 | 1 ---
+int(4294967295)
+--- testing: 4294967295 | -1 ---
+int(-1)
+--- testing: 4294967295 | 7 ---
+int(4294967295)
+--- testing: 4294967295 | 9 ---
+int(4294967295)
+--- testing: 4294967295 | 65 ---
+int(4294967295)
+--- testing: 4294967295 | -44 ---
+int(-1)
+--- testing: 4294967295 | 2147483647 ---
+int(4294967295)
+--- testing: 4294967295 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: 4294967293 | 0 ---
+int(4294967293)
+--- testing: 4294967293 | 1 ---
+int(4294967293)
+--- testing: 4294967293 | -1 ---
+int(-1)
+--- testing: 4294967293 | 7 ---
+int(4294967295)
+--- testing: 4294967293 | 9 ---
+int(4294967293)
+--- testing: 4294967293 | 65 ---
+int(4294967293)
+--- testing: 4294967293 | -44 ---
+int(-3)
+--- testing: 4294967293 | 2147483647 ---
+int(4294967295)
+--- testing: 4294967293 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | 0 ---
+int(9223372036854775806)
+--- testing: 9223372036854775806 | 1 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | -1 ---
+int(-1)
+--- testing: 9223372036854775806 | 7 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | 9 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | 65 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | -44 ---
+int(-2)
+--- testing: 9223372036854775806 | 2147483647 ---
+int(9223372036854775807)
+--- testing: 9223372036854775806 | 9223372036854775807 ---
+int(9223372036854775807)
+--- testing: 9.2233720368548E+18 | 0 ---
+int(-9223372036854775808)
+--- testing: 9.2233720368548E+18 | 1 ---
+int(-9223372036854775807)
+--- testing: 9.2233720368548E+18 | -1 ---
+int(-1)
+--- testing: 9.2233720368548E+18 | 7 ---
+int(-9223372036854775801)
+--- testing: 9.2233720368548E+18 | 9 ---
+int(-9223372036854775799)
+--- testing: 9.2233720368548E+18 | 65 ---
+int(-9223372036854775743)
+--- testing: 9.2233720368548E+18 | -44 ---
+int(-44)
+--- testing: 9.2233720368548E+18 | 2147483647 ---
+int(-9223372034707292161)
+--- testing: 9.2233720368548E+18 | 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 | 0 ---
+int(-9223372036854775807)
+--- testing: -9223372036854775807 | 1 ---
+int(-9223372036854775807)
+--- testing: -9223372036854775807 | -1 ---
+int(-1)
+--- testing: -9223372036854775807 | 7 ---
+int(-9223372036854775801)
+--- testing: -9223372036854775807 | 9 ---
+int(-9223372036854775799)
+--- testing: -9223372036854775807 | 65 ---
+int(-9223372036854775743)
+--- testing: -9223372036854775807 | -44 ---
+int(-43)
+--- testing: -9223372036854775807 | 2147483647 ---
+int(-9223372034707292161)
+--- testing: -9223372036854775807 | 9223372036854775807 ---
+int(-1)
+--- testing: -9.2233720368548E+18 | 0 ---
+int(-9223372036854775808)
+--- testing: -9.2233720368548E+18 | 1 ---
+int(-9223372036854775807)
+--- testing: -9.2233720368548E+18 | -1 ---
+int(-1)
+--- testing: -9.2233720368548E+18 | 7 ---
+int(-9223372036854775801)
+--- testing: -9.2233720368548E+18 | 9 ---
+int(-9223372036854775799)
+--- testing: -9.2233720368548E+18 | 65 ---
+int(-9223372036854775743)
+--- testing: -9.2233720368548E+18 | -44 ---
+int(-44)
+--- testing: -9.2233720368548E+18 | 2147483647 ---
+int(-9223372034707292161)
+--- testing: -9.2233720368548E+18 | 9223372036854775807 ---
+int(-1)
+string(11) "random_var:"
+NULL
+int(1)
+int(9223372036854775807)
+Calling function: is_subclass_of with arguments: , , 
+Calling function: chown with arguments: , 1
+Calling function: fgetcsv with arguments: , 9223372036854775807, , 9223372036854775807, 
+Error calling function fgetcsv: fgetcsv(): Argument #1 ($stream) must be of type resource, null given
+Calling function: restore_exception_handler with arguments: 
+Calling function: get_cfg_var with arguments: 1
+Calling function: addcslashes with arguments: 1, 9223372036854775807
+Calling function: password_hash with arguments: 9223372036854775807, , 9223372036854775807
+Error calling function password_hash: password_hash(): Argument #3 ($options) must be of type array, int given
+Calling function: is_uploaded_file with arguments: 9223372036854775807
+Calling function: get_browser with arguments: 9223372036854775807, 9223372036854775807
+Calling function: strcspn with arguments: , , , 
+Calling function: date_create with arguments: , 1
+Error calling function date_create: date_create(): Argument #2 ($timezone) must be of type ?DateTimeZone, int given
+Calling function: highlight_file with arguments: , 9223372036854775807
+Error calling function highlight_file: Path must not be empty
+Calling function: session_abort with arguments: 
+Calling function: opcache_get_configuration with arguments: 
+Calling function: xmlwriter_write_dtd_entity with arguments: 1, 9223372036854775807, 1, 9223372036854775807, 1, 9223372036854775807, 1
+Error calling function xmlwriter_write_dtd_entity: xmlwriter_write_dtd_entity(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: chown with arguments: 9223372036854775807, 
+Calling function: date_sunrise with arguments: 9223372036854775807, 1, 9223372036854775807, 1, 9223372036854775807, 1
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17: runtime error: -nan is outside the range of representable values of type 'long long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17 in

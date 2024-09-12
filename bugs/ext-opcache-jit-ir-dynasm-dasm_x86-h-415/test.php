@@ -61,33 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
+require 'examine_diff.inc';
+define('PHPT_DATETIME_SHOW', PHPT_DATETIME_SHOW_DAYS);
+require 'DateTime_data-fall-type3-type3.inc';
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 interface I {
-    public $prop { &get; }
+    public $prop { get; }
 }
 class A implements I {
-    private $_prop;
-    public $prop {
-        &get => $this->_prop;
+    public $prop = 42 {
+        get => $this->prop;
     }
 }
-function test(I $i) {
-    $ref = &$i->prop;
-    $ref = 42;
-}
 $a = new A();
-test($a);
 var_dump($a);
-$fusion = $i;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$b = 'test';
-$fn = function () use (
-    $b,
-    &$a,
-) {
-    $a = $fusion;
-};
-$fn();
-echo "$a\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

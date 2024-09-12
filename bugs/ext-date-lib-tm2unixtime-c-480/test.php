@@ -61,54 +61,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$file_path = __DIR__;
-echo "*** Testing with a directory ***\n";
-var_dump( disk_total_space($file_path."/..") );
-echo "\nTesting for the return type ***\n";
-$return_value = disk_total_space($file_path);
-var_dump( is_float($return_value) );
-echo "\n*** Testing with different directory combinations ***";
-$dir = "/disk_total_space";
-mkdir($file_path.$dir);
-$dirs_arr = array(
-  ".",
-  $file_path.$dir,
-  $file_path."/.".$dir,
-  /* Testing a file trailing slash */
-  $file_path."".$dir."/",
-  $file_path."/.".$dir."/",
-  /* Testing file with double trailing slashes */
-  $file_path.$dir."//",
-  $file_path."/.".$dir."//",
-  $file_path."/./".$dir."//",
-  /* Testing Binary safe */
-  $file_path.$dir.chr(0),
-  $file_path."/.".$dir.chr(0),
-  ".".chr(0).$file_path.$dir,
-  ".".chr(0).$file_path.$dir.chr(0)
-);
-$count = 1;
-/* loop through to test each element the above array */
-foreach($dirs_arr as $dir1) {
-  echo "\n-- Iteration $count --\n";
-  try {
-    var_dump( disk_total_space( $dir1 ) );
-  } catch (Error $e) {
-    echo $e->getMessage(), "\n";
-  }
-  $count++;
-}
-echo "*** Testing with Binary Input ***\n";
-var_dump( disk_total_space(b"$file_path") );
-echo"\n--- Done ---";
-$fusion = $return_value;
+//Set the default time zone
+date_default_timezone_set("Europe/London");
+echo "*** Testing date_time_set() : basic functionality ***\n";
+// Create a DateTime object
+$datetime = date_create("2009-01-31 15:14:10");
+echo "Initial date: " . date_format($datetime, DATE_RFC2822) . "\n";
+date_time_set($datetime, 17, 20);
+echo "After modification1 " . date_format($datetime, DATE_RFC2822) . "\n";
+date_time_set($datetime, 19, 05, 59);
+echo "After modification2 " . date_format($datetime, DATE_RFC2822) . "\n";
+date_time_set($datetime, 24, 10);
+echo "After modification3 " . date_format($datetime, DATE_RFC2822) . "\n";
+date_time_set($datetime, 47, 35, 47);
+echo "After modification4 " . date_format($datetime, DATE_RFC2822) . "\n";
+date_time_set($datetime, 54, PHP_INT_MAX);
+echo "After modification5 " . date_format($datetime, DATE_RFC2822) . "\n";
+$fusion = $datetime;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function foo(int $x, int $y) {
-    $fusion = [$x];
-    $a[1] = $y;
-    $a = $y;
-    return $a;
+class Foo {
+    private $_bar;
+    public $bar {
+        &get {
+            echo __METHOD__, PHP_EOL;
+            return $this->_bar;
+        }
+    }
 }
+$fusion = new Foo;
+$foo->bar = 'bar';
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
