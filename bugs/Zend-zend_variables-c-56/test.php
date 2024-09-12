@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,81 +61,36 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/* Test fscanf() to scan resource type using different unsigned format types */
-$file_path = __DIR__;
-echo "*** Test fscanf(): different unsigned format types with resource ***\n";
-// create a file
-$filename = "$file_path/fscanf_variation41.tmp";
-$file_handle = fopen($filename, "w");
-if($file_handle == false)
-  exit("Error:failed to open file $filename");
-// resource type variable
-$fp = fopen (__FILE__, "r");
-$dfp = opendir ( __DIR__ );
-// array of resource types
-$resource_types = array (
-  $fp,
-  $dfp
-);
-$unsigned_formats = array( "%u", "%hu", "%lu", "%Lu", " %u", "%u ", "% u", "\t%u", "\n%u", "%4u", "%30u", "%[0-9]", "%*u");
-$counter = 1;
-// writing to the file
-foreach($resource_types as $value) {
-  @fprintf($file_handle, "%s", $value);
-  @fprintf($file_handle, "\n");
-}
-// closing the file
-fclose($file_handle);
-// opening the file for reading
-$file_handle = fopen($filename, "r");
-if($file_handle == false) {
-  exit("Error:failed to open file $filename");
-}
-$counter = 1;
-// reading the values from file using different unsigned formats
-foreach($unsigned_formats as $unsigned_format) {
-  // rewind the file so that for every foreach iteration the file pointer starts from bof
-  rewind($file_handle);
-  echo "\n-- iteration $counter --\n";
-  while( !feof($file_handle) ) {
-    try {
-      var_dump(fscanf($file_handle,$unsigned_format));
-    } catch (ValueError $exception) {
-      echo $exception->getMessage() . "\n";
-    }
-  }
-  $counter++;
-}
-// closing the resources
+$filename = __DIR__."/bug35781.txt";
+$fp = fopen($filename, "w");
+stream_filter_append($fp, "string.rot13", -49);
+fwrite($fp, "This is a test\n");
+rewind($fp);
+fpassthru($fp);
 fclose($fp);
-closedir($dfp);
-echo "\n*** Done ***";
+var_dump(file_get_contents($filename));
+@unlink($filename);
+echo "Done\n";
 $fusion = $filename;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = array();
-for ($i=0; $fusion < 550; $i++) {
-    $array = array($array);
+echo "*** Testing array_intersect_uassoc() : usage variation ***\n";
+//Initialize variables
+$arr_float = array(0 => 1.00, 1 => 2.00);
+$arr_string = array('1', '2', '3');
+$arr_string_float = array('1.00', '2.00');
+function key_compare_func($a, $b)
+{
+    if ($a === $b) {
+        return 0;
+    }
+    return ($a > $b)? 1:-1;
 }
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
+echo "\n-- Result of floating points and strings containing integers intersection --\n";
+var_dump( array_intersect_uassoc($arr_float, $arr_string, "key_compare_func") );
+echo "\n-- Result of floating points and strings containing floating point intersection --\n";
+var_dump( array_intersect_uassoc($fusion, $arr_string_float, "key_compare_func") );
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

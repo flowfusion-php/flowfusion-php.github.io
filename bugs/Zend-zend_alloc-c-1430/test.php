@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,35 +61,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$min_value = 10;
-$max_value = 20;
-$correct_order = rand($min_value, $max_value);
-$incorrect_order = rand($max_value, $min_value);
-var_dump($correct_order >= $min_value);
-var_dump($correct_order <= $max_value);
-var_dump($incorrect_order >= $min_value);
-var_dump($incorrect_order <= $max_value);
-$fusion = $max_value;
+$dir = __DIR__ . '/bug77263';
+mkdir($dir);
+mkdir("$dir/subdir");
+touch("$dir/file1");
+touch("$dir/subdir/file2");
+class Filter1 extends RecursiveFilterIterator {
+    public function accept(): bool { return $this->getInnerIterator()->getSubPathname() != ''; }
+}
+class Filter2 extends RecursiveFilterIterator {
+    public function accept(): bool { return $this->getInnerIterator()->getSubPathname() != ' '; }
+}
+$iterator = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS );
+$iterator = new Filter1( $iterator );
+$iterator = new Filter2( $iterator );
+$iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD );
+foreach ( $iterator as $item ) {
+}
+?>
+OK
+$fusion = $iterator;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
-}
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+$fusion = 'bar';
+var_dump("${foo}");
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

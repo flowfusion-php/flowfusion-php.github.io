@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,53 +61,53 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// Replace with itself
-$doc = new DOMDocument();
-$doc->appendChild($target = $doc->createElement('test'));
-$target->replaceWith($target);
-var_dump($doc->saveXML());
-// Replace with itself + another element
-$doc = new DOMDocument();
-$doc->appendChild($target = $doc->createElement('test'));
-$target->replaceWith($target, $doc->createElement('foo'));
-var_dump($doc->saveXML());
-// Replace with text node
-$doc = new DOMDocument();
-$doc->appendChild($target = $doc->createElement('test'));
-$target->replaceWith($target, 'foo');
-var_dump($doc->saveXML());
-// Replace with text node variant 2
-$doc = new DOMDocument();
-$doc->appendChild($target = $doc->createElement('test'));
-$target->replaceWith('bar', $target, 'foo');
-var_dump($doc->saveXML());
-$fusion = $doc;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$dom = DOM\XMLDocument::createFromString(<<<XML
-<!DOCTYPE root [
-    <!ENTITY foo "content">
-]>
-<root/>
-XML);
-$child = $dom->documentElement->appendChild($dom->createElementNS('urn:a', 'child'));
-$original = $dom->saveXML();
-function test($child, $html) {
-    global $dom, $original;
-    try {
-        $child->innerHTML = $html;
-    } catch (DOMException $e) {
-        echo $e->getMessage(), "\n";
-    }
-    var_dump($dom->saveXML() === $original);
+class TestClass
+{
+    /** const comment */
+    const C = 0;
+    function x() {}
 }
-test($child, '&foo;');
-test($child, '</root>');
-test($child, '</root><foo/><!--');
-test($fusion, '--></root><!--');
-test($child, '<');
-test($child, '<!ENTITY foo "content">');
+$rm = new ReflectionMethod('TestClass', 'x');
+var_dump($rm->getDocComment());
+class TestClass2
+{
+    /** const comment */
+    const C = 0;
+    public $x;
+}
+$rp = new ReflectionProperty('TestClass2', 'x');
+var_dump($rp->getDocComment());
+$fusion = $x;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class A {
+    public $fusion = "string";
+    function __set($propName, $propValue)
+    {
+        $oldType = \gettype($this->$propName);
+        $newType = \gettype($propValue);
+        if ($propValue === 'false')
+        {
+            $newType   = 'boolean';
+            $propValue = \false;
+        }
+        elseif ($propValue === 'true')
+        {
+            $newType   = 'boolean';
+            $propValue = \true;
+        }
+        if ($oldType !== $newType)
+        {
+            $tmp = $propValue;
+            \settype($tmp, $newType);
+        }
+        $this->propName = $propValue;
+    }
+}
+$a = new A;
+$a->result = "okey";
+echo $a->result;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

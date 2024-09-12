@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,22 +61,25 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$i = 0;
-while(100000 > $i++) {
-    $m0 = microtime(true);
-    $m1 = microtime(true);
-    $d = $m1 - $m0;
-    /*echo "$d\n";*/
-    if ($d < 0) {
-        die("failed in {$i}th iteration");
+function exception_error_handler($severity, $message, $file, $line) {
+    if (!(error_reporting() & $severity)) {
+        return;
     }
+    throw new ErrorException($message, 0, $severity, $file, $line);
 }
-echo "ok\n";
+set_error_handler("exception_error_handler");
+touch(__DIR__ . "/gh7875.mail.log");
+chmod(__DIR__ . "/gh7875.mail.log", 0444);
+try {
+	mail('recipient@example.com', 'Subject', 'Body', []);
+	echo 'Not Reached';
+} catch (\Exception $e) {
+	echo $e->getMessage(), PHP_EOL;
+    var_dump(file_exists(__DIR__ . "/gh7875.mail.out"));
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-include_once __DIR__.'/include.inc';
-include_once __DIR__.'/include.inc';
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

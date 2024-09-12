@@ -1,16 +1,12 @@
 --TEST--
-set $value parameter variance+Test function posix_errno() by calling it with with permission error
+Bug #31341 (escape on curly inconsistent)+No additional parenthesis are required around yield if they are already present
 --INI--
-internal_encoding=EUC-JP
-iconv.internal_charset=ISO-8859-1
+max_execution_time=10
+opcache.enable=1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1004
---SKIPIF--
-<?php
-        if(posix_getuid()==0) print "skip - Cannot run test as root.";
-?>
+opcache.jit=0003
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -42,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -65,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -75,30 +71,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-interface X {}
-interface Y extends X {}
-class Test {
-    public Y $prop {
-        set(X $prop) {}
-    }
+$a = array(
+    "$     \{    ",
+    "      \{   $",
+    "      \{$   ",
+    "      $\{   ",
+    "      \$\{  ",
+    "      \{\$  ",
+    "\$    \{    ",
+    "      \{  \$",
+    "%     \{    ");
+foreach ($a as $v) {
+    echo("'$v'\n");
 }
-?>
+$fusion = $v;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Test by calling function with permission error ***\n";
-posix_setuid(0);
-var_dump(posix_errno());
+function gen() {
+    if (yield $foo); elseif (yield $foo);
+    if (yield $foo): elseif (yield $foo): endif;
+    while (yield $foo);
+    do {} while (yield $foo);
+    switch (yield $foo) {}
+    (yield $foo);
+    die(yield $foo);
+    func(yield $foo);
+    $fusion->func(yield $foo);
+    new Foo(yield $foo);
+}
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-posix
---CREDITS--
-Morten Amundsen mor10am@gmail.com
-Francesco Fullone ff@ideato.it
-#PHPTestFest Cesena Italia on 2009-06-20
 --EXPECT--
-===DONE===
-*** Test by calling function with permission error ***
-int(1)
+'$     \{    '
+'      \{   $'
+'      \{$   '
+'      $\{   '
+'      $\{  '
+'      \{$  '
+'$    \{    '
+'      \{  $'
+'%     \{    '
+Done

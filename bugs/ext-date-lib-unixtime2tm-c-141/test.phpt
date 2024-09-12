@@ -1,16 +1,12 @@
 --TEST--
-Testing __construct and __destruct with Trait+Test is_finite function : 64bit long tests
+Bug #53748 (Using traits lead to a segmentation fault)+testing @ and error_reporting - 8
 --INI--
-zend_test.observer.enabled=1
-date.timezone=Atlantic/Azores
+session.gc_maxlifetime=300
+short_open_tag=off
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1212
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+opcache.jit=1042
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -42,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -65,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -75,67 +71,58 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-trait foo {
-    public function __construct() {
-        var_dump(__FUNCTION__);
+trait Singleton {
+  protected static $instances=array();
+  abstract protected function __construct($config);
+  public static function getInstance($config) {
+    if (!isset(self::$instances[$serialize = serialize($config)])) {
+      self::$instances[$serialize] = new self($config);
     }
-    public function __destruct() {
-        var_dump(__FUNCTION__);
-    }
+    return self::$instances[$serialize];
+  }
 }
-class bar {
-    use foo;
+class MyHelloWorld {
+  use Singleton;
+  public function __construct($config)
+  {
+    var_dump( $config);
+  }
 }
-new bar;
+$o= myHelloWorld::getInstance(1);
+$o= myHelloWorld::getInstance(1);
+$o= myHelloWorld::getInstance(2);
+$o= myHelloWorld::getInstance(array(1=>2));
+$o= myHelloWorld::getInstance(array(1=>2));
+$fusion = $o;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(is_finite($longVal));
+error_reporting(E_ALL & ~E_DEPRECATED);
+function foo1($arg) {
 }
+function foo2($arg) {
+}
+function foo3() {
+    error_reporting(E_ALL);
+    echo $fusion;
+    throw new Exception("test");
+}
+try {
+    @foo1(@foo2(@foo3()));
+} catch (Exception $e) {
+}
+var_dump(error_reporting());
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-string(11) "__construct"
-string(10) "__destruct"
---- testing: 9223372036854775807 ---
-bool(true)
---- testing: -9223372036854775808 ---
-bool(true)
---- testing: 2147483647 ---
-bool(true)
---- testing: -2147483648 ---
-bool(true)
---- testing: 9223372034707292160 ---
-bool(true)
---- testing: -9223372034707292160 ---
-bool(true)
---- testing: 2147483648 ---
-bool(true)
---- testing: -2147483649 ---
-bool(true)
---- testing: 4294967294 ---
-bool(true)
---- testing: 4294967295 ---
-bool(true)
---- testing: 4294967293 ---
-bool(true)
---- testing: 9223372036854775806 ---
-bool(true)
---- testing: 9.2233720368548E+18 ---
-bool(true)
---- testing: -9223372036854775807 ---
-bool(true)
---- testing: -9.2233720368548E+18 ---
-bool(true)
+--EXPECTF--
+int(1)
+int(2)
+array(1) {
+  [1]=>
+  int(2)
+}
+Warning: Undefined variable $undef3 in %s on line %d
+int(32767)
+Done

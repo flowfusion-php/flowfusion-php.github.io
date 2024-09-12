@@ -1,9 +1,18 @@
 --TEST--
-Check that SplDoublyLinkedList::add throws an exception with an invalid offset argument+Bug #71818 (Memory leak when array altered in destructor)
+Test mail() function : variation invalid program for sendmail+Testing callback formats within class method
 --INI--
-zend.enable_gc = 1
-phar.cache_list={PWD}/frontcontroller32.php
-phar.cache_list={PWD}/copyonwrite20.phar.php
+sendmail_path=rubbish 2>/dev/null
+opcache.validate_timestamps=0
+session.upload_progress.enabled=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0203
+--SKIPIF--
+<?php
+if(substr(PHP_OS, 0, 3) == "WIN")
+  die("skip Won't run on Windows");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +44,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +67,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,36 +77,64 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-try {
-    $dll = new SplDoublyLinkedList();
-    var_dump($dll->add([],2));
-} catch (TypeError $e) {
-    echo "Exception: ".$e->getMessage()."\n";
-}
-$fusion = $e;
+echo "*** Testing mail() : variation ***\n";
+// Initialise all required variables
+$to = 'user@example.com';
+$subject = 'Test Subject';
+$message = 'A Message';
+var_dump( mail($to, $subject, $message) );
+$fusion = $message;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
+class foo {
+    public function test() {
+        call_user_func(array('FOO', 'ABC'));
+        call_user_func(array($this, 'ABC'));
+        foo::XYZ();
+        self::WWW();
+        call_user_func('FOO::ABC');
     }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
+    function __call($a, $b) {
+        print "__call:\n";
+        var_dump($a);
     }
-    private $things = [];
+    static public function __callStatic($a, $b) {
+        print "__callstatic:\n";
+        var_dump($a);
+    }
 }
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
-}
-echo "OK\n";
+$x = new foo;
+$x->test();
+$fusion::A();
+foo::B();
+$f = 'FOO';
+$f::C();
+$f::$f();
+foo::$f();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-Exception: SplDoublyLinkedList::add(): Argument #1 ($index) must be of type int, array given
-OK
+*** Testing mail() : variation ***
+bool(false)
+__call:
+string(3) "ABC"
+__call:
+string(3) "ABC"
+__call:
+string(3) "XYZ"
+__call:
+string(3) "WWW"
+__call:
+string(3) "ABC"
+__callstatic:
+string(1) "A"
+__callstatic:
+string(1) "B"
+__callstatic:
+string(1) "C"
+__callstatic:
+string(3) "FOO"
+__callstatic:
+string(3) "FOO"

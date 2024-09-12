@@ -1,24 +1,4 @@
-string(30) "<?xml version="1.0"?>
-<test/>
-"
-string(37) "<?xml version="1.0"?>
-<test/>
-<foo/>
-"
-string(34) "<?xml version="1.0"?>
-<test/>
-foo
-"
-string(38) "<?xml version="1.0"?>
-bar
-<test/>
-foo
-"
-XML fragment is not well-formed
-bool(true)
-XML fragment is not well-formed
-bool(true)
-XML fragment is not well-formed
-bool(true)
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/namespace_compat.c:224:44: runtime error: member access within null pointer of type 'php_dom_private_data' (aka 'struct php_dom_private_data')
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/namespace_compat.c:224:44 in
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
+Aborted (core dumped)
+
+Termsig=6

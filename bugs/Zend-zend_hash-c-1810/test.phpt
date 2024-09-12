@@ -1,9 +1,12 @@
 --TEST--
-Bug #62991 (Segfault with generator and closure)+Bug #71818 (Memory leak when array altered in destructor)
+ReflectionNamedType::getName() and ReflectionNamedType::__toString()+Handling of UNDEF property in compound assign 
 --INI--
-zend.enable_gc = 1
-session.cache_limiter=
-session.upload_progress.cleanup=0
+opcache.memory_consumption=7
+session.upload_progress.enabled=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0243
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,66 +71,55 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function test( array $array )
-{
-    $closure = function() use ( $array ) {
-        print_r( $array );
-        yield "hi";
-    };
-    return $closure();
+function testInternalTypes(?Traversable $traversable): ?string {
+    return 'test';
 }
-function test2( array $array )
-{
-    $closure = function() use ( $array ) {
-        print_r( $array );
-        yield "hi";
-    };
-    return $closure; // if you return the $closure and call it outside this function it works.
+function testUserDefinedTypes(?Test $traversable): ?Test {
+    return new Test;
 }
-$generator = test(array( 1, 2, 3 ) );
-foreach($generator as $something) {
-}
-$generator = test2(array( 1, 2, 3 ) );
-foreach($generator() as $something) {
-}
-$generator = test2(array( 1, 2, 3 ) );
-echo "okey\n";
-$fusion = $generator;
+$function = new ReflectionFunction('testInternalTypes');
+$type = $function->getParameters()[0]->getType();
+$return = $function->getReturnType();
+var_dump($type->getName());
+var_dump((string) $type);
+var_dump($return->getName());
+var_dump((string) $return);
+$function = new ReflectionFunction('testUserDefinedTypes');
+$type = $function->getParameters()[0]->getType();
+$return = $function->getReturnType();
+var_dump($type->getName());
+var_dump((string) $type);
+var_dump($return->getName());
+var_dump((string) $return);
+$fusion = $traversable;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
-    }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
+class C {
+    public $a = 0;
 }
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
+function foo() {
+    $x = new C;
+    $x->a = 1;
+    unset($fusion->a);
+    $x->a += 2;
+    var_dump($x);
 }
-echo "OK\n";
+foo();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Array
-(
-    [0] => 1
-    [1] => 2
-    [2] => 3
-)
-Array
-(
-    [0] => 1
-    [1] => 2
-    [2] => 3
-)
-okey
-OK
+--EXPECTF--
+string(11) "Traversable"
+string(12) "?Traversable"
+string(6) "string"
+string(7) "?string"
+string(4) "Test"
+string(5) "?Test"
+string(4) "Test"
+string(5) "?Test"
+Warning: Undefined property: C::$a in %s on line %d
+object(C)#1 (1) {
+  ["a"]=>
+  int(2)
+}

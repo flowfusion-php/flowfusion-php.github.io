@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,53 +61,39 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$values = [
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-];
-foreach ($values as $var) {
-    $var--;
-    var_dump($var);
+class Foo {
+    public int $bar = 1;
 }
-echo "Done\n";
+function test() {
+    $foo = new Foo();
+    $foo->bar = "10";
+    var_dump($foo->bar);
+}
+test();
+$fusion = $bar;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * testing array_fill() by passing different types of array  values for 'val' argument
- */
-echo "*** Testing array_fill() : usage variations ***\n";
-// Initialise function arguments not being substituted
-$start_key = 0;
-$num = 2;
-//array of different types of array values for 'val' argument
-$values = array(
-  /* 1  */  array(),
-            array(1 , 2 , 3 , 4),
-            array(1 => "Hi" , 2 => "Hello"),
-            array("Saffron" , "White" , "Green"),
-  /* 5  */  array('color' => 'red' , 'item' => 'pen'),
-            array( 'color' => 'red' , 2 => 'green ' ),
-            array("colour" => "red" , "item" => "pen"),
-            array( TRUE => "red" , FALSE => "green" ),
-            array( true => "red" , FALSE => "green" ),
-  /* 10 */  array( 1 => "Hi" , "color" => "red" , 'item' => 'pen'),
-            array( NULL => "Hi", '1' => "Hello" , "1" => "Green"),
-            array( ""=>1, "color" => "green"),
-  /* 13 */  array('Saffron' , 'White' , 'Green')
-);
-// loop through each element of the values array for 'val' argument
-// check the working of array_fill()
-echo "--- Testing array_fill() with different types of array values for 'val' argument ---\n";
-$counter = 1;
-for($i = 0; $i < count($values); $i++)
-{
-  echo "-- Iteration $counter --\n";
-  $val = $values[$i];
-  var_dump( array_fill($start_key , $num , $val) );
-  $counter++;
-}
-echo "Done";
+$xw = new XMLWriter();
+$xw->openMemory();
+$xw->setIndent(TRUE);
+$xw->setIndentString('   ');
+$xw->startDocument('1.0', "UTF-8");
+$xw->startElement('root');
+$xw->startElementNS('ns1', 'child1', 'urn:ns1');
+$xw->startAttributeNS('ns1', 'att1', 'urn:ns1');
+$xw->text('a&b');
+$xw->endAttribute();
+$xw->writeAttribute('att2', "double\" single'");
+$xw->startAttributeNS('ns1', 'att2', 'urn:ns1');
+$xw->text("<>\"'&");
+$xw->endAttribute();
+$xw->writeElement('chars', "special characters: <>\"'&");
+$xw->endElement();
+$xw->endDocument();
+// Force to write and empty the buffer
+$fusion = $xw->flush(true);
+print $output;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

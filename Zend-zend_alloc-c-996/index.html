@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
 </pre>
         </div>
 
@@ -64,7 +64,7 @@
 
         <div class="keywords">
             <div class="section-title">Keywords:</div>
-            <pre>['stack-overflow']</pre>
+            <pre>['core dumped']</pre>
         </div>
 
         <div class="bughit">
@@ -75,262 +75,10 @@
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-bool(true)
-string(5) &quot;start&quot;
-string(3) &quot;end&quot;
-AddressSanitizer:DEADLYSIGNAL
-=================================================================
-==110081==ERROR: AddressSanitizer: stack-overflow on address 0x7ffe59270ff8 (pc 0x560cece4d7c6 bp 0x7ffe592715e0 sp 0x7ffe59271000 T0)
-    #0 0x560cece4d7c6 in zend_mm_alloc_pages /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:996:20
-    #1 0x560cece5294b in zend_mm_alloc_large_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1127:14
-    #2 0x560cece4a98a in zend_mm_alloc_large /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1144:9
-    #3 0x560cece3a402 in zend_mm_alloc_heap /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:1499:9
-    #4 0x560cece3ef9d in _emalloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:2740:9
-    #5 0x560cedc10988 in _smart_string_alloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_smart_str.c:169:14
-    #6 0x560cec8fd79a in smart_string_alloc /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_smart_string.h:59:4
-    #7 0x560cec8fbb2c in xbuf_format_converter /home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:756:5
-    #8 0x560cec8f1c89 in php_printf_to_smart_string /home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:778:2
-    #9 0x560cedc7589d in zend_vspprintf /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:292:2
-    #10 0x560cec85194f in php_printf /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:947:9
-    #11 0x560cec6fd624 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:100:3
-    #12 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #13 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #14 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #15 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #16 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #17 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #18 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #19 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #20 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #21 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #22 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #23 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #24 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #25 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #26 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #27 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #28 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #29 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #30 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #31 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #32 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #33 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #34 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #35 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #36 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #37 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #38 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #39 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #40 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #41 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #42 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #43 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #44 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #45 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #46 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #47 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #48 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #49 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #50 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #51 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #52 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #53 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #54 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #55 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #56 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #57 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #58 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #59 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #60 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #61 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #62 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #63 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #64 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #65 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #66 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #67 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #68 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #69 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #70 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #71 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #72 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #73 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #74 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #75 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #76 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #77 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #78 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #79 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #80 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #81 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #82 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #83 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #84 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #85 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #86 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #87 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #88 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #89 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #90 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #91 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #92 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #93 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #94 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #95 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #96 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #97 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #98 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #99 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #100 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #101 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #102 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #103 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #104 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #105 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #106 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #107 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #108 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #109 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #110 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #111 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #112 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #113 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #114 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #115 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #116 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #117 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #118 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #119 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #120 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #121 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #122 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #123 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #124 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #125 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #126 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #127 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #128 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #129 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #130 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #131 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #132 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #133 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #134 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #135 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #136 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #137 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #138 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #139 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #140 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #141 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #142 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #143 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #144 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #145 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #146 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #147 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #148 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #149 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #150 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #151 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #152 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #153 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #154 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #155 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #156 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #157 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #158 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #159 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #160 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #161 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #162 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #163 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #164 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #165 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #166 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #167 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #168 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #169 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #170 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #171 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #172 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #173 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #174 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #175 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #176 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #177 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #178 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #179 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #180 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #181 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #182 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #183 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #184 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #185 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #186 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #187 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #188 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #189 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #190 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #191 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #192 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #193 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #194 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #195 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #196 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #197 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #198 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #199 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #200 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #201 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #202 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #203 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #204 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #205 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #206 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #207 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #208 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #209 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #210 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #211 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #212 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #213 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #214 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #215 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #216 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #217 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #218 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #219 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #220 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #221 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #222 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #223 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #224 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #225 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #226 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #227 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #228 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #229 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #230 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #231 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #232 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #233 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #234 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #235 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #236 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #237 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #238 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #239 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #240 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #241 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #242 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #243 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #244 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
-    #245 0x560cec700fb5 in php_var_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:185:7
-    #246 0x560cec703201 in php_object_property_dump /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:84:3
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0&#x27; failed.
+Aborted (core dumped)
 
-SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_alloc.c:996:20 in zend_mm_alloc_pages
-==110081==ABORTING
+Termsig=6
             </pre>
         </div>
 
@@ -367,7 +115,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -390,7 +138,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -400,57 +148,16 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Node
-{
-    /** @var Node */
-    public $previous;
-    /** @var Node */
-    public $next;
-}
-var_dump(gc_enabled());
-var_dump(&#x27;start&#x27;);
-$firstNode = new Node();
-$firstNode-&gt;previous = $firstNode;
-$firstNode-&gt;next = $firstNode;
-$circularDoublyLinkedList = $firstNode;
-for ($i = 0; $i &lt; 200000; $i++) {
-    $currentNode = $circularDoublyLinkedList;
-    $nextNode = $circularDoublyLinkedList-&gt;next;
-    $newNode = new Node();
-    $newNode-&gt;previous = $currentNode;
-    $currentNode-&gt;next = $newNode;
-    $newNode-&gt;next = $nextNode;
-    $nextNode-&gt;previous = $newNode;
-    $circularDoublyLinkedList = $nextNode;
-}
-var_dump(&#x27;end&#x27;);
-$fusion = $circularDoublyLinkedList;
+// Ensure we can still unserialize the old style.
+var_dump(unserialize(&#x27;O:8:&quot;DateTime&quot;:3:{s:4:&quot;date&quot;;s:19:&quot;2005-07-14 22:30:41&quot;;s:13:&quot;timezone_type&quot;;i:3;s:8:&quot;timezone&quot;;s:13:&quot;Europe/London&quot;;}&#x27;));
+// New style.
+var_dump(unserialize(&#x27;O:8:&quot;DateTime&quot;:3:{s:4:&quot;date&quot;;s:26:&quot;2005-07-14 22:30:41.123456&quot;;s:13:&quot;timezone_type&quot;;i:3;s:8:&quot;timezone&quot;;s:13:&quot;Europe/London&quot;;}&#x27;));
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-function open($save_path, $fusion) {
-    return true;
-}
-function close() {
-    echo &quot;close: goodbye cruel world\n&quot;;
-    exit;
-}
-function read($id) {
-    return &#x27;&#x27;;
-}
-function write($id, $session_data) {
-    echo &quot;write: goodbye cruel world\n&quot;;
-    throw new Exception;
-}
-function destroy($id) {
-    return true;
-}
-function gc($maxlifetime) {
-    return true;
-}
-session_set_save_handler(&#x27;open&#x27;, &#x27;close&#x27;, &#x27;read&#x27;, &#x27;write&#x27;, &#x27;destroy&#x27;, &#x27;gc&#x27;);
-session_start();
+$xml = new SimpleXMLElement(&#x27;&lt;root&gt;&lt;elem&gt;Text&lt;/elem&gt;&lt;/root&gt;&#x27;);
+echo &#x27;elem2 is: &#x27; . ($xml-&gt;elem2 ?? &#x27;backup string&#x27;) . &quot;\n&quot;;
+echo &#x27;elem2 is: &#x27; . (isset($xml-&gt;elem2) ? $xml-&gt;elem2 : &#x27;backup string&#x27;) . &quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -462,18 +169,15 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Bug #77345 (Segmentation faults stack overflow in cyclic garbage collector) (Bug #77427)+Bug #60634 (Segmentation fault when trying to die() in SessionHandler::write()) - exception in write after exec
+Bug #67308 (Serialize of DateTime truncates fractions of second)+Bug #72957: Null coalescing operator doesn&#x27;t behave as expected with SimpleXMLElement
 --INI--
-zend.enable_gc = 1
-session.save_path=
-session.name=PHPSESSID
-session.save_handler=files
-phar.cache_list={PWD}/frontcontroller26.php
-// default INI will fail too)
+date.timezone=America/Vancouver
+allow_url_include=0
+session.sid_length=32
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=tracing
+opcache.jit=1141
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -505,7 +209,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -528,7 +232,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -538,76 +242,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Node
-{
-    /** @var Node */
-    public $previous;
-    /** @var Node */
-    public $next;
-}
-var_dump(gc_enabled());
-var_dump(&#x27;start&#x27;);
-$firstNode = new Node();
-$firstNode-&gt;previous = $firstNode;
-$firstNode-&gt;next = $firstNode;
-$circularDoublyLinkedList = $firstNode;
-for ($i = 0; $i &lt; 200000; $i++) {
-    $currentNode = $circularDoublyLinkedList;
-    $nextNode = $circularDoublyLinkedList-&gt;next;
-    $newNode = new Node();
-    $newNode-&gt;previous = $currentNode;
-    $currentNode-&gt;next = $newNode;
-    $newNode-&gt;next = $nextNode;
-    $nextNode-&gt;previous = $newNode;
-    $circularDoublyLinkedList = $nextNode;
-}
-var_dump(&#x27;end&#x27;);
-$fusion = $circularDoublyLinkedList;
+// Ensure we can still unserialize the old style.
+var_dump(unserialize(&#x27;O:8:&quot;DateTime&quot;:3:{s:4:&quot;date&quot;;s:19:&quot;2005-07-14 22:30:41&quot;;s:13:&quot;timezone_type&quot;;i:3;s:8:&quot;timezone&quot;;s:13:&quot;Europe/London&quot;;}&#x27;));
+// New style.
+var_dump(unserialize(&#x27;O:8:&quot;DateTime&quot;:3:{s:4:&quot;date&quot;;s:26:&quot;2005-07-14 22:30:41.123456&quot;;s:13:&quot;timezone_type&quot;;i:3;s:8:&quot;timezone&quot;;s:13:&quot;Europe/London&quot;;}&#x27;));
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-function open($save_path, $fusion) {
-    return true;
-}
-function close() {
-    echo &quot;close: goodbye cruel world\n&quot;;
-    exit;
-}
-function read($id) {
-    return &#x27;&#x27;;
-}
-function write($id, $session_data) {
-    echo &quot;write: goodbye cruel world\n&quot;;
-    throw new Exception;
-}
-function destroy($id) {
-    return true;
-}
-function gc($maxlifetime) {
-    return true;
-}
-session_set_save_handler(&#x27;open&#x27;, &#x27;close&#x27;, &#x27;read&#x27;, &#x27;write&#x27;, &#x27;destroy&#x27;, &#x27;gc&#x27;);
-session_start();
+$xml = new SimpleXMLElement(&#x27;&lt;root&gt;&lt;elem&gt;Text&lt;/elem&gt;&lt;/root&gt;&#x27;);
+echo &#x27;elem2 is: &#x27; . ($xml-&gt;elem2 ?? &#x27;backup string&#x27;) . &quot;\n&quot;;
+echo &#x27;elem2 is: &#x27; . (isset($xml-&gt;elem2) ? $xml-&gt;elem2 : &#x27;backup string&#x27;) . &quot;\n&quot;;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
 --EXTENSIONS--
-session
+simplexml
 --EXPECTF--
-bool(true)
-string(5) &quot;start&quot;
-string(3) &quot;end&quot;
-Deprecated: Calling session_set_save_handler() with more than 2 arguments is deprecated in %s on line %d
-write: goodbye cruel world
-
-Fatal error: Uncaught Exception in %s
-Stack trace:
-#0 [internal function]: write(&#x27;%s&#x27;, &#x27;&#x27;)
-#1 {main}
-  thrown in %s on line %d
-
-Warning: PHP Request Shutdown: Cannot call session save handler in a recursive manner in Unknown on line 0
+object(DateTime)#%d (3) {
+  [&quot;date&quot;]=&gt;
+  string(26) &quot;2005-07-14 22:30:41.000000&quot;
+  [&quot;timezone_type&quot;]=&gt;
+  int(3)
+  [&quot;timezone&quot;]=&gt;
+  string(13) &quot;Europe/London&quot;
+}
+object(DateTime)#%d (3) {
+  [&quot;date&quot;]=&gt;
+  string(26) &quot;2005-07-14 22:30:41.123456&quot;
+  [&quot;timezone_type&quot;]=&gt;
+  int(3)
+  [&quot;timezone&quot;]=&gt;
+  string(13) &quot;Europe/London&quot;
+}
+elem2 is: backup string
+elem2 is: backup string
 
             </pre>
         </div>
@@ -622,8 +290,8 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
-export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -634,12 +302,11 @@ export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
-export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
@@ -652,30 +319,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker4&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;session.save_path=&quot; -d &quot;session.name=PHPSESSID&quot; -d &quot;session.save_handler=files&quot; -d &quot;phar.cache_list=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/frontcontroller26.php&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=tracing&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused781.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;date.timezone=America/Vancouver&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.sid_length=32&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1141&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused197.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,64 +61,49 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$pharconfig = 2;
-require_once 'files/phar_oo_test.inc';
-$phar = new Phar($fname);
-$phar->setInfoClass('SplFileObject');
-$f = $phar['a.csv'];
-$f->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE);
-foreach($f as $k => $v)
-{
-    echo "$k=>$v\n";
-}
-?>
-===CSV===
-<?php
-$f->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE | SplFileObject::READ_CSV);
-foreach($f as $k => $v)
-{
-    echo "$k=>" . join('|', $v) . "\n";
-}
-$fusion = $k;
+/*
+ * Function is implemented in ext/standard/array.c
+*/
+echo "test behaviour when input array is in a reference set\n";
+$input_array=array (array(1,2));
+$input_array[]=&$input_array[0];
+var_dump (array_splice ($input_array[0],1,1));
+var_dump ($input_array);
+echo "Test behaviour of input arrays containing references \n";
+/*
+ *  There are three regions to test:, before cut, the cut and after the cut.
+ *  For reach we check a plain value, a reference value with integer key and a
+ *  reference value with a string key.
+ */
+$numbers=array(0,1,2,3,4,5,6,7,8,9,10,11,12);
+$input_array=array(0,1,&$numbers[2],"three"=>&$numbers[3],4,&$numbers[5],"six"=>&$numbers[6],7,&$numbers[8],"nine"=>&$numbers[9]);
+var_dump (array_splice ($input_array,4,3));
+var_dump ($input_array);
+echo "Test behaviour of replacement array containing references \n";
+$three=3;
+$four=4;
+$input_array=array (0,1,2);
+$b=array(&$three,"fourkey"=>&$four);
+array_splice ($input_array,-1,1,$b);
+var_dump ($input_array);
+echo "Test behaviour of replacement which is part of reference set \n";
+$int=3;
+$input_array=array (1,2);
+$b=&$int;
+array_splice ($input_array,-1,1,$b);
+var_dump ($input_array);
+echo "Done\n";
+$fusion = $numbers;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class CycleWithoutDestructor
-{
-    private \stdClass $cycleRef;
-    public function __construct()
-    {
-        $this->cycleRef = new \stdClass();
-        $this->cycleRef->x = $this;
-    }
-}
-class CycleWithDestructor extends CycleWithoutDestructor
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-    public function __destruct()
-    {
-        new CycleWithoutDestructor();
-    }
-}
-echo "---\n";
-$cycleWithoutDestructor = new CycleWithoutDestructor();
-$cycleWithoutDestructorWeak = \WeakReference::create($cycleWithoutDestructor);
-$cycleWithDestructor = new CycleWithDestructor();
-$cycleWithDestructorWeak = \WeakReference::create($cycleWithDestructor);
-gc_collect_cycles();
-echo "---\n";
-unset($cycleWithoutDestructor);
-var_dump($fusionWeak->get() !== null);
-gc_collect_cycles();
-var_dump($cycleWithoutDestructorWeak->get() !== null);
-echo "---\n";
-unset($cycleWithDestructor);
-var_dump($cycleWithDestructorWeak->get() !== null);
-gc_collect_cycles();
-var_dump($cycleWithDestructorWeak->get() !== null);
+$obj = new stdClass;
+$obj2 = new stdClass;
+$obj2->obj = $obj;
+$s = serialize($GLOBALS);
+$fusion = unserialize($s);
+var_dump($obj);
+var_dump($obj2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

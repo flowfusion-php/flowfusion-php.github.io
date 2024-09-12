@@ -1,12 +1,12 @@
 --TEST--
-Test log1p function : 64bit long tests+NodeList dimensions
+Test extract() function - ensure EXTR_REFS works when array is referenced and keys clash with variables in current scope.+Bug #77257: value of variable assigned in a switch() construct gets lost
 --INI--
-phar.cache_list={PWD}/frontcontroller12.php
-max_execution_time=1
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+session.gc_probability=0
+session.use_strict_mode=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1144
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,119 +71,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $longVal ---\n";
-   var_dump(log1p($longVal));
-}
-$fusion = $longVals;
+$a = array('foo' => 'original.foo');
+$ref = &$a;
+$foo = 'test';
+extract($a, EXTR_OVERWRITE|EXTR_REFS);
+$foo = 'changed.foo';
+var_dump($a['foo']);
+$fusion = $ref;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$dom = Dom\XMLDocument::createFromString('<root><a/><b/><c/></root>');
-$children = $dom->documentElement->childNodes;
-$test_values = [-1, 0, 1, 2, 3, 1.0, 1.1, true, null, "0", "1", "", "foo"];
-foreach ($fusion as $value) {
-    echo "--- ", json_encode($value), " ---\n";
-    try {
-        var_dump($children[$value] ? $children[$value]->nodeName : "N/A", isset($children[$value]), empty($children[$value]));
-    } catch (Error $e) {
-        echo $e->getMessage(), "\n";
+function test($fusion) {
+    $a = false;
+    switch($x["y"]) {
+        case "a":
+            $a = true;
+            break;
+        case "b":
+            break;
+        case "c":
+            break;
     }
+    return $a;
 }
+var_dump(test(["y" => "a"]));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-dom
---EXPECTF--
---- testing: 9223372036854775807 ---
-float(43.66827237527655)
---- testing: -9223372036854775808 ---
-float(NAN)
---- testing: 2147483647 ---
-float(21.487562597358306)
---- testing: -2147483648 ---
-float(NAN)
---- testing: 9223372034707292160 ---
-float(43.66827237504372)
---- testing: -9223372034707292160 ---
-float(NAN)
---- testing: 2147483648 ---
-float(21.487562597823967)
---- testing: -2147483649 ---
-float(NAN)
---- testing: 4294967294 ---
-float(22.18070977768542)
---- testing: 4294967295 ---
-float(22.18070977791825)
---- testing: 4294967293 ---
-float(22.180709777452588)
---- testing: 9223372036854775806 ---
-float(43.66827237527655)
---- testing: 9.2233720368548E+18 ---
-float(43.66827237527655)
---- testing: -9223372036854775807 ---
-float(NAN)
---- testing: -9.2233720368548E+18 ---
-float(NAN)
---- -1 ---
-string(3) "N/A"
-bool(false)
+opcache
+--EXPECT--
+string(11) "changed.foo"
 bool(true)
---- 0 ---
-string(1) "a"
-bool(true)
-bool(false)
---- 1 ---
-string(1) "b"
-bool(true)
-bool(false)
---- 2 ---
-string(1) "c"
-bool(true)
-bool(false)
---- 3 ---
-string(3) "N/A"
-bool(false)
-bool(true)
---- 1 ---
-string(1) "b"
-bool(true)
-bool(false)
---- 1.1 ---
-
-Deprecated: Implicit conversion from float 1.1 to int loses precision in %s on line %d
-
-Deprecated: Implicit conversion from float 1.1 to int loses precision in %s on line %d
-
-Deprecated: Implicit conversion from float 1.1 to int loses precision in %s on line %d
-
-Deprecated: Implicit conversion from float 1.1 to int loses precision in %s on line %d
-string(1) "b"
-bool(true)
-bool(false)
---- true ---
-Cannot access offset of type bool on Dom\NodeList
---- null ---
-Cannot access offset of type null on Dom\NodeList
---- "0" ---
-string(1) "a"
-bool(true)
-bool(false)
---- "1" ---
-string(1) "b"
-bool(true)
-bool(false)
---- "" ---
-Cannot access offset of type string on Dom\NodeList
---- "foo" ---
-Cannot access offset of type string on Dom\NodeList

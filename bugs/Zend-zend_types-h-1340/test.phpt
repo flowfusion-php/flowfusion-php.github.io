@@ -1,5 +1,12 @@
 --TEST--
-Bug #22538 (filtered stream doesn't update file pointer)+FR #62369 (Segfault on json_encode(deeply_nested_array)
+new with an arbitrary expression+Lazy objects: getLazyInitializer() returns initializer
+--INI--
+post_max_size=1M
+auto_globals_jit=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0153
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -31,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -54,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -64,70 +71,58 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function my_stream_copy_to_stream($fin, $fout) {
-    while (!feof($fin)) {
-        fwrite($fout, fread($fin, 4096));
-    }
-}
-$size = 65536;
-do {
-    $path1 = sprintf("%s/%s%da", __DIR__, uniqid(), time());
-    $path2 = sprintf("%s/%s%db", __DIR__, uniqid(), time());
-} while ($path1 == $path2);
-$fp = fopen($path1, "w") or die("Cannot open $path1\n");
-$str = "abcdefghijklmnopqrstuvwxyz\n";
-$str_len = strlen($str);
-$cnt = $size;
-while (($cnt -= $str_len) > 0) {
-    fwrite($fp, $str);
-}
-$cnt = $size - ($str_len + $cnt);
-fclose($fp);
-$fin = fopen($path1, "r") or die("Cannot open $path1\n");
-$fout = fopen($path2, "w") or die("Cannot open $path2\n");
-stream_filter_append($fout, "string.rot13");
-my_stream_copy_to_stream($fin, $fout);
-fclose($fout);
-fclose($fin);
-var_dump($cnt);
-var_dump(filesize($path2));
-var_dump(md5_file($path1));
-var_dump(md5_file($path2));
-unlink($path1);
-unlink($path2);
-$script1_dataflow = $path1;
+$class = 'class';
+var_dump(new ('std'.$class));
+var_dump(new ('std'.$class)());
+$obj = new stdClass;
+var_dump($obj instanceof ('std'.$class));
+$fusion = $class;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = array();
-for ($i=0; $script1_dataflow < 550; $i++) {
-    $array = array($array);
+class C {
+    public $fusion;
+    public static function initStatic() {}
+    public function init() {}
 }
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
+function foo() {
 }
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
+$reflector = new ReflectionClass(C::class);
+$initializers = [
+    'foo',
+    foo(...),
+    function () {},
+    [C::class, 'initStatic'],
+    [new C(), 'init'],
+    C::initStatic(...),
+    (new C())->init(...),
+];
+foreach ($initializers as $i => $initializer) {
+    $c = $reflector->newLazyGhost($initializer);
+    if ($reflector->getLazyInitializer($c) !== $initializer) {
+        printf("Initializer %d: failed\n", $i);
+        continue;
+    }
+    $reflector->initializeLazyObject($c);
+    if ($reflector->getLazyInitializer($c) !== null) {
+        printf("Initializer %d: failed\n", $i);
+        continue;
+    }
+    printf("Initializer %d: ok\n", $i);
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-int(65529)
-int(65529)
-string(32) "e10e3d1ae81b084b822e8592d019b57a"
-string(32) "931f0fbf8a72312e3bab9965b1d1081c"
-OK
-ERROR
+object(stdClass)#1 (0) {
+}
+object(stdClass)#1 (0) {
+}
+bool(true)
+Initializer 0: ok
+Initializer 1: ok
+Initializer 2: ok
+Initializer 3: ok
+Initializer 4: ok
+Initializer 5: ok
+Initializer 6: ok

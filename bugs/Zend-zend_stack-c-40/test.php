@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,50 +61,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function output_html($ext) {
-    return strlen($ext);
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a'] = array('cont' => 'a');
+$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
+$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
+$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
+include 'files/phar_test.inc';
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
 }
-class MySessionHandler implements SessionHandlerInterface {
-    function open ($save_path, $session_name): bool {
-        return true;
-    }
-    function close(): bool {
-        return true;
-    }
-    function read ($id): string {
-        return '';
-    }
-    function write ($id, $sess_data): bool {
-        ob_start("output_html");
-        echo "laruence";
-        ob_end_flush();
-        return true;
-    }
-    function destroy ($id): bool {
-        return true;
-    }
-    function gc ($maxlifetime): int {
-        return 1;
-    }
+$phar = new Phar($fname);
+foreach($files as $name => $cont) {
+    var_dump($phar[$name]->getMetadata());
 }
-session_set_save_handler(new MySessionHandler());
-session_start();
-$script1_dataflow = $save_path;
+unset($phar);
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
+$fusion = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start(function() {
-    global $a;
-    for ($i = count($a); $i > 0; --$script1_dataflow) {
-        $a[] = 2;
-    }
-    fwrite(STDOUT, "Success");
-});
-$a = [];
-// trigger OOM in a resize operation
-while (1) {
-    $a[] = 1;
+$dom = Dom\XMLDocument::createEmpty();
+$fusionlement = $dom->createElement('foo');
+$attr = $dom->createAttribute('bar');
+$attr->value = "hello";
+try {
+    $element->appendChild($attr);
+} catch (DOMException $e) {
+    echo $e->getMessage(), "\n";
 }
+var_dump($attr->value);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

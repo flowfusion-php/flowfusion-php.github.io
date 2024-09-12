@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,27 +61,30 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$file_stream = new SplFileObject(__FILE__, 'rb');
-echo $file_stream; // line 4
-echo $file_stream; // line 5
-echo $file_stream; // line 6
-echo $file_stream; // line 7
-echo $file_stream; // line 8
-echo $file_stream; // line 9
-$fusion = $file_stream;
+var_dump(preg_match_all('/\p{Ll}(\p{L}((\p{Ll}\p{Ll})))/', 'aeiou', $dummy));
+var_dump(preg_last_error() === PREG_RECURSION_LIMIT_ERROR);
+var_dump(preg_match_all('/\p{Ll}\p{L}\p{Ll}\p{Ll}/', 'aeiou', $dummy));
+var_dump(preg_last_error() === PREG_NO_ERROR);
+$fusion = $dummy;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function createGenerator() { yield 1; }
-$appendIterator = createGenerator();
-$appendIterator = new AppendIterator();
-$appendIterator->append($appendIterator);
-iterator_to_array($appendIterator);
-try {
-    iterator_to_array($appendIterator);
-} catch (\Exception $fusion) {
-    echo $e->getMessage();
-}
+$closure = function($a) { echo $a; };
+$reflection = new ReflectionClass('closure');
+var_dump($reflection->hasMethod('__invoke')); // true
+$reflection = new ReflectionClass($closure);
+var_dump($reflection->hasMethod('__invoke')); // true
+$reflection = new ReflectionObject($closure);
+var_dump($reflection->hasMethod('__invoke')); // true
+$reflection = new ReflectionClass('closure');
+var_dump($h = $reflection->getMethod('__invoke')); // true
+var_dump($h->class.'::'.$h->getName());
+$reflection = new ReflectionClass($closure);
+var_dump($h = $reflection->getMethod('__invoke')); // true
+var_dump($h->class.'::'.$h->getName());
+$reflection = new ReflectionObject($closure);
+var_dump($h = $reflection->getMethod('__invoke')); // true
+var_dump($fusion->class.'::'.$h->getName());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

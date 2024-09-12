@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,36 +61,90 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "no dst --> dst\n";
-$ts = -1;
-gm_date_check(01,00,00,03,27,2005);
-gm_date_check(02,00,00,03,27,2005);
-gm_date_check(03,00,00,03,27,2005);
-gm_date_check(04,00,00,03,27,2005);
-echo "\ndst --> no dst\n";
-$ts = -1;
-gm_date_check(01,00,00,10,30,2005);
-gm_date_check(02,00,00,10,30,2005);
-gm_date_check(03,00,00,10,30,2005);
-gm_date_check(04,00,00,10,30,2005);
-function gm_date_check($hour, $minute, $second, $month, $day, $year) {
-    global $ts, $tsold;
-    echo "gmmktime($hour,$minute,$second,$month,$day,$year): ";
-    $tsold = $ts;
-    $ts = gmmktime($hour, $minute, $second, $month, $day, $year);
-    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
-    if ($tsold > 0) {
-        echo " | Diff: " . ($ts - $tsold);
-    }
-    echo "\n";
+define('V1', strtoupper(php_sapi_name()));
+#[A1([V1 => V1])]
+class C1
+{
+    public const BAR = 'bar';
 }
+$ref = new \ReflectionClass(C1::class);
+$attr = $ref->getAttributes();
+var_dump(count($attr));
+$args = $attr[0]->getArguments();
+var_dump(count($args), $args[0][V1] === V1);
+echo "\n";
+#[A1(V1, 1 + 2, C1::class)]
+class C2 { }
+$ref = new \ReflectionClass(C2::class);
+$attr = $ref->getAttributes();
+var_dump(count($attr));
+$args = $attr[0]->getArguments();
+var_dump(count($args));
+var_dump($args[0] === V1);
+var_dump($args[1] === 3);
+var_dump($args[2] === C1::class);
+echo "\n";
+#[A1(self::FOO, C1::BAR)]
+class C3
+{
+    private const FOO = 'foo';
+}
+$ref = new \ReflectionClass(C3::class);
+$attr = $ref->getAttributes();
+var_dump(count($attr));
+$args = $attr[0]->getArguments();
+var_dump(count($args));
+var_dump($args[0] === 'foo');
+var_dump($args[1] === C1::BAR);
+echo "\n";
+#[ExampleWithShift(4 >> 1)]
+class C4 {}
+$ref = new \ReflectionClass(C4::class);
+var_dump($ref->getAttributes()[0]->getArguments());
+echo "\n";
+#[Attribute]
+class C5
+{
+    public function __construct() { }
+}
+$ref = new \ReflectionFunction(#[C5(MissingClass::SOME_CONST)] function () { });
+$attr = $ref->getAttributes();
+var_dump(count($attr));
+try {
+    $attr[0]->getArguments();
+} catch (\Error $e) {
+    var_dump($e->getMessage());
+}
+try {
+    $attr[0]->newInstance();
+} catch (\Error $e) {
+    var_dump($e->getMessage());
+}
+$fusion = $attr;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class TestClass {
+    public $pub;
+    public $pub2 = 5;
+    static public $stat = "static property";
+    protected $prot = 4;
+    private $priv = "keepOut";
+}
+#[AllowDynamicProperties]
+class AnotherClass {
+}
+$instance = new TestClass();
+$instanceWithNoProperties = new AnotherClass();
+$propInfo = new ReflectionProperty('TestClass', 'pub2');
+echo "\nProtected property:\n";
+$propInfo = new ReflectionProperty('TestClass', 'prot');
+$propInfo->setValue($instance, "NewValue");
+var_dump($propInfo->getValue($instance));
+echo "\n\nInstance without property:\n";
+$propInfo = new ReflectionProperty('TestClass', 'pub2');
+var_dump($propInfo->setValue($instanceWithNoProperties, "NewValue"));
+var_dump($fusion->pub2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

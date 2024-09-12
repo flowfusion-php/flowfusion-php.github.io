@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments
+                // Prepare arguments alternating between v1 and v2
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try{
+    try {
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,86 +61,38 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BadStr {
-    public function __toString() {
-        throw new Exception("Exception");
-    }
-}
-$str = "a";
-$num = 42;
-$badStr = new BadStr;
-try { $x = $str . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $str .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-try { $x = $num . $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $badStr . $num; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = $num .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($num);
-try { $x = $badStr .= $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = $badStr .= $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($badStr);
-try { $x = "x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$badStr$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "x$str$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$str}x$badStr"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = "{$badStr}x$str"; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = (string) $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = include $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { echo $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-${""} = 42;
-try { unset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(${""});
-unset(${""});
-try { $x = ${$badStr}; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-try { $x = isset(${$badStr}); }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-$obj = new stdClass;
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($obj);
-try { $str[0] = $badStr; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump($str);
-$obj = new DateInterval('P1D');
-try { $x = $obj->{$badStr} = $str; }
-catch (Exception $e) { echo $e->getMessage(), "\n"; }
-var_dump(!isset($obj->{""}));
-try { strlen($badStr); } catch (Exception $e) { echo "Exception\n"; }
-try { substr($badStr, 0); } catch (Exception $e) { echo "Exception\n"; }
-try { new ArrayObject([], 0, $badStr); } catch (Exception $e) { echo "Exception\n"; }
-$fusion = $badStr;
+$gen = (function() {
+    $x = new stdClass;
+    yield from (function () {
+        $x = new stdClass;
+        print "Before suspend\n";
+        Fiber::suspend();
+        print "Not executed\n";
+        yield;
+    })();
+    print "Not executed\n";
+    yield;
+})();
+$fiber = new Fiber(function() use ($gen, &$fiber) {
+    $gen->current();
+    print "Not executed";
+});
+$fiber->start();
+?>
+$fusion = $gen;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$tz = new DateTimeZone("Asia/Tokyo");
+$current = "2012-12-27 16:24:08";
+echo "\ngetTimezone():\n";
+$v = date_create_immutable($current);
+$x = $v->getTimezone();
+var_dump($x->getName());
+echo "\ngetTimestamp():\n";
+$v = date_create_immutable($current);
+$x = $v->getTimestamp();
 var_dump($fusion);
-var_dump(stream_get_contents(STDIN));
-echo "ok\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
