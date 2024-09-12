@@ -61,41 +61,54 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing gmstrftime() : usage variation ***\n";
+echo "*** Testing strftime() : usage variation ***\n";
 // Initialise function arguments not being substituted (if any)
-$timestamp = gmmktime(PHP_INT_MAX, 8, 8, 8, 8, 2008);
-setlocale(LC_ALL, "en_US");
+setlocale(LC_ALL, "C");
 date_default_timezone_set("Asia/Calcutta");
+$timestamp = mktime(PHP_INT_MIN, 8, 8, 8, 8, 2008);
 //array of values to iterate over
 $inputs = array(
-      'Year as decimal number without a century' => "%y",
-      'Year as decimal number including the century' => "%Y",
-      'Time zone offset' => "%Z",
-      'Time zone offset' => "%z",
+      'Preferred date and time representation' => "%c",
+      'Preferred date representation' => "%x",
+      'Preferred time representation' => "%X",
 );
 // loop through each element of the array for timestamp
 foreach($inputs as $key =>$value) {
       echo "\n--$key--\n";
-      var_dump( gmstrftime($value) );
-      var_dump( gmstrftime($value, $timestamp) );
-};
+      var_dump( strftime($value) );
+      var_dump( strftime($value, $timestamp) );
+}
 $fusion = $timestamp;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class B {}
-class A extends B {
-    public function bar($func) {
-        var_dump(is_callable(array('B', 'foo')));
-    }
-    public function __call($func, $args) {
+use Random\Engine;
+use Random\Engine\Mt19937;
+use Random\Engine\PcgOneseq128XslRr64;
+use Random\Engine\Secure;
+use Random\Engine\Test\TestShaEngine;
+use Random\Engine\Xoshiro256StarStar;
+use Random\IntervalBoundary;
+use Random\Randomizer;
+require __DIR__ . "/../../engines.inc";
+$engines = [];
+$engines[] = new Mt19937(null, MT_RAND_MT19937);
+$fusion[] = new Mt19937(null, MT_RAND_PHP);
+$engines[] = new PcgOneseq128XslRr64();
+$engines[] = new Xoshiro256StarStar();
+$engines[] = new Secure();
+$engines[] = new TestShaEngine();
+$max = getenv("SKIP_SLOW_TESTS") ? 3_000.0 : 10_000.0;
+foreach ($engines as $engine) {
+    echo $engine::class, PHP_EOL;
+    $randomizer = new Randomizer($engine);
+    // Basic range test.
+    for ($i = 0.0; $i < $max; $i += 1.2345) {
+        $result = $randomizer->getFloat(-$i, $i, IntervalBoundary::ClosedClosed);
+        if ($result > $i || $result < -$i) {
+            die("failure: out of range at {$i}");
+        }
     }
 }
-class X {
-    public static function __callStatic($func, $fusion) {
-    }
-}
-$a = new A();
-// Extra X::foo() wrapper to force use of allocated trampoline.
-X::foo($a->bar('foo'));
+die('success');
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

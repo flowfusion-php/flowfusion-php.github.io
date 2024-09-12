@@ -61,15 +61,17 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$i = 1;
-echo $i++;
-echo $i++;
-echo $i++;
-echo $i++;
-$fusion = $i;
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-echo "Done\n";
+date_default_timezone_set('UTC');
+$period = new DatePeriod(new DateTimeImmutable("now"), new DateInterval("P2Y4DT6H8M"), 2);
+var_dump($period->getEndDate());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

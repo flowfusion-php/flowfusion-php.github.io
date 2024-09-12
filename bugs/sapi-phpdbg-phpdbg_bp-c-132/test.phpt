@@ -1,5 +1,9 @@
 --TEST--
-Preserve breakpoints on restart+Bug #25145 (SEGV on receipt of form input with name like "123[]")
+Cleaning must preserve breakpoints+Bug #71635 (segfault in DatePeriod::getEndDate() when no end date has been set)
+--INI--
+opcache.enable_cli=0
+opcache.enable_cli=0
+opcache.validate_timestamps=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -64,56 +68,64 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$i = 1;
-echo $i++;
-echo $i++;
-echo $i++;
-echo $i++;
-$fusion = $i;
+echo 1;
+echo 2;
+echo 3;
+foo();
+function foo() {
+	echo 4;
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump($fusion);
-echo "Done\n";
+date_default_timezone_set('UTC');
+$period = new DatePeriod(new DateTimeImmutable("now"), new DateInterval("P2Y4DT6H8M"), 2);
+var_dump($period->getEndDate());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---GET--
-123[]=SEGV
 --PHPDBG--
-b breakpoints_002.php:4
+b 4
+b foo
 r
-b 3
-r
+c
+clean
 y
+c
+r
 c
 q
 --EXPECTF--
 [Successful compilation of %s]
 prompt> [Breakpoint #0 added at %s:4]
+prompt> [Breakpoint #1 added at foo]
 prompt> 1
 [Breakpoint #0 at %s:4, hits: 1]
->00004: echo $i++;
- 00005: echo $i++;
- 00006: echo $i++;
-prompt> [Breakpoint #1 added at %s:3]
-prompt> Do you really want to restart execution? (type y or n): [Breakpoint #1 at %s:3, hits: 1]
->00003: echo $i++;
- 00004: echo $i++;
- 00005: echo $i++;
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> Do you really want to clean your current environment? (type y or n): Cleaning Execution Environment
+Classes    %d
+Functions  %d
+Constants  %d
+Includes   0
+prompt> [Not running]
 prompt> 1
 [Breakpoint #0 at %s:4, hits: 1]
->00004: echo $i++;
- 00005: echo $i++;
- 00006: echo $i++;
-prompt> 234
+>00004: echo 2;
+ 00005: echo 3;
+ 00006: foo();
+prompt> 23
+[Breakpoint #1 in foo() at %s:9, hits: 1]
+>00009: 	echo 4;
+ 00010: }
+ 00011: 
+prompt> 4
 [Script ended normally]
 prompt> 
-array(1) {
-  [123]=>
-  array(1) {
-    [0]=>
-    string(4) "SEGV"
-  }
-}
-Done
+NULL

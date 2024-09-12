@@ -1,17 +1,13 @@
 --TEST--
-Test fopen() function : variation: use include path and stream context (absolute directories in path)+Bug #80745 (JIT produces Assert failure and UNKNOWN:0 var_dumps in code involving bitshifts)
+RegexIterator with $replacement being a reference+Phar object: ArrayAccess and isset
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.jit=function
-opcache.protect_memory=1
-max_input_vars=5
-sendmail_path={MAIL:{PWD}/gh8086.eml}
+phar.require_hash=0
+post_max_size=1024
+opcache.max_accelerated_files=4000
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1051
+opcache.jit=1231
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -76,143 +72,62 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-//create the include directory structure
-$thisTestDir =  basename(__FILE__, ".php") . ".dir";
-mkdir($thisTestDir);
-chdir($thisTestDir);
-$workingDir = "workdir";
-$filename = basename(__FILE__, ".php") . ".tmp";
-$scriptDir = __DIR__;
-$baseDir = getcwd();
-$secondFile = $baseDir."/dir2/".$filename;
-$firstFile = "../dir1/".$filename;
-$scriptFile = $scriptDir.'/'.$filename;
-$newdirs = array("dir1", "dir2", "dir3");
-$pathSep = ":";
-$newIncludePath = "";
-if(substr(PHP_OS, 0, 3) == 'WIN' ) {
-   $pathSep = ";";
-}
-foreach($newdirs as $newdir) {
-   mkdir($newdir);
-   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
-}
-mkdir($workingDir);
-chdir($workingDir);
-//define the files to go into these directories, create one in dir2
-echo "\n--- testing include path ---\n";
-set_include_path($newIncludePath);
-$modes = array("r", "r+", "rt");
-foreach($modes as $mode) {
-    test_fopen($mode);
-}
-// remove the directory structure
-chdir($baseDir);
-rmdir($workingDir);
-foreach($newdirs as $newdir) {
-   rmdir($newdir);
-}
-chdir("..");
-rmdir($thisTestDir);
-function test_fopen($mode) {
-   global $scriptFile, $secondFile, $firstFile, $filename;
-   // create a file in the middle directory
-   $h = fopen($secondFile, "w");
-   fwrite($h, "in dir2");
-   fclose($h);
-   echo "\n** testing with mode=$mode **\n";
-   // should read dir2 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   //create a file in dir1
-   $h = fopen($firstFile, "w");
-   fwrite($h, "in dir1");
-   fclose($h);
-   //should now read dir1 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   // create a file in working directory
-   $h = fopen($filename, "w");
-   fwrite($h, "in working dir");
-   fclose($h);
-   //should still read dir1 file
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   unlink($firstFile);
-   unlink($secondFile);
-   //should read the file in working dir
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   // create a file in the script directory
-   $h = fopen($scriptFile, "w");
-   fwrite($h, "in script dir");
-   fclose($h);
-   //should read the file in script dir
-   $h = fopen($filename, $mode, true);
-   fpassthru($h);
-   fclose($h);
-   echo "\n";
-   //cleanup
-   unlink($filename);
-   unlink($scriptFile);
-}
-$fusion = $scriptFile;
+$a = new ArrayIterator(array('test1', 'test2', 'test3'));
+$i = new RegexIterator($a, '/^(test)(\d+)/', RegexIterator::REPLACE);
+$r = '$2:$1';
+$i->replacement =& $r;
+var_dump(iterator_to_array($i));
+$fusion = $i;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-final class Message
-{
-    public $qr = false;
-    public $opcode = 0;
-    public $aa = false;
-}
-echo "Starting...\n";
-function headerToBinary(Message $message)
-{
-        $flags = 0;
-        $flags = ($flags << 1) | ($message->qr ? 1 : 0);
-        $flags = ($flags << 4) | $fusion->opcode;
-        var_dump($flags);
-        $flags = ($flags << 1) | ($message->aa ? 1 : 0);
-}
-headerToBinary(new Message());
-echo "PROBLEM NOT REPRODUCED !\n";
+$pharconfig = 0;
+require_once 'files/phar_oo_test.inc';
+$phar = new Phar($fusion);
+var_dump(isset($phar['a.php']));
+var_dump(isset($phar['b.php']));
+var_dump(isset($phar['b/c.php']));
+var_dump(isset($phar['b/d.php']));
+var_dump(isset($phar['e.php']));
+?>
+===DIR===
+<?php
+var_dump(isset($phar['b']));
+?>
+===NA===
+<?php
+var_dump(isset($phar['a']));
+var_dump(isset($phar['b/c']));
+var_dump(isset($phar[12]));
+var_dump(isset($phar['b']));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-opcache
+phar
+--CLEAN--
+<?php
+unlink(__DIR__ . '/files/phar_oo_010.phar.php');
+__halt_compiler();
+?>
 --EXPECT--
---- testing include path ---
-
-** testing with mode=r **
-in dir2
-in dir1
-in dir1
-in working dir
-in script dir
-
-** testing with mode=r+ **
-in dir2
-in dir1
-in dir1
-in working dir
-in script dir
-
-** testing with mode=rt **
-in dir2
-in dir1
-in dir1
-in working dir
-in script dir
-Starting...
-int(0)
-PROBLEM NOT REPRODUCED !
+array(3) {
+  [0]=>
+  string(6) "1:test"
+  [1]=>
+  string(6) "2:test"
+  [2]=>
+  string(6) "3:test"
+}
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+===DIR===
+bool(true)
+===NA===
+bool(false)
+bool(false)
+bool(false)
+bool(true)

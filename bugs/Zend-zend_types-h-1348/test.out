@@ -1,54 +1,223 @@
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused395.php on line 66
-array(7) {
+*** Testing array_column() : basic functionality ***
+-- first_name column from recordset --
+array(3) {
+  [0]=>
+  string(4) "John"
+  [1]=>
+  string(5) "Sally"
+  [2]=>
+  string(4) "Jane"
+}
+-- id column from recordset --
+array(3) {
   [0]=>
   int(1)
   [1]=>
   int(2)
   [2]=>
-  string(3) "foo"
-  [3]=>
-  string(4) "haha"
-  [4]=>
-  array(3) {
-    [0]=>
-    int(4)
-    [1]=>
-    int(5)
-    [2]=>
-    int(6)
-  }
-  [5]=>
-  float(1.3)
-  [6]=>
-  NULL
+  int(3)
 }
+-- last_name column from recordset, keyed by value from id column --
+array(3) {
+  [1]=>
+  string(3) "Doe"
+  [2]=>
+  string(5) "Smith"
+  [3]=>
+  string(5) "Jones"
+}
+-- last_name column from recordset, keyed by value from first_name column --
+array(3) {
+  ["John"]=>
+  string(3) "Doe"
+  ["Sally"]=>
+  string(5) "Smith"
+  ["Jane"]=>
+  string(5) "Jones"
+}
+
+*** Testing multiple data types ***
+array(8) {
+  [0]=>
+  object(stdClass)#1 (0) {
+  }
+  [1]=>
+  float(34.2345)
+  [2]=>
+  bool(true)
+  [3]=>
+  bool(false)
+  [4]=>
+  NULL
+  [5]=>
+  int(1234)
+  [6]=>
+  string(3) "Foo"
+  [7]=>
+  resource(5) of type (stream)
+}
+array(8) {
+  [1]=>
+  object(stdClass)#1 (0) {
+  }
+  [2]=>
+  float(34.2345)
+  [3]=>
+  bool(true)
+  [4]=>
+  bool(false)
+  [5]=>
+  NULL
+  [6]=>
+  int(1234)
+  [7]=>
+  string(3) "Foo"
+  [8]=>
+  resource(5) of type (stream)
+}
+
+*** Testing numeric column keys ***
+array(3) {
+  [0]=>
+  string(3) "111"
+  [1]=>
+  string(3) "222"
+  [2]=>
+  string(3) "333"
+}
+array(3) {
+  ["aaa"]=>
+  string(3) "111"
+  ["bbb"]=>
+  string(3) "222"
+  ["ccc"]=>
+  string(3) "333"
+}
+
+Deprecated: Implicit conversion from float 0.123 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused987.php on line 137
+array(3) {
+  ["aaa"]=>
+  string(3) "111"
+  ["bbb"]=>
+  string(3) "222"
+  ["ccc"]=>
+  string(3) "333"
+}
+array(3) {
+  [0]=>
+  string(3) "111"
+  [1]=>
+  string(3) "222"
+  ["ddd"]=>
+  string(3) "333"
+}
+
+*** Testing failure to find specified column ***
+array(0) {
+}
+array(0) {
+}
+array(3) {
+  [0]=>
+  string(3) "aaa"
+  [1]=>
+  string(3) "bbb"
+  [2]=>
+  string(3) "ccc"
+}
+
+Deprecated: Implicit conversion from float 3.14 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused987.php on line 143
+array(0) {
+}
+
+*** Testing single dimensional array ***
+array(0) {
+}
+
+*** Testing columns not present in all rows ***
+array(1) {
+  [0]=>
+  string(3) "qux"
+}
+array(1) {
+  ["baz"]=>
+  string(3) "qux"
+}
+array(3) {
+  [0]=>
+  string(3) "foo"
+  ["aaa"]=>
+  string(3) "baz"
+  [1]=>
+  string(3) "eee"
+}
+array(3) {
+  ["bbb"]=>
+  string(3) "foo"
+  [0]=>
+  string(3) "baz"
+  ["ggg"]=>
+  string(3) "eee"
+}
+array(2) {
+  [0]=>
+  string(3) "bar"
+  [1]=>
+  string(3) "fff"
+}
+array(2) {
+  ["foo"]=>
+  string(3) "bar"
+  ["eee"]=>
+  string(3) "fff"
+}
+
+*** Testing use of object converted to string ***
+array(3) {
+  [0]=>
+  string(3) "Doe"
+  [1]=>
+  string(5) "Smith"
+  [2]=>
+  string(5) "Jones"
+}
+array(3) {
+  ["John"]=>
+  string(3) "Doe"
+  ["Sally"]=>
+  string(5) "Smith"
+  ["Jane"]=>
+  string(5) "Jones"
+}
+Done
 # Ghost:
 string(11) "initializer"
-string(14) "C::__construct"
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused987.php on line 202
 AddressSanitizer:DEADLYSIGNAL
 =================================================================
-==2806511==ERROR: AddressSanitizer: SEGV on unknown address 0x55ab7cdf6c00 (pc 0x55ab7b8874d5 bp 0x7fffb22c5100 sp 0x7fffb22c50d0 T0)
-==2806511==The signal is caused by a WRITE memory access.
-    #0 0x55ab7b8874d5 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9
-    #1 0x55ab7b886abc in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44:8
-    #2 0x55ab7b8868a4 in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84:2
-    #3 0x55ab7b836485 in zho_it_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_property_hooks.c:211:2
-    #4 0x55ab7b632c3f in iter_wrapper_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_iterators.c:66:2
-    #5 0x55ab7b78fe53 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
-    #6 0x55ab7b3f9bea in zend_object_release /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.h:77:3
-    #7 0x55ab7b43bfac in zend_fe_reset_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.c:5182:4
-    #8 0x55ab7b0c8eba in ZEND_FE_RESET_R_SPEC_CV_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:41164:20
-    #9 0x55ab7ada8f47 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58585:7
-    #10 0x55ab7adaa382 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64237:2
-    #11 0x55ab7b8c74f8 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1926:3
-    #12 0x55ab7a477e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
-    #13 0x55ab7a4786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
-    #14 0x55ab7b8d5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
-    #15 0x55ab7b8d14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
-    #16 0x7fe71ba60d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
-    #17 0x7fe71ba60e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
-    #18 0x55ab78603244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
+==1357640==ERROR: AddressSanitizer: SEGV on unknown address 0x55cba0df6c00 (pc 0x55cb9f887505 bp 0x7fff65acd980 sp 0x7fff65acd950 T0)
+==1357640==The signal is caused by a WRITE memory access.
+    #0 0x55cb9f887505 in zend_gc_delref /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9
+    #1 0x55cb9f886aec in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:44:8
+    #2 0x55cb9f8868d4 in zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:84:2
+    #3 0x55cb9f8364b5 in zho_it_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_property_hooks.c:211:2
+    #4 0x55cb9f632c6f in iter_wrapper_free /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_iterators.c:66:2
+    #5 0x55cb9f78fe83 in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #6 0x55cb9f3f9c1a in zend_object_release /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.h:77:3
+    #7 0x55cb9f43bfdc in zend_fe_reset_iterator /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_execute.c:5182:4
+    #8 0x55cb9f0c8eea in ZEND_FE_RESET_R_SPEC_CV_HANDLER /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:41164:20
+    #9 0x55cb9eda8f77 in execute_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:58585:7
+    #10 0x55cb9edaa3b2 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64237:2
+    #11 0x55cb9f8c7528 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #12 0x55cb9e477e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
+    #13 0x55cb9e4786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
+    #14 0x55cb9f8d5b03 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #15 0x55cb9f8d1522 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #16 0x7fe070f71d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #17 0x7fe070f71e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #18 0x55cb9c603244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: 5882edce965afea0dcb731b65933407f5eabcd49)
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_types.h:1348:9 in zend_gc_delref
-==2806511==ABORTING
+==1357640==ABORTING

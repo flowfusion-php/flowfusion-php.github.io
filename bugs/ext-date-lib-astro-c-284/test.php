@@ -61,58 +61,22 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// 0/0 NAN value
-$f1 = fdiv(0, 0);
-var_dump($f1);
-// INF/INF NAN value
-$f2 = fdiv(10.0**400, 9.0**400);
-var_dump($f2);
-// -INF + +INF NAN value
-$f3 = (-10.0**400) + (9.0**400);
-var_dump($f3);
-$fs = [$f1, $f2, $f3, 5.5];
-foreach ($fs as $s) {
-    foreach ($fs as $e) {
-        echo "range($s, $e);\n";
-        try {
-            var_dump( range($s, $e) );
-        } catch (\ValueError $e) {
-            echo $e->getMessage(), PHP_EOL;
-        }
+function foo()
+{
+    $mode = 0;
+    $working = 0;
+    while ($mode == 0) {
+        $working = $mode = 1;
     }
 }
-$fusion = $f2;
+echo "ok\n";
+$fusion = $working;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$xml = <<<EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE test [<!ENTITY xxe SYSTEM "XXE_URI">]>
-<foo>&xxe;</foo>
-EOT;
-$dir = str_replace('\\', '/', __DIR__);
-$xml = str_replace('XXE_URI', $fusion . '/libxml_disable_entity_loader_payload.txt', $xml);
-function parseXML1($xml) {
-  $doc = new DOMDocument();
-  $doc->loadXML($xml, 0);
-  return $doc->saveXML();
+$b = NAN;
+for ($i = 0; $i < 3; $i++) {
+    if ($fusion) { echo "nan is true\n"; }
+    else { echo "nan is false\n"; }
 }
-function parseXML2($xml) {
-  return simplexml_load_string($xml);
-}
-function parseXML3($xml) {
-  $p = xml_parser_create();
-  xml_parse_into_struct($p, $xml, $vals, $index);
-  xml_parser_free($p);
-  return var_export($vals, true);
-}
-function parseXML4($xml) {
-  // This is the only time we enable external entity loading.
-  return simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOENT);
-}
-var_dump(strpos(parseXML1($xml), 'SECRET_DATA') === false);
-var_dump(strpos(parseXML2($xml), 'SECRET_DATA') === false);
-var_dump(strpos(parseXML3($xml), 'SECRET_DATA') === false);
-var_dump(strpos(parseXML4($xml), 'SECRET_DATA') === false);
-echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

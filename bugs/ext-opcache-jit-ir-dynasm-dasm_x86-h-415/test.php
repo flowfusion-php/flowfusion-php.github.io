@@ -61,40 +61,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once 'files/phar_oo_test.inc';
-class MyFile extends SplFileObject
-{
-    function __construct($what)
-    {
-        echo __METHOD__ . "($what)\n";
-        parent::__construct($what);
-    }
-}
-$phar = new Phar($fname);
-try
-{
-    $phar->setFileClass('SplFileInfo');
-}
-catch (TypeError $e)
-{
-    echo $e->getMessage() . "\n";
-}
-$phar->setInfoClass('MyFile');
-echo $phar['a.php']->getFilename() . "\n";
-echo $phar['b/c.php']->getFilename() . "\n";
-echo $phar['b.php']->getFilename() . "\n";
-$fusion = $e;
+$arr = new ArrayIterator(array());
+$regex = new RegexIterator($arr, '/^test/');
+var_dump(
+    $regex->getMode(),
+    $regex->getFlags(),
+    $regex->getPregFlags()
+);
+$fusion = $arr;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface X {}
-interface Y extends X {}
-class A {
-    public Y $prop {
-        set(X $fusion) {}
+trait T {
+    public $fusion {
+        get { echo __METHOD__, "\n"; }
+        set { echo __METHOD__, "\n"; }
     }
 }
-class B extends A {
-    public Y $prop {
-        set(Y $prop) {}
+class C {
+    use T;
+    public $prop {
+        get { echo __METHOD__, "\n"; }
+        set { echo __METHOD__, "\n"; }
     }
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];

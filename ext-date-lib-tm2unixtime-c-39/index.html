@@ -45,6 +45,18 @@
     <div class="container">
         <h1>PHP Crash Report</h1>
 
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>201c691fab036b40f8b2ddcfd253fd21089ed799
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --silent --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer
+</pre>
+        </div>
+
         <div class="crash-site">
             <div class="section-title">Crash Site:</div>
             <pre>/php-src/ext/date/lib/tm2unixtime.c:39</pre>
@@ -57,388 +69,97 @@
 
         <div class="bughit">
             <div class="section-title">Bug Hit Count:</div>
-            <pre>this bug has been detected for 51 times</pre>
+            <pre>this bug has been detected for 8 times</pre>
         </div>
 
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} === array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(0) &quot;&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(1)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== float(2.5)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(0)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(6) &quot;string&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(3) &quot;123&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(3) &quot;2.5&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== NULL
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== bool(true)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== bool(false)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(stdClass)#1 (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(stdClass)#2 (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(test)#3 (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== array(0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(-9223372036854775808)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(20) &quot;-9223372036854775808&quot;
-string(0) &quot;&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(0) &quot;&quot; === string(0) &quot;&quot;
-string(0) &quot;&quot; !== int(1)
-string(0) &quot;&quot; !== float(2.5)
-string(0) &quot;&quot; !== int(0)
-string(0) &quot;&quot; !== string(6) &quot;string&quot;
-string(0) &quot;&quot; !== string(3) &quot;123&quot;
-string(0) &quot;&quot; !== string(3) &quot;2.5&quot;
-string(0) &quot;&quot; !== NULL
-string(0) &quot;&quot; !== bool(true)
-string(0) &quot;&quot; !== bool(false)
-string(0) &quot;&quot; !== object(stdClass)#1 (0) {}
-string(0) &quot;&quot; !== object(stdClass)#2 (0) {}
-string(0) &quot;&quot; !== object(test)#3 (0) {}
-string(0) &quot;&quot; !== array(0) {}
-string(0) &quot;&quot; !== int(-9223372036854775808)
-string(0) &quot;&quot; !== string(20) &quot;-9223372036854775808&quot;
-int(1) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(1) !== string(0) &quot;&quot;
-int(1) === int(1)
-int(1) !== float(2.5)
-int(1) !== int(0)
-int(1) !== string(6) &quot;string&quot;
-int(1) !== string(3) &quot;123&quot;
-int(1) !== string(3) &quot;2.5&quot;
-int(1) !== NULL
-int(1) !== bool(true)
-int(1) !== bool(false)
-int(1) !== object(stdClass)#1 (0) {}
-int(1) !== object(stdClass)#2 (0) {}
-int(1) !== object(test)#3 (0) {}
-int(1) !== array(0) {}
-int(1) !== int(-9223372036854775808)
-int(1) !== string(20) &quot;-9223372036854775808&quot;
-float(2.5) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-float(2.5) !== string(0) &quot;&quot;
-float(2.5) !== int(1)
-float(2.5) === float(2.5)
-float(2.5) !== int(0)
-float(2.5) !== string(6) &quot;string&quot;
-float(2.5) !== string(3) &quot;123&quot;
-float(2.5) !== string(3) &quot;2.5&quot;
-float(2.5) !== NULL
-float(2.5) !== bool(true)
-float(2.5) !== bool(false)
-float(2.5) !== object(stdClass)#1 (0) {}
-float(2.5) !== object(stdClass)#2 (0) {}
-float(2.5) !== object(test)#3 (0) {}
-float(2.5) !== array(0) {}
-float(2.5) !== int(-9223372036854775808)
-float(2.5) !== string(20) &quot;-9223372036854775808&quot;
-int(0) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(0) !== string(0) &quot;&quot;
-int(0) !== int(1)
-int(0) !== float(2.5)
-int(0) === int(0)
-int(0) !== string(6) &quot;string&quot;
-int(0) !== string(3) &quot;123&quot;
-int(0) !== string(3) &quot;2.5&quot;
-int(0) !== NULL
-int(0) !== bool(true)
-int(0) !== bool(false)
-int(0) !== object(stdClass)#1 (0) {}
-int(0) !== object(stdClass)#2 (0) {}
-int(0) !== object(test)#3 (0) {}
-int(0) !== array(0) {}
-int(0) !== int(-9223372036854775808)
-int(0) !== string(20) &quot;-9223372036854775808&quot;
-string(6) &quot;string&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(6) &quot;string&quot; !== string(0) &quot;&quot;
-string(6) &quot;string&quot; !== int(1)
-string(6) &quot;string&quot; !== float(2.5)
-string(6) &quot;string&quot; !== int(0)
-string(6) &quot;string&quot; === string(6) &quot;string&quot;
-string(6) &quot;string&quot; !== string(3) &quot;123&quot;
-string(6) &quot;string&quot; !== string(3) &quot;2.5&quot;
-string(6) &quot;string&quot; !== NULL
-string(6) &quot;string&quot; !== bool(true)
-string(6) &quot;string&quot; !== bool(false)
-string(6) &quot;string&quot; !== object(stdClass)#1 (0) {}
-string(6) &quot;string&quot; !== object(stdClass)#2 (0) {}
-string(6) &quot;string&quot; !== object(test)#3 (0) {}
-string(6) &quot;string&quot; !== array(0) {}
-string(6) &quot;string&quot; !== int(-9223372036854775808)
-string(6) &quot;string&quot; !== string(20) &quot;-9223372036854775808&quot;
-string(3) &quot;123&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(3) &quot;123&quot; !== string(0) &quot;&quot;
-string(3) &quot;123&quot; !== int(1)
-string(3) &quot;123&quot; !== float(2.5)
-string(3) &quot;123&quot; !== int(0)
-string(3) &quot;123&quot; !== string(6) &quot;string&quot;
-string(3) &quot;123&quot; === string(3) &quot;123&quot;
-string(3) &quot;123&quot; !== string(3) &quot;2.5&quot;
-string(3) &quot;123&quot; !== NULL
-string(3) &quot;123&quot; !== bool(true)
-string(3) &quot;123&quot; !== bool(false)
-string(3) &quot;123&quot; !== object(stdClass)#1 (0) {}
-string(3) &quot;123&quot; !== object(stdClass)#2 (0) {}
-string(3) &quot;123&quot; !== object(test)#3 (0) {}
-string(3) &quot;123&quot; !== array(0) {}
-string(3) &quot;123&quot; !== int(-9223372036854775808)
-string(3) &quot;123&quot; !== string(20) &quot;-9223372036854775808&quot;
-string(3) &quot;2.5&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(3) &quot;2.5&quot; !== string(0) &quot;&quot;
-string(3) &quot;2.5&quot; !== int(1)
-string(3) &quot;2.5&quot; !== float(2.5)
-string(3) &quot;2.5&quot; !== int(0)
-string(3) &quot;2.5&quot; !== string(6) &quot;string&quot;
-string(3) &quot;2.5&quot; !== string(3) &quot;123&quot;
-string(3) &quot;2.5&quot; === string(3) &quot;2.5&quot;
-string(3) &quot;2.5&quot; !== NULL
-string(3) &quot;2.5&quot; !== bool(true)
-string(3) &quot;2.5&quot; !== bool(false)
-string(3) &quot;2.5&quot; !== object(stdClass)#1 (0) {}
-string(3) &quot;2.5&quot; !== object(stdClass)#2 (0) {}
-string(3) &quot;2.5&quot; !== object(test)#3 (0) {}
-string(3) &quot;2.5&quot; !== array(0) {}
-string(3) &quot;2.5&quot; !== int(-9223372036854775808)
-string(3) &quot;2.5&quot; !== string(20) &quot;-9223372036854775808&quot;
-NULL !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-NULL !== string(0) &quot;&quot;
-NULL !== int(1)
-NULL !== float(2.5)
-NULL !== int(0)
-NULL !== string(6) &quot;string&quot;
-NULL !== string(3) &quot;123&quot;
-NULL !== string(3) &quot;2.5&quot;
-NULL === NULL
-NULL !== bool(true)
-NULL !== bool(false)
-NULL !== object(stdClass)#1 (0) {}
-NULL !== object(stdClass)#2 (0) {}
-NULL !== object(test)#3 (0) {}
-NULL !== array(0) {}
-NULL !== int(-9223372036854775808)
-NULL !== string(20) &quot;-9223372036854775808&quot;
-bool(true) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-bool(true) !== string(0) &quot;&quot;
-bool(true) !== int(1)
-bool(true) !== float(2.5)
-bool(true) !== int(0)
-bool(true) !== string(6) &quot;string&quot;
-bool(true) !== string(3) &quot;123&quot;
-bool(true) !== string(3) &quot;2.5&quot;
-bool(true) !== NULL
-bool(true) === bool(true)
-bool(true) !== bool(false)
-bool(true) !== object(stdClass)#1 (0) {}
-bool(true) !== object(stdClass)#2 (0) {}
-bool(true) !== object(test)#3 (0) {}
-bool(true) !== array(0) {}
-bool(true) !== int(-9223372036854775808)
-bool(true) !== string(20) &quot;-9223372036854775808&quot;
-bool(false) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-bool(false) !== string(0) &quot;&quot;
-bool(false) !== int(1)
-bool(false) !== float(2.5)
-bool(false) !== int(0)
-bool(false) !== string(6) &quot;string&quot;
-bool(false) !== string(3) &quot;123&quot;
-bool(false) !== string(3) &quot;2.5&quot;
-bool(false) !== NULL
-bool(false) !== bool(true)
-bool(false) === bool(false)
-bool(false) !== object(stdClass)#1 (0) {}
-bool(false) !== object(stdClass)#2 (0) {}
-bool(false) !== object(test)#3 (0) {}
-bool(false) !== array(0) {}
-bool(false) !== int(-9223372036854775808)
-bool(false) !== string(20) &quot;-9223372036854775808&quot;
-object(stdClass)#1 (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(stdClass)#1 (0) {} !== string(0) &quot;&quot;
-object(stdClass)#1 (0) {} !== int(1)
-object(stdClass)#1 (0) {} !== float(2.5)
-object(stdClass)#1 (0) {} !== int(0)
-object(stdClass)#1 (0) {} !== string(6) &quot;string&quot;
-object(stdClass)#1 (0) {} !== string(3) &quot;123&quot;
-object(stdClass)#1 (0) {} !== string(3) &quot;2.5&quot;
-object(stdClass)#1 (0) {} !== NULL
-object(stdClass)#1 (0) {} !== bool(true)
-object(stdClass)#1 (0) {} !== bool(false)
-object(stdClass)#1 (0) {} === object(stdClass)#1 (0) {}
-object(stdClass)#1 (0) {} !== object(stdClass)#2 (0) {}
-object(stdClass)#1 (0) {} !== object(test)#3 (0) {}
-object(stdClass)#1 (0) {} !== array(0) {}
-object(stdClass)#1 (0) {} !== int(-9223372036854775808)
-object(stdClass)#1 (0) {} !== string(20) &quot;-9223372036854775808&quot;
-object(stdClass)#2 (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(stdClass)#2 (0) {} !== string(0) &quot;&quot;
-object(stdClass)#2 (0) {} !== int(1)
-object(stdClass)#2 (0) {} !== float(2.5)
-object(stdClass)#2 (0) {} !== int(0)
-object(stdClass)#2 (0) {} !== string(6) &quot;string&quot;
-object(stdClass)#2 (0) {} !== string(3) &quot;123&quot;
-object(stdClass)#2 (0) {} !== string(3) &quot;2.5&quot;
-object(stdClass)#2 (0) {} !== NULL
-object(stdClass)#2 (0) {} !== bool(true)
-object(stdClass)#2 (0) {} !== bool(false)
-object(stdClass)#2 (0) {} !== object(stdClass)#1 (0) {}
-object(stdClass)#2 (0) {} === object(stdClass)#2 (0) {}
-object(stdClass)#2 (0) {} !== object(test)#3 (0) {}
-object(stdClass)#2 (0) {} !== array(0) {}
-object(stdClass)#2 (0) {} !== int(-9223372036854775808)
-object(stdClass)#2 (0) {} !== string(20) &quot;-9223372036854775808&quot;
-object(test)#3 (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(test)#3 (0) {} !== string(0) &quot;&quot;
-object(test)#3 (0) {} !== int(1)
-object(test)#3 (0) {} !== float(2.5)
-object(test)#3 (0) {} !== int(0)
-object(test)#3 (0) {} !== string(6) &quot;string&quot;
-object(test)#3 (0) {} !== string(3) &quot;123&quot;
-object(test)#3 (0) {} !== string(3) &quot;2.5&quot;
-object(test)#3 (0) {} !== NULL
-object(test)#3 (0) {} !== bool(true)
-object(test)#3 (0) {} !== bool(false)
-object(test)#3 (0) {} !== object(stdClass)#1 (0) {}
-object(test)#3 (0) {} !== object(stdClass)#2 (0) {}
-object(test)#3 (0) {} === object(test)#3 (0) {}
-object(test)#3 (0) {} !== array(0) {}
-object(test)#3 (0) {} !== int(-9223372036854775808)
-object(test)#3 (0) {} !== string(20) &quot;-9223372036854775808&quot;
-array(0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-array(0) {} !== string(0) &quot;&quot;
-array(0) {} !== int(1)
-array(0) {} !== float(2.5)
-array(0) {} !== int(0)
-array(0) {} !== string(6) &quot;string&quot;
-array(0) {} !== string(3) &quot;123&quot;
-array(0) {} !== string(3) &quot;2.5&quot;
-array(0) {} !== NULL
-array(0) {} !== bool(true)
-array(0) {} !== bool(false)
-array(0) {} !== object(stdClass)#1 (0) {}
-array(0) {} !== object(stdClass)#2 (0) {}
-array(0) {} !== object(test)#3 (0) {}
-array(0) {} === array(0) {}
-array(0) {} !== int(-9223372036854775808)
-array(0) {} !== string(20) &quot;-9223372036854775808&quot;
-int(-9223372036854775808) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(-9223372036854775808) !== string(0) &quot;&quot;
-int(-9223372036854775808) !== int(1)
-int(-9223372036854775808) !== float(2.5)
-int(-9223372036854775808) !== int(0)
-int(-9223372036854775808) !== string(6) &quot;string&quot;
-int(-9223372036854775808) !== string(3) &quot;123&quot;
-int(-9223372036854775808) !== string(3) &quot;2.5&quot;
-int(-9223372036854775808) !== NULL
-int(-9223372036854775808) !== bool(true)
-int(-9223372036854775808) !== bool(false)
-int(-9223372036854775808) !== object(stdClass)#1 (0) {}
-int(-9223372036854775808) !== object(stdClass)#2 (0) {}
-int(-9223372036854775808) !== object(test)#3 (0) {}
-int(-9223372036854775808) !== array(0) {}
-int(-9223372036854775808) === int(-9223372036854775808)
-int(-9223372036854775808) !== string(20) &quot;-9223372036854775808&quot;
-string(20) &quot;-9223372036854775808&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(20) &quot;-9223372036854775808&quot; !== string(0) &quot;&quot;
-string(20) &quot;-9223372036854775808&quot; !== int(1)
-string(20) &quot;-9223372036854775808&quot; !== float(2.5)
-string(20) &quot;-9223372036854775808&quot; !== int(0)
-string(20) &quot;-9223372036854775808&quot; !== string(6) &quot;string&quot;
-string(20) &quot;-9223372036854775808&quot; !== string(3) &quot;123&quot;
-string(20) &quot;-9223372036854775808&quot; !== string(3) &quot;2.5&quot;
-string(20) &quot;-9223372036854775808&quot; !== NULL
-string(20) &quot;-9223372036854775808&quot; !== bool(true)
-string(20) &quot;-9223372036854775808&quot; !== bool(false)
-string(20) &quot;-9223372036854775808&quot; !== object(stdClass)#1 (0) {}
-string(20) &quot;-9223372036854775808&quot; !== object(stdClass)#2 (0) {}
-string(20) &quot;-9223372036854775808&quot; !== object(test)#3 (0) {}
-string(20) &quot;-9223372036854775808&quot; !== array(0) {}
-string(20) &quot;-9223372036854775808&quot; !== int(-9223372036854775808)
-string(20) &quot;-9223372036854775808&quot; === string(20) &quot;-9223372036854775808&quot;
-Done
-*** Testing array_diff_key() : usage variation ***
+*** Testing natcasesort() : object functionality ***
 
--- Testing array_diff_key() function with multi dimensional array --
-array(17) {
+-- Testing natcasesort() by supplying object arrays --
+bool(true)
+array(4) {
   [0]=&gt;
-  array(3) {
-    [0]=&gt;
-    int(1)
-    [1]=&gt;
-    int(2)
-    [2]=&gt;
-    int(3)
+  object(for_string_natcasesort)#1 (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(3) &quot;axx&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(3) &quot;AXX&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(3) &quot;ass&quot;
+  }
+  [3]=&gt;
+  object(for_string_natcasesort)#4 (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(2) &quot;py&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(2) &quot;PY&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(2) &quot;pt&quot;
   }
   [1]=&gt;
-  string(0) &quot;&quot;
+  object(for_string_natcasesort)#2 (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(1) &quot;t&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(3) &quot;eee&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(3) &quot;abb&quot;
+  }
   [2]=&gt;
-  int(1)
-  [3]=&gt;
-  float(2.5)
-  [4]=&gt;
-  int(0)
-  [5]=&gt;
-  string(6) &quot;string&quot;
-  [6]=&gt;
-  string(3) &quot;123&quot;
-  [7]=&gt;
-  string(3) &quot;2.5&quot;
-  [8]=&gt;
-  NULL
-  [9]=&gt;
-  bool(true)
-  [10]=&gt;
-  bool(false)
-  [11]=&gt;
-  object(stdClass)#1 (0) {
-  }
-  [12]=&gt;
-  object(stdClass)#2 (0) {
-  }
-  [13]=&gt;
-  object(test)#3 (0) {
-  }
-  [14]=&gt;
-  array(0) {
-  }
-  [15]=&gt;
-  int(-9223372036854775808)
-  [16]=&gt;
-  string(20) &quot;-9223372036854775808&quot;
-}
-array(1) {
-  [&quot;fourth&quot;]=&gt;
-  array(1) {
-    [2]=&gt;
-    string(3) &quot;two&quot;
+  object(for_string_natcasesort)#3 (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(1) &quot;w&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(1) &quot;W&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(1) &quot;c&quot;
   }
 }
+Done
+Warning: Undefined variable $value2 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php on line 99
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(-INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(-INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(-INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(-INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(INF)
+--- testing:  ---
+float(-INF)
+--- testing:  ---
+float(-INF)
 string(11) &quot;random_var:&quot;
-string(20) &quot;-9223372036854775808&quot;
-string(20) &quot;-9223372036854775808&quot;
-int(17)
-Calling function: usort with arguments: -9223372036854775808, -9223372036854775808
+int(1)
+float(-9.223372036854776E+18)
+array(0) {
+}
+Calling function: ctype_space with arguments: 1
 
-Warning: usort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php on line 41
-Error calling function usort: usort(): Argument #1 ($array) must be of type array, string given
-Calling function: array_fill with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808
-Error calling function array_fill: array_fill(): Argument #2 ($count) must be greater than or equal to 0
-Calling function: finfo_buffer with arguments: -9223372036854775808, 17, -9223372036854775808, 17
-Error calling function finfo_buffer: finfo_buffer(): Argument #1 ($finfo) must be of type finfo, string given
-Calling function: xmlwriter_start_attribute with arguments: -9223372036854775808, -9223372036854775808
-Error calling function xmlwriter_start_attribute: xmlwriter_start_attribute(): Argument #1 ($writer) must be of type XMLWriter, string given
-Calling function: password_verify with arguments: -9223372036854775808, -9223372036854775808
-Calling function: gmdate with arguments: -9223372036854775808, 17
-Calling function: strftime with arguments: 17, -9223372036854775808
-
-Deprecated: Function strftime() is deprecated since 8.1, use IntlDateFormatter::format() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php on line 41
-Calling function: array_search with arguments: 17, -9223372036854775808, 17
-Error calling function array_search: array_search(): Argument #2 ($haystack) must be of type array, string given
-Calling function: extract with arguments: 17, 17, 17
-Error calling function extract: extract(): Argument #1 ($array) must be of type array, int given
-Calling function: get_browser with arguments: -9223372036854775808, -9223372036854775808
-
-Warning: get_browser(): browscap ini directive not set in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php on line 41
-Calling function: mktime with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
-/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6: runtime error: signed integer overflow: -9223372036854775808 - 153722867280912931 cannot be represented in type &#x27;long long&#x27;
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:6 in
+Deprecated: ctype_space(): Argument of type int will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php on line 41
+Calling function: gmmktime with arguments: 1, -9.2233720368548E+18, 1, -9.2233720368548E+18, 1, -9.2233720368548E+18
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:16: runtime error: signed integer overflow: 1 - -9223372036854775807 cannot be represented in type &#x27;long long&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:39:16 in
             </pre>
         </div>
 
@@ -508,60 +229,56 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-}
-$a = array(
-    array(1,2,3),
-    &quot;&quot;,
-    1,
-    2.5,
-    0,
-    &quot;string&quot;,
-    &quot;123&quot;,
-    &quot;2.5&quot;,
-    NULL,
-    true,
-    false,
-    new stdclass,
-    new stdclass,
-    new test,
-    array(),
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-);
-$var_cnt = count($a);
-function my_dump($var) {
-    ob_start();
-    var_dump($var);
-    $buf = ob_get_clean();
-    echo str_replace(&quot;\n&quot;, &quot;&quot;, $buf);
-}
-foreach($a as $var) {
-    for ($i = 0; $i &lt; $var_cnt; $i++) {
-        my_dump($var);
-        echo ($var === $a[$i]) ? &quot; === &quot; : &quot; !== &quot;;
-        my_dump($a[$i]);
-        echo &quot;\n&quot;;
+/*
+ * Pass natcasesort() an array of objects which have properties of different
+ * visibilities to test how it re-orders the array.
+ */
+echo &quot;*** Testing natcasesort() : object functionality ***\n&quot;;
+// class declaration for string objects
+class for_string_natcasesort
+{
+    public $public_class_value;
+    private $private_class_value;
+    protected $protected_class_value;
+    // initializing object member value
+    function __construct($value1, $value2,$value3){
+        $this-&gt;public_class_value = $value1;
+        $this-&gt;private_class_value = $value2;
+        $this-&gt;protected_class_value = $value3;
+    }
+    // return string value
+    function __tostring() {
+        return (string)$this-&gt;public_class_value;
     }
 }
-echo &quot;Done\n&quot;;
-$fusion = $a;
+// array of string objects
+$unsorted_str_obj = array (
+new for_string_natcasesort(&quot;axx&quot;,&quot;AXX&quot;,&quot;ass&quot;),
+new for_string_natcasesort(&quot;t&quot;,&quot;eee&quot;,&quot;abb&quot;),
+new for_string_natcasesort(&quot;w&quot;,&quot;W&quot;, &quot;c&quot;),
+new for_string_natcasesort(&quot;py&quot;,&quot;PY&quot;, &quot;pt&quot;),
+);
+echo &quot;\n-- Testing natcasesort() by supplying object arrays --\n&quot;;
+// testing natcasesort() function by supplying string object array
+$temp_array = $unsorted_str_obj;
+var_dump(natcasesort($temp_array) );
+var_dump($temp_array);
+echo &quot;Done&quot;;
+$fusion = $value2;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;*** Testing array_diff_key() : usage variation ***\n&quot;;
-// Initialise function arguments not being substituted (if any)
-$array1 = array(
-      &#x27;first&#x27; =&gt; array(&#x27;blue&#x27; =&gt; 1, &#x27;red&#x27; =&gt; 2),
-      &#x27;second&#x27; =&gt; array(&#x27;yellow&#x27; =&gt; 7),
-      &#x27;third&#x27; =&gt; array(0 =&gt; &#x27;zero&#x27;),
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$array2 = array (
-      &#x27;first&#x27; =&gt; array(&#x27;blue&#x27; =&gt; 1, &#x27;red&#x27; =&gt; 2,),
-      &#x27;second&#x27; =&gt; array(&#x27;cyan&#x27; =&gt; 8),
-      &#x27;fourth&#x27; =&gt; array(2 =&gt; &#x27;two&#x27;),
-);
-echo &quot;\n-- Testing array_diff_key() function with multi dimensional array --\n&quot;;
-var_dump( array_diff_key($fusion, $array2) );
-var_dump( array_diff_key($array2, $array1) );
+foreach ($longVals as $longVal) {
+   echo &quot;--- testing: $fusion ---\n&quot;;
+   var_dump(sinh($longVal));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
@@ -575,9 +292,11 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-comparing different variables for identity+Test array_diff_key() function : usage variation - Passing multi-dimensional array
+Test natcasesort() function : object functionality - mixed visibility within objects+Test sinh function : 64bit long tests
 --SKIPIF--
-&lt;?php if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;); ?&gt;
+&lt;?php
+if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;);
+?&gt;
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -642,373 +361,135 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-}
-$a = array(
-    array(1,2,3),
-    &quot;&quot;,
-    1,
-    2.5,
-    0,
-    &quot;string&quot;,
-    &quot;123&quot;,
-    &quot;2.5&quot;,
-    NULL,
-    true,
-    false,
-    new stdclass,
-    new stdclass,
-    new test,
-    array(),
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-);
-$var_cnt = count($a);
-function my_dump($var) {
-    ob_start();
-    var_dump($var);
-    $buf = ob_get_clean();
-    echo str_replace(&quot;\n&quot;, &quot;&quot;, $buf);
-}
-foreach($a as $var) {
-    for ($i = 0; $i &lt; $var_cnt; $i++) {
-        my_dump($var);
-        echo ($var === $a[$i]) ? &quot; === &quot; : &quot; !== &quot;;
-        my_dump($a[$i]);
-        echo &quot;\n&quot;;
+/*
+ * Pass natcasesort() an array of objects which have properties of different
+ * visibilities to test how it re-orders the array.
+ */
+echo &quot;*** Testing natcasesort() : object functionality ***\n&quot;;
+// class declaration for string objects
+class for_string_natcasesort
+{
+    public $public_class_value;
+    private $private_class_value;
+    protected $protected_class_value;
+    // initializing object member value
+    function __construct($value1, $value2,$value3){
+        $this-&gt;public_class_value = $value1;
+        $this-&gt;private_class_value = $value2;
+        $this-&gt;protected_class_value = $value3;
+    }
+    // return string value
+    function __tostring() {
+        return (string)$this-&gt;public_class_value;
     }
 }
-echo &quot;Done\n&quot;;
-$fusion = $a;
+// array of string objects
+$unsorted_str_obj = array (
+new for_string_natcasesort(&quot;axx&quot;,&quot;AXX&quot;,&quot;ass&quot;),
+new for_string_natcasesort(&quot;t&quot;,&quot;eee&quot;,&quot;abb&quot;),
+new for_string_natcasesort(&quot;w&quot;,&quot;W&quot;, &quot;c&quot;),
+new for_string_natcasesort(&quot;py&quot;,&quot;PY&quot;, &quot;pt&quot;),
+);
+echo &quot;\n-- Testing natcasesort() by supplying object arrays --\n&quot;;
+// testing natcasesort() function by supplying string object array
+$temp_array = $unsorted_str_obj;
+var_dump(natcasesort($temp_array) );
+var_dump($temp_array);
+echo &quot;Done&quot;;
+$fusion = $value2;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo &quot;*** Testing array_diff_key() : usage variation ***\n&quot;;
-// Initialise function arguments not being substituted (if any)
-$array1 = array(
-      &#x27;first&#x27; =&gt; array(&#x27;blue&#x27; =&gt; 1, &#x27;red&#x27; =&gt; 2),
-      &#x27;second&#x27; =&gt; array(&#x27;yellow&#x27; =&gt; 7),
-      &#x27;third&#x27; =&gt; array(0 =&gt; &#x27;zero&#x27;),
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$array2 = array (
-      &#x27;first&#x27; =&gt; array(&#x27;blue&#x27; =&gt; 1, &#x27;red&#x27; =&gt; 2,),
-      &#x27;second&#x27; =&gt; array(&#x27;cyan&#x27; =&gt; 8),
-      &#x27;fourth&#x27; =&gt; array(2 =&gt; &#x27;two&#x27;),
-);
-echo &quot;\n-- Testing array_diff_key() function with multi dimensional array --\n&quot;;
-var_dump( array_diff_key($fusion, $array2) );
-var_dump( array_diff_key($array2, $array1) );
+foreach ($longVals as $longVal) {
+   echo &quot;--- testing: $fusion ---\n&quot;;
+   var_dump(sinh($longVal));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
 --EXPECTF--
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} === array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(0) &quot;&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(1)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== float(2.5)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(0)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(6) &quot;string&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(3) &quot;123&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(3) &quot;2.5&quot;
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== NULL
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== bool(true)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== bool(false)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(stdClass)#%d (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(stdClass)#%d (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== object(test)#%d (0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== array(0) {}
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== int(-9223372036854775808)
-array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} !== string(20) &quot;-9223372036854775808&quot;
-string(0) &quot;&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(0) &quot;&quot; === string(0) &quot;&quot;
-string(0) &quot;&quot; !== int(1)
-string(0) &quot;&quot; !== float(2.5)
-string(0) &quot;&quot; !== int(0)
-string(0) &quot;&quot; !== string(6) &quot;string&quot;
-string(0) &quot;&quot; !== string(3) &quot;123&quot;
-string(0) &quot;&quot; !== string(3) &quot;2.5&quot;
-string(0) &quot;&quot; !== NULL
-string(0) &quot;&quot; !== bool(true)
-string(0) &quot;&quot; !== bool(false)
-string(0) &quot;&quot; !== object(stdClass)#%d (0) {}
-string(0) &quot;&quot; !== object(stdClass)#%d (0) {}
-string(0) &quot;&quot; !== object(test)#%d (0) {}
-string(0) &quot;&quot; !== array(0) {}
-string(0) &quot;&quot; !== int(-9223372036854775808)
-string(0) &quot;&quot; !== string(20) &quot;-9223372036854775808&quot;
-int(1) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(1) !== string(0) &quot;&quot;
-int(1) === int(1)
-int(1) !== float(2.5)
-int(1) !== int(0)
-int(1) !== string(6) &quot;string&quot;
-int(1) !== string(3) &quot;123&quot;
-int(1) !== string(3) &quot;2.5&quot;
-int(1) !== NULL
-int(1) !== bool(true)
-int(1) !== bool(false)
-int(1) !== object(stdClass)#%d (0) {}
-int(1) !== object(stdClass)#%d (0) {}
-int(1) !== object(test)#%d (0) {}
-int(1) !== array(0) {}
-int(1) !== int(-9223372036854775808)
-int(1) !== string(20) &quot;-9223372036854775808&quot;
-float(2.5) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-float(2.5) !== string(0) &quot;&quot;
-float(2.5) !== int(1)
-float(2.5) === float(2.5)
-float(2.5) !== int(0)
-float(2.5) !== string(6) &quot;string&quot;
-float(2.5) !== string(3) &quot;123&quot;
-float(2.5) !== string(3) &quot;2.5&quot;
-float(2.5) !== NULL
-float(2.5) !== bool(true)
-float(2.5) !== bool(false)
-float(2.5) !== object(stdClass)#%d (0) {}
-float(2.5) !== object(stdClass)#%d (0) {}
-float(2.5) !== object(test)#%d (0) {}
-float(2.5) !== array(0) {}
-float(2.5) !== int(-9223372036854775808)
-float(2.5) !== string(20) &quot;-9223372036854775808&quot;
-int(0) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(0) !== string(0) &quot;&quot;
-int(0) !== int(1)
-int(0) !== float(2.5)
-int(0) === int(0)
-int(0) !== string(6) &quot;string&quot;
-int(0) !== string(3) &quot;123&quot;
-int(0) !== string(3) &quot;2.5&quot;
-int(0) !== NULL
-int(0) !== bool(true)
-int(0) !== bool(false)
-int(0) !== object(stdClass)#%d (0) {}
-int(0) !== object(stdClass)#%d (0) {}
-int(0) !== object(test)#%d (0) {}
-int(0) !== array(0) {}
-int(0) !== int(-9223372036854775808)
-int(0) !== string(20) &quot;-9223372036854775808&quot;
-string(6) &quot;string&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(6) &quot;string&quot; !== string(0) &quot;&quot;
-string(6) &quot;string&quot; !== int(1)
-string(6) &quot;string&quot; !== float(2.5)
-string(6) &quot;string&quot; !== int(0)
-string(6) &quot;string&quot; === string(6) &quot;string&quot;
-string(6) &quot;string&quot; !== string(3) &quot;123&quot;
-string(6) &quot;string&quot; !== string(3) &quot;2.5&quot;
-string(6) &quot;string&quot; !== NULL
-string(6) &quot;string&quot; !== bool(true)
-string(6) &quot;string&quot; !== bool(false)
-string(6) &quot;string&quot; !== object(stdClass)#%d (0) {}
-string(6) &quot;string&quot; !== object(stdClass)#%d (0) {}
-string(6) &quot;string&quot; !== object(test)#%d (0) {}
-string(6) &quot;string&quot; !== array(0) {}
-string(6) &quot;string&quot; !== int(-9223372036854775808)
-string(6) &quot;string&quot; !== string(20) &quot;-9223372036854775808&quot;
-string(3) &quot;123&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(3) &quot;123&quot; !== string(0) &quot;&quot;
-string(3) &quot;123&quot; !== int(1)
-string(3) &quot;123&quot; !== float(2.5)
-string(3) &quot;123&quot; !== int(0)
-string(3) &quot;123&quot; !== string(6) &quot;string&quot;
-string(3) &quot;123&quot; === string(3) &quot;123&quot;
-string(3) &quot;123&quot; !== string(3) &quot;2.5&quot;
-string(3) &quot;123&quot; !== NULL
-string(3) &quot;123&quot; !== bool(true)
-string(3) &quot;123&quot; !== bool(false)
-string(3) &quot;123&quot; !== object(stdClass)#%d (0) {}
-string(3) &quot;123&quot; !== object(stdClass)#%d (0) {}
-string(3) &quot;123&quot; !== object(test)#%d (0) {}
-string(3) &quot;123&quot; !== array(0) {}
-string(3) &quot;123&quot; !== int(-9223372036854775808)
-string(3) &quot;123&quot; !== string(20) &quot;-9223372036854775808&quot;
-string(3) &quot;2.5&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(3) &quot;2.5&quot; !== string(0) &quot;&quot;
-string(3) &quot;2.5&quot; !== int(1)
-string(3) &quot;2.5&quot; !== float(2.5)
-string(3) &quot;2.5&quot; !== int(0)
-string(3) &quot;2.5&quot; !== string(6) &quot;string&quot;
-string(3) &quot;2.5&quot; !== string(3) &quot;123&quot;
-string(3) &quot;2.5&quot; === string(3) &quot;2.5&quot;
-string(3) &quot;2.5&quot; !== NULL
-string(3) &quot;2.5&quot; !== bool(true)
-string(3) &quot;2.5&quot; !== bool(false)
-string(3) &quot;2.5&quot; !== object(stdClass)#%d (0) {}
-string(3) &quot;2.5&quot; !== object(stdClass)#%d (0) {}
-string(3) &quot;2.5&quot; !== object(test)#%d (0) {}
-string(3) &quot;2.5&quot; !== array(0) {}
-string(3) &quot;2.5&quot; !== int(-9223372036854775808)
-string(3) &quot;2.5&quot; !== string(20) &quot;-9223372036854775808&quot;
-NULL !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-NULL !== string(0) &quot;&quot;
-NULL !== int(1)
-NULL !== float(2.5)
-NULL !== int(0)
-NULL !== string(6) &quot;string&quot;
-NULL !== string(3) &quot;123&quot;
-NULL !== string(3) &quot;2.5&quot;
-NULL === NULL
-NULL !== bool(true)
-NULL !== bool(false)
-NULL !== object(stdClass)#%d (0) {}
-NULL !== object(stdClass)#%d (0) {}
-NULL !== object(test)#%d (0) {}
-NULL !== array(0) {}
-NULL !== int(-9223372036854775808)
-NULL !== string(20) &quot;-9223372036854775808&quot;
-bool(true) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-bool(true) !== string(0) &quot;&quot;
-bool(true) !== int(1)
-bool(true) !== float(2.5)
-bool(true) !== int(0)
-bool(true) !== string(6) &quot;string&quot;
-bool(true) !== string(3) &quot;123&quot;
-bool(true) !== string(3) &quot;2.5&quot;
-bool(true) !== NULL
-bool(true) === bool(true)
-bool(true) !== bool(false)
-bool(true) !== object(stdClass)#%d (0) {}
-bool(true) !== object(stdClass)#%d (0) {}
-bool(true) !== object(test)#%d (0) {}
-bool(true) !== array(0) {}
-bool(true) !== int(-9223372036854775808)
-bool(true) !== string(20) &quot;-9223372036854775808&quot;
-bool(false) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-bool(false) !== string(0) &quot;&quot;
-bool(false) !== int(1)
-bool(false) !== float(2.5)
-bool(false) !== int(0)
-bool(false) !== string(6) &quot;string&quot;
-bool(false) !== string(3) &quot;123&quot;
-bool(false) !== string(3) &quot;2.5&quot;
-bool(false) !== NULL
-bool(false) !== bool(true)
-bool(false) === bool(false)
-bool(false) !== object(stdClass)#%d (0) {}
-bool(false) !== object(stdClass)#%d (0) {}
-bool(false) !== object(test)#%d (0) {}
-bool(false) !== array(0) {}
-bool(false) !== int(-9223372036854775808)
-bool(false) !== string(20) &quot;-9223372036854775808&quot;
-object(stdClass)#%d (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(stdClass)#%d (0) {} !== string(0) &quot;&quot;
-object(stdClass)#%d (0) {} !== int(1)
-object(stdClass)#%d (0) {} !== float(2.5)
-object(stdClass)#%d (0) {} !== int(0)
-object(stdClass)#%d (0) {} !== string(6) &quot;string&quot;
-object(stdClass)#%d (0) {} !== string(3) &quot;123&quot;
-object(stdClass)#%d (0) {} !== string(3) &quot;2.5&quot;
-object(stdClass)#%d (0) {} !== NULL
-object(stdClass)#%d (0) {} !== bool(true)
-object(stdClass)#%d (0) {} !== bool(false)
-object(stdClass)#%d (0) {} === object(stdClass)#%d (0) {}
-object(stdClass)#%d (0) {} !== object(stdClass)#%d (0) {}
-object(stdClass)#%d (0) {} !== object(test)#%d (0) {}
-object(stdClass)#%d (0) {} !== array(0) {}
-object(stdClass)#%d (0) {} !== int(-9223372036854775808)
-object(stdClass)#%d (0) {} !== string(20) &quot;-9223372036854775808&quot;
-object(stdClass)#%d (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(stdClass)#%d (0) {} !== string(0) &quot;&quot;
-object(stdClass)#%d (0) {} !== int(1)
-object(stdClass)#%d (0) {} !== float(2.5)
-object(stdClass)#%d (0) {} !== int(0)
-object(stdClass)#%d (0) {} !== string(6) &quot;string&quot;
-object(stdClass)#%d (0) {} !== string(3) &quot;123&quot;
-object(stdClass)#%d (0) {} !== string(3) &quot;2.5&quot;
-object(stdClass)#%d (0) {} !== NULL
-object(stdClass)#%d (0) {} !== bool(true)
-object(stdClass)#%d (0) {} !== bool(false)
-object(stdClass)#%d (0) {} !== object(stdClass)#%d (0) {}
-object(stdClass)#%d (0) {} === object(stdClass)#%d (0) {}
-object(stdClass)#%d (0) {} !== object(test)#%d (0) {}
-object(stdClass)#%d (0) {} !== array(0) {}
-object(stdClass)#%d (0) {} !== int(-9223372036854775808)
-object(stdClass)#%d (0) {} !== string(20) &quot;-9223372036854775808&quot;
-object(test)#%d (0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-object(test)#%d (0) {} !== string(0) &quot;&quot;
-object(test)#%d (0) {} !== int(1)
-object(test)#%d (0) {} !== float(2.5)
-object(test)#%d (0) {} !== int(0)
-object(test)#%d (0) {} !== string(6) &quot;string&quot;
-object(test)#%d (0) {} !== string(3) &quot;123&quot;
-object(test)#%d (0) {} !== string(3) &quot;2.5&quot;
-object(test)#%d (0) {} !== NULL
-object(test)#%d (0) {} !== bool(true)
-object(test)#%d (0) {} !== bool(false)
-object(test)#%d (0) {} !== object(stdClass)#%d (0) {}
-object(test)#%d (0) {} !== object(stdClass)#%d (0) {}
-object(test)#%d (0) {} === object(test)#%d (0) {}
-object(test)#%d (0) {} !== array(0) {}
-object(test)#%d (0) {} !== int(-9223372036854775808)
-object(test)#%d (0) {} !== string(20) &quot;-9223372036854775808&quot;
-array(0) {} !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-array(0) {} !== string(0) &quot;&quot;
-array(0) {} !== int(1)
-array(0) {} !== float(2.5)
-array(0) {} !== int(0)
-array(0) {} !== string(6) &quot;string&quot;
-array(0) {} !== string(3) &quot;123&quot;
-array(0) {} !== string(3) &quot;2.5&quot;
-array(0) {} !== NULL
-array(0) {} !== bool(true)
-array(0) {} !== bool(false)
-array(0) {} !== object(stdClass)#%d (0) {}
-array(0) {} !== object(stdClass)#%d (0) {}
-array(0) {} !== object(test)#%d (0) {}
-array(0) {} === array(0) {}
-array(0) {} !== int(-9223372036854775808)
-array(0) {} !== string(20) &quot;-9223372036854775808&quot;
-int(-9223372036854775808) !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-int(-9223372036854775808) !== string(0) &quot;&quot;
-int(-9223372036854775808) !== int(1)
-int(-9223372036854775808) !== float(2.5)
-int(-9223372036854775808) !== int(0)
-int(-9223372036854775808) !== string(6) &quot;string&quot;
-int(-9223372036854775808) !== string(3) &quot;123&quot;
-int(-9223372036854775808) !== string(3) &quot;2.5&quot;
-int(-9223372036854775808) !== NULL
-int(-9223372036854775808) !== bool(true)
-int(-9223372036854775808) !== bool(false)
-int(-9223372036854775808) !== object(stdClass)#%d (0) {}
-int(-9223372036854775808) !== object(stdClass)#%d (0) {}
-int(-9223372036854775808) !== object(test)#%d (0) {}
-int(-9223372036854775808) !== array(0) {}
-int(-9223372036854775808) === int(-9223372036854775808)
-int(-9223372036854775808) !== string(20) &quot;-9223372036854775808&quot;
-string(20) &quot;-9223372036854775808&quot; !== array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
-string(20) &quot;-9223372036854775808&quot; !== string(0) &quot;&quot;
-string(20) &quot;-9223372036854775808&quot; !== int(1)
-string(20) &quot;-9223372036854775808&quot; !== float(2.5)
-string(20) &quot;-9223372036854775808&quot; !== int(0)
-string(20) &quot;-9223372036854775808&quot; !== string(6) &quot;string&quot;
-string(20) &quot;-9223372036854775808&quot; !== string(3) &quot;123&quot;
-string(20) &quot;-9223372036854775808&quot; !== string(3) &quot;2.5&quot;
-string(20) &quot;-9223372036854775808&quot; !== NULL
-string(20) &quot;-9223372036854775808&quot; !== bool(true)
-string(20) &quot;-9223372036854775808&quot; !== bool(false)
-string(20) &quot;-9223372036854775808&quot; !== object(stdClass)#%d (0) {}
-string(20) &quot;-9223372036854775808&quot; !== object(stdClass)#%d (0) {}
-string(20) &quot;-9223372036854775808&quot; !== object(test)#%d (0) {}
-string(20) &quot;-9223372036854775808&quot; !== array(0) {}
-string(20) &quot;-9223372036854775808&quot; !== int(-9223372036854775808)
-string(20) &quot;-9223372036854775808&quot; === string(20) &quot;-9223372036854775808&quot;
-Done
-*** Testing array_diff_key() : usage variation ***
+*** Testing natcasesort() : object functionality ***
 
--- Testing array_diff_key() function with multi dimensional array --
-array(1) {
-  [&quot;third&quot;]=&gt;
-  array(1) {
-    [0]=&gt;
-    string(4) &quot;zero&quot;
+-- Testing natcasesort() by supplying object arrays --
+bool(true)
+array(4) {
+  [0]=&gt;
+  object(for_string_natcasesort)#%d (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(3) &quot;axx&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(3) &quot;AXX&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(3) &quot;ass&quot;
+  }
+  [3]=&gt;
+  object(for_string_natcasesort)#%d (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(2) &quot;py&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(2) &quot;PY&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(2) &quot;pt&quot;
+  }
+  [1]=&gt;
+  object(for_string_natcasesort)#%d (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(1) &quot;t&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(3) &quot;eee&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(3) &quot;abb&quot;
+  }
+  [2]=&gt;
+  object(for_string_natcasesort)#%d (3) {
+    [&quot;public_class_value&quot;]=&gt;
+    string(1) &quot;w&quot;
+    [&quot;private_class_value&quot;:&quot;for_string_natcasesort&quot;:private]=&gt;
+    string(1) &quot;W&quot;
+    [&quot;protected_class_value&quot;:protected]=&gt;
+    string(1) &quot;c&quot;
   }
 }
-array(1) {
-  [&quot;fourth&quot;]=&gt;
-  array(1) {
-    [2]=&gt;
-    string(3) &quot;two&quot;
-  }
-}
+Done
+--- testing: 9223372036854775807 ---
+float(INF)
+--- testing: -9223372036854775808 ---
+float(-INF)
+--- testing: 2147483647 ---
+float(INF)
+--- testing: -2147483648 ---
+float(-INF)
+--- testing: 9223372034707292160 ---
+float(INF)
+--- testing: -9223372034707292160 ---
+float(-INF)
+--- testing: 2147483648 ---
+float(INF)
+--- testing: -2147483649 ---
+float(-INF)
+--- testing: 4294967294 ---
+float(INF)
+--- testing: 4294967295 ---
+float(INF)
+--- testing: 4294967293 ---
+float(INF)
+--- testing: 9223372036854775806 ---
+float(INF)
+--- testing: 9.2233720368548E+18 ---
+float(INF)
+--- testing: -9223372036854775807 ---
+float(-INF)
+--- testing: -9.2233720368548E+18 ---
+float(-INF)
 
             </pre>
         </div>
@@ -1021,10 +502,7 @@ array(1) {
 export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
-export SHELL=&#x27;/bin/sh&#x27;
-export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
-export HOSTNAME=&#x27;4c1800347231&#x27;
+export HOSTNAME=&#x27;146c83e2ec89&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
@@ -1032,16 +510,15 @@ export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:b
 export MFLAGS=&#x27;&#x27;
 export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
 export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
-export TERM=&#x27;screen&#x27;
+export TERM=&#x27;xterm&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
-export TMUX_PANE=&#x27;%0&#x27;
-export SHLVL=&#x27;3&#x27;
+export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
+export SHLVL=&#x27;2&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export TEST_PHP_ARGS=&#x27;-j16&#x27;
-export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export TEMP=&#x27;/tmp&#x27;
 export SKIP_ONLINE_TESTS=&#x27;1&#x27;
@@ -1052,30 +529,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker6&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused247.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused4.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

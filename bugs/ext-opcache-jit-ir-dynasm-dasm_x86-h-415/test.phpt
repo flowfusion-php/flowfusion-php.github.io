@@ -1,13 +1,12 @@
 --TEST--
-Phar object: array access+set $value parameter variance
+Bug #68175 (RegexIterator pregFlags are NULL instead of 0)+Trait property hook conflict
 --INI--
-phar.require_hash=0
-opcache.file_update_protection=0
-opcache.revalidate_freq=60
+opcache.interned_strings_buffer=-1
+max_execution_time=12
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1202
+opcache.jit=1004
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,40 +71,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once 'files/phar_oo_test.inc';
-class MyFile extends SplFileObject
-{
-    function __construct($what)
-    {
-        echo __METHOD__ . "($what)\n";
-        parent::__construct($what);
-    }
-}
-$phar = new Phar($fname);
-try
-{
-    $phar->setFileClass('SplFileInfo');
-}
-catch (TypeError $e)
-{
-    echo $e->getMessage() . "\n";
-}
-$phar->setInfoClass('MyFile');
-echo $phar['a.php']->getFilename() . "\n";
-echo $phar['b/c.php']->getFilename() . "\n";
-echo $phar['b.php']->getFilename() . "\n";
-$fusion = $e;
+$arr = new ArrayIterator(array());
+$regex = new RegexIterator($arr, '/^test/');
+var_dump(
+    $regex->getMode(),
+    $regex->getFlags(),
+    $regex->getPregFlags()
+);
+$fusion = $arr;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface X {}
-interface Y extends X {}
-class A {
-    public Y $prop {
-        set(X $fusion) {}
+trait T {
+    public $fusion {
+        get { echo __METHOD__, "\n"; }
+        set { echo __METHOD__, "\n"; }
     }
 }
-class B extends A {
-    public Y $prop {
-        set(Y $prop) {}
+class C {
+    use T;
+    public $prop {
+        get { echo __METHOD__, "\n"; }
+        set { echo __METHOD__, "\n"; }
     }
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
@@ -113,19 +98,8 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-phar
---CLEAN--
-<?php
-unlink(__DIR__ . '/files/phar_oo_006.phar.php');
-__halt_compiler();
-?>
 --EXPECTF--
-SplFileInfo::setFileClass(): Argument #1 ($class) must be a class name derived from SplFileObject, SplFileInfo given
-MyFile::__construct(phar://%s/a.php)
-a.php
-MyFile::__construct(phar://%s/b/c.php)
-c.php
-MyFile::__construct(phar://%s/b.php)
-b.php
-Fatal error: Declaration of B::$prop::set(Y $prop): void must be compatible with A::$prop::set(X $prop): void in %s on line %d
+int(0)
+int(0)
+int(0)
+Fatal error: C and T define the same hooked property ($prop) in the composition of C. Conflict resolution between hooked properties is currently not supported. Class was composed in %s on line %d

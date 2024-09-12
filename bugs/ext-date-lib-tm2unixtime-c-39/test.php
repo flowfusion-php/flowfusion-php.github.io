@@ -61,60 +61,56 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-}
-$a = array(
-    array(1,2,3),
-    "",
-    1,
-    2.5,
-    0,
-    "string",
-    "123",
-    "2.5",
-    NULL,
-    true,
-    false,
-    new stdclass,
-    new stdclass,
-    new test,
-    array(),
-    -PHP_INT_MAX-1,
-    (string)(-PHP_INT_MAX-1),
-);
-$var_cnt = count($a);
-function my_dump($var) {
-    ob_start();
-    var_dump($var);
-    $buf = ob_get_clean();
-    echo str_replace("\n", "", $buf);
-}
-foreach($a as $var) {
-    for ($i = 0; $i < $var_cnt; $i++) {
-        my_dump($var);
-        echo ($var === $a[$i]) ? " === " : " !== ";
-        my_dump($a[$i]);
-        echo "\n";
+/*
+ * Pass natcasesort() an array of objects which have properties of different
+ * visibilities to test how it re-orders the array.
+ */
+echo "*** Testing natcasesort() : object functionality ***\n";
+// class declaration for string objects
+class for_string_natcasesort
+{
+    public $public_class_value;
+    private $private_class_value;
+    protected $protected_class_value;
+    // initializing object member value
+    function __construct($value1, $value2,$value3){
+        $this->public_class_value = $value1;
+        $this->private_class_value = $value2;
+        $this->protected_class_value = $value3;
+    }
+    // return string value
+    function __tostring() {
+        return (string)$this->public_class_value;
     }
 }
-echo "Done\n";
-$fusion = $a;
+// array of string objects
+$unsorted_str_obj = array (
+new for_string_natcasesort("axx","AXX","ass"),
+new for_string_natcasesort("t","eee","abb"),
+new for_string_natcasesort("w","W", "c"),
+new for_string_natcasesort("py","PY", "pt"),
+);
+echo "\n-- Testing natcasesort() by supplying object arrays --\n";
+// testing natcasesort() function by supplying string object array
+$temp_array = $unsorted_str_obj;
+var_dump(natcasesort($temp_array) );
+var_dump($temp_array);
+echo "Done";
+$fusion = $value2;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing array_diff_key() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-$array1 = array(
-      'first' => array('blue' => 1, 'red' => 2),
-      'second' => array('yellow' => 7),
-      'third' => array(0 => 'zero'),
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$array2 = array (
-      'first' => array('blue' => 1, 'red' => 2,),
-      'second' => array('cyan' => 8),
-      'fourth' => array(2 => 'two'),
-);
-echo "\n-- Testing array_diff_key() function with multi dimensional array --\n";
-var_dump( array_diff_key($fusion, $array2) );
-var_dump( array_diff_key($array2, $array1) );
+foreach ($longVals as $longVal) {
+   echo "--- testing: $fusion ---\n";
+   var_dump(sinh($longVal));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

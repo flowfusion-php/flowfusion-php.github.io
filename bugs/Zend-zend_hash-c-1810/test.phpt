@@ -1,8 +1,12 @@
 --TEST--
-Test extract() function (variation 1)+Bug #79821 (array grow during var_dump)
+Pass function and method calls by reference and by value.+FR #62369 (Segfault on json_encode(deeply_nested_array)
 --INI--
-opcache.jit=1235
-session.auto_start=0
+session.use_trans_sid=0
+opcache.interned_strings_buffer=16
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1015
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,41 +71,116 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$val = 4;
-$str = "John";
-var_dump($val);
-var_dump($str);
-/* Extracting Global Variables */
-var_dump(extract($GLOBALS, EXTR_REFS));
-var_dump($val);
-var_dump($str);
-echo "\nDone";
-$fusion = $val;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
-    $foo = $bar = [];
-    for ($i = 0; $i < 3; $fusion++) {
-        $foo = [$foo, [&$bar]];
+class C {
+    static function sreturnVal() {
+        global $a;
+        return $a;
     }
-    ob_start(function (string $buffer) use (&$bar) {
-        $bar[][] = null;
-        return '';
-    }, 64);
-    $output($foo[0]);
-    ob_end_clean();
+    static function &sreturnReference() {
+        global $a;
+        return $a;
+    }
+    function returnVal() {
+        global $a;
+        return $a;
+    }
+    function &returnReference() {
+        global $a;
+        return $a;
+    }
 }
-echo "OK\n";
+function returnVal() {
+        global $a;
+        return $a;
+}
+function &returnReference() {
+        global $a;
+        return $a;
+}
+function foo(&$ref) {
+    var_dump($ref);
+    $ref = "changed";
+}
+echo "Pass a function call that returns a value:\n";
+$a = "original";
+foo(returnVal());
+var_dump($a);
+echo "Pass a function call that returns a reference:\n";
+$a = "original";
+foo(returnReference());
+var_dump($a);
+echo "\nPass a static method call that returns a value:\n";
+$a = "original";
+foo(C::sreturnVal());
+var_dump($a);
+echo "Pass a static method call that returns a reference:\n";
+$a = "original";
+foo(C::sreturnReference());
+var_dump($a);
+$myC = new C;
+echo "\nPass a method call that returns a value:\n";
+$a = "original";
+foo($myC->returnVal());
+var_dump($a);
+echo "Pass a method call that returns a reference:\n";
+$a = "original";
+foo($myC->returnReference());
+var_dump($a);
+$fusion = $a;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$array = array();
+for ($i=0; $i < 550; $fusion++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-int(4)
-string(4) "John"
-int(%d)
-int(4)
-string(4) "John"
+Pass a function call that returns a value:
 
-Done
+Notice: Only variables should be passed by reference in %s on line 44
+string(8) "original"
+string(8) "original"
+Pass a function call that returns a reference:
+string(8) "original"
+string(7) "changed"
+
+Pass a static method call that returns a value:
+
+Notice: Only variables should be passed by reference in %s on line 55
+string(8) "original"
+string(8) "original"
+Pass a static method call that returns a reference:
+string(8) "original"
+string(7) "changed"
+
+Pass a method call that returns a value:
+
+Notice: Only variables should be passed by reference in %s on line 67
+string(8) "original"
+string(8) "original"
+Pass a method call that returns a reference:
+string(8) "original"
+string(7) "changed"
 OK
+ERROR

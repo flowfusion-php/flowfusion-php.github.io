@@ -61,30 +61,85 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$val = 4;
-$str = "John";
-var_dump($val);
-var_dump($str);
-/* Extracting Global Variables */
-var_dump(extract($GLOBALS, EXTR_REFS));
-var_dump($val);
-var_dump($str);
-echo "\nDone";
-$fusion = $val;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
-    $foo = $bar = [];
-    for ($i = 0; $i < 3; $fusion++) {
-        $foo = [$foo, [&$bar]];
+class C {
+    static function sreturnVal() {
+        global $a;
+        return $a;
     }
-    ob_start(function (string $buffer) use (&$bar) {
-        $bar[][] = null;
-        return '';
-    }, 64);
-    $output($foo[0]);
-    ob_end_clean();
+    static function &sreturnReference() {
+        global $a;
+        return $a;
+    }
+    function returnVal() {
+        global $a;
+        return $a;
+    }
+    function &returnReference() {
+        global $a;
+        return $a;
+    }
 }
-echo "OK\n";
+function returnVal() {
+        global $a;
+        return $a;
+}
+function &returnReference() {
+        global $a;
+        return $a;
+}
+function foo(&$ref) {
+    var_dump($ref);
+    $ref = "changed";
+}
+echo "Pass a function call that returns a value:\n";
+$a = "original";
+foo(returnVal());
+var_dump($a);
+echo "Pass a function call that returns a reference:\n";
+$a = "original";
+foo(returnReference());
+var_dump($a);
+echo "\nPass a static method call that returns a value:\n";
+$a = "original";
+foo(C::sreturnVal());
+var_dump($a);
+echo "Pass a static method call that returns a reference:\n";
+$a = "original";
+foo(C::sreturnReference());
+var_dump($a);
+$myC = new C;
+echo "\nPass a method call that returns a value:\n";
+$a = "original";
+foo($myC->returnVal());
+var_dump($a);
+echo "Pass a method call that returns a reference:\n";
+$a = "original";
+foo($myC->returnReference());
+var_dump($a);
+$fusion = $a;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$array = array();
+for ($i=0; $i < 550; $fusion++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

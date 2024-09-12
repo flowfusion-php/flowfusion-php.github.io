@@ -61,15 +61,17 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$file =  __DIR__ . "/bug6559.inc.php";
-file_put_contents($file, '<?php return 1;');
-$var = include $file;
-var_dump($var);
-file_put_contents($file, '<?php return 2;');
-$var = include $file;
-var_dump($var);
-@unlink($file);
-$fusion = $var;
+class Test {
+    function __destruct() {
+        unset($GLOBALS['a']);
+    }
+}
+function returnsVal() {
+    return 42;
+}
+$a = new Test;
+var_dump($a =& returnsVal());
+$fusion = $a;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {

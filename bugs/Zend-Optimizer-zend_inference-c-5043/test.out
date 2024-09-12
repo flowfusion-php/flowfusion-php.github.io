@@ -1,10 +1,10 @@
---- testing include path ---
-
-** testing with mode=r **
-in dir2
-in dir1
-in dir1
-in working dir
-in script dir
+array(3) {
+  [0]=>
+  string(6) "1:test"
+  [1]=>
+  string(6) "2:test"
+  [2]=>
+  string(6) "3:test"
+}
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in
