@@ -61,24 +61,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$xml = "<root><a>1</a><a>2</a></root>";
-$xml = simplexml_load_string($xml);
-$a = $xml->a;
-foreach ($a as $test) {
-    echo "Iteration\n";
-    var_dump($a->key());
-    var_dump($a->getName());
-    var_dump((string) $test);
-}
-var_dump($a);
-$fusion = $a;
+$fo = new SplFileObject(__DIR__ . '/SplFileObject_fputcsv1.csv', 'w');
+$data = array(1, 2, 'foo', 'haha', array(4, 5, 6), 1.3, null);
+$fo->fputcsv($data);
+var_dump($data);
+$fusion = $fo;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -86,7 +80,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $this->b = 2;
+        $fusion->b = 2;
         $this->d = 4;
     }
 }

@@ -1,9 +1,8 @@
 --TEST--
-Test interaction with cache slots+Bug #71818 (Memory leak when array altered in destructor)
+Test extract() function (variation 1)+Bug #79821 (array grow during var_dump)
 --INI--
-zend.enable_gc = 1
-allow_url_include=0
-opcache.interned_strings_buffer=16
+opcache.jit=1235
+session.auto_start=0
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,101 +67,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    public readonly string $prop;
-    public readonly array $prop2;
-    public readonly object $prop3;
-    public function setProp(string $prop) {
-        $this->prop = $prop;
-    }
-    public function initAndAppendProp2() {
-        $this->prop2 = [];
-        $this->prop2[] = 1;
-    }
-    public function initProp3() {
-        $this->prop3 = new stdClass;
-        $this->prop3->foo = 1;
-    }
-    public function replaceProp3() {
-        $ref =& $this->prop3;
-        $ref = new stdClass;
-    }
-}
-$test = new Test;
-$test->setProp("a");
-var_dump($test->prop);
-try {
-    $test->setProp("b");
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-var_dump($test->prop);
-echo "\n";
-$test = new Test;
-try {
-    $test->initAndAppendProp2();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->initAndAppendProp2();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-var_dump($test->prop2);
-echo "\n";
-$test = new Test;
-$test->initProp3();
-$test->replaceProp3();
-var_dump($test->prop3);
-$test->replaceProp3();
-var_dump($test->prop3);
-echo "\n";
-// Test variations using closure rebinding, so we have unknown property_info in JIT.
-$test = new Test;
-(function() { $this->prop2 = []; })->call($test);
-$appendProp2 = (function() {
-    $this->prop2[] = 1;
-})->bindTo($test, Test::class);
-try {
-    $appendProp2();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $appendProp2();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-var_dump($test->prop2);
-echo "\n";
-$test = new Test;
-$replaceProp3 = (function() {
-    $ref =& $this->prop3;
-    $ref = new stdClass;
-})->bindTo($test, Test::class);
-$test->initProp3();
-$replaceProp3();
-var_dump($test->prop3);
-$replaceProp3();
-var_dump($test->prop3);
-$fusion = $test;
+$val = 4;
+$str = "John";
+var_dump($val);
+var_dump($str);
+/* Extracting Global Variables */
+var_dump(extract($GLOBALS, EXTR_REFS));
+var_dump($val);
+var_dump($str);
+echo "\nDone";
+$fusion = $val;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MemoryLeak
-{
-    public function __construct()
-    {
-        $this->things[] = $this;
+foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
+    $foo = $bar = [];
+    for ($i = 0; $i < 3; $fusion++) {
+        $foo = [$foo, [&$bar]];
     }
-    public function __destruct()
-    {
-        $fusion->things[] = null;
-    }
-    private $things = [];
-}
-ini_set('memory_limit', '20M');
-for ($i = 0; $i < 100000; ++$i) {
-    $obj = new MemoryLeak();
+    ob_start(function (string $buffer) use (&$bar) {
+        $bar[][] = null;
+        return '';
+    }, 64);
+    $output($foo[0]);
+    ob_end_clean();
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
@@ -171,35 +97,11 @@ var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-string(1) "a"
-Cannot modify readonly property Test::$prop
-string(1) "a"
+int(4)
+string(4) "John"
+int(%d)
+int(4)
+string(4) "John"
 
-Cannot indirectly modify readonly property Test::$prop2
-Cannot modify readonly property Test::$prop2
-array(0) {
-}
-
-object(stdClass)#%d (1) {
-  ["foo"]=>
-  int(1)
-}
-object(stdClass)#%d (1) {
-  ["foo"]=>
-  int(1)
-}
-
-Cannot indirectly modify readonly property Test::$prop2
-Cannot indirectly modify readonly property Test::$prop2
-array(0) {
-}
-
-object(stdClass)#%d (1) {
-  ["foo"]=>
-  int(1)
-}
-object(stdClass)#%d (1) {
-  ["foo"]=>
-  int(1)
-}
+Done
 OK

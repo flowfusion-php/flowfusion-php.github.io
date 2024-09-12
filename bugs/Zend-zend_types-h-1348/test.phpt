@@ -1,12 +1,5 @@
 --TEST--
-GH-12192 (SimpleXML infinite loop when getName() is called within foreach)+Lazy objects: Foreach initializes object
---INI--
-opcache.max_accelerated_files=10
-opcache.optimization_level=2147483647
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0101
+SplFileObject::fputcsv(): Checking data after calling the function+Lazy objects: Foreach initializes object
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,24 +64,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$xml = "<root><a>1</a><a>2</a></root>";
-$xml = simplexml_load_string($xml);
-$a = $xml->a;
-foreach ($a as $test) {
-    echo "Iteration\n";
-    var_dump($a->key());
-    var_dump($a->getName());
-    var_dump((string) $test);
-}
-var_dump($a);
-$fusion = $a;
+$fo = new SplFileObject(__DIR__ . '/SplFileObject_fputcsv1.csv', 'w');
+$data = array(1, 2, 'foo', 'haha', array(4, 5, 6), 1.3, null);
+$fo->fputcsv($data);
+var_dump($data);
+$fusion = $fo;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 #[AllowDynamicProperties]
 class C {
     public int $a;
     public int $b {
         get { return $this->b; }
-        set(int $value) { $fusion->b = $value; }
+        set(int $value) { $this->b = $value; }
     }
     public int $c {
         get { return $this->a + 2; }
@@ -96,7 +83,7 @@ class C {
     public function __construct() {
         var_dump(__METHOD__);
         $this->a = 1;
-        $this->b = 2;
+        $fusion->b = 2;
         $this->d = 4;
     }
 }
@@ -140,22 +127,35 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-simplexml
---EXPECT--
-Iteration
-string(1) "a"
-string(1) "a"
-string(1) "1"
-Iteration
-string(1) "a"
-string(1) "a"
-string(1) "2"
-object(SimpleXMLElement)#2 (2) {
+--CLEAN--
+<?php
+$file = __DIR__ . '/SplFileObject_fputcsv1.csv';
+unlink($file);
+?>
+--EXPECTF--
+Warning: Array to string conversion in %s on line %d
+array(7) {
   [0]=>
-  string(1) "1"
+  int(1)
   [1]=>
-  string(1) "2"
+  int(2)
+  [2]=>
+  string(3) "foo"
+  [3]=>
+  string(4) "haha"
+  [4]=>
+  array(3) {
+    [0]=>
+    int(4)
+    [1]=>
+    int(5)
+    [2]=>
+    int(6)
+  }
+  [5]=>
+  float(1.3)
+  [6]=>
+  NULL
 }
 # Ghost:
 string(11) "initializer"

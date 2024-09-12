@@ -1,9 +1,19 @@
-int(0)
-int(3)
-int(9)
-float(1)
-int(9999999800000001)
-float(1.219953680144986E+30)
-float(3.6893488147419103E+19)
+AutoGen::__get
+Test::__set
+AutoGen::__get
+object(Test)#2 (1) {
+  ["x":protected]=>
+  array(1) {
+    ["baz"]=>
+    string(5) "Check"
+  }
+}
+AutoGen::__get
+Test::__get
+string(5) "Check"
+
+Warning: Undefined variable $name in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused582.php on line 101
+
+Warning: Undefined variable $defaultThreshold in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused582.php on line 134
 /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46: runtime error: applying non-zero offset 36 to null pointer
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:5043:46 in

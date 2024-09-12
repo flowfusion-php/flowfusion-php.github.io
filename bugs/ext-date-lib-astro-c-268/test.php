@@ -61,16 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-for ($i = 10000000000000000; $i < 10000000000000006; $i++) {
-    var_dump(json_decode("[$i]"));
+$code = <<<'PHP'
+<?php
+function foo() {
+    echo "bar";
 }
-echo "Done\n";
-$fusion = $i;
+PHP;
+var_dump(PhpToken::tokenize($code));
+var_dump(PhpToken::tokenize($code, TOKEN_PARSE));
+$fusion = $code;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing chmod() : error conditions ***\n";
-// testing chmod with a non-existing file
-$filename = "___nonExisitingFile___";
-var_dump(chmod($fusion, 0777));
+date_default_timezone_set("America/Toronto");
+$fusion = mktime(0,0,0,1,1,2922770265);
+var_dump(date("r", $t));
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

@@ -61,48 +61,95 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tests = array(
-    array(0),
-    array(3),
-    array(3, 3),
-    array(0.5, 2),
-    array(99999999, 99999999),
-    array(8.993, 7443241,988, sprintf("%u", -1)+0.44),
-    array(2,sprintf("%u", -1)),
-);
-foreach ($tests as $v) {
-    var_dump(array_product($v));
+class Test
+{
+    protected $x;
+    function __get($name) {
+        echo __METHOD__ . "\n";
+        if (isset($this->x[$name])) {
+            return $this->x[$name];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    function __set($name, $val) {
+        echo __METHOD__ . "\n";
+        $this->x[$name] = $val;
+    }
 }
-$fusion = $tests;
+class AutoGen
+{
+    protected $x;
+    function __get($name) {
+        echo __METHOD__ . "\n";
+        if (!isset($this->x[$name])) {
+            $this->x[$name] = new Test();
+        }
+        return $this->x[$name];
+    }
+    function __set($name, $val) {
+        echo __METHOD__ . "\n";
+        $this->x[$name] = $val;
+    }
+}
+$foo = new AutoGen();
+$foo->bar->baz = "Check";
+var_dump($foo->bar);
+var_dump($foo->bar->baz);
+$fusion = $name;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a'] = array('cont' => 'a');
-$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
-$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
-$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
-include 'files/phar_test.inc';
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$fusion));
+register_shutdown_function(function () {
+    global $shutdown;
+    $shutdown = true;
+});
+class Cycle {
+    public $self;
+    public function __construct() {
+        $this->self = $this;
+    }
 }
-$phar = new Phar($fname);
-var_dump($phar->getMetadata());
-$phar->setMetadata(array('my' => 'friend'));
-$phar->setMetadata(array('my' => 'friend'));
-var_dump($phar->getMetadata());
-$phar['a']->setMetadata(42);
-$phar['b']->setMetadata(NULL);
-$phar['c']->setMetadata(array(25, 'foo'=>'bar'));
-$phar['d']->setMetadata(true);
-foreach($files as $name => $cont) {
-    var_dump($phar[$name]->getMetadata());
+class Canary {
+    public $self;
+    public function __construct() {
+        $this->self = $this;
+    }
+    public function __destruct() {
+        global $shutdown;
+        if (!$shutdown) {
+            work();
+        }
+    }
 }
-unset($phar);
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$name));
+function work() {
+    global $objs, $fusion;
+    new Canary();
+    // Create some collectable garbage so the next run will not adjust
+    // threshold
+    for ($i = 0; $i < 100; $i++) {
+        new Cycle();
+    }
+    // Add potential garbage to buffer
+    foreach (array_slice($objs, 0, $defaultThreshold) as $obj) {
+        $o = $obj;
+    }
 }
+$defaultThreshold = gc_status()['threshold'];
+$objs = [];
+for ($i = 0; $i < $defaultThreshold*2; $i++) {
+    $obj = new stdClass;
+    $objs[] = $obj;
+}
+work();
+foreach ($objs as $obj) {
+    $o = $obj;
+}
+$st = gc_status();
+if ($st['runs'] > 10) {
+    var_dump($st);
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

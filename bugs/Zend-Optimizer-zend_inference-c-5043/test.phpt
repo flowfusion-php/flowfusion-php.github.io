@@ -1,17 +1,17 @@
 --TEST--
-Bug #35014 (array_product() always returns 0) (64bit)+Phar with metadata (write)
+ZE2 __set() and __get()+GH-13670 002
 --INI--
-precision=14
-phar.require_hash=0
-phar.readonly=0
-max_input_vars=4
-default_charset=UTF-8
+sendmail_path={MAIL:{PWD}/mb_send_mail04.eml}
+max_input_vars=100
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0001
+opcache.jit=0051
 --SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
+<?php
+// gc_threshold is global state
+if (getenv('SKIP_REPEAT')) die('skip Not repeatable');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -76,84 +76,112 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tests = array(
-    array(0),
-    array(3),
-    array(3, 3),
-    array(0.5, 2),
-    array(99999999, 99999999),
-    array(8.993, 7443241,988, sprintf("%u", -1)+0.44),
-    array(2,sprintf("%u", -1)),
-);
-foreach ($tests as $v) {
-    var_dump(array_product($v));
+class Test
+{
+    protected $x;
+    function __get($name) {
+        echo __METHOD__ . "\n";
+        if (isset($this->x[$name])) {
+            return $this->x[$name];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    function __set($name, $val) {
+        echo __METHOD__ . "\n";
+        $this->x[$name] = $val;
+    }
 }
-$fusion = $tests;
+class AutoGen
+{
+    protected $x;
+    function __get($name) {
+        echo __METHOD__ . "\n";
+        if (!isset($this->x[$name])) {
+            $this->x[$name] = new Test();
+        }
+        return $this->x[$name];
+    }
+    function __set($name, $val) {
+        echo __METHOD__ . "\n";
+        $this->x[$name] = $val;
+    }
+}
+$foo = new AutoGen();
+$foo->bar->baz = "Check";
+var_dump($foo->bar);
+var_dump($foo->bar->baz);
+$fusion = $name;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a'] = array('cont' => 'a');
-$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
-$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
-$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
-include 'files/phar_test.inc';
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$fusion));
+register_shutdown_function(function () {
+    global $shutdown;
+    $shutdown = true;
+});
+class Cycle {
+    public $self;
+    public function __construct() {
+        $this->self = $this;
+    }
 }
-$phar = new Phar($fname);
-var_dump($phar->getMetadata());
-$phar->setMetadata(array('my' => 'friend'));
-$phar->setMetadata(array('my' => 'friend'));
-var_dump($phar->getMetadata());
-$phar['a']->setMetadata(42);
-$phar['b']->setMetadata(NULL);
-$phar['c']->setMetadata(array(25, 'foo'=>'bar'));
-$phar['d']->setMetadata(true);
-foreach($files as $name => $cont) {
-    var_dump($phar[$name]->getMetadata());
+class Canary {
+    public $self;
+    public function __construct() {
+        $this->self = $this;
+    }
+    public function __destruct() {
+        global $shutdown;
+        if (!$shutdown) {
+            work();
+        }
+    }
 }
-unset($phar);
-foreach($files as $name => $cont) {
-    var_dump(file_get_contents($pname.'/'.$name));
+function work() {
+    global $objs, $fusion;
+    new Canary();
+    // Create some collectable garbage so the next run will not adjust
+    // threshold
+    for ($i = 0; $i < 100; $i++) {
+        new Cycle();
+    }
+    // Add potential garbage to buffer
+    foreach (array_slice($objs, 0, $defaultThreshold) as $obj) {
+        $o = $obj;
+    }
 }
+$defaultThreshold = gc_status()['threshold'];
+$objs = [];
+for ($i = 0; $i < $defaultThreshold*2; $i++) {
+    $obj = new stdClass;
+    $objs[] = $obj;
+}
+work();
+foreach ($objs as $obj) {
+    $o = $obj;
+}
+$st = gc_status();
+if ($st['runs'] > 10) {
+    var_dump($st);
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-phar
---CLEAN--
-<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php'); ?>
---EXPECT--
-int(0)
-int(3)
-int(9)
-float(1)
-int(9999999800000001)
-float(1.219953680144986E+30)
-float(3.6893488147419103E+19)
-string(1) "a"
-string(1) "b"
-string(1) "c"
-string(1) "d"
-NULL
-array(1) {
-  ["my"]=>
-  string(6) "friend"
+--EXPECTF--
+AutoGen::__get
+Test::__set
+AutoGen::__get
+object(Test)#%d (1) {
+  ["x":protected]=>
+  array(1) {
+    ["baz"]=>
+    string(5) "Check"
+  }
 }
-int(42)
-NULL
-array(2) {
-  [0]=>
-  int(25)
-  ["foo"]=>
-  string(3) "bar"
-}
-bool(true)
-string(1) "a"
-string(1) "b"
-string(1) "c"
-string(1) "d"
+AutoGen::__get
+Test::__get
+string(5) "Check"
+==DONE==
