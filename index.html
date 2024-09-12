@@ -45,11 +45,19 @@
             return formatted + "/index.html";
         }
 
-        // Function to read the JSON file and display bugs in a table
+        // Function to parse and format the mtime for sorting
+        function parseMtime(mtime) {
+            return new Date(mtime).getTime();
+        }
+
+        // Function to read the JSON file and display bugs in a table, sorted by mtime
         async function loadBugs() {
             try {
                 const response = await fetch('./bugs.json');
                 const bugs = await response.json();
+
+                // Sort bugs by mtime (latest first)
+                bugs.sort((a, b) => parseMtime(b.mtime) - parseMtime(a.mtime));
 
                 const bugTableBody = document.getElementById('bug-table-body');
 
@@ -57,17 +65,17 @@
                     // Create a new table row
                     const row = document.createElement('tr');
 
-                    // Bug ID
-                    const bugIDCell = document.createElement('td');
-                    bugIDCell.textContent = bug.bugID;
-                    row.appendChild(bugIDCell);
+                    // Time (mtime) column
+                    const timeCell = document.createElement('td');
+                    timeCell.textContent = bug.mtime;
+                    row.appendChild(timeCell);
 
-                    // Crash site
+                    // Crash site column
                     const crashSiteCell = document.createElement('td');
                     crashSiteCell.textContent = bug.identifier; // renamed from 'identifier' to 'crash site'
                     row.appendChild(crashSiteCell);
 
-                    // Bug Hits
+                    // Bug Hits column
                     const bugHitsCell = document.createElement('td');
                     bugHitsCell.textContent = bug.bugHit;
                     row.appendChild(bugHitsCell);
@@ -98,7 +106,7 @@
     <table>
         <thead>
             <tr>
-                <th>Bug ID</th>
+                <th>Time</th>
                 <th>Crash Site</th>
                 <th>Bug Hits</th>
                 <th>Link</th>
