@@ -61,21 +61,54 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$b = [0, 1, 2];
-var_dump($b);
-substr_replace("test", $b, "1");
-var_dump($b);
-$fusion = $b;
+$dom = DOM\XMLDocument::createFromString("<root/>");
+$list = $dom->documentElement->classList;
+try {
+    $list->add("");
+} catch (DOMException $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $list->add("  ");
+} catch (DOMException $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $list->add("\0");
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $list->add(0);
+} catch (TypeError $e) {
+    echo $e->getMessage(), "\n";
+}
+echo $dom->saveXML(), "\n";
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fd = fopen('php://temp', 'r+');
-$delimiter = 'MM';
-$str = str_repeat('.', 8191) . $delimiter . "rest";
-fwrite($fd, $str);
-rewind($fd);
-$line = stream_get_line($fd, 9000, $delimiter);
-var_dump(strlen($fusion));
-$line = stream_get_line($fd, 9000, $delimiter);
-var_dump($line);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$fusion = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+       echo "--- testing: $longVal + $otherVal ---\n";
+      var_dump($longVal+$otherVal);
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+       echo "--- testing: $otherVal + $longVal ---\n";
+      var_dump($otherVal+$longVal);
+   }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

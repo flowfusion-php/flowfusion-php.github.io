@@ -61,49 +61,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Peoples implements ArrayAccess {
-    public $person;
-    function __construct() {
-        $this->person = array(array('name'=>'Joe'));
-    }
-    function offsetExists($index): bool {
-        return array_key_exists($this->person, $index);
-    }
-    function offsetGet($index): mixed {
-        return $this->person[$index];
-    }
-    function offsetSet($index, $value): void {
-        $this->person[$index] = $value;
-    }
-    function offsetUnset($index): void {
-        unset($this->person[$index]);
+interface I {
+    public $prop { get; }
+}
+class A implements I {
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
-$people = new Peoples;
-var_dump($people->person[0]['name']);
-$people->person[0]['name'] = $people->person[0]['name'] . 'Foo';
-var_dump($people->person[0]['name']);
-$people->person[0]['name'] .= 'Bar';
-var_dump($people->person[0]['name']);
-echo "---ArrayOverloading---\n";
-$people = new Peoples;
-var_dump($people[0]);
-var_dump($people[0]['name']);
-var_dump($people->person[0]['name'] . 'Foo'); // impossible to assign this since we don't return references here
-$x = $people[0]; // creates a copy
-$x['name'] .= 'Foo';
-$people[0] = $x;
-var_dump($people[0]);
-$people[0]['name'] = 'JoeFoo';
-var_dump($people[0]['name']);
-$people[0]['name'] = 'JoeFooBar';
-var_dump($people[0]['name']);
-$fusion = $index;
+function test(I $i) {
+    $ref = &$i->prop;
+    $ref = 42;
+}
+$a = new A();
+test($a);
+var_dump($a);
+$fusion = $ref;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(preg_match_all('/.*\p{N}/', '0123456789', $fusion));
-var_dump(preg_last_error_msg() === 'Backtrack limit exhausted');
-var_dump(preg_match_all('/\p{Nd}/', '0123456789', $dummy));
-var_dump(preg_last_error_msg() === 'No error');
+foreach($fusion as $val);
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

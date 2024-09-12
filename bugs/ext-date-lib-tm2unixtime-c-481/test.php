@@ -61,31 +61,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class evilClass {
-    public $name;
-    function __wakeup() {
-        unset($this->name);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$numbers = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit - 1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1,
+    // floats rounded as int
+    MAX_64Bit - 1024.0, MIN_64Bit + 1024.0
+);
+$precisions = array(
+    5,
+    0,
+    -1,
+    -5,
+    -10,
+    -11,
+    -17,
+    -19,
+    -20,
+    PHP_INT_MIN,
+);
+foreach ($numbers as $number) {
+    echo "--- testing: ";
+    var_dump($number);
+    foreach ($precisions as $precision) {
+        echo "... with precision " . $precision . ": ";
+        var_dump(number_format($number, $precision));
     }
 }
-$fakezval = pack(
-    'IIII',
-    0x00100000,
-    0x00000400,
-    0x00000000,
-    0x00000006
-);
-$data = unserialize('a:2:{i:0;O:9:"evilClass":1:{s:4:"name";a:2:{i:0;i:1;i:1;i:2;}}i:1;R:4;}');
-for($i = 0; $i < 5; $i++) {
-    $v[$i] = $fakezval.$i;
-}
-var_dump($data);
-$fusion = $v;
+$fusion = $numbers;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-spl_autoload_register(function($fusion) {
-    echo new ReflectionClass(A::class), "\n";
-});
-class A implements I {
+function foo() {
+    $fusion[0][0] += 2;
+    return $a[0];
 }
+var_dump(foo());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

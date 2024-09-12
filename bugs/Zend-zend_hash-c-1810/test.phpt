@@ -1,12 +1,8 @@
 --TEST--
-ReflectionNamedType::getName() and ReflectionNamedType::__toString()+Handling of UNDEF property in compound assign 
+Bug #72496 (declare public method with signature incompatible with parent private method should not throw a warning)+FR #62369 (Segfault on json_encode(deeply_nested_array)
 --INI--
-opcache.memory_consumption=7
-session.upload_progress.enabled=0
+error_reporting=E_ALL & ~E_DEPRECATED
 opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0243
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,55 +67,67 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function testInternalTypes(?Traversable $traversable): ?string {
-    return 'test';
+class Foo
+{
+    private function getFoo()
+    {
+        return 'Foo';
+    }
+    private function getBar()
+    {
+        return 'Bar';
+    }
+    private function getBaz()
+    {
+        return 'Baz';
+    }
 }
-function testUserDefinedTypes(?Test $traversable): ?Test {
-    return new Test;
+class Bar extends Foo
+{
+    public function getFoo($extraArgument)
+    {
+        return $extraArgument;
+    }
+    protected function getBar($extraArgument)
+    {
+        return $extraArgument;
+    }
+    private function getBaz($extraArgument)
+    {
+        return $extraArgument;
+    }
 }
-$function = new ReflectionFunction('testInternalTypes');
-$type = $function->getParameters()[0]->getType();
-$return = $function->getReturnType();
-var_dump($type->getName());
-var_dump((string) $type);
-var_dump($return->getName());
-var_dump((string) $return);
-$function = new ReflectionFunction('testUserDefinedTypes');
-$type = $function->getParameters()[0]->getType();
-$return = $function->getReturnType();
-var_dump($type->getName());
-var_dump((string) $type);
-var_dump($return->getName());
-var_dump((string) $return);
-$fusion = $traversable;
+echo "OK\n";
+$fusion = $extraArgument;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    public $a = 0;
+$array = array();
+for ($i=0; $i < 550; $fusion++) {
+    $array = array($array);
 }
-function foo() {
-    $x = new C;
-    $x->a = 1;
-    unset($fusion->a);
-    $x->a += 2;
-    var_dump($x);
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
 }
-foo();
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-string(11) "Traversable"
-string(12) "?Traversable"
-string(6) "string"
-string(7) "?string"
-string(4) "Test"
-string(5) "?Test"
-string(4) "Test"
-string(5) "?Test"
-Warning: Undefined property: C::$a in %s on line %d
-object(C)#1 (1) {
-  ["a"]=>
-  int(2)
-}
+--EXPECT--
+OK
+OK
+ERROR

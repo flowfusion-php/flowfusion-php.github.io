@@ -61,46 +61,23 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-trait Singleton {
-  protected static $instances=array();
-  abstract protected function __construct($config);
-  public static function getInstance($config) {
-    if (!isset(self::$instances[$serialize = serialize($config)])) {
-      self::$instances[$serialize] = new self($config);
-    }
-    return self::$instances[$serialize];
-  }
-}
-class MyHelloWorld {
-  use Singleton;
-  public function __construct($config)
-  {
-    var_dump( $config);
-  }
-}
-$o= myHelloWorld::getInstance(1);
-$o= myHelloWorld::getInstance(1);
-$o= myHelloWorld::getInstance(2);
-$o= myHelloWorld::getInstance(array(1=>2));
-$o= myHelloWorld::getInstance(array(1=>2));
-$fusion = $o;
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-error_reporting(E_ALL & ~E_DEPRECATED);
-function foo1($arg) {
+$array = ['foo'];
+reset($array);
+while (true) {
+    $key = key($array);
+    next($array);
+    var_dump($key);
+    unset($array[$key]);
+    $array[] = 'foo';
+    if ($key === 10) {
+        break;
+    }
 }
-function foo2($arg) {
-}
-function foo3() {
-    error_reporting(E_ALL);
-    echo $fusion;
-    throw new Exception("test");
-}
-try {
-    @foo1(@foo2(@foo3()));
-} catch (Exception $e) {
-}
-var_dump(error_reporting());
-echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

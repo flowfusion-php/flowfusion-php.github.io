@@ -1,4 +1,5 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
-
-Termsig=6
+no dst --> dst
+gmmktime(1,0,0,3,27,): -62191407600 | gmdate('r', -62191407600):Sat, 27 Mar -001 01:00:00 +0000
+gmmktime(2,0,0,3,27,-1): -1962571326605416800 | gmdate('r', -1962571326605416800):Mon, 27 Mar -62191407600 02:00:00 +0000
+gmmktime(3,0,0,3,27,-62191407600): /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:464:13: runtime error: signed integer overflow: -4906428316513542 * 146097 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:464:13 in

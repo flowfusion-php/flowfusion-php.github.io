@@ -61,15 +61,38 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-try {
-    assert(false && "Is this evaluated?");
-} catch (Throwable $e) {
-    echo $e::class, ': ', $e->getMessage(), PHP_EOL;
+class ezcConsoleOutput
+{
+    protected static $color = array( 'gray' => 30 );
+    public static function isValidFormatCode( $type, $key )
+    {
+        return isset( self::${$type}[$key] );
+    }
 }
-$fusion = $e;
+var_dump( ezcConsoleOutput::isValidFormatCode( 'color', 'gray' ) );
+$fusion = $color;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo {
-    public int $fusion = "string";
+$array = array();
+for ($i=0; $fusion < 550; $i++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

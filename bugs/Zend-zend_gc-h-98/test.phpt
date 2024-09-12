@@ -1,12 +1,9 @@
 --TEST--
-Bug #24884 (calling $this->__clone(); crashes php)+SQLite3 - memory leak on SQLite3Result and SQLite3Stmt
+The SensitiveParameterValue replacement value correctly captures the original value.+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
-session.auto_start=0
-sendmail_path={MAIL:{PWD}/mb_send_mail03.eml}
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0043
+zend.enable_gc = 1
+session.cookie_httponly=TRUE
+opcache.enable=0
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,40 +68,88 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test {
-    function __copy()
-    {
-        $string = PHP_VERSION;
-        $version = $string[0];
-        if($string < 5)
-        {
-            return $this;
-        }
-        else
-        {
-            return clone $this;
-        }
-    }
+function test(
+    $foo,
+    #[SensitiveParameter] $bar,
+    $baz
+) {
+    throw new Exception('Error');
 }
-$test = new Test();
-$test2 = $test->__copy();
-var_dump($test2);
-$fusion = $version;
+try {
+    test('foo', 'bar', 'baz');
+    echo 'Not reached';
+} catch (Exception $e) {
+    echo $e->getMessage(), PHP_EOL;
+    $testFrame = $e->getTrace()[0];
+    var_dump($testFrame['function']);
+    var_dump(count($testFrame['args']));
+    var_dump($testFrame['args'][0]);
+    assert($testFrame['args'][1] instanceof SensitiveParameterValue);
+    var_dump($testFrame['args'][1]->getValue());
+    var_dump($testFrame['args'][2]);
+    echo "Success", PHP_EOL;
+}
+function test2(
+    $foo,
+    #[SensitiveParameter] ...$variadic,
+) {
+    throw new Exception('Error 2');
+}
+try {
+    test2('foo', 'variadic1', 'variadic2', 'variadic3');
+    echo 'Not reached';
+} catch (Exception $e) {
+    echo $e->getMessage(), PHP_EOL;
+    $testFrame = $e->getTrace()[0];
+    var_dump($testFrame['function']);
+    var_dump(count($testFrame['args']));
+    var_dump($testFrame['args'][0]);
+    assert($testFrame['args'][1] instanceof SensitiveParameterValue);
+    var_dump($testFrame['args'][1]->getValue());
+    assert($testFrame['args'][2] instanceof SensitiveParameterValue);
+    var_dump($testFrame['args'][2]->getValue());
+    assert($testFrame['args'][3] instanceof SensitiveParameterValue);
+    var_dump($testFrame['args'][3]->getValue());
+    echo "Success", PHP_EOL;
+}
+$fusion = $testFrame;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function test(&$x) {
-    $class = new SQLite3(':memory:');
-    $x = $fusion->prepare('SELECT 1');
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
+    }
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
 }
-test($foo);
-echo "done\n";
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-sqlite3
 --EXPECTF--
-object(Test)#%d (0) {
-}
-done
+Error
+string(4) "test"
+int(3)
+string(3) "foo"
+string(3) "bar"
+string(3) "baz"
+Success
+Error 2
+string(5) "test2"
+int(4)
+string(3) "foo"
+string(9) "variadic1"
+string(9) "variadic2"
+string(9) "variadic3"
+Success
+OK

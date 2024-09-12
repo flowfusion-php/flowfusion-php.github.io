@@ -1,14 +1,5 @@
 --TEST--
-Use disable_functions INI setting to disable assert()+Test typed properties disallow incorrect type initial value (scalar)
---INI--
-zend.assertions=1
-disable_functions=assert
-opcache.preload={PWD}/preload_user.inc
-max_input_vars=4
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0201
+Bug #53347 Segfault accessing static method+FR #62369 (Segfault on json_encode(deeply_nested_array)
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -73,21 +64,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-try {
-    assert(false && "Is this evaluated?");
-} catch (Throwable $e) {
-    echo $e::class, ': ', $e->getMessage(), PHP_EOL;
+class ezcConsoleOutput
+{
+    protected static $color = array( 'gray' => 30 );
+    public static function isValidFormatCode( $type, $key )
+    {
+        return isset( self::${$type}[$key] );
+    }
 }
-$fusion = $e;
+var_dump( ezcConsoleOutput::isValidFormatCode( 'color', 'gray' ) );
+$fusion = $color;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Foo {
-    public int $fusion = "string";
+$array = array();
+for ($i=0; $fusion < 550; $i++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-Error: Call to undefined function assert()
-Fatal error: Cannot use string as default value for property Foo::$bar of type int in %s on line 3
+--EXPECT--
+bool(true)
+OK
+ERROR

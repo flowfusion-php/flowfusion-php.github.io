@@ -61,50 +61,44 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// Extra args
-function gen1() {
-    yield;
+try {
+    Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/gb18030_without_charset.html'), overrideEncoding: 'nonexistent');
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
 }
-$obj = new stdClass;
-$obj->gen = gen1($obj);
-// Symtable
-function gen2() {
-    $varName = 'a';
-    $$varName = yield;
-    yield;
-}
-$gen = gen2();
-$gen->send($gen);
-// Symtable indirect
-function gen3() {
-    $varName = 'a';
-    $$varName = 42;
-    $var = yield;
-    yield;
-}
-$gen = gen3();
-$gen->send($gen);
-// Yield from root
-function gen4() {
-    yield from yield;
-}
-$gen = gen4();
-$gen2 = gen4($gen);
-$gen2->send([1, 2, 3]);
-$gen->send($gen2);
-?>
+// The override encoding matches with the document encoding attribute
+$dom = Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/gb18030_without_charset.html'), overrideEncoding: 'GB18030');
+var_dump($dom->documentElement->lastChild->textContent);
+var_dump($dom->charset);
+// The override encoding mismatches with the document encoding attribute
+$dom = Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/fallback_encoding.html'), overrideEncoding: 'Windows-1252');
+var_dump($dom->documentElement->lastChild->textContent);
+var_dump($dom->charset);
+$fusion = $dom;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class A {
-    use T2 { t2method as Bmethod; }
-}
-class B extends A {
-}
-trait T2 {
-    public function t2method() {
-    }
-}
-print_r(get_class_methods("A"));
-print_r(get_class_methods("B"));
+/*
+ * Reference two arrays to each other then call reset() to test position of
+ * internal pointer in both arrays
+ */
+echo "*** Testing reset() : usage variations ***\n";
+$array1 = array ('zero', 'one', 'two');
+echo "\n-- Initial position of internal pointer --\n";
+var_dump(current($fusion));
+// Test that when two variables are referenced to one another
+// the internal pointer is the same for both
+$array2 = &$array1;
+next($array1);
+echo "\n-- Position after calling next() --\n";
+echo "\$array1: ";
+var_dump(current($array1));
+echo "\$array2: ";
+var_dump(current($array2));
+echo "\n-- Position after calling reset() --\n";
+var_dump(reset($array1));
+echo "\$array1: ";
+var_dump(current($array1));
+echo "\$array2: ";
+var_dump(current($array2));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

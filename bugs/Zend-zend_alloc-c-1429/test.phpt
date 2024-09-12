@@ -1,12 +1,14 @@
 --TEST--
-Properties serialization for SplFixedArray should have updated properties+lcg_value() deprecation
+Test open_basedir configuration+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
-session.auto_start=1
-session.gc_probability=1
+open_basedir=.
+zend.enable_gc = 1
+opcache.validate_timestamps=1
+max_input_vars=10
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1245
+opcache.jit=0040
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,73 +73,90 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-#[AllowDynamicProperties]
-class MySplFixedArray extends SplFixedArray {
-    public $x;
-    public int $y = 3;
-}
-$x = new MySplFixedArray(2);
-var_dump($x->y);
-$x->y = 2;
-var_dump($x->y);
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
-$x->dynamic_property = "dynamic_property_value";
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
-$x->dynamic_property = "dynamic_property_value2";
-$x->y = 4;
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
+require_once "open_basedir.inc";
+$initdir = getcwd();
+test_open_basedir_before("tempnam");
+var_dump(tempnam("../bad", "test"));
+var_dump(tempnam("..", "test"));
+var_dump(tempnam("../", "test"));
+var_dump(tempnam("/", "test"));
+var_dump(tempnam("../bad/.", "test"));
+var_dump(tempnam("./../.", "test"));
+var_dump(tempnam("", "test"));
+//absolute test
+$file = tempnam($initdir."/test/ok", "test");
+var_dump($file);
+var_dump(unlink($file));
+//relative test
+$file = tempnam(".", "test");
+var_dump($file);
+var_dump(unlink($file));
+$file = tempnam("../ok", "test");
+var_dump($file);
+var_dump(unlink($file));
+test_open_basedir_after("tempnam");
+$fusion = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(lcg_value());
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
+    }
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--CLEAN--
+<?php
+require_once "open_basedir.inc";
+delete_directories();
+?>
 --EXPECTF--
-int(3)
-int(2)
-string(61) "O:15:"MySplFixedArray":4:{i:0;N;i:1;N;s:1:"x";N;s:1:"y";i:2;}"
-object(MySplFixedArray)#2 (4) {
-  [0]=>
-  NULL
-  [1]=>
-  NULL
-  ["x"]=>
-  NULL
-  ["y"]=>
-  int(2)
-}
-string(115) "O:15:"MySplFixedArray":5:{i:0;N;i:1;N;s:1:"x";N;s:1:"y";i:2;s:16:"dynamic_property";s:22:"dynamic_property_value";}"
-object(MySplFixedArray)#2 (5) {
-  [0]=>
-  NULL
-  [1]=>
-  NULL
-  ["x"]=>
-  NULL
-  ["y"]=>
-  int(2)
-  ["dynamic_property"]=>
-  string(22) "dynamic_property_value"
-}
-string(116) "O:15:"MySplFixedArray":5:{i:0;N;i:1;N;s:1:"x";N;s:1:"y";i:4;s:16:"dynamic_property";s:23:"dynamic_property_value2";}"
-object(MySplFixedArray)#2 (5) {
-  [0]=>
-  NULL
-  [1]=>
-  NULL
-  ["x"]=>
-  NULL
-  ["y"]=>
-  int(4)
-  ["dynamic_property"]=>
-  string(23) "dynamic_property_value2"
-}
-Deprecated: Function lcg_value() is deprecated since 8.4, use \Random\Randomizer::getFloat() instead in %s on line %d
-float(%f)
+*** Testing open_basedir configuration [tempnam] ***
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
+
+Warning: tempnam(): open_basedir restriction in effect. File(../bad) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(..) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(../) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(/) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(../bad/.) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(./../.) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+
+Warning: tempnam(): open_basedir restriction in effect. File(%s) is not within the allowed path(s): (.) in %s on line %d
+bool(false)
+string(%d) "%s"
+bool(true)
+string(%d) "%s"
+bool(true)
+string(%d) "%s"
+bool(true)
+*** Finished testing open_basedir configuration [tempnam] ***
+OK

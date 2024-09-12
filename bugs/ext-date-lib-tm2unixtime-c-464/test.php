@@ -61,12 +61,37 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-K
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function f() {
-    return array(1, 2);
+echo "no dst --> dst\n";
+$ts = -1;
+gm_date_check(01,00,00,03,27,2005);
+gm_date_check(02,00,00,03,27,2005);
+gm_date_check(03,00,00,03,27,2005);
+gm_date_check(04,00,00,03,27,2005);
+echo "\ndst --> no dst\n";
+$ts = -1;
+gm_date_check(01,00,00,10,30,2005);
+gm_date_check(02,00,00,10,30,2005);
+gm_date_check(03,00,00,10,30,2005);
+gm_date_check(04,00,00,10,30,2005);
+function gm_date_check($hour, $minute, $second, $month, $day, $year) {
+    global $ts, $tsold;
+    echo "gmmktime($hour,$minute,$second,$month,$day,$tsold): ";
+    $tsold = $ts;
+    $ts = gmmktime($hour, $minute, $second, $month, $day, $tsold);
+    echo $ts, " | gmdate('r', $ts):", gmdate('r', $ts);
+    if ($tsold > 0) {
+        echo " | Diff: " . ($ts - $tsold);
+    }
+    echo "\n";
 }
-var_dump(next(f()));
+$fusion = $minute;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$fusion = new \DateTimeImmutable(
+    '2770-01-00 15:00:00.000000',
+    new \DateTimeZone('UTC')
+);
+\var_dump($datetime->format('j') === '0');
+\var_dump($datetime);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

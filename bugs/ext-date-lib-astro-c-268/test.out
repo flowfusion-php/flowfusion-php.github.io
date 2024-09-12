@@ -1,4 +1,40 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3199: int zend_jit_script(zend_script *): Assertion `0' failed.
-Aborted (core dumped)
+array(3) {
+  [0]=>
+  string(1) ","
+  [1]=>
+  string(1) """
+  [2]=>
+  string(0) ""
+}
+bool(true)
+bool(false)
+string(11) "random_var:"
+array(0) {
+}
+int(9223372036854775807)
+int(9223372036854775807)
+Calling function: is_subclass_of with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
 
-Termsig=6
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+Array, Array, Array
+Error calling function is_subclass_of: is_subclass_of(): Argument #2 ($class) must be of type string, array given
+Calling function: rand with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+Array, 9223372036854775807
+Error calling function rand: rand(): Argument #1 ($min) must be of type int, array given
+Calling function: link with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+Array, 9223372036854775807
+Error calling function link: link(): Argument #1 ($target) must be of type string, array given
+Calling function: strspn with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused109.php on line 38
+9223372036854775807, Array, 9223372036854775807, Array
+Error calling function strspn: strspn(): Argument #2 ($characters) must be of type string, array given
+Calling function: date_sun_info with arguments: 9223372036854775807, 9223372036854775807, 9223372036854775807
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17: runtime error: -nan is outside the range of representable values of type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/astro.c:268:17 in

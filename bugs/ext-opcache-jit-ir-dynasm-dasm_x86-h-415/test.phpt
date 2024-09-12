@@ -1,20 +1,12 @@
 --TEST--
-ZE2 ArrayAccess and sub Arrays+Test preg_match_all() function : error conditions - Backtracking limit
+By-value get may be implemented as by-reference+foreach() & undefined var
 --INI--
-pcre.backtrack_limit=2
-pcre.jit=0
-opcache.interned_strings_buffer=131072
-opcache.jit=1255
+opcache.max_accelerated_files=10
+error_reporting=E_ALL^E_NOTICE
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1243
---SKIPIF--
-<?php
-if (@preg_match_all('/\p{N}/', '0123456789', $dummy) === false) {
-    die("skip no support for \p support PCRE library");
-}
-?>
+opcache.jit=0101
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -79,76 +71,37 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Peoples implements ArrayAccess {
-    public $person;
-    function __construct() {
-        $this->person = array(array('name'=>'Joe'));
-    }
-    function offsetExists($index): bool {
-        return array_key_exists($this->person, $index);
-    }
-    function offsetGet($index): mixed {
-        return $this->person[$index];
-    }
-    function offsetSet($index, $value): void {
-        $this->person[$index] = $value;
-    }
-    function offsetUnset($index): void {
-        unset($this->person[$index]);
+interface I {
+    public $prop { get; }
+}
+class A implements I {
+    private $_prop;
+    public $prop {
+        &get => $this->_prop;
     }
 }
-$people = new Peoples;
-var_dump($people->person[0]['name']);
-$people->person[0]['name'] = $people->person[0]['name'] . 'Foo';
-var_dump($people->person[0]['name']);
-$people->person[0]['name'] .= 'Bar';
-var_dump($people->person[0]['name']);
-echo "---ArrayOverloading---\n";
-$people = new Peoples;
-var_dump($people[0]);
-var_dump($people[0]['name']);
-var_dump($people->person[0]['name'] . 'Foo'); // impossible to assign this since we don't return references here
-$x = $people[0]; // creates a copy
-$x['name'] .= 'Foo';
-$people[0] = $x;
-var_dump($people[0]);
-$people[0]['name'] = 'JoeFoo';
-var_dump($people[0]['name']);
-$people[0]['name'] = 'JoeFooBar';
-var_dump($people[0]['name']);
-$fusion = $index;
+function test(I $i) {
+    $ref = &$i->prop;
+    $ref = 42;
+}
+$a = new A();
+test($a);
+var_dump($a);
+$fusion = $ref;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(preg_match_all('/.*\p{N}/', '0123456789', $fusion));
-var_dump(preg_last_error_msg() === 'Backtrack limit exhausted');
-var_dump(preg_match_all('/\p{Nd}/', '0123456789', $dummy));
-var_dump(preg_last_error_msg() === 'No error');
+foreach($fusion as $val);
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECTF--
-string(3) "Joe"
-string(6) "JoeFoo"
-string(9) "JoeFooBar"
----ArrayOverloading---
-array(1) {
-  ["name"]=>
-  string(3) "Joe"
+object(A)#1 (1) {
+  ["_prop":"A":private]=>
+  int(42)
 }
-string(3) "Joe"
-string(6) "JoeFoo"
-array(1) {
-  ["name"]=>
-  string(6) "JoeFoo"
-}
+Warning: Undefined variable $a in %s on line %d
 
-Notice: Indirect modification of overloaded element of Peoples has no effect in %sarray_access_005.php on line 46
-string(6) "JoeFoo"
-
-Notice: Indirect modification of overloaded element of Peoples has no effect in %sarray_access_005.php on line 48
-string(6) "JoeFoo"
-bool(false)
-bool(true)
-int(10)
-bool(true)
+Warning: foreach() argument must be of type array|object, null given in %s on line %d
+Done

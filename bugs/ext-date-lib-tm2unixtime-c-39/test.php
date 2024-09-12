@@ -61,43 +61,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class BlaIterator implements Iterator
-{
-    public function rewind(): void { }
-    public function next(): void { }
-    public function valid(): bool {
-        return true;
-    }
-    public function current(): mixed
-    {
-      throw new Exception('boo');
-    }
-    public function key(): mixed { return null; }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(round($longVal));
 }
-$it = new BlaIterator();
-$itit = new IteratorIterator($it);
-try {
-  foreach($itit as $key => $value) {
-    echo $key, $value;
-  }
-}
-catch (Exception $e) {
-    var_dump($e->getMessage());
-}
-var_dump($itit->current());
-var_dump($itit->key());
-$fusion = $it;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-ob_start();
-var_dump(session_start());
-session_module_name("user");
-var_dump(session_destroy());
-try {
-    session_module_name("user");
-} catch (\ValueError $fusion) {
-    echo $e->getMessage() . \PHP_EOL;
-}
-?>
+/* Test copy(): Trying to copy the file to a destination, where destination is an existing dir */
+$file_path = __DIR__;
+echo "*** Test copy() function: Trying to create a copy of source file as a dir ***\n";
+$file = $file_path."/copy_variation11.tmp";
+$file_handle =  fopen($file, "w");
+fwrite($file_handle, str_repeat("Hello, world...", 20));
+fclose($file_handle);
+$dir = $file_path."/copy_variation11";
+mkdir($dir);
+echo "Size of source before copy operation => ";
+var_dump( filesize($file) );  //size of source before copy
+clearstatcache();
+echo "Size of destination before copy operation => ";
+var_dump( filesize($dir) );  //size of destination before copy
+clearstatcache();
+echo "\n-- Now applying copy() operation --\n";
+var_dump( copy($file, $dir) );  //expected: bool(false)
+var_dump( file_exists($file) );  //expected: bool(true)
+var_dump( file_exists($dir) );  //expected: bool(true)
+var_dump( is_file($file) );  //expected: bool(true)
+var_dump( is_dir($file) );  //expected: bool(false)
+var_dump( is_file($fusion) ); //expected: bool(false)
+var_dump( is_dir($dir) );  //expected: bool(true)
+var_dump( filesize($file) );   //size of source after copy
+var_dump( filesize($dir) );   //size of destination after copy
+echo "*** Done ***\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

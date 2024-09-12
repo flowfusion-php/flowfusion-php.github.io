@@ -1,13 +1,12 @@
 --TEST--
-External covariant return type of self+PDO Common: Bug #47769 (Strange extends PDO)
+Test octdec function : 64bit long tests+ZE2 The new constructor/destructor is called
 --INI--
-opcache.enable_cli=1
-session.gc_maxlifetime=300
-max_input_vars=100
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0245
+expose_php=On
+opcache.memory_consumption=7
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,55 +71,73 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require __DIR__ . "/classes.php.inc";
-class Foo {
-    public static function test() : A {
-        return new A;
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$octLongStrs = array(
+   '777777777777777777777',
+   '1777777777777777777777',
+   '17777777777',
+   '37777777777',
+   '377777777777777777777777',
+   '17777777777777777777777777',
+   '377777777777',
+   '777777777777',
+);
+foreach ($octLongStrs as $strVal) {
+   echo "--- testing: $strVal ---\n";
+   var_dump(octdec($strVal));
 }
-class Bar extends Foo {
-    public static function test() : A {
-        return new B;
-    }
-}
-var_dump(Bar::test());
-var_dump(Foo::test());
+$fusion = $octLongStrs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class TestClass extends PDO
-{
-    protected function isProtected() {
-        echo "this is a protected method.\n";
+class early {
+    function __construct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
     }
-    private function isPrivate() {
-        echo "this is a private method.\n";
-    }
-    public function quote($str, $paramtype = NULL): string|false {
-        $this->isProtected();
-        $this->isPrivate();
-        print $str ."\n";
-        return $str;
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
     }
 }
-$test = new TestClass('sqlite::memory:');
-$test->quote('foo');
-$test->isProtected();
+class late {
+    function __construct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+}
+$t = new early();
+$t->__construct();
+unset($fusion);
+$t = new late();
+//unset($t); delay to end of script
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-pdo_sqlite
---EXPECTF--
-object(B)#%d (0) {
-}
-object(A)#%d (0) {
-}
-this is a protected method.
-this is a private method.
-foo
-
-Fatal error: Uncaught Error: Call to protected method TestClass::isProtected() from global scope in %s:%d
-Stack trace:
-#0 {main}
-  thrown in %s on line %d
+--EXPECT--
+--- testing: 777777777777777777777 ---
+int(9223372036854775807)
+--- testing: 1777777777777777777777 ---
+float(1.8446744073709552E+19)
+--- testing: 17777777777 ---
+int(2147483647)
+--- testing: 37777777777 ---
+int(4294967295)
+--- testing: 377777777777777777777777 ---
+float(2.3611832414348226E+21)
+--- testing: 17777777777777777777777777 ---
+float(7.555786372591432E+22)
+--- testing: 377777777777 ---
+int(34359738367)
+--- testing: 777777777777 ---
+int(68719476735)
+early::__construct
+early::__construct
+early::__destruct
+late::__construct
+Done
+late::__destruct

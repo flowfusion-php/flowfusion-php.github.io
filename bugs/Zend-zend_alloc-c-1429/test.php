@@ -61,29 +61,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-#[AllowDynamicProperties]
-class MySplFixedArray extends SplFixedArray {
-    public $x;
-    public int $y = 3;
-}
-$x = new MySplFixedArray(2);
-var_dump($x->y);
-$x->y = 2;
-var_dump($x->y);
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
-$x->dynamic_property = "dynamic_property_value";
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
-$x->dynamic_property = "dynamic_property_value2";
-$x->y = 4;
-$serialized = serialize($x);
-var_dump($serialized);
-var_dump(unserialize($serialized));
+require_once "open_basedir.inc";
+$initdir = getcwd();
+test_open_basedir_before("tempnam");
+var_dump(tempnam("../bad", "test"));
+var_dump(tempnam("..", "test"));
+var_dump(tempnam("../", "test"));
+var_dump(tempnam("/", "test"));
+var_dump(tempnam("../bad/.", "test"));
+var_dump(tempnam("./../.", "test"));
+var_dump(tempnam("", "test"));
+//absolute test
+$file = tempnam($initdir."/test/ok", "test");
+var_dump($file);
+var_dump(unlink($file));
+//relative test
+$file = tempnam(".", "test");
+var_dump($file);
+var_dump(unlink($file));
+$file = tempnam("../ok", "test");
+var_dump($file);
+var_dump(unlink($file));
+test_open_basedir_after("tempnam");
+$fusion = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump(lcg_value());
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
+    }
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

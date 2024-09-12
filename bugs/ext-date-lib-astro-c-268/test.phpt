@@ -1,13 +1,12 @@
 --TEST--
-date_default_timezone_get() function [3]+Test DOM\Document::$body setter
+SplFileObject::setCsvControl() and ::getCsvControl() with empty $escape+Bug #76717: var_export() does not create a parsable value for PHP_INT_MIN
 --INI--
-date.timezone=Europe/Rome
-opcache.memory_consumption=7
-session.sid_length=32
+implicit_flush=0
+opcache.enable_cli=1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1145
+opcache.jit=1123
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -72,51 +71,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date_default_timezone_get(), "\n";
-    date_default_timezone_set("America/Chicago");
-    echo date_default_timezone_get(), "\n";
+$file = new SplTempFileObject;
+$file->setCsvControl(',', '"', '');
+var_dump($file->getCsvControl());
+$fusion = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "--- Replace body with itself ---\n";
-$dom = DOM\HTMLDocument::createFromString('<p>foo</p>', LIBXML_NOERROR);
-$dom->body = $dom->body;
-var_dump($dom->body?->nodeName);
-echo "--- Add body when there is no body yet ---\n";
-$dom = DOM\HTMLDocument::createFromString('<p>foo</p>', LIBXML_NOERROR);
-$dom->body->remove();
-$dom->body = $dom->createElementNS("http://www.w3.org/1999/xhtml", "prefix:body");
-var_dump($dom->body?->nodeName);
-echo "--- Replace old body with new body ---\n";
-$dom = DOM\HTMLDocument::createFromString('<p>foo</p>', LIBXML_NOERROR);
-$dom->body = $dom->createElementNS("http://www.w3.org/1999/xhtml", "prefix:body");
-var_dump($dom->body?->nodeName);
-echo "--- Replace old body with new body, while still having a reference to the old body ---\n";
-$dom = DOM\HTMLDocument::createFromString('<p>foo</p>', LIBXML_NOERROR);
-$old = $dom->body;
-$dom->body = $dom->createElementNS("http://www.w3.org/1999/xhtml", "prefix:body");
-var_dump($dom->body?->nodeName);
-var_dump($old->nodeName);
-echo "--- Special note from the DOM spec ---\n";
-$dom = DOM\XMLDocument::createFromString('<svg xmlns="http://www.w3.org/2000/svg"/>');
-$dom->body = $dom->createElementNS("http://www.w3.org/1999/xhtml", "body");
-var_dump($dom->body?->nodeName);
+$min = eval('return '.var_export(PHP_INT_MIN, true).';');
+$max = eval('return '.var_export(PHP_INT_MAX, true).';');
+var_dump($min === PHP_INT_MIN);
+var_dump($fusion === PHP_INT_MAX);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-dom
 --EXPECT--
-Europe/Rome
-America/Chicago
---- Replace body with itself ---
-string(4) "BODY"
---- Add body when there is no body yet ---
-string(11) "PREFIX:BODY"
---- Replace old body with new body ---
-string(11) "PREFIX:BODY"
---- Replace old body with new body, while still having a reference to the old body ---
-string(11) "PREFIX:BODY"
-string(4) "BODY"
---- Special note from the DOM spec ---
-NULL
+array(3) {
+  [0]=>
+  string(1) ","
+  [1]=>
+  string(1) """
+  [2]=>
+  string(0) ""
+}
+bool(true)
+bool(true)

@@ -1,4 +1,15 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var->var >= op_array->last_var || (ssa_var_info[__var].type & (1 << 10)) == (__type & (1 << 10))' failed.
-Aborted (core dumped)
+Dom\HTMLDocument::createFromString(): Argument #3 ($overrideEncoding) must be a valid document encoding
+string(20) "
+    Héllo, world!
+"
+string(7) "gb18030"
+string(1) "
+"
+string(12) "windows-1252"
+*** Testing reset() : usage variations ***
 
-Termsig=6
+-- Initial position of internal pointer --
+
+Deprecated: current(): Calling current() on an object is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused793.php on line 86
+/home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:376:14: runtime error: member access within null pointer of type 'zend_string' (aka 'struct _zend_string')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/main/spprintf.c:376:14 in

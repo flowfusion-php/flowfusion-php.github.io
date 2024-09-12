@@ -61,38 +61,48 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require __DIR__ . "/classes.php.inc";
-class Foo {
-    public static function test() : A {
-        return new A;
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$octLongStrs = array(
+   '777777777777777777777',
+   '1777777777777777777777',
+   '17777777777',
+   '37777777777',
+   '377777777777777777777777',
+   '17777777777777777777777777',
+   '377777777777',
+   '777777777777',
+);
+foreach ($octLongStrs as $strVal) {
+   echo "--- testing: $strVal ---\n";
+   var_dump(octdec($strVal));
 }
-class Bar extends Foo {
-    public static function test() : A {
-        return new B;
-    }
-}
-var_dump(Bar::test());
-var_dump(Foo::test());
+$fusion = $octLongStrs;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class TestClass extends PDO
-{
-    protected function isProtected() {
-        echo "this is a protected method.\n";
+class early {
+    function __construct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
     }
-    private function isPrivate() {
-        echo "this is a private method.\n";
-    }
-    public function quote($str, $paramtype = NULL): string|false {
-        $this->isProtected();
-        $this->isPrivate();
-        print $str ."\n";
-        return $str;
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
     }
 }
-$test = new TestClass('sqlite::memory:');
-$test->quote('foo');
-$test->isProtected();
+class late {
+    function __construct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+    function __destruct() {
+        echo __CLASS__ . "::" . __FUNCTION__ . "\n";
+    }
+}
+$t = new early();
+$t->__construct();
+unset($fusion);
+$t = new late();
+//unset($t); delay to end of script
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

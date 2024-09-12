@@ -1,12 +1,15 @@
 --TEST--
-Attributes can deal with AST nodes.+Test ReflectionProperty::setValue() error cases.
+jump 17: goto into try/catch with finally+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"
 --INI--
-opcache.jit=1255
-session.cookie_secure=TRUE
+date.timezone = UTC
+session.auto_start=1
+date.timezone=Europe/Rome
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1042
+opcache.jit=1253
+--SKIPIF--
+<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,121 +74,66 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define('V1', strtoupper(php_sapi_name()));
-#[A1([V1 => V1])]
-class C1
-{
-    public const BAR = 'bar';
-}
-$ref = new \ReflectionClass(C1::class);
-$attr = $ref->getAttributes();
-var_dump(count($attr));
-$args = $attr[0]->getArguments();
-var_dump(count($args), $args[0][V1] === V1);
-echo "\n";
-#[A1(V1, 1 + 2, C1::class)]
-class C2 { }
-$ref = new \ReflectionClass(C2::class);
-$attr = $ref->getAttributes();
-var_dump(count($attr));
-$args = $attr[0]->getArguments();
-var_dump(count($args));
-var_dump($args[0] === V1);
-var_dump($args[1] === 3);
-var_dump($args[2] === C1::class);
-echo "\n";
-#[A1(self::FOO, C1::BAR)]
-class C3
-{
-    private const FOO = 'foo';
-}
-$ref = new \ReflectionClass(C3::class);
-$attr = $ref->getAttributes();
-var_dump(count($attr));
-$args = $attr[0]->getArguments();
-var_dump(count($args));
-var_dump($args[0] === 'foo');
-var_dump($args[1] === C1::BAR);
-echo "\n";
-#[ExampleWithShift(4 >> 1)]
-class C4 {}
-$ref = new \ReflectionClass(C4::class);
-var_dump($ref->getAttributes()[0]->getArguments());
-echo "\n";
-#[Attribute]
-class C5
-{
-    public function __construct() { }
-}
-$ref = new \ReflectionFunction(#[C5(MissingClass::SOME_CONST)] function () { });
-$attr = $ref->getAttributes();
-var_dump(count($attr));
+goto b;
 try {
-    $attr[0]->getArguments();
-} catch (\Error $e) {
-    var_dump($e->getMessage());
+    echo "1";
+a:
+    echo "2";
+    throw new Exception();
+} catch (Exception $e) {
+    echo "3";
+b:
+    echo "4";
+} finally {
+    echo "5";
+c:
+    echo "6";
 }
-try {
-    $attr[0]->newInstance();
-} catch (\Error $e) {
-    var_dump($e->getMessage());
-}
-$fusion = $attr;
+echo "7\n";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class TestClass {
-    public $pub;
-    public $pub2 = 5;
-    static public $stat = "static property";
-    protected $prot = 4;
-    private $priv = "keepOut";
-}
-#[AllowDynamicProperties]
-class AnotherClass {
-}
-$instance = new TestClass();
-$instanceWithNoProperties = new AnotherClass();
-$propInfo = new ReflectionProperty('TestClass', 'pub2');
-echo "\nProtected property:\n";
-$propInfo = new ReflectionProperty('TestClass', 'prot');
-$propInfo->setValue($instance, "NewValue");
-var_dump($propInfo->getValue($instance));
-echo "\n\nInstance without property:\n";
-$propInfo = new ReflectionProperty('TestClass', 'pub2');
-var_dump($propInfo->setValue($instanceWithNoProperties, "NewValue"));
-var_dump($fusion->pub2);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-int(1)
-int(1)
-bool(true)
+4567
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657
+-57
+-292277022657
+-9223372036854775808
 
-int(1)
-int(3)
-bool(true)
-bool(true)
-bool(true)
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483648
+47
+2147483647
+67767976233532799
 
-int(1)
-int(2)
-bool(true)
-bool(true)
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648
+48
+2147483648
+67767976233532800
 
-array(1) {
-  [0]=>
-  int(2)
-}
-
-int(1)
-string(30) "Class "MissingClass" not found"
-string(30) "Class "MissingClass" not found"
-Protected property:
-string(8) "NewValue"
-
-
-Instance without property:
-NULL
-string(8) "NewValue"
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596
+96
+292277026596
+9223372036854775807

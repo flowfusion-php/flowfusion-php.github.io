@@ -61,39 +61,61 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function testInternalTypes(?Traversable $traversable): ?string {
-    return 'test';
+class Foo
+{
+    private function getFoo()
+    {
+        return 'Foo';
+    }
+    private function getBar()
+    {
+        return 'Bar';
+    }
+    private function getBaz()
+    {
+        return 'Baz';
+    }
 }
-function testUserDefinedTypes(?Test $traversable): ?Test {
-    return new Test;
+class Bar extends Foo
+{
+    public function getFoo($extraArgument)
+    {
+        return $extraArgument;
+    }
+    protected function getBar($extraArgument)
+    {
+        return $extraArgument;
+    }
+    private function getBaz($extraArgument)
+    {
+        return $extraArgument;
+    }
 }
-$function = new ReflectionFunction('testInternalTypes');
-$type = $function->getParameters()[0]->getType();
-$return = $function->getReturnType();
-var_dump($type->getName());
-var_dump((string) $type);
-var_dump($return->getName());
-var_dump((string) $return);
-$function = new ReflectionFunction('testUserDefinedTypes');
-$type = $function->getParameters()[0]->getType();
-$return = $function->getReturnType();
-var_dump($type->getName());
-var_dump((string) $type);
-var_dump($return->getName());
-var_dump((string) $return);
-$fusion = $traversable;
+echo "OK\n";
+$fusion = $extraArgument;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class C {
-    public $a = 0;
+$array = array();
+for ($i=0; $i < 550; $fusion++) {
+    $array = array($array);
 }
-function foo() {
-    $x = new C;
-    $x->a = 1;
-    unset($fusion->a);
-    $x->a += 2;
-    var_dump($x);
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
 }
-foo();
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

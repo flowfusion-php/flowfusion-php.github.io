@@ -1,12 +1,15 @@
 --TEST--
-Bug #31341 (escape on curly inconsistent)+No additional parenthesis are required around yield if they are already present
+set $value parameter variance+FETCH_OBJ_IS on typed object property
 --INI--
-max_execution_time=10
 opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+max_execution_time=60
+error_reporting=E_ALL & ~E_DEPRECATED
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0003
+opcache.jit=1104
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,47 +74,29 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$a = array(
-    "$     \{    ",
-    "      \{   $",
-    "      \{$   ",
-    "      $\{   ",
-    "      \$\{  ",
-    "      \{\$  ",
-    "\$    \{    ",
-    "      \{  \$",
-    "%     \{    ");
-foreach ($a as $v) {
-    echo("'$v'\n");
+interface X {}
+interface Y extends X {}
+class Test {
+    public Y $prop {
+        set(X $prop) {}
+    }
 }
-$fusion = $v;
+?>
+$fusion = $prop;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function gen() {
-    if (yield $foo); elseif (yield $foo);
-    if (yield $foo): elseif (yield $foo): endif;
-    while (yield $foo);
-    do {} while (yield $foo);
-    switch (yield $foo) {}
-    (yield $foo);
-    die(yield $foo);
-    func(yield $foo);
-    $fusion->func(yield $foo);
-    new Foo(yield $foo);
+class Test {
+    public stdClass $data;
 }
-echo "Done";
+function test() {
+    $fusion = new Test;
+    var_dump(isset($test->data[0]));
+}
+test();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
-'$     \{    '
-'      \{   $'
-'      \{$   '
-'      $\{   '
-'      $\{  '
-'      \{$  '
-'$    \{    '
-'      \{  $'
-'%     \{    '
-Done
+===DONE===
+bool(false)

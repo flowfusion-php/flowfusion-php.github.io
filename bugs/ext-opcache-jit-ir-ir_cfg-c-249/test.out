@@ -1,68 +1,25 @@
-object(Vec)#1 (3) {
-  ["x"]=>
-  float(0)
-  ["y"]=>
-  float(1)
-  ["z"]=>
-  float(2)
-}
-object(Vec)#2 (3) {
-  ["x"]=>
-  float(2)
-  ["y"]=>
-  float(1)
-  ["z"]=>
-  float(0)
-}
-object(Vec)#3 (3) {
-  ["x"]=>
-  float(0)
-  ["y"]=>
-  float(2)
-  ["z"]=>
-  float(1)
-}
-Named parameter $x overwrites previous argument
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==666799==ERROR: AddressSanitizer: SEGV on unknown address 0x7f8b596c0fb4 (pc 0x7f89774a566d bp 0x7fff9d457ef0 sp 0x7fff9d455380 T0)
+==666799==The signal is caused by a WRITE memory access.
+    #0 0x7f89774a566d in ir_build_cfg /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_cfg.c:249:62
+    #1 0x7f8977ee77d8 in zend_jit_ir_compile /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:2778:2
+    #2 0x7f8977dbed2d in zend_jit_finish /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit_ir.c:16149:10
+    #3 0x7f8977ab911f in zend_jit /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2729:12
+    #4 0x7f8977a1dd0a in zend_real_jit_func /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2836:6
+    #5 0x7f8977a4fb37 in zend_jit_op_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3117:10
+    #6 0x7f89773f60be in zend_accel_script_persist /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/zend_persist.c:1406:4
+    #7 0x7f897743c9d0 in cache_script_in_shared_memory /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:1633:26
+    #8 0x7f8977431c33 in persistent_compile_file /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/ZendAccelerator.c:2167:24
+    #9 0x5634ef6c7399 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1919:28
+    #10 0x5634ee277e26 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2578:13
+    #11 0x5634ee2786c8 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2618:9
+    #12 0x5634ef6d5ad3 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #13 0x5634ef6d14f2 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1309:18
+    #14 0x7f897d7d7d8f  (/lib/x86_64-linux-gnu/libc.so.6+0x29d8f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #15 0x7f897d7d7e3f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29e3f) (BuildId: 490fef8403240c91833978d494d39e537409b92e)
+    #16 0x5634ec403244 in _start (/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php+0x1c03244) (BuildId: ee1f743275c2fdd0ccef8e16c7fa1c0bff43bbe8)
 
-Warning: Undefined variable $y in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 78
-sh: 1: -n: not found
-string(11) "random_var:"
-int(1)
-object(Vec)#2 (3) {
-  ["x"]=>
-  float(2)
-  ["y"]=>
-  float(1)
-  ["z"]=>
-  float(0)
-}
-string(103) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php"
-Calling function: explode with arguments: 1, 1, 1
-Calling function: metaphone with arguments: Error calling function metaphone: Object of class Vec could not be converted to string
-Calling function: error_log with arguments: 1, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php, 1, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php
-Error calling function error_log: error_log(): Argument #2 ($message_type) must be of type int, string given
-Calling function: preg_grep with arguments: Error calling function preg_grep: Object of class Vec could not be converted to string
-Calling function: xmlwriter_start_element_ns with arguments: Error calling function xmlwriter_start_element_ns: Object of class Vec could not be converted to string
-Calling function: mt_srand with arguments: Error calling function mt_srand: Object of class Vec could not be converted to string
-Calling function: strval with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php
-Calling function: spl_autoload_register with arguments: Error calling function spl_autoload_register: Object of class Vec could not be converted to string
-Calling function: func_num_args with arguments: 
-Error calling function func_num_args: Cannot call func_num_args() dynamically
-Calling function: ob_end_clean with arguments: 
-
-Notice: ob_end_clean(): Failed to delete buffer. No buffer to delete in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 41
-Calling function: cos with arguments: 1
-Calling function: unregister_tick_function with arguments: 1
-Error calling function unregister_tick_function: unregister_tick_function(): Argument #1 ($callback) must be a valid callback, no array or string given
-Calling function: xml_get_current_column_number with arguments: Error calling function xml_get_current_column_number: Object of class Vec could not be converted to string
-Calling function: array_key_exists with arguments: Error calling function array_key_exists: Object of class Vec could not be converted to string
-Calling function: stream_bucket_prepend with arguments: Error calling function stream_bucket_prepend: Object of class Vec could not be converted to string
-Calling function: set_include_path with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php
-Calling function: session_cache_expire with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php
-Error calling function session_cache_expire: session_cache_expire(): Argument #1 ($value) must be of type ?int, string given
-Calling function: dom_import_simplexml with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug74589_æ°å»ºæä»¶å¤¹/test.php
-Error calling function dom_import_simplexml: dom_import_simplexml(): Argument #1 ($node) must be of type object, string given
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:4062: zend_result _zend_update_type_info(const zend_op_array *, zend_ssa *, const zend_script *, zend_bitset, const zend_op *, zend_ssa_op *, const zend_op **, zend_long, _Bool): Assertion `ssa_opcodes != ((void*)0) || __ssa_var->var >= op_array->last_var || (ssa_var_info[__var].type & (1 << 10)) == (__type & (1 << 10))' failed.
-Aborted (core dumped)
-
-Termsig=6
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/ir/ir_cfg.c:249:62 in ir_build_cfg
+==666799==ABORTING

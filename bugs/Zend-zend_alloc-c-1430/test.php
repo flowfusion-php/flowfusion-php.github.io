@@ -61,29 +61,36 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$dir = __DIR__ . '/bug77263';
-mkdir($dir);
-mkdir("$dir/subdir");
-touch("$dir/file1");
-touch("$dir/subdir/file2");
-class Filter1 extends RecursiveFilterIterator {
-    public function accept(): bool { return $this->getInnerIterator()->getSubPathname() != ''; }
-}
-class Filter2 extends RecursiveFilterIterator {
-    public function accept(): bool { return $this->getInnerIterator()->getSubPathname() != ' '; }
-}
-$iterator = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS );
-$iterator = new Filter1( $iterator );
-$iterator = new Filter2( $iterator );
-$iterator = new RecursiveIteratorIterator( $iterator, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD );
-foreach ( $iterator as $item ) {
-}
-?>
-OK
-$fusion = $iterator;
+$rc = new ReflectionClass(XMLReader::class);
+$prop = $rc->getProperty("nodeType");
+var_dump($prop->isVirtual());
+var_dump($prop->getSettableType());
+var_dump($prop->getHooks());
+var_dump($prop->getRawValue(new XMLReader));
+var_dump($prop->getValue(new XMLReader));
+$reader = XMLReader::XML("<root>hi</root>");
+var_dump(json_encode($reader));
+var_export($reader); echo "\n";
+var_dump(get_object_vars($reader));
+$fusion = $rc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$fusion = 'bar';
-var_dump("${foo}");
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
+    }
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

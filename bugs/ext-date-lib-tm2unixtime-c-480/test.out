@@ -1,4 +1,34 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3199: int zend_jit_script(zend_script *): Assertion `0' failed.
-Aborted (core dumped)
-
-Termsig=6
+--- testing: 777777777777777777777 ---
+int(9223372036854775807)
+--- testing: 1777777777777777777777 ---
+float(1.8446744073709552E+19)
+--- testing: 17777777777 ---
+int(2147483647)
+--- testing: 37777777777 ---
+int(4294967295)
+--- testing: 377777777777777777777777 ---
+float(2.3611832414348226E+21)
+--- testing: 17777777777777777777777777 ---
+float(7.555786372591432E+22)
+--- testing: 377777777777 ---
+int(34359738367)
+--- testing: 777777777777 ---
+int(68719476735)
+early::__construct
+early::__construct
+late::__construct
+early::__destruct
+Done
+string(11) "random_var:"
+string(12) "777777777777"
+string(12) "777777777777"
+array(0) {
+}
+Calling function: fgetc with arguments: 777777777777
+Error calling function fgetc: fgetc(): Argument #1 ($stream) must be of type resource, string given
+Calling function: str_getcsv with arguments: 777777777777, 777777777777, 777777777777, 777777777777
+Error calling function str_getcsv: str_getcsv(): Argument #2 ($separator) must be a single character
+Calling function: memory_get_usage with arguments: 777777777777
+Calling function: gmmktime with arguments: 777777777777, 777777777777, 777777777777, 777777777777, 777777777777, 777777777777
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50: runtime error: signed integer overflow: 308561358590831 * 43200 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:480:50 in

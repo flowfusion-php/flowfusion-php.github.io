@@ -1,4 +1,237 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
+--- testing: int(9223372036854775807)
+... with precision 5: string(31) "9,223,372,036,854,775,807.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,807"
+... with precision -1: string(25) "9,223,372,036,854,775,810"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372036854775808)
+... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,808"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(2147483647)
+... with precision 5: string(19) "2,147,483,647.00000"
+... with precision 0: string(13) "2,147,483,647"
+... with precision -1: string(13) "2,147,483,650"
+... with precision -5: string(13) "2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-2147483648)
+... with precision 5: string(20) "-2,147,483,648.00000"
+... with precision 0: string(14) "-2,147,483,648"
+... with precision -1: string(14) "-2,147,483,650"
+... with precision -5: string(14) "-2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(9223372034707292160)
+... with precision 5: string(31) "9,223,372,034,707,292,160.00000"
+... with precision 0: string(25) "9,223,372,034,707,292,160"
+... with precision -1: string(25) "9,223,372,034,707,292,160"
+... with precision -5: string(25) "9,223,372,034,707,300,000"
+... with precision -10: string(25) "9,223,372,030,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372034707292160)
+... with precision 5: string(32) "-9,223,372,034,707,292,160.00000"
+... with precision 0: string(26) "-9,223,372,034,707,292,160"
+... with precision -1: string(26) "-9,223,372,034,707,292,160"
+... with precision -5: string(26) "-9,223,372,034,707,300,000"
+... with precision -10: string(26) "-9,223,372,030,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(2147483648)
+... with precision 5: string(19) "2,147,483,648.00000"
+... with precision 0: string(13) "2,147,483,648"
+... with precision -1: string(13) "2,147,483,650"
+... with precision -5: string(13) "2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-2147483649)
+... with precision 5: string(20) "-2,147,483,649.00000"
+... with precision 0: string(14) "-2,147,483,649"
+... with precision -1: string(14) "-2,147,483,650"
+... with precision -5: string(14) "-2,147,500,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967294)
+... with precision 5: string(19) "4,294,967,294.00000"
+... with precision 0: string(13) "4,294,967,294"
+... with precision -1: string(13) "4,294,967,290"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967295)
+... with precision 5: string(19) "4,294,967,295.00000"
+... with precision 0: string(13) "4,294,967,295"
+... with precision -1: string(13) "4,294,967,300"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(4294967293)
+... with precision 5: string(19) "4,294,967,293.00000"
+... with precision 0: string(13) "4,294,967,293"
+... with precision -1: string(13) "4,294,967,290"
+... with precision -5: string(13) "4,295,000,000"
+... with precision -10: string(1) "0"
+... with precision -11: string(1) "0"
+... with precision -17: string(1) "0"
+... with precision -19: string(1) "0"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(9223372036854775806)
+... with precision 5: string(31) "9,223,372,036,854,775,806.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,806"
+... with precision -1: string(25) "9,223,372,036,854,775,810"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(9.223372036854776E+18)
+... with precision 5: string(31) "9,223,372,036,854,775,808.00000"
+... with precision 0: string(25) "9,223,372,036,854,775,808"
+... with precision -1: string(25) "9,223,372,036,854,775,808"
+... with precision -5: string(25) "9,223,372,036,854,800,384"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: int(-9223372036854775807)
+... with precision 5: string(32) "-9,223,372,036,854,775,807.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,807"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(-9.223372036854776E+18)
+... with precision 5: string(32) "-9,223,372,036,854,775,808.00000"
+... with precision 0: string(26) "-9,223,372,036,854,775,808"
+... with precision -1: string(26) "-9,223,372,036,854,775,810"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(9.223372036854775E+18)
+... with precision 5: string(31) "9,223,372,036,854,774,784.00000"
+... with precision 0: string(25) "9,223,372,036,854,774,784"
+... with precision -1: string(25) "9,223,372,036,854,774,780"
+... with precision -5: string(25) "9,223,372,036,854,800,000"
+... with precision -10: string(25) "9,223,372,040,000,000,000"
+... with precision -11: string(25) "9,223,372,000,000,000,000"
+... with precision -17: string(25) "9,200,000,000,000,000,000"
+... with precision -19: string(26) "10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
+--- testing: float(-9.223372036854775E+18)
+... with precision 5: string(32) "-9,223,372,036,854,774,784.00000"
+... with precision 0: string(26) "-9,223,372,036,854,774,784"
+... with precision -1: string(26) "-9,223,372,036,854,774,780"
+... with precision -5: string(26) "-9,223,372,036,854,800,000"
+... with precision -10: string(26) "-9,223,372,040,000,000,000"
+... with precision -11: string(26) "-9,223,372,000,000,000,000"
+... with precision -17: string(26) "-9,200,000,000,000,000,000"
+... with precision -19: string(27) "-10,000,000,000,000,000,000"
+... with precision -20: string(1) "0"
+... with precision -9223372036854775808: string(1) "0"
 
-Termsig=6
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 98
+
+Warning: Undefined array key 0 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 98
+
+Warning: Undefined array key 0 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 98
+
+Warning: Undefined variable $a in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 99
+
+Warning: Trying to access array offset on null in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 99
+NULL
+string(11) "random_var:"
+int(1)
+float(-9.223372036854775E+18)
+float(-9.223372036854775E+18)
+Calling function: stream_filter_remove with arguments: 1
+Error calling function stream_filter_remove: stream_filter_remove(): Argument #1 ($stream_filter) must be of type resource, int given
+Calling function: array_reverse with arguments: 1, -9.2233720368548E+18
+Error calling function array_reverse: array_reverse(): Argument #1 ($array) must be of type array, int given
+Calling function: ltrim with arguments: 1, -9.2233720368548E+18
+Calling function: trait_exists with arguments: -9.2233720368548E+18, 1
+Calling function: get_called_class with arguments: 
+Calling function: spl_autoload_unregister with arguments: -9.2233720368548E+18
+Error calling function spl_autoload_unregister: spl_autoload_unregister(): Argument #1 ($callback) must be a valid callback, no array or string given
+Calling function: array_unique with arguments: -9.2233720368548E+18, 1
+Error calling function array_unique: array_unique(): Argument #1 ($array) must be of type array, float given
+Calling function: ini_get_all with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+
+Warning: ini_get_all(): Extension "-9.2233720368548E+18" cannot be found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 41
+Calling function: get_defined_functions with arguments: -9.2233720368548E+18
+Calling function: fwrite with arguments: 1, 1, 1
+Error calling function fwrite: fwrite(): Argument #1 ($stream) must be of type resource, int given
+Calling function: stripcslashes with arguments: 1
+Calling function: setrawcookie with arguments: 1, -9.2233720368548E+18, 1, -9.2233720368548E+18, 1, -9.2233720368548E+18, 1
+
+Warning: Cannot modify header information - headers already sent by (output started at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php:88) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 41
+Calling function: output_reset_rewrite_vars with arguments: 
+Calling function: is_float with arguments: -9.2233720368548E+18
+Calling function: mt_rand with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: addcslashes with arguments: -9.2233720368548E+18, 1
+Calling function: class_exists with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: is_scalar with arguments: -9.2233720368548E+18
+Calling function: strip_tags with arguments: 1, 1
+Calling function: asin with arguments: 1
+Calling function: memory_get_peak_usage with arguments: 1
+Calling function: date_sunset with arguments: -9.2233720368548E+18, 1, -9.2233720368548E+18, 1, -9.2233720368548E+18, 1
+
+Deprecated: Function date_sunset() is deprecated since 8.1, use date_sun_info() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused87.php on line 41
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12: runtime error: signed integer overflow: -4611686018427403200 + -4611686018427403200 cannot be represented in type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12 in

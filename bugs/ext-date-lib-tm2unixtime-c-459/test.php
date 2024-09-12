@@ -61,54 +61,29 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * Function is implemented in ext/standard/math.c
-*/
-//Test cos with a different input values
-$values = array(23,
-        -23,
-        2.345e1,
-        -2.345e1,
-        0x17,
-        027,
-        "23",
-        "23.45",
-        "2.345e1",
-        "1000",
-        true,
-        false);
-for ($i = 0; $i < count($values); $i++) {
-    $res = cos($values[$i]);
-    var_dump($res);
-}
-$fusion = $res;
+$doc = new DOMDocument();
+$doc->loadXML('<prefix:root xmlns:prefix="urn:a" />');
+$xp = new DOMXPath($doc);
+$xp->registerNamespace('prefix', 'urn:b');
+echo($xp->query('//prefix:root', null, false)->length . "\n");
+$fusion = $doc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/* test for stats of dir/file when their names are stored in an array */
-$fusion = __DIR__;
-require "$file_path/file.inc";
-/* create temp file, link and directory */
-@rmdir("$file_path/lstat_stat_variation19");  // ensure that dir doesn't exists
-mkdir("$file_path/lstat_stat_variation19");  // temp dir
-$fp = fopen("$file_path/lstat_stat_variation19.tmp", "w");  // temp file
-fclose($fp);
-echo "*** Testing stat() with filename & directory name stored inside an array ***\n";
-// array with default numeric index
-$names = array(
-  "$file_path/lstat_stat_variation19.tmp",
-  "$file_path/lstat_stat_variation19"
+echo "*** Testing gmstrftime() : usage variation ***\n";
+// Initialise function arguments not being substituted (if any)
+$timestamp = gmmktime(8, 8, 8, 8, 8, PHP_INT_MIN);
+setlocale(LC_ALL, "C");
+date_default_timezone_set("Asia/Calcutta");
+//array of values to iterate over
+$inputs = array(
+      'Newline character' => "%n",
+      'Tab character' => "%t"
 );
-//array with string key index
-$names_with_key = array (
-  'file' => "$file_path/lstat_stat_variation19.tmp",
-  "dir" => "$file_path/lstat_stat_variation19"
-);
-echo "\n-- Testing stat() on filename stored inside an array --\n";
-var_dump( stat($names[0]) ); // values stored with numeric index
-var_dump( stat($names_with_key['file']) ); // value stored with string key
-echo "\n-- Testing stat() on dir name stored inside an array --\n";
-var_dump( stat($names[1]) ); // values stored with numeric index
-var_dump( stat($names_with_key["dir"]) ); // value stored with string key
-echo "\n--- Done ---";
+// loop through each element of the array for timestamp
+foreach($inputs as $key =>$value) {
+      echo "\n--$key--\n";
+      var_dump( gmstrftime($fusion) );
+      var_dump( gmstrftime($value, $timestamp) );
+};
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

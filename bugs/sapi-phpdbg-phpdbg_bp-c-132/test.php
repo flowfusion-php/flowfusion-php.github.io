@@ -61,36 +61,95 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$gen = (function() {
-    $x = new stdClass;
-    yield from (function () {
-        $x = new stdClass;
-        print "Before suspend\n";
-        Fiber::suspend();
-        print "Not executed\n";
-        yield;
-    })();
-    print "Not executed\n";
-    yield;
-})();
-$fiber = new Fiber(function() use ($gen, &$fiber) {
-    $gen->current();
-    print "Not executed";
-});
-$fiber->start();
-?>
-$fusion = $gen;
+class MyArrayIterator extends ArrayIterator
+{
+    static protected $fail = 0;
+    public $state;
+    static function fail($state, $method)
+    {
+        if (self::$fail == $state)
+        {
+            throw new Exception("State $state: $method()");
+        }
+    }
+    function __construct()
+    {
+        $this->state = MyArrayIterator::$fail;
+        self::fail(0, __FUNCTION__);
+        parent::__construct(array(1, 2));
+        self::fail(1, __FUNCTION__);
+    }
+    function rewind(): void
+    {
+        self::fail(2, __FUNCTION__);
+        parent::rewind();
+    }
+    function valid(): bool
+    {
+        self::fail(3, __FUNCTION__);
+        return parent::valid();
+    }
+    function current(): mixed
+    {
+        self::fail(4, __FUNCTION__);
+        return parent::current();
+    }
+    function key(): string|int|null
+    {
+        self::fail(5, __FUNCTION__);
+        return parent::key();
+    }
+    function next(): void
+    {
+        self::fail(6, __FUNCTION__);
+        parent::next();
+    }
+    function __destruct()
+    {
+        self::fail(7, __FUNCTION__);
+    }
+    static function test($func, $skip = null)
+    {
+        echo "===$func===\n";
+        self::$fail = 0;
+        while(self::$fail < 10)
+        {
+            try
+            {
+                var_dump($func(new MyArrayIterator()));
+                break;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage() . "\n";
+            }
+            if (isset($skip[self::$fail]))
+            {
+                self::$fail = $skip[self::$fail];
+            }
+            else
+            {
+                self::$fail++;
+            }
+            try {
+                $e = null;
+            } catch (Exception $e) {
+            }
+        }
+    }
+}
+MyArrayIterator::test('iterator_to_array');
+MyArrayIterator::test('iterator_count', array(3 => 6));
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$tz = new DateTimeZone("Asia/Tokyo");
-$current = "2012-12-27 16:24:08";
-echo "\ngetTimezone():\n";
-$v = date_create_immutable($current);
-$x = $v->getTimezone();
-var_dump($x->getName());
-echo "\ngetTimestamp():\n";
-$v = date_create_immutable($current);
-$x = $v->getTimestamp();
-var_dump($fusion);
+echo "*** Testing array_multisort() : Testing with anonymous arguments ***\n";
+var_dump(array_multisort(array(1,3,2,4)));
+$xconnect=$GLOBALS[array_rand($GLOBALS)];
+echo "Done\n";
+$a = [];
+$a[0] = 1;
+$a[0] = 2;
+$fusion = [0 => 3, 1 => 4];
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

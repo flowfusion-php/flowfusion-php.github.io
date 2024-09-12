@@ -1,12 +1,11 @@
 --TEST--
-Bug #53748 (Using traits lead to a segmentation fault)+testing @ and error_reporting - 8
+Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+GH-13178: Packed to hash must reset nInternalPointer
 --INI--
-session.gc_maxlifetime=300
-short_open_tag=off
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1042
+date.timezone = UTC
+precision=13
+date.timezone=America/New_York
+--SKIPIF--
+<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,58 +70,72 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-trait Singleton {
-  protected static $instances=array();
-  abstract protected function __construct($config);
-  public static function getInstance($config) {
-    if (!isset(self::$instances[$serialize = serialize($config)])) {
-      self::$instances[$serialize] = new self($config);
-    }
-    return self::$instances[$serialize];
-  }
-}
-class MyHelloWorld {
-  use Singleton;
-  public function __construct($config)
-  {
-    var_dump( $config);
-  }
-}
-$o= myHelloWorld::getInstance(1);
-$o= myHelloWorld::getInstance(1);
-$o= myHelloWorld::getInstance(2);
-$o= myHelloWorld::getInstance(array(1=>2));
-$o= myHelloWorld::getInstance(array(1=>2));
-$fusion = $o;
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
+echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-error_reporting(E_ALL & ~E_DEPRECATED);
-function foo1($arg) {
+$array = ['foo'];
+reset($array);
+while (true) {
+    $key = key($array);
+    next($array);
+    var_dump($key);
+    unset($array[$key]);
+    $array[] = 'foo';
+    if ($key === 10) {
+        break;
+    }
 }
-function foo2($arg) {
-}
-function foo3() {
-    error_reporting(E_ALL);
-    echo $fusion;
-    throw new Exception("test");
-}
-try {
-    @foo1(@foo2(@foo3()));
-} catch (Exception $e) {
-}
-var_dump(error_reporting());
-echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
+--EXPECT--
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657-01-27T08:29:52+00:00
+Sun, 27 Jan -292277022657 08:29:52 +0000
+-292277022657
+-57
+-292277022657
+-9223372036854775808
+
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483647-12-31T23:59:59+00:00
+Tue, 31 Dec 2147483647 23:59:59 +0000
+2147483648
+47
+2147483647
+67767976233532799
+
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648-01-01T00:00:00+00:00
+Wed, 01 Jan 2147483648 00:00:00 +0000
+2147483648
+48
+2147483648
+67767976233532800
+
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596-12-04T15:30:07+00:00
+Sun, 04 Dec 292277026596 15:30:07 +0000
+292277026596
+96
+292277026596
+9223372036854775807
+int(0)
 int(1)
 int(2)
-array(1) {
-  [1]=>
-  int(2)
-}
-Warning: Undefined variable $undef3 in %s on line %d
-int(32767)
-Done
+int(3)
+int(4)
+int(5)
+int(6)
+int(7)
+int(8)
+int(9)
+int(10)
