@@ -1,8 +1,9 @@
 --TEST--
-Property not found error+Text coalesce bug when appending fragment with text nodes
+Bug #69181 (READ_CSV|DROP_NEW_LINE drops newlines within fields)+Phar: PharFileInfo::__construct
 --INI--
-session.gc_maxlifetime=300
-variables_order=GPS
+phar.readonly=0
+opcache.preload={PWD}/preload_bug80634.inc
+filter.default_flags=
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,35 +68,110 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-enum A {
-    case B;
+$filename = __DIR__ . "/bug69181.csv";
+$csv = <<<CSV
+"foo\n\nbar\nbaz",qux
+"foo\nbar\nbaz",qux
+CSV;
+file_put_contents($filename, $csv);
+$file = new SplFileObject($filename);
+$file->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE | SplFileObject::READ_CSV);
+var_dump(iterator_to_array($file));
+echo "\n====\n\n";
+$file->rewind();
+while (($record = $file->fgetcsv())) {
+  var_dump($record);
 }
-const A_prop = A::B->prop;
-var_dump(A_prop);
-const A_prop_nullsafe = A::B?->prop;
-var_dump(A_prop_nullsafe);
+$script1_dataflow = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$document = new DOMDocument();
-$document->loadXML('<root/>');
-$sut = $document->createDocumentFragment();
-for($i = 0; $i < 10; $i++) {
-	$textNode = $document->createTextNode("Node$i");
-	$sut->append($textNode);
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar';
+$pname = 'phar://' . $fname;
+try {
+file_put_contents($fname, 'blah');
+$a = new PharFileInfo($pname . '/oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+unlink($fname);
 }
-$document->documentElement->append($sut);
-echo $document->saveXML();
+try {
+$a = new PharFileInfo(array());
+} catch (TypeError $e) {
+echo $e->getMessage() . "\n";
+}
+$a = new Phar($fname);
+$a['a'] = 'hi';
+$b = $a['a'];
+try {
+$a = new PharFileInfo($pname . '/oops/I/do/not/exist');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$script1_dataflow->__construct('oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$a = new PharFileInfo(__FILE__);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-dom
+phar
+--CLEAN--
+<?php
+@unlink(__DIR__ . "/bug69181.csv");
+?>
+<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar'); ?>
 --EXPECTF--
-Warning: Undefined property: A::$prop in %s on line %d
-NULL
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(12) "foo
 
-Warning: Undefined property: A::$prop in %s on line %d
-NULL
-<?xml version="1.0"?>
-<root>Node0Node1Node2Node3Node4Node5Node6Node7Node8Node9</root>
+bar
+baz"
+    [1]=>
+    string(3) "qux"
+  }
+  [2]=>
+  array(2) {
+    [0]=>
+    string(11) "foo
+bar
+baz"
+    [1]=>
+    string(3) "qux"
+  }
+}
+
+====
+
+array(2) {
+  [0]=>
+  string(12) "foo
+
+bar
+baz"
+  [1]=>
+  string(3) "qux"
+}
+array(2) {
+  [0]=>
+  string(11) "foo
+bar
+baz"
+  [1]=>
+  string(3) "qux"
+}
+Cannot open phar file 'phar://%spharfileinfo_construct.phar/oops': internal corruption of phar "%spharfileinfo_construct.phar" (truncated entry)
+PharFileInfo::__construct(): Argument #1 ($filename) must be of type string, array given
+Cannot access phar file entry '%s' in archive '%s'
+Cannot call constructor twice
+'%s' is not a valid phar archive URL (must have at least phar://filename.phar)

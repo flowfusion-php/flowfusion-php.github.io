@@ -1,11 +1,8 @@
 --TEST--
-Test scandir() function : usage variations - different relative paths+Test function get_cfg_var() by calling deprecated option
+Bug #63882 (zend_std_compare_objects crash on recursion)+Bug #65251: array_merge_recursive() recursion detection broken
 --INI--
-magic_quotes_gpc=1
-highlight.keyword=#007700
-session.auto_start=0
---SKIPIF--
-<?php if (getenv('SKIP_ASAN')) die('xleak Startup failure leak'); ?>
+opcache.record_warnings=1
+ary2[1] = a
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -70,161 +67,29 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * Test scandir() with relative paths as $dir argument
- */
-echo "*** Testing scandir() : usage variations ***\n";
-// include for create_files/delete_files functions
-include (__DIR__ . '/../file/file.inc');
-$base_dir_path = __DIR__ . '/scandir_variation4';
-@mkdir($base_dir_path);
-$level_one_dir_path = "$base_dir_path/level_one";
-$level_two_dir_path = "$level_one_dir_path/level_two";
-// create directories and files
-mkdir($level_one_dir_path);
-create_files($level_one_dir_path, 2, 'numeric', 0755, 1, 'w', 'level_one', 1);
-mkdir($level_two_dir_path);
-create_files($level_two_dir_path, 2, 'numeric', 0755, 1, 'w', 'level_two', 1);
-echo "\n-- \$path = './level_one': --\n";
-var_dump(chdir($base_dir_path));
-var_dump(scandir('./level_one'));
-echo "\n-- \$path = 'level_one/level_two': --\n";
-var_dump(chdir($base_dir_path));
-var_dump(scandir('level_one/level_two'));
-echo "\n-- \$path = '..': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('..'));
-echo "\n-- \$path = 'level_two', '.': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('.'));
-echo "\n-- \$path = '../': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('../'));
-echo "\n-- \$path = './': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('./'));
-echo "\n-- \$path = '../../'level_one': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('../../level_one'));
-@delete_files($level_one_dir_path, 2, 'level_one');
-@delete_files($level_two_dir_path, 2, 'level_two');
+class Test { public $x = 5; }
+$testobj1 = new Test;
+$testobj2 = new Test;
+$testobj1->x = $testobj1;
+$testobj2->x = $testobj2;
+try {
+    var_dump($testobj1 == $testobj2);
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Test by calling method or function with deprecated option ***\n";
-var_dump(get_cfg_var( 'magic_quotes_gpc' ) );
+/* This no longer involves any recursion. */
+try {
+    array_merge_recursive($GLOBALS, $GLOBALS);
+} catch (\Error $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CLEAN--
-<?php
-$base_dir_path = __DIR__ . '/scandir_variation4';
-rmdir("$base_dir_path/level_one/level_two");
-rmdir("$base_dir_path/level_one");
-rmdir($base_dir_path);
-?>
---CREDITS--
-Francesco Fullone ff@ideato.it
-#PHPTestFest Cesena Italia on 2009-06-20
 --EXPECT--
-*** Testing scandir() : usage variations ***
-
--- $path = './level_one': --
-bool(true)
-array(5) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_one1.tmp"
-  [3]=>
-  string(14) "level_one2.tmp"
-  [4]=>
-  string(9) "level_two"
-}
-
--- $path = 'level_one/level_two': --
-bool(true)
-array(4) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_two1.tmp"
-  [3]=>
-  string(14) "level_two2.tmp"
-}
-
--- $path = '..': --
-bool(true)
-array(5) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_one1.tmp"
-  [3]=>
-  string(14) "level_one2.tmp"
-  [4]=>
-  string(9) "level_two"
-}
-
--- $path = 'level_two', '.': --
-bool(true)
-array(4) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_two1.tmp"
-  [3]=>
-  string(14) "level_two2.tmp"
-}
-
--- $path = '../': --
-bool(true)
-array(5) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_one1.tmp"
-  [3]=>
-  string(14) "level_one2.tmp"
-  [4]=>
-  string(9) "level_two"
-}
-
--- $path = './': --
-bool(true)
-array(4) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_two1.tmp"
-  [3]=>
-  string(14) "level_two2.tmp"
-}
-
--- $path = '../../'level_one': --
-bool(true)
-array(5) {
-  [0]=>
-  string(1) "."
-  [1]=>
-  string(2) ".."
-  [2]=>
-  string(14) "level_one1.tmp"
-  [3]=>
-  string(14) "level_one2.tmp"
-  [4]=>
-  string(9) "level_two"
-}
-Fatal error: Directive 'magic_quotes_gpc' is no longer available in PHP in Unknown on line 0
+Nesting level too deep - recursive dependency?
+===DONE===

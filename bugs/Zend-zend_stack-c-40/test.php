@@ -61,61 +61,48 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$foo = match (0) {
-    0 => 'foo',
-    default => 'bar', // breakpoint #0
-};
-$foo = match (1) {
-    0 => 'foo',
-    default => 'bar', // breakpoint #1
-};
-$fusion = $foo;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class classA
-{
+function output_html($ext) {
+    return strlen($ext);
 }
-// resource variable
-$fp = fopen(__FILE__, "r");
-$inputs = [
-    // int data
-    0,
-    1,
-    12345,
-    -2345,
-    PHP_INT_MAX,
-    // float data
-    10.5,
-    -10.5,
-    12.3456789e10,
-    12.3456789e-10,
-    0.5,
-    // null data
-    null,
-    // boolean data
-    true,
-    false,
-    // empty data
-    "",
-    [],
-    // string data
-    "abcxyz",
-    "10.5",
-    "2",
-    "6.3e-2",
-    // object data
-    new classA(),
-    // resource variable
-    $fp,
-];
-// loop through each element of $inputs to check the behaviour of pow()
-foreach ($inputs as $input) {
-    try {
-        var_dump(pow($fusion, 3));
-    } catch (Error $e) {
-        echo $e->getMessage(), "\n";
+class MySessionHandler implements SessionHandlerInterface {
+    function open ($save_path, $session_name): bool {
+        return true;
+    }
+    function close(): bool {
+        return true;
+    }
+    function read ($id): string {
+        return '';
+    }
+    function write ($id, $sess_data): bool {
+        ob_start("output_html");
+        echo "laruence";
+        ob_end_flush();
+        return true;
+    }
+    function destroy ($id): bool {
+        return true;
+    }
+    function gc ($maxlifetime): int {
+        return 1;
     }
 }
-fclose($fp);
+session_set_save_handler(new MySessionHandler());
+session_start();
+$script1_dataflow = $save_path;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+ob_start(function() {
+    global $a;
+    for ($i = count($a); $i > 0; --$script1_dataflow) {
+        $a[] = 2;
+    }
+    fwrite(STDOUT, "Success");
+});
+$a = [];
+// trigger OOM in a resize operation
+while (1) {
+    $a[] = 1;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

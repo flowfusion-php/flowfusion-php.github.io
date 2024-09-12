@@ -1,8 +1,12 @@
 --TEST--
-SPL: RecursiveIteratorIterator::beginIteration() is called by RecursiveIteratorIterator::rewind()+SQLite3::blobOpen stream test
+Bug #77345 (Segmentation faults stack overflow in cyclic garbage collector) (Bug #77427)+Bug #60634 (Segmentation fault when trying to die() in SessionHandler::write()) - fatal error in write after exec
 --INI--
-post_max_size=1K
-serialize_precision=10
+zend.enable_gc = 1
+session.save_path=
+session.name=PHPSESSID
+session.save_handler=files
+opcache.preload={PWD}/preload.inc
+error_reporting=8192
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -67,104 +71,73 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$sample_array = array(1, 2);
-$sub_iterator = new RecursiveArrayIterator($sample_array);
-$iterator = new RecursiveIteratorIterator($sub_iterator);
-foreach ($iterator as $element) {
-  var_dump($element);
+class Node
+{
+    /** @var Node */
+    public $previous;
+    /** @var Node */
+    public $next;
 }
-class SkipsFirstElementRecursiveIteratorIterator extends RecursiveIteratorIterator {
-  public function beginIteration(): void {
-    echo "::beginIteration() was invoked\n";
-    $this->next();
-  }
+var_dump(gc_enabled());
+var_dump('start');
+$firstNode = new Node();
+$firstNode->previous = $firstNode;
+$firstNode->next = $firstNode;
+$circularDoublyLinkedList = $firstNode;
+for ($i = 0; $i < 200000; $i++) {
+    $currentNode = $circularDoublyLinkedList;
+    $nextNode = $circularDoublyLinkedList->next;
+    $newNode = new Node();
+    $newNode->previous = $currentNode;
+    $currentNode->next = $newNode;
+    $newNode->next = $nextNode;
+    $nextNode->previous = $newNode;
+    $circularDoublyLinkedList = $nextNode;
 }
-$iterator = new SkipsFirstElementRecursiveIteratorIterator($sub_iterator);
-foreach ($iterator as $element) {
-  var_dump($element);
-}
-$fusion = $element;
+var_dump('end');
+$script1_dataflow = $newNode;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-require_once(__DIR__ . '/new_db.inc');
-require_once(__DIR__ . '/stream_test.inc');
-define('TIMENOW', time());
-echo "Creating Table\n";
-var_dump($db->exec('CREATE TABLE test (id STRING, data BLOB)'));
-echo "PREPARING insert\n";
-$insert_stmt = $db->prepare("INSERT INTO test (id, data) VALUES (?, ?)");
-echo "BINDING Parameter\n";
-var_dump($insert_stmt->bindValue(1, 'a', SQLITE3_TEXT));
-var_dump($insert_stmt->bindValue(2, 'TEST TEST', SQLITE3_BLOB));
-$insert_stmt->execute();
-echo "Closing statement\n";
-var_dump($insert_stmt->close());
-$stream = $db->openBlob('test', 'data', 1);
-var_dump($stream);
-echo "Stream Contents\n";
-var_dump(stream_get_contents($stream));
-echo "Writing to read-only stream\n";
-var_dump(fwrite($fusion, 'ABCD'));
-echo "Closing Stream\n";
-var_dump(fclose($stream));
-echo "Opening stream in write mode\n";
-$stream = $db->openBlob('test', 'data', 1, 'main', SQLITE3_OPEN_READWRITE);
-var_dump($stream);
-echo "Writing to blob\n";
-var_dump(fwrite($stream, 'ABCD'));
-echo "Stream Contents\n";
-fseek($stream, 0);
-var_dump(stream_get_contents($stream));
-echo "Expanding blob size\n";
-var_dump(fwrite($stream, 'ABCD ABCD ABCD'));
-echo "Closing Stream\n";
-var_dump(fclose($stream));
-echo "Closing database\n";
-var_dump($db->close());
-echo "Done\n";
+ob_start();
+function open($save_path, $script1_dataflow) {
+    return true;
+}
+function close() {
+    echo "close: goodbye cruel world\n";
+    exit;
+}
+function read($id) {
+    return '';
+}
+function write($id, $session_data) {
+    echo "write: goodbye cruel world\n";
+    undefined_function();
+}
+function destroy($id): bool {
+    return true;
+}
+function gc($maxlifetime) {
+    return true;
+}
+session_set_save_handler('open', 'close', 'read', 'write', 'destroy', 'gc');
+session_start();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-sqlite3
---CREDITS--
-Matt Raines matt@raines.me.uk
-#testfest London 2009-05-09
+session
 --EXPECTF--
-int(1)
-int(2)
-::beginIteration() was invoked
-int(2)
-Creating Table
 bool(true)
-PREPARING insert
-BINDING Parameter
-bool(true)
-bool(true)
-Closing statement
-bool(true)
-resource(%d) of type (stream)
-Stream Contents
-string(9) "TEST TEST"
-Writing to read-only stream
+string(5) "start"
+string(3) "end"
+Deprecated: Calling session_set_save_handler() with more than 2 arguments is deprecated in %s on line %d
+write: goodbye cruel world
 
-Warning: fwrite(): Can't write to blob stream: is open as read only in %s on line %d
-bool(false)
-Closing Stream
-bool(true)
-Opening stream in write mode
-resource(%d) of type (stream)
-Writing to blob
-int(4)
-Stream Contents
-string(9) "ABCD TEST"
-Expanding blob size
+Fatal error: Uncaught Error: Call to undefined function undefined_function() in %s:%d
+Stack trace:
+#0 [internal function]: write(%s, '')
+#1 {main}
+  thrown in %s on line %d
 
-Warning: fwrite(): It is not possible to increase the size of a BLOB in %s on line %d
-bool(false)
-Closing Stream
-bool(true)
-Closing database
-bool(true)
-Done
+Warning: PHP Request Shutdown: Cannot call session save handler in a recursive manner in Unknown on line 0

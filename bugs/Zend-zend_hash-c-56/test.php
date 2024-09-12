@@ -61,28 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class test {
-  static public $a = 1;
-}
-$r = new ReflectionProperty('test', 'a');
-var_dump($r->getValue(null));
-$r->setValue(NULL, 2);
-var_dump($r->getValue());
-$r->setValue(3);
-var_dump($r->getValue());
-$fusion = $a;
+$foos = str_repeat('<foo/>' . PHP_EOL, 65535);
+$xml = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+$foos
+<bar/>
+</root>
+XML;
+$dom = new DOMDocument();
+$dom->loadXML($xml, LIBXML_BIGLINES);
+var_dump($dom->getElementsByTagName('bar')->item(0)->getLineNo());
+$fusion = $foos;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
-    $foo = $bar = [];
-    for ($i = 0; $i < 3; $fusion++) {
-        $foo = [$foo, [&$bar]];
+class MemoryLeak
+{
+    public function __construct()
+    {
+        $this->things[] = $this;
     }
-    ob_start(function (string $buffer) use (&$bar) {
-        $bar[][] = null;
-        return '';
-    }, 64);
-    $output($foo[0]);
-    ob_end_clean();
+    public function __destruct()
+    {
+        $fusion->things[] = null;
+    }
+    private $things = [];
+}
+ini_set('memory_limit', '20M');
+for ($i = 0; $i < 100000; ++$i) {
+    $obj = new MemoryLeak();
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];

@@ -61,67 +61,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// Note: basic use cases in Zend/tests/is_a.phpt
-spl_autoload_register(function ($className) {
-    echo "In autoload($className)\n";
-});
-function test_error_handler($err_no, $err_msg, $filename, $linenum) {
-    echo "Error: $err_no - $err_msg\n";
+class Node
+{
+    /** @var Node */
+    public $previous;
+    /** @var Node */
+    public $next;
 }
-set_error_handler('test_error_handler');
-echo "*** Testing is_subclass_of() : usage variations ***\n";
-// Initialise function arguments not being substituted (if any)
-$class_name = 'stdClass';
-//get an unset variable
-$unset_var = 10;
-unset ($unset_var);
-//array of values to iterate over
-$values = array(
-      // int data
-      0,
-      1,
-      12345,
-      -2345,
-      // float data
-      10.5,
-      -10.5,
-      10.1234567e10,
-      10.7654321E-10,
-      .5,
-      // array data
-      array(),
-      array(0),
-      array(1),
-      array(1, 2),
-      array('color' => 'red', 'item' => 'pen'),
-      // null data
-      NULL,
-      null,
-      // boolean data
-      true,
-      false,
-      TRUE,
-      FALSE,
-      // empty data
-      "",
-      '',
-      // string data
-      "string",
-      'String',
-      // undefined data
-      $undefined_var,
-      // unset data
-      $unset_var,
-);
-// loop through each element of the array for object
-foreach($values as $value) {
-      echo "\nArg value $value \n";
-      var_dump( is_subclass_of($value, $class_name) );
-};
-echo "Done";
+var_dump(gc_enabled());
+var_dump('start');
+$firstNode = new Node();
+$firstNode->previous = $firstNode;
+$firstNode->next = $firstNode;
+$circularDoublyLinkedList = $firstNode;
+for ($i = 0; $i < 200000; $i++) {
+    $currentNode = $circularDoublyLinkedList;
+    $nextNode = $circularDoublyLinkedList->next;
+    $newNode = new Node();
+    $newNode->previous = $currentNode;
+    $currentNode->next = $newNode;
+    $newNode->next = $nextNode;
+    $nextNode->previous = $newNode;
+    $circularDoublyLinkedList = $nextNode;
+}
+var_dump('end');
+$script1_dataflow = $nextNode;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Test by calling method or function with deprecated option ***\n";
-var_dump(get_cfg_var( 'magic_quotes_gpc' ) );
+ini_set('session.use_trans_sid', 1);
+session_save_path(__DIR__);
+session_start();
+ob_start();
+$script1_dataflow = "<a href='a?q=1'>asd</a>";
+output_add_rewrite_var('a', 'b');
+echo $string;
+ob_flush();
+ob_end_clean();
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

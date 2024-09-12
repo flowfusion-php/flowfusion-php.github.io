@@ -61,94 +61,113 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
-* Testing strcspn() : with heredoc string, varying mask and default start and len arguments
-*/
-echo "*** Testing strcspn() : with different mask strings ***\n";
-// initialing required variables
-// defining different heredoc strings
-$empty_heredoc = <<<EOT
-EOT;
-$heredoc_with_newline = <<<EOT
-\n
-EOT;
-$heredoc_with_characters = <<<EOT
-first line of heredoc string
-second line of heredoc string
-third line of heredocstring
-EOT;
-$heredoc_with_newline_and_tabs = <<<EOT
-hello\tworld\nhello\nworld\n
-EOT;
-$heredoc_with_alphanumerics = <<<EOT
-hello123world456
-1234hello\t1234
-EOT;
-$heredoc_with_embedded_nulls = <<<EOT
-hello\0world\0hello
-\0hello\0
-EOT;
-$heredoc_with_hexa_octal = <<<EOT
-hello\0\100\xaaworld\0hello
-\0hello\0
-EOT;
-$heredoc_strings = array(
-                   $empty_heredoc,
-                   $heredoc_with_newline,
-                   $heredoc_with_characters,
-                   $heredoc_with_newline_and_tabs,
-                   $heredoc_with_alphanumerics,
-                   $heredoc_with_embedded_nulls,
-                   $heredoc_with_hexa_octal
-                   );
-// defining array of mask strings
-$mask_array = array(
-            "",
-            '',
-            "\n\trsti \l",
-            '\n\trsti \l',
-            "\t",
-            "t\ ",
-            '\t',
-            "\t\ ",
-            " \t",
-                    "\t\i\100\xaa"
-                   );
-// loop through each element of the arrays for string and mask arguments
-$count = 1;
-foreach($heredoc_strings as $str) {
-  echo "\n-- Iteration $count --\n";
-  foreach($mask_array as $mask) {
-      var_dump( strcspn($str,$mask) ); // with default start and len value
-  }
-  $count++;
+function t() {
+    echo "!";
+    return true;
 }
-echo "Done"
-$fusion = $heredoc_strings;
+function f() {
+    echo "!";
+    return false;
+}
+$a = 0.0;
+$b = 0.0;
+$c = 1.0;
+$d = NAN;
+var_dump($a === $b);
+var_dump($a === $c);
+var_dump($a === $d);
+var_dump($a !== $b);
+var_dump($a !== $c);
+var_dump($a !== $d);
+var_dump($a === $b ? 1 : 0);
+var_dump($a === $c ? 1 : 0);
+var_dump($a === $d ? 1 : 0);
+var_dump($a !== $b ? 1 : 0);
+var_dump($a !== $c ? 1 : 0);
+var_dump($a !== $d ? 1 : 0);
+if ($a === $b) {
+    echo "1\n";
+}
+if ($a === $c) {
+    echo "2\n";
+}
+if ($a === $d) {
+    echo "3\n";
+}
+if ($a !== $b) {
+    echo "4\n";
+}
+if ($a !== $c) {
+    echo "5\n";
+}
+if ($a !== $d) {
+    echo "6\n";
+}
+if ($a === $b) {
+} else {
+    echo "7\n";
+}
+if ($a === $c) {
+} else {
+    echo "8\n";
+}
+if ($a === $d) {
+} else {
+    echo "9\n";
+}
+if ($a !== $b) {
+} else {
+    echo "A\n";
+}
+if ($a !== $c) {
+} else {
+    echo "B\n";
+}
+if ($a !== $d) {
+} else {
+    echo "C\n";
+}
+var_dump($a === $b && t());
+var_dump($a === $c && t());
+var_dump($a === $d && t());
+var_dump($a !== $b && t());
+var_dump($a !== $c && t());
+var_dump($a !== $d && t());
+var_dump($a === $b || f());
+var_dump($a === $c || f());
+var_dump($a === $d || f());
+var_dump($a !== $b || f());
+var_dump($a !== $c || f());
+var_dump($a !== $d || f());
+$a=NAN;
+var_dump($a === $d);
+var_dump($a !== $d);
+var_dump($a === $d ? 1 : 0);
+var_dump($a !== $d ? 1 : 0);
+$script1_dataflow = $d;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class MyPDO extends PDO {
-    public function __construct() {}
+class Dtor {
+    public function __destruct() {
+        throw new Exception(2);
+    }
 }
-class MyPDOStatement extends PDOStatement {
-    public function __construct() {}
+function test() {
+    try {
+        throw new Exception(1);
+    } finally {
+        try {
+            foreach ([new Dtor] as $script1_dataflow) {
+                unset($v);
+                return 42;
+            }
+        } catch (Exception $e) {
+        }
+    }
 }
-$pdo = new MyPDO;
 try {
-    $pdo->query("foo");
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-$stmt = new MyPDOStatement;
-try {
-    $stmt->fetch();
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
-}
-$stmt = new MyPDOStatement;
-try {
-    foreach ($stmt as $fusion) {}
-} catch (Error $e) {
-    echo $e->getMessage(), "\n";
+    test();
+} catch (Exception $e) {
+    echo $e, "\n";
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;

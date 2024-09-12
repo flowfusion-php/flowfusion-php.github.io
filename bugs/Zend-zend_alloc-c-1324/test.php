@@ -61,47 +61,24 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * Test scandir() with relative paths as $dir argument
- */
-echo "*** Testing scandir() : usage variations ***\n";
-// include for create_files/delete_files functions
-include (__DIR__ . '/../file/file.inc');
-$base_dir_path = __DIR__ . '/scandir_variation4';
-@mkdir($base_dir_path);
-$level_one_dir_path = "$base_dir_path/level_one";
-$level_two_dir_path = "$level_one_dir_path/level_two";
-// create directories and files
-mkdir($level_one_dir_path);
-create_files($level_one_dir_path, 2, 'numeric', 0755, 1, 'w', 'level_one', 1);
-mkdir($level_two_dir_path);
-create_files($level_two_dir_path, 2, 'numeric', 0755, 1, 'w', 'level_two', 1);
-echo "\n-- \$path = './level_one': --\n";
-var_dump(chdir($base_dir_path));
-var_dump(scandir('./level_one'));
-echo "\n-- \$path = 'level_one/level_two': --\n";
-var_dump(chdir($base_dir_path));
-var_dump(scandir('level_one/level_two'));
-echo "\n-- \$path = '..': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('..'));
-echo "\n-- \$path = 'level_two', '.': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('.'));
-echo "\n-- \$path = '../': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('../'));
-echo "\n-- \$path = './': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('./'));
-echo "\n-- \$path = '../../'level_one': --\n";
-var_dump(chdir($level_two_dir_path));
-var_dump(scandir('../../level_one'));
-@delete_files($level_one_dir_path, 2, 'level_one');
-@delete_files($level_two_dir_path, 2, 'level_two');
+class Test { public $x = 5; }
+$testobj1 = new Test;
+$testobj2 = new Test;
+$testobj1->x = $testobj1;
+$testobj2->x = $testobj2;
+try {
+    var_dump($testobj1 == $testobj2);
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
+}
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Test by calling method or function with deprecated option ***\n";
-var_dump(get_cfg_var( 'magic_quotes_gpc' ) );
+/* This no longer involves any recursion. */
+try {
+    array_merge_recursive($GLOBALS, $GLOBALS);
+} catch (\Error $e) {
+    echo $e->getMessage() . "\n";
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

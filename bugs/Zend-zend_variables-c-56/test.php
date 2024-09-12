@@ -61,26 +61,56 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Base {
-  protected $hello;
+/* Test fscanf() to scan resource type using different unsigned format types */
+$file_path = __DIR__;
+echo "*** Test fscanf(): different unsigned format types with resource ***\n";
+// create a file
+$filename = "$file_path/fscanf_variation41.tmp";
+$file_handle = fopen($filename, "w");
+if($file_handle == false)
+  exit("Error:failed to open file $filename");
+// resource type variable
+$fp = fopen (__FILE__, "r");
+$dfp = opendir ( __DIR__ );
+// array of resource types
+$resource_types = array (
+  $fp,
+  $dfp
+);
+$unsigned_formats = array( "%u", "%hu", "%lu", "%Lu", " %u", "%u ", "% u", "\t%u", "\n%u", "%4u", "%30u", "%[0-9]", "%*u");
+$counter = 1;
+// writing to the file
+foreach($resource_types as $value) {
+  @fprintf($file_handle, "%s", $value);
+  @fprintf($file_handle, "\n");
 }
-trait THello1 {
-  protected $hello;
+// closing the file
+fclose($file_handle);
+// opening the file for reading
+$file_handle = fopen($filename, "r");
+if($file_handle == false) {
+  exit("Error:failed to open file $filename");
 }
-// Protected and public are handle more strict with a warning then what is
-// expected from normal inheritance since they can have easier coliding semantics
-echo "PRE-CLASS-GUARD\n";
-class SameNameInSubClassProducesNotice extends Base {
-    use THello1;
+$counter = 1;
+// reading the values from file using different unsigned formats
+foreach($unsigned_formats as $unsigned_format) {
+  // rewind the file so that for every foreach iteration the file pointer starts from bof
+  rewind($file_handle);
+  echo "\n-- iteration $counter --\n";
+  while( !feof($file_handle) ) {
+    try {
+      var_dump(fscanf($file_handle,$unsigned_format));
+    } catch (ValueError $exception) {
+      echo $exception->getMessage() . "\n";
+    }
+  }
+  $counter++;
 }
-echo "POST-CLASS-GUARD\n";
-// now the same with a class that defines the property itself, too.
-class Notice extends Base {
-    use THello1;
-    protected $hello;
-}
-echo "POST-CLASS-GUARD2\n";
-$fusion = $hello;
+// closing the resources
+fclose($fp);
+closedir($dfp);
+echo "\n*** Done ***";
+$fusion = $filename;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 $array = array();
 for ($i=0; $fusion < 550; $i++) {

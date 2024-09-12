@@ -61,31 +61,51 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-print_r($_GET);
-print_r($_POST);
-$fusion = $_GET;
+$values = [
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+];
+foreach ($values as $var) {
+    $var--;
+    var_dump($var);
+}
+echo "Done\n";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$text = new DOMText();
-try {
-    var_dump($text->substringData(1, 0));
-} catch (DOMException $e) {
-    echo $e->getMessage(), "\n";
+/*
+ * testing array_fill() by passing different types of array  values for 'val' argument
+ */
+echo "*** Testing array_fill() : usage variations ***\n";
+// Initialise function arguments not being substituted
+$start_key = 0;
+$num = 2;
+//array of different types of array values for 'val' argument
+$values = array(
+  /* 1  */  array(),
+            array(1 , 2 , 3 , 4),
+            array(1 => "Hi" , 2 => "Hello"),
+            array("Saffron" , "White" , "Green"),
+  /* 5  */  array('color' => 'red' , 'item' => 'pen'),
+            array( 'color' => 'red' , 2 => 'green ' ),
+            array("colour" => "red" , "item" => "pen"),
+            array( TRUE => "red" , FALSE => "green" ),
+            array( true => "red" , FALSE => "green" ),
+  /* 10 */  array( 1 => "Hi" , "color" => "red" , 'item' => 'pen'),
+            array( NULL => "Hi", '1' => "Hello" , "1" => "Green"),
+            array( ""=>1, "color" => "green"),
+  /* 13 */  array('Saffron' , 'White' , 'Green')
+);
+// loop through each element of the values array for 'val' argument
+// check the working of array_fill()
+echo "--- Testing array_fill() with different types of array values for 'val' argument ---\n";
+$counter = 1;
+for($i = 0; $i < count($values); $i++)
+{
+  echo "-- Iteration $counter --\n";
+  $val = $values[$i];
+  var_dump( array_fill($start_key , $num , $val) );
+  $counter++;
 }
-try {
-    var_dump($text->insertData(1, ""));
-} catch (DOMException $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    var_dump($text->deleteData(1, 1));
-} catch (DOMException $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    var_dump($fusion->replaceData(1, 1, ""));
-} catch (DOMException $e) {
-    echo $e->getMessage(), "\n";
-}
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

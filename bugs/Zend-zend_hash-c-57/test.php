@@ -61,15 +61,61 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$json = '{"foo":"bar"}';
-var_dump(json_decode($json, false));
-var_dump(json_decode($json, true));
-var_dump(json_decode($json, null, 512, 0));
-var_dump(json_decode($json, null, 512, JSON_OBJECT_AS_ARRAY));
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-K
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+file_put_contents(__DIR__ . "/bug74596_1.php", <<<CODE
+<?php
+class A {
+    public function __construct() {
+        \$a = true;
+        if (\$a) {
+            echo 1 + 2;
+        } else {
+            echo 2 + 3;
+        }
+    }
+}
+?>
+CODE
+);
+file_put_contents(__DIR__ . "/bug74596_2.php", "ok\n");
+class ufilter extends php_user_filter
+{
+    function filter($in, $out, &$consumed, $closing): int
+    {
+        include_once __DIR__ . "/bug74596_1.php";
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            stream_bucket_append($out, $bucket);
+        }
+        return PSFS_PASS_ON;
+    }
+}
+stream_filter_register("ufilter", "ufilter");
+include "php://filter/read=ufilter/resource=" . __DIR__ . "/bug74596_2.php";
+$script1_dataflow = $bucket;
+$script1_connect=$script1_dataflow;
+$array = array();
+for ($i=0; $script1_dataflow < 550; $i++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+$script2_connect=$array;
+$random_var=$GLOBALS[array_rand($GLOBALS)];
+var_dump('random_var:',$random_var);
+var_fusion($script1_connect, $script2_connect, $random_var);
 ?>

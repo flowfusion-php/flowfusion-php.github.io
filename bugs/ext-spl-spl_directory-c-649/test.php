@@ -61,23 +61,54 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-enum A {
-    case B;
+$filename = __DIR__ . "/bug69181.csv";
+$csv = <<<CSV
+"foo\n\nbar\nbaz",qux
+"foo\nbar\nbaz",qux
+CSV;
+file_put_contents($filename, $csv);
+$file = new SplFileObject($filename);
+$file->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::DROP_NEW_LINE | SplFileObject::READ_CSV);
+var_dump(iterator_to_array($file));
+echo "\n====\n\n";
+$file->rewind();
+while (($record = $file->fgetcsv())) {
+  var_dump($record);
 }
-const A_prop = A::B->prop;
-var_dump(A_prop);
-const A_prop_nullsafe = A::B?->prop;
-var_dump(A_prop_nullsafe);
+$script1_dataflow = $file;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$document = new DOMDocument();
-$document->loadXML('<root/>');
-$sut = $document->createDocumentFragment();
-for($i = 0; $i < 10; $i++) {
-	$textNode = $document->createTextNode("Node$i");
-	$sut->append($textNode);
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar';
+$pname = 'phar://' . $fname;
+try {
+file_put_contents($fname, 'blah');
+$a = new PharFileInfo($pname . '/oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+unlink($fname);
 }
-$document->documentElement->append($sut);
-echo $document->saveXML();
+try {
+$a = new PharFileInfo(array());
+} catch (TypeError $e) {
+echo $e->getMessage() . "\n";
+}
+$a = new Phar($fname);
+$a['a'] = 'hi';
+$b = $a['a'];
+try {
+$a = new PharFileInfo($pname . '/oops/I/do/not/exist');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$script1_dataflow->__construct('oops');
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
+try {
+$a = new PharFileInfo(__FILE__);
+} catch (Exception $e) {
+echo $e->getMessage() . "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
