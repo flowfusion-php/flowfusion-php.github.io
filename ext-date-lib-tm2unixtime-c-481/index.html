@@ -63,30 +63,597 @@
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!--Ã©Ã©Ã©--&gt;
-Warning: Undefined variable $writer in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 69
-
-Warning: Trying to access array offset on null in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 103
-
-Warning: foreach() argument must be of type array|object, null given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 104
-
-Warning: Trying to access array offset on null in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 103
-
-Warning: foreach() argument must be of type array|object, null given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 104
-Test Passed
-string(11) &quot;random_var:&quot;
-int(1)
+--- testing: 9223372036854775807 &gt;&gt; 0 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 &gt;&gt; 1 ---
+int(4611686018427387903)
+--- testing: 9223372036854775807 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 7 ---
+int(72057594037927935)
+--- testing: 9223372036854775807 &gt;&gt; 9 ---
+int(18014398509481983)
+--- testing: 9223372036854775807 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -9223372036854775808 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: -9223372036854775808 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9223372036854775808 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775808 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9223372036854775808 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9223372036854775808 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372036854775808 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775808 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372036854775808 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 &gt;&gt; 0 ---
+int(2147483647)
+--- testing: 2147483647 &gt;&gt; 1 ---
+int(1073741823)
+--- testing: 2147483647 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 7 ---
+int(16777215)
+--- testing: 2147483647 &gt;&gt; 9 ---
+int(4194303)
+--- testing: 2147483647 &gt;&gt; 65 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -2147483648 &gt;&gt; 0 ---
+int(-2147483648)
+--- testing: -2147483648 &gt;&gt; 1 ---
+int(-1073741824)
+--- testing: -2147483648 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -2147483648 &gt;&gt; 7 ---
+int(-16777216)
+--- testing: -2147483648 &gt;&gt; 9 ---
+int(-4194304)
+--- testing: -2147483648 &gt;&gt; 65 ---
+int(-1)
+--- testing: -2147483648 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -2147483648 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -2147483648 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 9223372034707292160 &gt;&gt; 0 ---
+int(9223372034707292160)
+--- testing: 9223372034707292160 &gt;&gt; 1 ---
+int(4611686017353646080)
+--- testing: 9223372034707292160 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372034707292160 &gt;&gt; 7 ---
+int(72057594021150720)
+--- testing: 9223372034707292160 &gt;&gt; 9 ---
+int(18014398505287680)
+--- testing: 9223372034707292160 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372034707292160 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372034707292160 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372034707292160 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -9223372034707292160 &gt;&gt; 0 ---
+int(-9223372034707292160)
+--- testing: -9223372034707292160 &gt;&gt; 1 ---
+int(-4611686017353646080)
+--- testing: -9223372034707292160 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372034707292160 &gt;&gt; 7 ---
+int(-72057594021150720)
+--- testing: -9223372034707292160 &gt;&gt; 9 ---
+int(-18014398505287680)
+--- testing: -9223372034707292160 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372034707292160 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372034707292160 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372034707292160 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 2147483648 &gt;&gt; 0 ---
+int(2147483648)
+--- testing: 2147483648 &gt;&gt; 1 ---
+int(1073741824)
+--- testing: 2147483648 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 2147483648 &gt;&gt; 7 ---
+int(16777216)
+--- testing: 2147483648 &gt;&gt; 9 ---
+int(4194304)
+--- testing: 2147483648 &gt;&gt; 65 ---
+int(0)
+--- testing: 2147483648 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 2147483648 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483648 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -2147483649 &gt;&gt; 0 ---
+int(-2147483649)
+--- testing: -2147483649 &gt;&gt; 1 ---
+int(-1073741825)
+--- testing: -2147483649 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -2147483649 &gt;&gt; 7 ---
+int(-16777217)
+--- testing: -2147483649 &gt;&gt; 9 ---
+int(-4194305)
+--- testing: -2147483649 &gt;&gt; 65 ---
+int(-1)
+--- testing: -2147483649 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -2147483649 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -2147483649 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 4294967294 &gt;&gt; 0 ---
+int(4294967294)
+--- testing: 4294967294 &gt;&gt; 1 ---
+int(2147483647)
+--- testing: 4294967294 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967294 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967294 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967294 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967294 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967294 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967294 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; 0 ---
+int(4294967295)
+--- testing: 4294967295 &gt;&gt; 1 ---
+int(2147483647)
+--- testing: 4294967295 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967295 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967295 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967295 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967295 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; 0 ---
+int(4294967293)
+--- testing: 4294967293 &gt;&gt; 1 ---
+int(2147483646)
+--- testing: 4294967293 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967293 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967293 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967293 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967293 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; 0 ---
+int(9223372036854775806)
+--- testing: 9223372036854775806 &gt;&gt; 1 ---
+int(4611686018427387903)
+--- testing: 9223372036854775806 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775806 &gt;&gt; 7 ---
+int(72057594037927935)
+--- testing: 9223372036854775806 &gt;&gt; 9 ---
+int(18014398509481983)
+--- testing: 9223372036854775806 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775806 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9.2233720368548E+18 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: 9.2233720368548E+18 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: 9.2233720368548E+18 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9.2233720368548E+18 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: 9.2233720368548E+18 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: 9.2233720368548E+18 &gt;&gt; 65 ---
+int(-1)
+--- testing: 9.2233720368548E+18 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9.2233720368548E+18 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: 9.2233720368548E+18 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; 0 ---
 int(-9223372036854775807)
-int(1)
-Calling function: xmlwriter_end_document with arguments: 1
-Error calling function xmlwriter_end_document: xmlwriter_end_document(): Argument #1 ($writer) must be of type XMLWriter, int given
-Calling function: sizeof with arguments: 1, -9223372036854775807
-Error calling function sizeof: sizeof(): Argument #2 ($mode) must be either COUNT_NORMAL or COUNT_RECURSIVE
-Calling function: defined with arguments: 1
-Calling function: date_sunrise with arguments: -9223372036854775807, 1, -9223372036854775807, 1, -9223372036854775807, 1
-
-Deprecated: Function date_sunrise() is deprecated since 8.1, use date_sun_info() instead in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php on line 41
+--- testing: -9223372036854775807 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9223372036854775807 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775807 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9223372036854775807 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9223372036854775807 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775807 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: -9.2233720368548E+18 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9.2233720368548E+18 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9.2233720368548E+18 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9.2233720368548E+18 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9.2233720368548E+18 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9.2233720368548E+18 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 0 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 0 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 0 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 0 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 0 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 0 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 0 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 0 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 0 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 1 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 1 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 1 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 1 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 1 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 1 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 1 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 1 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -1 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -1 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 9223372034707292160 ---
+int(-1)
+--- testing: -1 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 2147483648 ---
+int(-1)
+--- testing: -1 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 4294967294 ---
+int(-1)
+--- testing: -1 &gt;&gt; 4294967295 ---
+int(-1)
+--- testing: -1 &gt;&gt; 4294967293 ---
+int(-1)
+--- testing: -1 &gt;&gt; 9223372036854775806 ---
+int(-1)
+--- testing: -1 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 7 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 7 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 7 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 7 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 7 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 7 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 7 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 7 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 9 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 9 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 9 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 9 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 9 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 9 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 65 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 65 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 65 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 65 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 65 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 65 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 65 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 65 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -44 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -44 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 9223372034707292160 ---
+int(-1)
+--- testing: -44 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 2147483648 ---
+int(-1)
+--- testing: -44 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 4294967294 ---
+int(-1)
+--- testing: -44 &gt;&gt; 4294967295 ---
+int(-1)
+--- testing: -44 &gt;&gt; 4294967293 ---
+int(-1)
+--- testing: -44 &gt;&gt; 9223372036854775806 ---
+int(-1)
+--- testing: -44 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 ---
+float(43.66827237527655)
+--- testing: -9223372036854775808 ---
+float(NAN)
+--- testing: 2147483647 ---
+float(21.487562597358306)
+--- testing: -2147483648 ---
+float(NAN)
+--- testing: 9223372034707292160 ---
+float(43.66827237504372)
+--- testing: -9223372034707292160 ---
+float(NAN)
+--- testing: 2147483648 ---
+float(21.487562597823967)
+--- testing: -2147483649 ---
+float(NAN)
+--- testing: 4294967294 ---
+float(22.18070977768542)
+--- testing: 4294967295 ---
+float(22.18070977791825)
+--- testing: 4294967293 ---
+float(22.180709777452588)
+--- testing: 9223372036854775806 ---
+float(43.66827237527655)
+--- testing: 9.2233720368548E+18 ---
+float(43.66827237527655)
+--- testing: -9223372036854775807 ---
+float(NAN)
+--- testing: -9.2233720368548E+18 ---
+float(NAN)
+string(11) &quot;random_var:&quot;
+float(-9.223372036854776E+18)
+array(0) {
+}
+float(-9.223372036854776E+18)
+Calling function: link with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: get_include_path with arguments: 
+Calling function: similar_text with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
+Calling function: socket_get_status with arguments: Array
+Error calling function socket_get_status: socket_get_status(): Argument #1 ($stream) must be of type resource, array given
+Calling function: bin2hex with arguments: Array
+Error calling function bin2hex: bin2hex(): Argument #1 ($string) must be of type string, array given
+Calling function: preg_last_error_msg with arguments: 
+Calling function: ctype_cntrl with arguments: -9.2233720368548E+18
+Calling function: compact with arguments: -9.2233720368548E+18, Array
+Error calling function compact: Cannot call compact() dynamically
+Calling function: microtime with arguments: -9.2233720368548E+18
+Calling function: settype with arguments: -9.2233720368548E+18, -9.2233720368548E+18
+Error calling function settype: settype(): Argument #2 ($type) must be a valid type
+Calling function: crc32 with arguments: -9.2233720368548E+18
+Calling function: date_sun_info with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12: runtime error: signed integer overflow: -4611686018427403200 + -4611686018427403200 cannot be represented in type &#x27;long long&#x27;
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:481:12 in
             </pre>
@@ -158,55 +725,51 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$h = fopen(&quot;php://output&quot;, &quot;w&quot;);
-$writer = XMLWriter::toStream($h);
-$writer-&gt;startDocument(encoding: &quot;UTF-8&quot;);
-$writer-&gt;writeComment(&#x27;Ã©Ã©Ã©&#x27;);
-unset($writer);
-$fusion = $writer;
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo &quot;--- testing: $longVal &gt;&gt; $otherVal ---\n&quot;;
+      try {
+        var_dump($longVal&gt;&gt;$otherVal);
+      } catch (ArithmeticError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo &quot;--- testing: $otherVal &gt;&gt; $longVal ---\n&quot;;
+      try {
+        var_dump($otherVal&gt;&gt;$longVal);
+      } catch (ArithmeticError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+$fusion = $longVals;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define(&quot;MAX_64Bit&quot;, 9223372036854775807);
 define(&quot;MAX_32Bit&quot;, 2147483647);
 define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
 define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$validLtOrEqual = array (
-MAX_32Bit, array(MAX_32Bit, &quot;2147483647&quot;, &quot;2147483647.0000000&quot;, 2.147483647e9, 2147483647.0, MAX_32Bit + 1),
-MIN_32Bit, array(MIN_32Bit, &quot;-2147483648&quot;, &quot;-2147483648.000&quot;, -2.147483648e9, -2147483648.0, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit, MIN_64Bit - 1, MIN_64Bit + 1),
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$invalidLtOrEqual = array (
-MAX_32Bit, array(&quot;2147483646&quot;, 2.1474836460001e9, MAX_32Bit - 1),
-MIN_32Bit, array(MIN_32Bit - 1, &quot;-2147483649&quot;, -2.1474836480001e9)
-);
-$failed = false;
-// test valid values
-for ($i = 0; $i &lt; count($validLtOrEqual); $i +=2) {
-   $typeToTestVal = $validLtOrEqual[$i];
-   $compares = $validLtOrEqual[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal &lt;= $compareVal) {
-         // do nothing
-      }
-      else {
-         echo &quot;FAILED: &#x27;$typeToTestVal&#x27; &gt; &#x27;$compareVal&#x27;\n&quot;;
-         $failed = true;
-      }
-   }
-}
-// test invalid values
-for ($i = 0; $i &lt; count($invalidLtOrEqual); $i +=2) {
-   $typeToTestVal = $invalidLtOrEqual[$i];
-   $compares = $fusion[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal &lt;= $compareVal) {
-         echo &quot;FAILED: &#x27;$typeToTestVal&#x27; &lt;= &#x27;$compareVal&#x27;\n&quot;;
-         $failed = true;
-      }
-   }
-}
-if ($failed == false) {
-   echo &quot;Test Passed\n&quot;;
+foreach ($fusion as $longVal) {
+   echo &quot;--- testing: $longVal ---\n&quot;;
+   var_dump(log1p($longVal));
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
@@ -221,11 +784,18 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-XMLWriter::toStream() with encoding - test UTF-8+Test &lt;= operator : max int 64bit range
+Test &gt;&gt; operator : 64bit long tests+Test log1p function : 64bit long tests
 --INI--
-session.use_cookies=0
-max_execution_time=2
+opcache.jit=1235
+max_input_vars=4
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1035
 --SKIPIF--
+&lt;?php
+if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;);
+?&gt;
 &lt;?php
 if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;);
 ?&gt;
@@ -293,67 +863,628 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$h = fopen(&quot;php://output&quot;, &quot;w&quot;);
-$writer = XMLWriter::toStream($h);
-$writer-&gt;startDocument(encoding: &quot;UTF-8&quot;);
-$writer-&gt;writeComment(&#x27;Ã©Ã©Ã©&#x27;);
-unset($writer);
-$fusion = $writer;
+define(&quot;MAX_64Bit&quot;, 9223372036854775807);
+define(&quot;MAX_32Bit&quot;, 2147483647);
+define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
+define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
+error_reporting(E_ERROR);
+foreach ($longVals as $longVal) {
+   foreach($otherVals as $otherVal) {
+      echo &quot;--- testing: $longVal &gt;&gt; $otherVal ---\n&quot;;
+      try {
+        var_dump($longVal&gt;&gt;$otherVal);
+      } catch (ArithmeticError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+foreach ($otherVals as $otherVal) {
+   foreach($longVals as $longVal) {
+      echo &quot;--- testing: $otherVal &gt;&gt; $longVal ---\n&quot;;
+      try {
+        var_dump($otherVal&gt;&gt;$longVal);
+      } catch (ArithmeticError $e) {
+        echo &quot;Exception: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+      }
+   }
+}
+$fusion = $longVals;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 define(&quot;MAX_64Bit&quot;, 9223372036854775807);
 define(&quot;MAX_32Bit&quot;, 2147483647);
 define(&quot;MIN_64Bit&quot;, -9223372036854775807 - 1);
 define(&quot;MIN_32Bit&quot;, -2147483647 - 1);
-$validLtOrEqual = array (
-MAX_32Bit, array(MAX_32Bit, &quot;2147483647&quot;, &quot;2147483647.0000000&quot;, 2.147483647e9, 2147483647.0, MAX_32Bit + 1),
-MIN_32Bit, array(MIN_32Bit, &quot;-2147483648&quot;, &quot;-2147483648.000&quot;, -2.147483648e9, -2147483648.0, MIN_32Bit + 1),
-MAX_64Bit, array(MAX_64Bit, MAX_64Bit + 1),
-MIN_64Bit, array(MIN_64Bit, MIN_64Bit - 1, MIN_64Bit + 1),
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
 );
-$invalidLtOrEqual = array (
-MAX_32Bit, array(&quot;2147483646&quot;, 2.1474836460001e9, MAX_32Bit - 1),
-MIN_32Bit, array(MIN_32Bit - 1, &quot;-2147483649&quot;, -2.1474836480001e9)
-);
-$failed = false;
-// test valid values
-for ($i = 0; $i &lt; count($validLtOrEqual); $i +=2) {
-   $typeToTestVal = $validLtOrEqual[$i];
-   $compares = $validLtOrEqual[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal &lt;= $compareVal) {
-         // do nothing
-      }
-      else {
-         echo &quot;FAILED: &#x27;$typeToTestVal&#x27; &gt; &#x27;$compareVal&#x27;\n&quot;;
-         $failed = true;
-      }
-   }
-}
-// test invalid values
-for ($i = 0; $i &lt; count($invalidLtOrEqual); $i +=2) {
-   $typeToTestVal = $invalidLtOrEqual[$i];
-   $compares = $fusion[$i + 1];
-   foreach($compares as $compareVal) {
-      if ($typeToTestVal &lt;= $compareVal) {
-         echo &quot;FAILED: &#x27;$typeToTestVal&#x27; &lt;= &#x27;$compareVal&#x27;\n&quot;;
-         $failed = true;
-      }
-   }
-}
-if ($failed == false) {
-   echo &quot;Test Passed\n&quot;;
+foreach ($fusion as $longVal) {
+   echo &quot;--- testing: $longVal ---\n&quot;;
+   var_dump(log1p($longVal));
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
---EXTENSIONS--
-xmlwriter
 --EXPECT--
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!--Ã©Ã©Ã©--&gt;
-Test Passed
+--- testing: 9223372036854775807 &gt;&gt; 0 ---
+int(9223372036854775807)
+--- testing: 9223372036854775807 &gt;&gt; 1 ---
+int(4611686018427387903)
+--- testing: 9223372036854775807 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 7 ---
+int(72057594037927935)
+--- testing: 9223372036854775807 &gt;&gt; 9 ---
+int(18014398509481983)
+--- testing: 9223372036854775807 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -9223372036854775808 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: -9223372036854775808 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9223372036854775808 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775808 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9223372036854775808 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9223372036854775808 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372036854775808 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775808 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372036854775808 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 2147483647 &gt;&gt; 0 ---
+int(2147483647)
+--- testing: 2147483647 &gt;&gt; 1 ---
+int(1073741823)
+--- testing: 2147483647 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 7 ---
+int(16777215)
+--- testing: 2147483647 &gt;&gt; 9 ---
+int(4194303)
+--- testing: 2147483647 &gt;&gt; 65 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -2147483648 &gt;&gt; 0 ---
+int(-2147483648)
+--- testing: -2147483648 &gt;&gt; 1 ---
+int(-1073741824)
+--- testing: -2147483648 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -2147483648 &gt;&gt; 7 ---
+int(-16777216)
+--- testing: -2147483648 &gt;&gt; 9 ---
+int(-4194304)
+--- testing: -2147483648 &gt;&gt; 65 ---
+int(-1)
+--- testing: -2147483648 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -2147483648 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -2147483648 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 9223372034707292160 &gt;&gt; 0 ---
+int(9223372034707292160)
+--- testing: 9223372034707292160 &gt;&gt; 1 ---
+int(4611686017353646080)
+--- testing: 9223372034707292160 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372034707292160 &gt;&gt; 7 ---
+int(72057594021150720)
+--- testing: 9223372034707292160 &gt;&gt; 9 ---
+int(18014398505287680)
+--- testing: 9223372034707292160 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372034707292160 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372034707292160 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372034707292160 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -9223372034707292160 &gt;&gt; 0 ---
+int(-9223372034707292160)
+--- testing: -9223372034707292160 &gt;&gt; 1 ---
+int(-4611686017353646080)
+--- testing: -9223372034707292160 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372034707292160 &gt;&gt; 7 ---
+int(-72057594021150720)
+--- testing: -9223372034707292160 &gt;&gt; 9 ---
+int(-18014398505287680)
+--- testing: -9223372034707292160 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372034707292160 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372034707292160 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372034707292160 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 2147483648 &gt;&gt; 0 ---
+int(2147483648)
+--- testing: 2147483648 &gt;&gt; 1 ---
+int(1073741824)
+--- testing: 2147483648 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 2147483648 &gt;&gt; 7 ---
+int(16777216)
+--- testing: 2147483648 &gt;&gt; 9 ---
+int(4194304)
+--- testing: 2147483648 &gt;&gt; 65 ---
+int(0)
+--- testing: 2147483648 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 2147483648 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483648 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: -2147483649 &gt;&gt; 0 ---
+int(-2147483649)
+--- testing: -2147483649 &gt;&gt; 1 ---
+int(-1073741825)
+--- testing: -2147483649 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -2147483649 &gt;&gt; 7 ---
+int(-16777217)
+--- testing: -2147483649 &gt;&gt; 9 ---
+int(-4194305)
+--- testing: -2147483649 &gt;&gt; 65 ---
+int(-1)
+--- testing: -2147483649 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -2147483649 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -2147483649 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 4294967294 &gt;&gt; 0 ---
+int(4294967294)
+--- testing: 4294967294 &gt;&gt; 1 ---
+int(2147483647)
+--- testing: 4294967294 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967294 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967294 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967294 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967294 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967294 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967294 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; 0 ---
+int(4294967295)
+--- testing: 4294967295 &gt;&gt; 1 ---
+int(2147483647)
+--- testing: 4294967295 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967295 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967295 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967295 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967295 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967295 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; 0 ---
+int(4294967293)
+--- testing: 4294967293 &gt;&gt; 1 ---
+int(2147483646)
+--- testing: 4294967293 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 4294967293 &gt;&gt; 7 ---
+int(33554431)
+--- testing: 4294967293 &gt;&gt; 9 ---
+int(8388607)
+--- testing: 4294967293 &gt;&gt; 65 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 4294967293 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 4294967293 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; 0 ---
+int(9223372036854775806)
+--- testing: 9223372036854775806 &gt;&gt; 1 ---
+int(4611686018427387903)
+--- testing: 9223372036854775806 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775806 &gt;&gt; 7 ---
+int(72057594037927935)
+--- testing: 9223372036854775806 &gt;&gt; 9 ---
+int(18014398509481983)
+--- testing: 9223372036854775806 &gt;&gt; 65 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775806 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775806 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9.2233720368548E+18 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: 9.2233720368548E+18 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: 9.2233720368548E+18 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: 9.2233720368548E+18 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: 9.2233720368548E+18 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: 9.2233720368548E+18 &gt;&gt; 65 ---
+int(-1)
+--- testing: 9.2233720368548E+18 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: 9.2233720368548E+18 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: 9.2233720368548E+18 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; 0 ---
+int(-9223372036854775807)
+--- testing: -9223372036854775807 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9223372036854775807 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775807 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9223372036854775807 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9223372036854775807 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9223372036854775807 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; 0 ---
+int(-9223372036854775808)
+--- testing: -9.2233720368548E+18 &gt;&gt; 1 ---
+int(-4611686018427387904)
+--- testing: -9.2233720368548E+18 &gt;&gt; -1 ---
+Exception: Bit shift by negative number
+--- testing: -9.2233720368548E+18 &gt;&gt; 7 ---
+int(-72057594037927936)
+--- testing: -9.2233720368548E+18 &gt;&gt; 9 ---
+int(-18014398509481984)
+--- testing: -9.2233720368548E+18 &gt;&gt; 65 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; -44 ---
+Exception: Bit shift by negative number
+--- testing: -9.2233720368548E+18 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -9.2233720368548E+18 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: 0 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 0 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 0 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 0 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 0 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 0 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 0 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 0 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 0 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 0 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 1 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 1 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 1 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 1 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 1 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 1 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 1 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 1 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 1 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -1 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -1 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 9223372034707292160 ---
+int(-1)
+--- testing: -1 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 2147483648 ---
+int(-1)
+--- testing: -1 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; 4294967294 ---
+int(-1)
+--- testing: -1 &gt;&gt; 4294967295 ---
+int(-1)
+--- testing: -1 &gt;&gt; 4294967293 ---
+int(-1)
+--- testing: -1 &gt;&gt; 9223372036854775806 ---
+int(-1)
+--- testing: -1 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: -1 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 7 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 7 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 7 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 7 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 7 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 7 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 7 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 7 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 7 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 9 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 9 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 9 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 9 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 9 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 9 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 9 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 65 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 65 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 65 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 65 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 65 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 65 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 65 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 65 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 65 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 9223372036854775807 ---
+int(-1)
+--- testing: -44 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 2147483647 ---
+int(-1)
+--- testing: -44 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 9223372034707292160 ---
+int(-1)
+--- testing: -44 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 2147483648 ---
+int(-1)
+--- testing: -44 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; 4294967294 ---
+int(-1)
+--- testing: -44 &gt;&gt; 4294967295 ---
+int(-1)
+--- testing: -44 &gt;&gt; 4294967293 ---
+int(-1)
+--- testing: -44 &gt;&gt; 9223372036854775806 ---
+int(-1)
+--- testing: -44 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: -44 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 2147483647 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 2147483647 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775807 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -9223372036854775808 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483647 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -2147483648 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 9223372034707292160 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -9223372034707292160 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 2147483648 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; -2147483649 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; 4294967294 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 4294967295 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 4294967293 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9223372036854775806 ---
+int(0)
+--- testing: 9223372036854775807 &gt;&gt; 9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; -9223372036854775807 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 &gt;&gt; -9.2233720368548E+18 ---
+Exception: Bit shift by negative number
+--- testing: 9223372036854775807 ---
+float(43.66827237527655)
+--- testing: -9223372036854775808 ---
+float(NAN)
+--- testing: 2147483647 ---
+float(21.487562597358306)
+--- testing: -2147483648 ---
+float(NAN)
+--- testing: 9223372034707292160 ---
+float(43.66827237504372)
+--- testing: -9223372034707292160 ---
+float(NAN)
+--- testing: 2147483648 ---
+float(21.487562597823967)
+--- testing: -2147483649 ---
+float(NAN)
+--- testing: 4294967294 ---
+float(22.18070977768542)
+--- testing: 4294967295 ---
+float(22.18070977791825)
+--- testing: 4294967293 ---
+float(22.180709777452588)
+--- testing: 9223372036854775806 ---
+float(43.66827237527655)
+--- testing: 9.2233720368548E+18 ---
+float(43.66827237527655)
+--- testing: -9223372036854775807 ---
+float(NAN)
+--- testing: -9.2233720368548E+18 ---
+float(NAN)
 
             </pre>
         </div>
@@ -397,30 +1528,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;max_execution_time=2&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused799.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker14&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.jit=1035&quot; -d &quot;max_input_vars=4&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused400.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

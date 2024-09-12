@@ -1,17 +1,17 @@
 --TEST--
-ZE2 __set() and __get()+GH-13670 002
+Test fopen() function : variation: use include path and stream context (absolute directories in path)+Bug #80745 (JIT produces Assert failure and UNKNOWN:0 var_dumps in code involving bitshifts)
 --INI--
-sendmail_path={MAIL:{PWD}/mb_send_mail04.eml}
-max_input_vars=100
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.jit=function
+opcache.protect_memory=1
+max_input_vars=5
+sendmail_path={MAIL:{PWD}/gh8086.eml}
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0051
---SKIPIF--
-<?php
-// gc_threshold is global state
-if (getenv('SKIP_REPEAT')) die('skip Not repeatable');
-?>
+opcache.jit=1051
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -76,112 +76,143 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class Test
-{
-    protected $x;
-    function __get($name) {
-        echo __METHOD__ . "\n";
-        if (isset($this->x[$name])) {
-            return $this->x[$name];
-        }
-        else
-        {
-            return NULL;
-        }
-    }
-    function __set($name, $val) {
-        echo __METHOD__ . "\n";
-        $this->x[$name] = $val;
-    }
+//create the include directory structure
+$thisTestDir =  basename(__FILE__, ".php") . ".dir";
+mkdir($thisTestDir);
+chdir($thisTestDir);
+$workingDir = "workdir";
+$filename = basename(__FILE__, ".php") . ".tmp";
+$scriptDir = __DIR__;
+$baseDir = getcwd();
+$secondFile = $baseDir."/dir2/".$filename;
+$firstFile = "../dir1/".$filename;
+$scriptFile = $scriptDir.'/'.$filename;
+$newdirs = array("dir1", "dir2", "dir3");
+$pathSep = ":";
+$newIncludePath = "";
+if(substr(PHP_OS, 0, 3) == 'WIN' ) {
+   $pathSep = ";";
 }
-class AutoGen
-{
-    protected $x;
-    function __get($name) {
-        echo __METHOD__ . "\n";
-        if (!isset($this->x[$name])) {
-            $this->x[$name] = new Test();
-        }
-        return $this->x[$name];
-    }
-    function __set($name, $val) {
-        echo __METHOD__ . "\n";
-        $this->x[$name] = $val;
-    }
+foreach($newdirs as $newdir) {
+   mkdir($newdir);
+   $newIncludePath .= $baseDir.'/'.$newdir.$pathSep;
 }
-$foo = new AutoGen();
-$foo->bar->baz = "Check";
-var_dump($foo->bar);
-var_dump($foo->bar->baz);
-$fusion = $name;
+mkdir($workingDir);
+chdir($workingDir);
+//define the files to go into these directories, create one in dir2
+echo "\n--- testing include path ---\n";
+set_include_path($newIncludePath);
+$modes = array("r", "r+", "rt");
+foreach($modes as $mode) {
+    test_fopen($mode);
+}
+// remove the directory structure
+chdir($baseDir);
+rmdir($workingDir);
+foreach($newdirs as $newdir) {
+   rmdir($newdir);
+}
+chdir("..");
+rmdir($thisTestDir);
+function test_fopen($mode) {
+   global $scriptFile, $secondFile, $firstFile, $filename;
+   // create a file in the middle directory
+   $h = fopen($secondFile, "w");
+   fwrite($h, "in dir2");
+   fclose($h);
+   echo "\n** testing with mode=$mode **\n";
+   // should read dir2 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //create a file in dir1
+   $h = fopen($firstFile, "w");
+   fwrite($h, "in dir1");
+   fclose($h);
+   //should now read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in working directory
+   $h = fopen($filename, "w");
+   fwrite($h, "in working dir");
+   fclose($h);
+   //should still read dir1 file
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   unlink($firstFile);
+   unlink($secondFile);
+   //should read the file in working dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   // create a file in the script directory
+   $h = fopen($scriptFile, "w");
+   fwrite($h, "in script dir");
+   fclose($h);
+   //should read the file in script dir
+   $h = fopen($filename, $mode, true);
+   fpassthru($h);
+   fclose($h);
+   echo "\n";
+   //cleanup
+   unlink($filename);
+   unlink($scriptFile);
+}
+$fusion = $scriptFile;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-register_shutdown_function(function () {
-    global $shutdown;
-    $shutdown = true;
-});
-class Cycle {
-    public $self;
-    public function __construct() {
-        $this->self = $this;
-    }
+final class Message
+{
+    public $qr = false;
+    public $opcode = 0;
+    public $aa = false;
 }
-class Canary {
-    public $self;
-    public function __construct() {
-        $this->self = $this;
-    }
-    public function __destruct() {
-        global $shutdown;
-        if (!$shutdown) {
-            work();
-        }
-    }
+echo "Starting...\n";
+function headerToBinary(Message $message)
+{
+        $flags = 0;
+        $flags = ($flags << 1) | ($message->qr ? 1 : 0);
+        $flags = ($flags << 4) | $fusion->opcode;
+        var_dump($flags);
+        $flags = ($flags << 1) | ($message->aa ? 1 : 0);
 }
-function work() {
-    global $objs, $fusion;
-    new Canary();
-    // Create some collectable garbage so the next run will not adjust
-    // threshold
-    for ($i = 0; $i < 100; $i++) {
-        new Cycle();
-    }
-    // Add potential garbage to buffer
-    foreach (array_slice($objs, 0, $defaultThreshold) as $obj) {
-        $o = $obj;
-    }
-}
-$defaultThreshold = gc_status()['threshold'];
-$objs = [];
-for ($i = 0; $i < $defaultThreshold*2; $i++) {
-    $obj = new stdClass;
-    $objs[] = $obj;
-}
-work();
-foreach ($objs as $obj) {
-    $o = $obj;
-}
-$st = gc_status();
-if ($st['runs'] > 10) {
-    var_dump($st);
-}
-?>
+headerToBinary(new Message());
+echo "PROBLEM NOT REPRODUCED !\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-AutoGen::__get
-Test::__set
-AutoGen::__get
-object(Test)#%d (1) {
-  ["x":protected]=>
-  array(1) {
-    ["baz"]=>
-    string(5) "Check"
-  }
-}
-AutoGen::__get
-Test::__get
-string(5) "Check"
-==DONE==
+--EXTENSIONS--
+opcache
+--EXPECT--
+--- testing include path ---
+
+** testing with mode=r **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
+
+** testing with mode=r+ **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
+
+** testing with mode=rt **
+in dir2
+in dir1
+in dir1
+in working dir
+in script dir
+Starting...
+int(0)
+PROBLEM NOT REPRODUCED !

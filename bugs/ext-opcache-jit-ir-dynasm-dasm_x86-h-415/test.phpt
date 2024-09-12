@@ -1,12 +1,13 @@
 --TEST--
-Plain prop satisfies interface get hook by-reference+Test rsort() function : usage variations - String values
+Phar object: array access+set $value parameter variance
 --INI--
-precision=17
-opcache.jit=1205
+phar.require_hash=0
+opcache.file_update_protection=0
+opcache.revalidate_freq=60
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=0004
+opcache.jit=1202
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,225 +72,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-interface I {
-    public $prop { get; }
-}
-class A implements I {
-    public $prop = 42 {
-        get => $this->prop;
+require_once 'files/phar_oo_test.inc';
+class MyFile extends SplFileObject
+{
+    function __construct($what)
+    {
+        echo __METHOD__ . "($what)\n";
+        parent::__construct($what);
     }
 }
-$a = new A();
-var_dump($a);
-$fusion = $prop;
+$phar = new Phar($fname);
+try
+{
+    $phar->setFileClass('SplFileInfo');
+}
+catch (TypeError $e)
+{
+    echo $e->getMessage() . "\n";
+}
+$phar->setInfoClass('MyFile');
+echo $phar['a.php']->getFilename() . "\n";
+echo $phar['b/c.php']->getFilename() . "\n";
+echo $phar['b.php']->getFilename() . "\n";
+$fusion = $e;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-/*
- * Pass arrays containing different string data to rsort() to test behaviour
- */
-echo "*** Testing rsort() : variation ***\n";
-$fusion = array (
-// group of escape sequences
-array(null, NULL, "\a", "\cx", "\e", "\f", "\n", "\t", "\xhh", "\ddd", "\v"),
-// array contains combination of capital/small letters
-array("lemoN", "Orange", "banana", "apple", "Test", "TTTT", "ttt", "ww", "x", "X", "oraNGe", "BANANA")
-);
-$flags = array("SORT_REGULAR" => SORT_REGULAR, "SORT_STRING" => SORT_STRING);
-$count = 1;
-// loop through to test rsort() with different arrays
-foreach ($various_arrays as $array) {
-    echo "\n-- Iteration $count --\n";
-    echo "- With Default sort flag -\n";
-    $temp_array = $array;
-    var_dump(rsort($temp_array) );
-    var_dump($temp_array);
-    // loop through $flags array and setting all possible flag values
-    foreach($flags as $key => $flag){
-        echo "- Sort flag = $key -\n";
-        $temp_array = $array;
-        var_dump(rsort($temp_array, $flag) );
-        var_dump($temp_array);
+interface X {}
+interface Y extends X {}
+class A {
+    public Y $prop {
+        set(X $fusion) {}
     }
-    $count++;
 }
-echo "Done";
+class B extends A {
+    public Y $prop {
+        set(Y $prop) {}
+    }
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-object(A)#1 (1) {
-  ["prop"]=>
-  int(42)
-}
-*** Testing rsort() : variation ***
-
--- Iteration 1 --
-- With Default sort flag -
-bool(true)
-array(11) {
-  [0]=>
-  string(4) "\xhh"
-  [1]=>
-  string(4) "\ddd"
-  [2]=>
-  string(3) "\cx"
-  [3]=>
-  string(2) "\a"
-  [4]=>
-  string(1) ""
-  [5]=>
-  string(1) ""
-  [6]=>
-  string(1) ""
-  [7]=>
-  string(1) "
-"
-  [8]=>
-  string(1) "	"
-  [9]=>
-  NULL
-  [10]=>
-  NULL
-}
-- Sort flag = SORT_REGULAR -
-bool(true)
-array(11) {
-  [0]=>
-  string(4) "\xhh"
-  [1]=>
-  string(4) "\ddd"
-  [2]=>
-  string(3) "\cx"
-  [3]=>
-  string(2) "\a"
-  [4]=>
-  string(1) ""
-  [5]=>
-  string(1) ""
-  [6]=>
-  string(1) ""
-  [7]=>
-  string(1) "
-"
-  [8]=>
-  string(1) "	"
-  [9]=>
-  NULL
-  [10]=>
-  NULL
-}
-- Sort flag = SORT_STRING -
-bool(true)
-array(11) {
-  [0]=>
-  string(4) "\xhh"
-  [1]=>
-  string(4) "\ddd"
-  [2]=>
-  string(3) "\cx"
-  [3]=>
-  string(2) "\a"
-  [4]=>
-  string(1) ""
-  [5]=>
-  string(1) ""
-  [6]=>
-  string(1) ""
-  [7]=>
-  string(1) "
-"
-  [8]=>
-  string(1) "	"
-  [9]=>
-  NULL
-  [10]=>
-  NULL
-}
-
--- Iteration 2 --
-- With Default sort flag -
-bool(true)
-array(12) {
-  [0]=>
-  string(1) "x"
-  [1]=>
-  string(2) "ww"
-  [2]=>
-  string(3) "ttt"
-  [3]=>
-  string(6) "oraNGe"
-  [4]=>
-  string(5) "lemoN"
-  [5]=>
-  string(6) "banana"
-  [6]=>
-  string(5) "apple"
-  [7]=>
-  string(1) "X"
-  [8]=>
-  string(4) "Test"
-  [9]=>
-  string(4) "TTTT"
-  [10]=>
-  string(6) "Orange"
-  [11]=>
-  string(6) "BANANA"
-}
-- Sort flag = SORT_REGULAR -
-bool(true)
-array(12) {
-  [0]=>
-  string(1) "x"
-  [1]=>
-  string(2) "ww"
-  [2]=>
-  string(3) "ttt"
-  [3]=>
-  string(6) "oraNGe"
-  [4]=>
-  string(5) "lemoN"
-  [5]=>
-  string(6) "banana"
-  [6]=>
-  string(5) "apple"
-  [7]=>
-  string(1) "X"
-  [8]=>
-  string(4) "Test"
-  [9]=>
-  string(4) "TTTT"
-  [10]=>
-  string(6) "Orange"
-  [11]=>
-  string(6) "BANANA"
-}
-- Sort flag = SORT_STRING -
-bool(true)
-array(12) {
-  [0]=>
-  string(1) "x"
-  [1]=>
-  string(2) "ww"
-  [2]=>
-  string(3) "ttt"
-  [3]=>
-  string(6) "oraNGe"
-  [4]=>
-  string(5) "lemoN"
-  [5]=>
-  string(6) "banana"
-  [6]=>
-  string(5) "apple"
-  [7]=>
-  string(1) "X"
-  [8]=>
-  string(4) "Test"
-  [9]=>
-  string(4) "TTTT"
-  [10]=>
-  string(6) "Orange"
-  [11]=>
-  string(6) "BANANA"
-}
-Done
+--EXTENSIONS--
+phar
+--CLEAN--
+<?php
+unlink(__DIR__ . '/files/phar_oo_006.phar.php');
+__halt_compiler();
+?>
+--EXPECTF--
+SplFileInfo::setFileClass(): Argument #1 ($class) must be a class name derived from SplFileObject, SplFileInfo given
+MyFile::__construct(phar://%s/a.php)
+a.php
+MyFile::__construct(phar://%s/b/c.php)
+c.php
+MyFile::__construct(phar://%s/b.php)
+b.php
+Fatal error: Declaration of B::$prop::set(Y $prop): void must be compatible with A::$prop::set(X $prop): void in %s on line %d

@@ -61,27 +61,15 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$a = [0];
-$a[0] = 1;
-$b = &$a;
-$a[0] = 2;
-$a[1] = 3;
-$c = [1];
-$b = &$c;
-$fusion = $a;
+$i = 1;
+echo $i++;
+echo $i++;
+echo $i++;
+echo $i++;
+$fusion = $i;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$iToday = new DateTimeImmutable('today');
-$iTomorrow = new DateTimeImmutable('tomorrow');
-$mToday = new DateTime('today');
-$mTomorrow = new DateTime('tomorrow');
-var_dump($iToday < $iTomorrow);
-var_dump($iToday == $iTomorrow);
-var_dump($iToday > $iTomorrow);
-var_dump($iToday == $mToday);
-var_dump($iToday === $mToday);
-var_dump($iToday < $mTomorrow);
-var_dump($iToday == $fusion);
-var_dump($iToday > $mTomorrow);
+var_dump($fusion);
+echo "Done\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
