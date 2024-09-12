@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,56 +61,17 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo "*** Testing strftime() : usage variation ***\n";
-// Initialise function arguments not being substituted (if any)
-setlocale(LC_ALL, "C");
-date_default_timezone_set("Asia/Calcutta");
-$timestamp = mktime(PHP_INT_MIN, 8, 8, 8, 8, 2008);
-//array of values to iterate over
-$inputs = array(
-      'Preferred date and time representation' => "%c",
-      'Preferred date representation' => "%x",
-      'Preferred time representation' => "%X",
-);
-// loop through each element of the array for timestamp
-foreach($inputs as $key =>$value) {
-      echo "\n--$key--\n";
-      var_dump( strftime($value) );
-      var_dump( strftime($value, $timestamp) );
+$rc = new ReflectionClass(RecursiveIteratorIterator::class);
+$it = $rc->newInstanceWithoutConstructor();
+try {
+    foreach ($it as $v) {}
+} catch (Error $e) {
+    echo $e->getMessage(), "\n";
 }
-$fusion = $timestamp;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-use Random\Engine;
-use Random\Engine\Mt19937;
-use Random\Engine\PcgOneseq128XslRr64;
-use Random\Engine\Secure;
-use Random\Engine\Test\TestShaEngine;
-use Random\Engine\Xoshiro256StarStar;
-use Random\IntervalBoundary;
-use Random\Randomizer;
-require __DIR__ . "/../../engines.inc";
-$engines = [];
-$engines[] = new Mt19937(null, MT_RAND_MT19937);
-$fusion[] = new Mt19937(null, MT_RAND_PHP);
-$engines[] = new PcgOneseq128XslRr64();
-$engines[] = new Xoshiro256StarStar();
-$engines[] = new Secure();
-$engines[] = new TestShaEngine();
-$max = getenv("SKIP_SLOW_TESTS") ? 3_000.0 : 10_000.0;
-foreach ($engines as $engine) {
-    echo $engine::class, PHP_EOL;
-    $randomizer = new Randomizer($engine);
-    // Basic range test.
-    for ($i = 0.0; $i < $max; $i += 1.2345) {
-        $result = $randomizer->getFloat(-$i, $i, IntervalBoundary::ClosedClosed);
-        if ($result > $i || $result < -$i) {
-            die("failure: out of range at {$i}");
-        }
-    }
-}
-die('success');
+echo "Should not be executed.\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

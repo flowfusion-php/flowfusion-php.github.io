@@ -1,12 +1,12 @@
 --TEST--
-Bug #68175 (RegexIterator pregFlags are NULL instead of 0)+Trait property hook conflict
+SCCP 023: ADD_ARRAY_ELEMENT with partial array+Serialize element choose nearest prefix if unqualified name
 --INI--
-opcache.interned_strings_buffer=-1
-max_execution_time=12
 opcache.enable=1
 opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1004
+opcache.optimization_level=-1
+opcache.opt_debug_level=0
+opcache.preload={PWD}/preload_class_alias_2.inc
+opcache.preload={PWD}/bug78761_preload.php
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,35 +71,41 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$arr = new ArrayIterator(array());
-$regex = new RegexIterator($arr, '/^test/');
-var_dump(
-    $regex->getMode(),
-    $regex->getFlags(),
-    $regex->getPregFlags()
-);
-$fusion = $arr;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-trait T {
-    public $fusion {
-        get { echo __METHOD__, "\n"; }
-        set { echo __METHOD__, "\n"; }
-    }
+function a ($field_type, $allowed_values) {
+    $settings = [
+        'list_string' => [
+            'allowed_values' => $allowed_values,
+        ],
+    ];
+    return $settings[$field_type];
 }
-class C {
-    use T;
-    public $prop {
-        get { echo __METHOD__, "\n"; }
-        set { echo __METHOD__, "\n"; }
-    }
-}
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+var_dump(a("list_string", ["xxx"]));
+$script1_dataflow = $settings;
+$script1_connect=$script1_dataflow;
+$dom = Dom\XMLDocument::createFromString('<root xmlns:p1="u1"><child xmlns:p2="u1"><p1:child2/></child></root>');
+echo $dom->saveXml(), "\n";
+$dom = Dom\XMLDocument::createFromString('<root xmlns:p1="u1"><child xmlns:p2="u1"></child></root>');
+$script1_dataflow = $dom->documentElement;
+$child2 = $root->ownerDocument->createElementNS('u1', 'child2');
+$root->firstChild->appendChild($child2);
+echo $dom->saveXml(), "\n";
+$script2_connect=$script1_dataflow;
+$random_var=$GLOBALS[array_rand($GLOBALS)];
+var_dump('random_var:',$random_var);
+var_fusion($script1_connect, $script2_connect, $random_var);
 ?>
---EXPECTF--
-int(0)
-int(0)
-int(0)
-Fatal error: C and T define the same hooked property ($prop) in the composition of C. Conflict resolution between hooked properties is currently not supported. Class was composed in %s on line %d
+--EXTENSIONS--
+opcache
+dom
+--EXPECT--
+array(1) {
+  ["allowed_values"]=>
+  array(1) {
+    [0]=>
+    string(3) "xxx"
+  }
+}
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:p1="u1"><child xmlns:p2="u1"><p1:child2/></child></root>
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:p1="u1"><child xmlns:p2="u1"><p2:child2/></child></root>

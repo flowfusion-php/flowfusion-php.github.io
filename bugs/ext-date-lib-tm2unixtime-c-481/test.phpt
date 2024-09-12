@@ -1,8 +1,13 @@
 --TEST--
-Bug #47745 (FILTER_VALIDATE_INT doesn't allow minimum integer)+Bug #36510 (strtotime() fails to parse date strings with tabs)
+Test array_chunk() function : usage variations - array with diff. sub arrays+Parent type with interning disabled
 --INI--
-session.gc_maxlifetime=300
-session.use_cookies=0
+opcache.interned_strings_buffer=0
+opcache.file_cache_only=1
+session.auto_start = 0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=tracing
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -34,7 +39,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -57,7 +62,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -67,24 +72,121 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$s = (string)(-PHP_INT_MAX-1);
-var_dump(intval($s));
-var_dump(filter_var($s, FILTER_VALIDATE_INT));
-$fusion = $s;
+/*
+* Testing array_chunk() function - input array containing different sub arrays
+*/
+echo "*** Testing array_chunk() : usage variations ***\n";
+$size = 2;
+// input array
+$input_array = array (
+  "array1" => array(),
+  "array2" => array(1, 2, 3),
+  "array3" =>  array(1)
+);
+echo "\n-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' as default --\n";
+var_dump( array_chunk($input_array, $size) );
+echo "\n-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' = true --\n";
+var_dump( array_chunk($input_array, $size, true) );
+echo "\n-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' = false --\n";
+var_dump( array_chunk($input_array, $size, false) );
+echo "Done";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-date_default_timezone_set("UTC");
-$t = 1140973388;
-var_dump(strtotime("-2 hours", $t));
-var_dump(strtotime("-2\thours", $fusion));
+class Foo {
+    public function test(): self {
+    }
+}
+class Bar extends Foo {
+    public function test(): parent {
+    }
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-filter
---EXPECTF--
-int(-%d)
-int(-%d)
-int(1140966188)
-int(1140966188)
+--EXPECT--
+*** Testing array_chunk() : usage variations ***
+
+-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' as default --
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    array(0) {
+    }
+    [1]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(2)
+      [2]=>
+      int(3)
+    }
+  }
+  [1]=>
+  array(1) {
+    [0]=>
+    array(1) {
+      [0]=>
+      int(1)
+    }
+  }
+}
+
+-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' = true --
+array(2) {
+  [0]=>
+  array(2) {
+    ["array1"]=>
+    array(0) {
+    }
+    ["array2"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(2)
+      [2]=>
+      int(3)
+    }
+  }
+  [1]=>
+  array(1) {
+    ["array3"]=>
+    array(1) {
+      [0]=>
+      int(1)
+    }
+  }
+}
+
+-- Testing array_chunk() by supplying an array containing different sub arrays & 'preserve_key' = false --
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    array(0) {
+    }
+    [1]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(2)
+      [2]=>
+      int(3)
+    }
+  }
+  [1]=>
+  array(1) {
+    [0]=>
+    array(1) {
+      [0]=>
+      int(1)
+    }
+  }
+}
+Done
+===DONE===

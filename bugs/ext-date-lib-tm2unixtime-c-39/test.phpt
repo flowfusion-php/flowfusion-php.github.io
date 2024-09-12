@@ -1,9 +1,12 @@
 --TEST--
-Test natcasesort() function : object functionality - mixed visibility within objects+Test sinh function : 64bit long tests
---SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+GH-10271: Incorrect arithmetic calculations when using JIT+Bug #81433 (DOMElement::setIdAttribute(attr, true) called twice removes ID)
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.jit_hot_loop=1
+magic_quotes_gpc=1
+zend_test.observer.observe_includes=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +38,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +61,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,132 +71,54 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-/*
- * Pass natcasesort() an array of objects which have properties of different
- * visibilities to test how it re-orders the array.
- */
-echo "*** Testing natcasesort() : object functionality ***\n";
-// class declaration for string objects
-class for_string_natcasesort
+$tang['KSI']=-9.1751656444142E-5;
+$tang['ETA']=8.5076090069491E-5;
+$sol['X']['k']=-222.45470924306;
+$sol['X']['e']=-8.1787760034414;
+$sol['X'][1]=-0.020231298698539;
+$sol['Y']['k']=-14.400586941152;
+$sol['Y']['e']=392.95090925357;
+$sol['Y'][1]=-0.035664413413272;
+$sol['xc']=968;
+$sol['yc']=548;
+for( $p=0; $p<3; $p++ )
 {
-    public $public_class_value;
-    private $private_class_value;
-    protected $protected_class_value;
-    // initializing object member value
-    function __construct($value1, $value2,$value3){
-        $this->public_class_value = $value1;
-        $this->private_class_value = $value2;
-        $this->protected_class_value = $value3;
-    }
-    // return string value
-    function __tostring() {
-        return (string)$this->public_class_value;
-    }
+	print($p.': ');
+	Tangential2XY($tang,$sol);
 }
-// array of string objects
-$unsorted_str_obj = array (
-new for_string_natcasesort("axx","AXX","ass"),
-new for_string_natcasesort("t","eee","abb"),
-new for_string_natcasesort("w","W", "c"),
-new for_string_natcasesort("py","PY", "pt"),
-);
-echo "\n-- Testing natcasesort() by supplying object arrays --\n";
-// testing natcasesort() function by supplying string object array
-$temp_array = $unsorted_str_obj;
-var_dump(natcasesort($temp_array) );
-var_dump($temp_array);
-echo "Done";
-$fusion = $value2;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-foreach ($longVals as $longVal) {
-   echo "--- testing: $fusion ---\n";
-   var_dump(sinh($longVal));
+function Tangential2XY(array $tang, array $sol) : array
+{
+	$x = $sol['X']['k']*$tang['KSI'] + $sol['X']['e']*$tang['ETA'] + $sol['X'][1];
+	$y = $sol['Y']['k']*$tang['KSI'] + $sol['Y']['e']*$tang['ETA'] + $sol['Y'][1];
+	printf("In;%.12f;%.12f;%.12f;%.12f;",$x,$y,$sol['xc'],$sol['yc']);
+	$x = $sol['xc']*($x+1);
+	$y = $sol['yc']*($y+1);
+	printf("Out;%.12f;%.12f\n",$x,$y);
+	if( $x<100 )
+		exit("Mamy to!\n");
+	return ['x'=>$x,'y'=>$y];
 }
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+$script1_dataflow = $y;
+$script1_connect=$x;
+$dom = new DOMDocument('1.0', 'utf-8');
+$script1_dataflow = $dom->createElement('test', 'root');
+$dom->appendChild($element);
+$element->setAttribute("id", 123);
+$element->setIdAttribute("id", true);
+$node = $element->getAttributeNode("id");
+var_dump($node->isId());
+$element->setIdAttribute("id", true);
+var_dump($node->isId());
+$script2_connect=$script1_dataflow;
+$random_var=$GLOBALS[array_rand($GLOBALS)];
+var_dump('random_var:',$random_var);
+var_fusion($script1_connect, $script2_connect, $random_var);
 ?>
---EXPECTF--
-*** Testing natcasesort() : object functionality ***
-
--- Testing natcasesort() by supplying object arrays --
+--EXTENSIONS--
+dom
+--EXPECT--
+0: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
+1: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
+2: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
 bool(true)
-array(4) {
-  [0]=>
-  object(for_string_natcasesort)#%d (3) {
-    ["public_class_value"]=>
-    string(3) "axx"
-    ["private_class_value":"for_string_natcasesort":private]=>
-    string(3) "AXX"
-    ["protected_class_value":protected]=>
-    string(3) "ass"
-  }
-  [3]=>
-  object(for_string_natcasesort)#%d (3) {
-    ["public_class_value"]=>
-    string(2) "py"
-    ["private_class_value":"for_string_natcasesort":private]=>
-    string(2) "PY"
-    ["protected_class_value":protected]=>
-    string(2) "pt"
-  }
-  [1]=>
-  object(for_string_natcasesort)#%d (3) {
-    ["public_class_value"]=>
-    string(1) "t"
-    ["private_class_value":"for_string_natcasesort":private]=>
-    string(3) "eee"
-    ["protected_class_value":protected]=>
-    string(3) "abb"
-  }
-  [2]=>
-  object(for_string_natcasesort)#%d (3) {
-    ["public_class_value"]=>
-    string(1) "w"
-    ["private_class_value":"for_string_natcasesort":private]=>
-    string(1) "W"
-    ["protected_class_value":protected]=>
-    string(1) "c"
-  }
-}
-Done
---- testing: 9223372036854775807 ---
-float(INF)
---- testing: -9223372036854775808 ---
-float(-INF)
---- testing: 2147483647 ---
-float(INF)
---- testing: -2147483648 ---
-float(-INF)
---- testing: 9223372034707292160 ---
-float(INF)
---- testing: -9223372034707292160 ---
-float(-INF)
---- testing: 2147483648 ---
-float(INF)
---- testing: -2147483649 ---
-float(-INF)
---- testing: 4294967294 ---
-float(INF)
---- testing: 4294967295 ---
-float(INF)
---- testing: 4294967293 ---
-float(INF)
---- testing: 9223372036854775806 ---
-float(INF)
---- testing: 9.2233720368548E+18 ---
-float(INF)
---- testing: -9223372036854775807 ---
-float(-INF)
---- testing: -9.2233720368548E+18 ---
-float(-INF)
+bool(true)

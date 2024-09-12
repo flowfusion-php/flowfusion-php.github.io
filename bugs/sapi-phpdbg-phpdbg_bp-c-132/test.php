@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,19 +61,33 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo 1;
-echo 2;
-echo 3;
-foo();
-function foo() {
-	echo 4;
+class C {
+    public $class = C::class;
 }
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-date_default_timezone_set('UTC');
-$period = new DatePeriod(new DateTimeImmutable("now"), new DateInterval("P2Y4DT6H8M"), 2);
-var_dump($period->getEndDate());
-$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
-var_dump('random_var:',$v1,$v2,$v3);
-var_fusion($v1,$v2,$v3);
+$c = new C();
+$c->/* comment */class = 42;
+var_dump($c->/** doc comment */class);
+var_dump($c->
+    // line comment
+    class);
+var_dump($c->
+    # hash comment
+    class);
+var_dump($c?->/* comment */class);
+$script1_dataflow = $c;
+$script1_connect=$class;
+$input = '';
+for($i=0; $i<512; $script1_dataflow++) {
+    $input .= chr($i%256);
+}
+echo "Normal: ";
+if($input === stripslashes(addslashes($input))) {
+    echo "OK\n";
+} else {
+    echo "FAILED\n";
+}
+$script2_connect=$input;
+$random_var=$GLOBALS[array_rand($GLOBALS)];
+var_dump('random_var:',$random_var);
+var_fusion($script1_connect, $script2_connect, $random_var);
 ?>

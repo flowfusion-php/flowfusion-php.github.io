@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,87 +61,32 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class C {
-    static function sreturnVal() {
-        global $a;
-        return $a;
-    }
-    static function &sreturnReference() {
-        global $a;
-        return $a;
-    }
-    function returnVal() {
-        global $a;
-        return $a;
-    }
-    function &returnReference() {
-        global $a;
-        return $a;
-    }
+$array = array(array(7,8,9),1,2,3,array(4,5,6));
+$arrayIterator = new ArrayIterator($array);
+try {
+  $limitIterator = new LimitIterator($arrayIterator, -1);
+} catch (\ValueError $e){
+  print $e->getMessage(). "\n";
 }
-function returnVal() {
-        global $a;
-        return $a;
+try {
+  $limitIterator = new LimitIterator($arrayIterator, 0, -2);
+} catch (\ValueError $e){
+  print $e->getMessage() . "\n";
 }
-function &returnReference() {
-        global $a;
-        return $a;
-}
-function foo(&$ref) {
-    var_dump($ref);
-    $ref = "changed";
-}
-echo "Pass a function call that returns a value:\n";
-$a = "original";
-foo(returnVal());
-var_dump($a);
-echo "Pass a function call that returns a reference:\n";
-$a = "original";
-foo(returnReference());
-var_dump($a);
-echo "\nPass a static method call that returns a value:\n";
-$a = "original";
-foo(C::sreturnVal());
-var_dump($a);
-echo "Pass a static method call that returns a reference:\n";
-$a = "original";
-foo(C::sreturnReference());
-var_dump($a);
-$myC = new C;
-echo "\nPass a method call that returns a value:\n";
-$a = "original";
-foo($myC->returnVal());
-var_dump($a);
-echo "Pass a method call that returns a reference:\n";
-$a = "original";
-foo($myC->returnReference());
-var_dump($a);
-$fusion = $a;
+$limitIterator = new LimitIterator($arrayIterator, 0, -1);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = array();
-for ($i=0; $i < 550; $fusion++) {
-    $array = array($array);
-}
-json_encode($array, 0, 551);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
-json_encode($array, 0, 540);
-switch (json_last_error()) {
-    case JSON_ERROR_NONE:
-        echo 'OK' . PHP_EOL;
-    break;
-    case JSON_ERROR_DEPTH:
-        echo 'ERROR' . PHP_EOL;
-    break;
-}
+echo "*** testing stat ***\n";
+var_dump(stat(false));
+var_dump(stat(''));
+var_dump(stat(' '));
+var_dump(stat('|'));
+echo "*** testing lstat ***\n";
+var_dump(lstat(false));
+var_dump(lstat(''));
+var_dump(lstat(' '));
+var_dump(lstat('|'));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

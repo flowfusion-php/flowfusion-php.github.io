@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,24 +61,22 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function foo()
-{
-    $mode = 0;
-    $working = 0;
-    while ($mode == 0) {
-        $working = $mode = 1;
-    }
-}
-echo "ok\n";
-$fusion = $working;
+$ar = array("one"=>1, "two"=>2, "three"=>array("four"=>4, "five"=>5, "six"=>array("seven"=>7)), "eight"=>8, -100 => 10, NULL => "null");
+  $it = new RecursiveArrayIterator($ar);
+  $it = new RecursiveIteratorIterator($it);
+  foreach($it as $k=>$v)
+  {
+    echo "$k=>$v\n";
+    var_dump($k);
+  }
+$script1_dataflow = $ar;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$b = NAN;
-for ($i = 0; $i < 3; $i++) {
-    if ($fusion) { echo "nan is true\n"; }
-    else { echo "nan is false\n"; }
-}
+set_error_handler(function(y$y) {
+});
+$k=[];
+$y[$script1_dataflow]++;
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
