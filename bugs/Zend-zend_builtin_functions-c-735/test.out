@@ -1,4 +1,52 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
+A::$prop::get
+A::$prop::get
+bool(true)
+A::$prop::set
+Cannot unset hooked property B::$prop
 
-Termsig=6
+Warning: Undefined variable $value in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 111
+===EmptyIterator===
+===InfiniteIterator===
+2=>
+3=>
+0=>
+1=>
+2=>
+===Infinite/LimitIterator===
+1=>B
+2=>C
+1=>B
+2=>C
+1=>B
+string(11) "random_var:"
+array(0) {
+}
+string(1) "B"
+array(1) {
+  [0]=>
+  string(68) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php"
+}
+Calling function: timezone_identifiers_list with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+Array, Array
+Error calling function timezone_identifiers_list: timezone_identifiers_list(): Argument #1 ($timezoneGroup) must be of type int, array given
+Calling function: inet_pton with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+Array
+Error calling function inet_pton: inet_pton(): Argument #1 ($ip) must be of type string, array given
+Calling function: getimagesizefromstring with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 38
+Array, Array
+
+Warning: getimagesizefromstring(): Argument #2 ($image_info) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1643.php on line 41
+Error calling function getimagesizefromstring: getimagesizefromstring(): Argument #1 ($string) must be of type string, array given
+Calling function: feof with arguments: B
+Error calling function feof: feof(): Argument #1 ($stream) must be of type resource, string given
+Calling function: method_exists with arguments: B, B
+Calling function: get_class_vars with arguments: B
+/home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:735:12: runtime error: applying non-zero offset 4294967248 to null pointer
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_builtin_functions.c:735:12 in

@@ -1,9 +1,11 @@
 --TEST--
-Test ^ operator : 64bit long tests+DOMNode::C14NFile()
+Decrementing min int values 64bit+Test array_fill() function : usage variations - different types of array values for 'val' argument
+--INI--
+precision=14
+mysqlnd.debug="t:O,/tmp/mysqli_debug_phpt.trace"
+internal_encoding=cp1255
 --SKIPIF--
-<?php
-if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
-?>
+<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -35,7 +37,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -58,7 +60,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -68,615 +70,293 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$longVals = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
-);
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-       echo "--- testing: $longVal ^ $otherVal ---\n";
-      var_dump($longVal^$otherVal);
-   }
+$values = [
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+];
+foreach ($values as $var) {
+    $var--;
+    var_dump($var);
 }
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-       echo "--- testing: $otherVal ^ $longVal ---\n";
-      var_dump($otherVal^$longVal);
-   }
-}
-$fusion = $longVal;
+echo "Done\n";
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$xml = <<< XML
-<?xml version="1.0" ?>
-<books>
- <book>
-  <title>The Grapes of Wrath</title>
-  <author>John Steinbeck</author>
- </book>
- <book>
-  <title>The Pearl</title>
-  <author>John Steinbeck</author>
- </book>
-</books>
-XML;
-$output = __DIR__.'/DOMNode_C14NFile_basic.tmp';
-$doc = new DOMDocument();
-$doc->loadXML($xml);
-$node = $doc->getElementsByTagName('title')->item(0);
-var_dump($node->C14NFile($output));
-$content = file_get_contents($output);
-var_dump($fusion);
-try {
-    var_dump($node->C14NFile($output, false, false, []));
-} catch (\ValueError $e) {
-    echo $e->getMessage() . \PHP_EOL;
+/*
+ * testing array_fill() by passing different types of array  values for 'val' argument
+ */
+echo "*** Testing array_fill() : usage variations ***\n";
+// Initialise function arguments not being substituted
+$start_key = 0;
+$num = 2;
+//array of different types of array values for 'val' argument
+$values = array(
+  /* 1  */  array(),
+            array(1 , 2 , 3 , 4),
+            array(1 => "Hi" , 2 => "Hello"),
+            array("Saffron" , "White" , "Green"),
+  /* 5  */  array('color' => 'red' , 'item' => 'pen'),
+            array( 'color' => 'red' , 2 => 'green ' ),
+            array("colour" => "red" , "item" => "pen"),
+            array( TRUE => "red" , FALSE => "green" ),
+            array( true => "red" , FALSE => "green" ),
+  /* 10 */  array( 1 => "Hi" , "color" => "red" , 'item' => 'pen'),
+            array( NULL => "Hi", '1' => "Hello" , "1" => "Green"),
+            array( ""=>1, "color" => "green"),
+  /* 13 */  array('Saffron' , 'White' , 'Green')
+);
+// loop through each element of the values array for 'val' argument
+// check the working of array_fill()
+echo "--- Testing array_fill() with different types of array values for 'val' argument ---\n";
+$counter = 1;
+for($i = 0; $i < count($values); $i++)
+{
+  echo "-- Iteration $counter --\n";
+  $val = $values[$i];
+  var_dump( array_fill($start_key , $num , $val) );
+  $counter++;
 }
-try {
-    var_dump($node->C14NFile($output, false, false, ['query' => []]));
-} catch (\TypeError $e) {
-    echo $e->getMessage() . \PHP_EOL;
-}
+echo "Done";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-dom
---CLEAN--
-<?php
-$output = __DIR__.'/DOMNode_C14NFile_basic.tmp';
-unlink($output);
-?>
 --EXPECT--
---- testing: 9223372036854775807 ^ 0 ---
-int(9223372036854775807)
---- testing: 9223372036854775807 ^ 1 ---
-int(9223372036854775806)
---- testing: 9223372036854775807 ^ -1 ---
-int(-9223372036854775808)
---- testing: 9223372036854775807 ^ 7 ---
-int(9223372036854775800)
---- testing: 9223372036854775807 ^ 9 ---
-int(9223372036854775798)
---- testing: 9223372036854775807 ^ 65 ---
-int(9223372036854775742)
---- testing: 9223372036854775807 ^ -44 ---
-int(-9223372036854775765)
---- testing: 9223372036854775807 ^ 2147483647 ---
-int(9223372034707292160)
---- testing: 9223372036854775807 ^ 9223372036854775807 ---
-int(0)
---- testing: -9223372036854775808 ^ 0 ---
-int(-9223372036854775808)
---- testing: -9223372036854775808 ^ 1 ---
-int(-9223372036854775807)
---- testing: -9223372036854775808 ^ -1 ---
-int(9223372036854775807)
---- testing: -9223372036854775808 ^ 7 ---
-int(-9223372036854775801)
---- testing: -9223372036854775808 ^ 9 ---
-int(-9223372036854775799)
---- testing: -9223372036854775808 ^ 65 ---
-int(-9223372036854775743)
---- testing: -9223372036854775808 ^ -44 ---
-int(9223372036854775764)
---- testing: -9223372036854775808 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: -9223372036854775808 ^ 9223372036854775807 ---
-int(-1)
---- testing: 2147483647 ^ 0 ---
-int(2147483647)
---- testing: 2147483647 ^ 1 ---
-int(2147483646)
---- testing: 2147483647 ^ -1 ---
-int(-2147483648)
---- testing: 2147483647 ^ 7 ---
-int(2147483640)
---- testing: 2147483647 ^ 9 ---
-int(2147483638)
---- testing: 2147483647 ^ 65 ---
-int(2147483582)
---- testing: 2147483647 ^ -44 ---
-int(-2147483605)
---- testing: 2147483647 ^ 2147483647 ---
-int(0)
---- testing: 2147483647 ^ 9223372036854775807 ---
-int(9223372034707292160)
---- testing: -2147483648 ^ 0 ---
-int(-2147483648)
---- testing: -2147483648 ^ 1 ---
-int(-2147483647)
---- testing: -2147483648 ^ -1 ---
-int(2147483647)
---- testing: -2147483648 ^ 7 ---
-int(-2147483641)
---- testing: -2147483648 ^ 9 ---
-int(-2147483639)
---- testing: -2147483648 ^ 65 ---
-int(-2147483583)
---- testing: -2147483648 ^ -44 ---
-int(2147483604)
---- testing: -2147483648 ^ 2147483647 ---
-int(-1)
---- testing: -2147483648 ^ 9223372036854775807 ---
-int(-9223372034707292161)
---- testing: 9223372034707292160 ^ 0 ---
-int(9223372034707292160)
---- testing: 9223372034707292160 ^ 1 ---
-int(9223372034707292161)
---- testing: 9223372034707292160 ^ -1 ---
-int(-9223372034707292161)
---- testing: 9223372034707292160 ^ 7 ---
-int(9223372034707292167)
---- testing: 9223372034707292160 ^ 9 ---
-int(9223372034707292169)
---- testing: 9223372034707292160 ^ 65 ---
-int(9223372034707292225)
---- testing: 9223372034707292160 ^ -44 ---
-int(-9223372034707292204)
---- testing: 9223372034707292160 ^ 2147483647 ---
-int(9223372036854775807)
---- testing: 9223372034707292160 ^ 9223372036854775807 ---
-int(2147483647)
---- testing: -9223372034707292160 ^ 0 ---
-int(-9223372034707292160)
---- testing: -9223372034707292160 ^ 1 ---
-int(-9223372034707292159)
---- testing: -9223372034707292160 ^ -1 ---
-int(9223372034707292159)
---- testing: -9223372034707292160 ^ 7 ---
-int(-9223372034707292153)
---- testing: -9223372034707292160 ^ 9 ---
-int(-9223372034707292151)
---- testing: -9223372034707292160 ^ 65 ---
-int(-9223372034707292095)
---- testing: -9223372034707292160 ^ -44 ---
-int(9223372034707292116)
---- testing: -9223372034707292160 ^ 2147483647 ---
-int(-9223372032559808513)
---- testing: -9223372034707292160 ^ 9223372036854775807 ---
-int(-2147483649)
---- testing: 2147483648 ^ 0 ---
-int(2147483648)
---- testing: 2147483648 ^ 1 ---
-int(2147483649)
---- testing: 2147483648 ^ -1 ---
-int(-2147483649)
---- testing: 2147483648 ^ 7 ---
-int(2147483655)
---- testing: 2147483648 ^ 9 ---
-int(2147483657)
---- testing: 2147483648 ^ 65 ---
-int(2147483713)
---- testing: 2147483648 ^ -44 ---
-int(-2147483692)
---- testing: 2147483648 ^ 2147483647 ---
-int(4294967295)
---- testing: 2147483648 ^ 9223372036854775807 ---
-int(9223372034707292159)
---- testing: -2147483649 ^ 0 ---
-int(-2147483649)
---- testing: -2147483649 ^ 1 ---
-int(-2147483650)
---- testing: -2147483649 ^ -1 ---
-int(2147483648)
---- testing: -2147483649 ^ 7 ---
-int(-2147483656)
---- testing: -2147483649 ^ 9 ---
-int(-2147483658)
---- testing: -2147483649 ^ 65 ---
-int(-2147483714)
---- testing: -2147483649 ^ -44 ---
-int(2147483691)
---- testing: -2147483649 ^ 2147483647 ---
-int(-4294967296)
---- testing: -2147483649 ^ 9223372036854775807 ---
-int(-9223372034707292160)
---- testing: 4294967294 ^ 0 ---
-int(4294967294)
---- testing: 4294967294 ^ 1 ---
-int(4294967295)
---- testing: 4294967294 ^ -1 ---
-int(-4294967295)
---- testing: 4294967294 ^ 7 ---
-int(4294967289)
---- testing: 4294967294 ^ 9 ---
-int(4294967287)
---- testing: 4294967294 ^ 65 ---
-int(4294967231)
---- testing: 4294967294 ^ -44 ---
-int(-4294967254)
---- testing: 4294967294 ^ 2147483647 ---
-int(2147483649)
---- testing: 4294967294 ^ 9223372036854775807 ---
-int(9223372032559808513)
---- testing: 4294967295 ^ 0 ---
-int(4294967295)
---- testing: 4294967295 ^ 1 ---
-int(4294967294)
---- testing: 4294967295 ^ -1 ---
-int(-4294967296)
---- testing: 4294967295 ^ 7 ---
-int(4294967288)
---- testing: 4294967295 ^ 9 ---
-int(4294967286)
---- testing: 4294967295 ^ 65 ---
-int(4294967230)
---- testing: 4294967295 ^ -44 ---
-int(-4294967253)
---- testing: 4294967295 ^ 2147483647 ---
-int(2147483648)
---- testing: 4294967295 ^ 9223372036854775807 ---
-int(9223372032559808512)
---- testing: 4294967293 ^ 0 ---
-int(4294967293)
---- testing: 4294967293 ^ 1 ---
-int(4294967292)
---- testing: 4294967293 ^ -1 ---
-int(-4294967294)
---- testing: 4294967293 ^ 7 ---
-int(4294967290)
---- testing: 4294967293 ^ 9 ---
-int(4294967284)
---- testing: 4294967293 ^ 65 ---
-int(4294967228)
---- testing: 4294967293 ^ -44 ---
-int(-4294967255)
---- testing: 4294967293 ^ 2147483647 ---
-int(2147483650)
---- testing: 4294967293 ^ 9223372036854775807 ---
-int(9223372032559808514)
---- testing: 9223372036854775806 ^ 0 ---
-int(9223372036854775806)
---- testing: 9223372036854775806 ^ 1 ---
-int(9223372036854775807)
---- testing: 9223372036854775806 ^ -1 ---
-int(-9223372036854775807)
---- testing: 9223372036854775806 ^ 7 ---
-int(9223372036854775801)
---- testing: 9223372036854775806 ^ 9 ---
-int(9223372036854775799)
---- testing: 9223372036854775806 ^ 65 ---
-int(9223372036854775743)
---- testing: 9223372036854775806 ^ -44 ---
-int(-9223372036854775766)
---- testing: 9223372036854775806 ^ 2147483647 ---
-int(9223372034707292161)
---- testing: 9223372036854775806 ^ 9223372036854775807 ---
-int(1)
---- testing: 9.2233720368548E+18 ^ 0 ---
-int(-9223372036854775808)
---- testing: 9.2233720368548E+18 ^ 1 ---
-int(-9223372036854775807)
---- testing: 9.2233720368548E+18 ^ -1 ---
-int(9223372036854775807)
---- testing: 9.2233720368548E+18 ^ 7 ---
-int(-9223372036854775801)
---- testing: 9.2233720368548E+18 ^ 9 ---
-int(-9223372036854775799)
---- testing: 9.2233720368548E+18 ^ 65 ---
-int(-9223372036854775743)
---- testing: 9.2233720368548E+18 ^ -44 ---
-int(9223372036854775764)
---- testing: 9.2233720368548E+18 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: 9.2233720368548E+18 ^ 9223372036854775807 ---
-int(-1)
---- testing: -9223372036854775807 ^ 0 ---
-int(-9223372036854775807)
---- testing: -9223372036854775807 ^ 1 ---
-int(-9223372036854775808)
---- testing: -9223372036854775807 ^ -1 ---
-int(9223372036854775806)
---- testing: -9223372036854775807 ^ 7 ---
-int(-9223372036854775802)
---- testing: -9223372036854775807 ^ 9 ---
-int(-9223372036854775800)
---- testing: -9223372036854775807 ^ 65 ---
-int(-9223372036854775744)
---- testing: -9223372036854775807 ^ -44 ---
-int(9223372036854775765)
---- testing: -9223372036854775807 ^ 2147483647 ---
-int(-9223372034707292162)
---- testing: -9223372036854775807 ^ 9223372036854775807 ---
-int(-2)
---- testing: -9.2233720368548E+18 ^ 0 ---
-int(-9223372036854775808)
---- testing: -9.2233720368548E+18 ^ 1 ---
-int(-9223372036854775807)
---- testing: -9.2233720368548E+18 ^ -1 ---
-int(9223372036854775807)
---- testing: -9.2233720368548E+18 ^ 7 ---
-int(-9223372036854775801)
---- testing: -9.2233720368548E+18 ^ 9 ---
-int(-9223372036854775799)
---- testing: -9.2233720368548E+18 ^ 65 ---
-int(-9223372036854775743)
---- testing: -9.2233720368548E+18 ^ -44 ---
-int(9223372036854775764)
---- testing: -9.2233720368548E+18 ^ 2147483647 ---
-int(-9223372034707292161)
---- testing: -9.2233720368548E+18 ^ 9223372036854775807 ---
-int(-1)
---- testing: 0 ^ 9223372036854775807 ---
-int(9223372036854775807)
---- testing: 0 ^ -9223372036854775808 ---
-int(-9223372036854775808)
---- testing: 0 ^ 2147483647 ---
-int(2147483647)
---- testing: 0 ^ -2147483648 ---
-int(-2147483648)
---- testing: 0 ^ 9223372034707292160 ---
-int(9223372034707292160)
---- testing: 0 ^ -9223372034707292160 ---
-int(-9223372034707292160)
---- testing: 0 ^ 2147483648 ---
-int(2147483648)
---- testing: 0 ^ -2147483649 ---
-int(-2147483649)
---- testing: 0 ^ 4294967294 ---
-int(4294967294)
---- testing: 0 ^ 4294967295 ---
-int(4294967295)
---- testing: 0 ^ 4294967293 ---
-int(4294967293)
---- testing: 0 ^ 9223372036854775806 ---
-int(9223372036854775806)
---- testing: 0 ^ 9.2233720368548E+18 ---
-int(-9223372036854775808)
---- testing: 0 ^ -9223372036854775807 ---
-int(-9223372036854775807)
---- testing: 0 ^ -9.2233720368548E+18 ---
-int(-9223372036854775808)
---- testing: 1 ^ 9223372036854775807 ---
-int(9223372036854775806)
---- testing: 1 ^ -9223372036854775808 ---
-int(-9223372036854775807)
---- testing: 1 ^ 2147483647 ---
-int(2147483646)
---- testing: 1 ^ -2147483648 ---
-int(-2147483647)
---- testing: 1 ^ 9223372034707292160 ---
-int(9223372034707292161)
---- testing: 1 ^ -9223372034707292160 ---
-int(-9223372034707292159)
---- testing: 1 ^ 2147483648 ---
-int(2147483649)
---- testing: 1 ^ -2147483649 ---
-int(-2147483650)
---- testing: 1 ^ 4294967294 ---
-int(4294967295)
---- testing: 1 ^ 4294967295 ---
-int(4294967294)
---- testing: 1 ^ 4294967293 ---
-int(4294967292)
---- testing: 1 ^ 9223372036854775806 ---
-int(9223372036854775807)
---- testing: 1 ^ 9.2233720368548E+18 ---
-int(-9223372036854775807)
---- testing: 1 ^ -9223372036854775807 ---
-int(-9223372036854775808)
---- testing: 1 ^ -9.2233720368548E+18 ---
-int(-9223372036854775807)
---- testing: -1 ^ 9223372036854775807 ---
-int(-9223372036854775808)
---- testing: -1 ^ -9223372036854775808 ---
-int(9223372036854775807)
---- testing: -1 ^ 2147483647 ---
-int(-2147483648)
---- testing: -1 ^ -2147483648 ---
-int(2147483647)
---- testing: -1 ^ 9223372034707292160 ---
-int(-9223372034707292161)
---- testing: -1 ^ -9223372034707292160 ---
-int(9223372034707292159)
---- testing: -1 ^ 2147483648 ---
-int(-2147483649)
---- testing: -1 ^ -2147483649 ---
-int(2147483648)
---- testing: -1 ^ 4294967294 ---
-int(-4294967295)
---- testing: -1 ^ 4294967295 ---
-int(-4294967296)
---- testing: -1 ^ 4294967293 ---
-int(-4294967294)
---- testing: -1 ^ 9223372036854775806 ---
-int(-9223372036854775807)
---- testing: -1 ^ 9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: -1 ^ -9223372036854775807 ---
-int(9223372036854775806)
---- testing: -1 ^ -9.2233720368548E+18 ---
-int(9223372036854775807)
---- testing: 7 ^ 9223372036854775807 ---
-int(9223372036854775800)
---- testing: 7 ^ -9223372036854775808 ---
-int(-9223372036854775801)
---- testing: 7 ^ 2147483647 ---
-int(2147483640)
---- testing: 7 ^ -2147483648 ---
-int(-2147483641)
---- testing: 7 ^ 9223372034707292160 ---
-int(9223372034707292167)
---- testing: 7 ^ -9223372034707292160 ---
-int(-9223372034707292153)
---- testing: 7 ^ 2147483648 ---
-int(2147483655)
---- testing: 7 ^ -2147483649 ---
-int(-2147483656)
---- testing: 7 ^ 4294967294 ---
-int(4294967289)
---- testing: 7 ^ 4294967295 ---
-int(4294967288)
---- testing: 7 ^ 4294967293 ---
-int(4294967290)
---- testing: 7 ^ 9223372036854775806 ---
-int(9223372036854775801)
---- testing: 7 ^ 9.2233720368548E+18 ---
-int(-9223372036854775801)
---- testing: 7 ^ -9223372036854775807 ---
-int(-9223372036854775802)
---- testing: 7 ^ -9.2233720368548E+18 ---
-int(-9223372036854775801)
---- testing: 9 ^ 9223372036854775807 ---
-int(9223372036854775798)
---- testing: 9 ^ -9223372036854775808 ---
-int(-9223372036854775799)
---- testing: 9 ^ 2147483647 ---
-int(2147483638)
---- testing: 9 ^ -2147483648 ---
-int(-2147483639)
---- testing: 9 ^ 9223372034707292160 ---
-int(9223372034707292169)
---- testing: 9 ^ -9223372034707292160 ---
-int(-9223372034707292151)
---- testing: 9 ^ 2147483648 ---
-int(2147483657)
---- testing: 9 ^ -2147483649 ---
-int(-2147483658)
---- testing: 9 ^ 4294967294 ---
-int(4294967287)
---- testing: 9 ^ 4294967295 ---
-int(4294967286)
---- testing: 9 ^ 4294967293 ---
-int(4294967284)
---- testing: 9 ^ 9223372036854775806 ---
-int(9223372036854775799)
---- testing: 9 ^ 9.2233720368548E+18 ---
-int(-9223372036854775799)
---- testing: 9 ^ -9223372036854775807 ---
-int(-9223372036854775800)
---- testing: 9 ^ -9.2233720368548E+18 ---
-int(-9223372036854775799)
---- testing: 65 ^ 9223372036854775807 ---
-int(9223372036854775742)
---- testing: 65 ^ -9223372036854775808 ---
-int(-9223372036854775743)
---- testing: 65 ^ 2147483647 ---
-int(2147483582)
---- testing: 65 ^ -2147483648 ---
-int(-2147483583)
---- testing: 65 ^ 9223372034707292160 ---
-int(9223372034707292225)
---- testing: 65 ^ -9223372034707292160 ---
-int(-9223372034707292095)
---- testing: 65 ^ 2147483648 ---
-int(2147483713)
---- testing: 65 ^ -2147483649 ---
-int(-2147483714)
---- testing: 65 ^ 4294967294 ---
-int(4294967231)
---- testing: 65 ^ 4294967295 ---
-int(4294967230)
---- testing: 65 ^ 4294967293 ---
-int(4294967228)
---- testing: 65 ^ 9223372036854775806 ---
-int(9223372036854775743)
---- testing: 65 ^ 9.2233720368548E+18 ---
-int(-9223372036854775743)
---- testing: 65 ^ -9223372036854775807 ---
-int(-9223372036854775744)
---- testing: 65 ^ -9.2233720368548E+18 ---
-int(-9223372036854775743)
---- testing: -44 ^ 9223372036854775807 ---
-int(-9223372036854775765)
---- testing: -44 ^ -9223372036854775808 ---
-int(9223372036854775764)
---- testing: -44 ^ 2147483647 ---
-int(-2147483605)
---- testing: -44 ^ -2147483648 ---
-int(2147483604)
---- testing: -44 ^ 9223372034707292160 ---
-int(-9223372034707292204)
---- testing: -44 ^ -9223372034707292160 ---
-int(9223372034707292116)
---- testing: -44 ^ 2147483648 ---
-int(-2147483692)
---- testing: -44 ^ -2147483649 ---
-int(2147483691)
---- testing: -44 ^ 4294967294 ---
-int(-4294967254)
---- testing: -44 ^ 4294967295 ---
-int(-4294967253)
---- testing: -44 ^ 4294967293 ---
-int(-4294967255)
---- testing: -44 ^ 9223372036854775806 ---
-int(-9223372036854775766)
---- testing: -44 ^ 9.2233720368548E+18 ---
-int(9223372036854775764)
---- testing: -44 ^ -9223372036854775807 ---
-int(9223372036854775765)
---- testing: -44 ^ -9.2233720368548E+18 ---
-int(9223372036854775764)
---- testing: 2147483647 ^ 9223372036854775807 ---
-int(9223372034707292160)
---- testing: 2147483647 ^ -9223372036854775808 ---
-int(-9223372034707292161)
---- testing: 2147483647 ^ 2147483647 ---
-int(0)
---- testing: 2147483647 ^ -2147483648 ---
-int(-1)
---- testing: 2147483647 ^ 9223372034707292160 ---
-int(9223372036854775807)
---- testing: 2147483647 ^ -9223372034707292160 ---
-int(-9223372032559808513)
---- testing: 2147483647 ^ 2147483648 ---
-int(4294967295)
---- testing: 2147483647 ^ -2147483649 ---
-int(-4294967296)
---- testing: 2147483647 ^ 4294967294 ---
-int(2147483649)
---- testing: 2147483647 ^ 4294967295 ---
-int(2147483648)
---- testing: 2147483647 ^ 4294967293 ---
-int(2147483650)
---- testing: 2147483647 ^ 9223372036854775806 ---
-int(9223372034707292161)
---- testing: 2147483647 ^ 9.2233720368548E+18 ---
-int(-9223372034707292161)
---- testing: 2147483647 ^ -9223372036854775807 ---
-int(-9223372034707292162)
---- testing: 2147483647 ^ -9.2233720368548E+18 ---
-int(-9223372034707292161)
---- testing: 9223372036854775807 ^ 9223372036854775807 ---
-int(0)
---- testing: 9223372036854775807 ^ -9223372036854775808 ---
-int(-1)
---- testing: 9223372036854775807 ^ 2147483647 ---
-int(9223372034707292160)
---- testing: 9223372036854775807 ^ -2147483648 ---
-int(-9223372034707292161)
---- testing: 9223372036854775807 ^ 9223372034707292160 ---
-int(2147483647)
---- testing: 9223372036854775807 ^ -9223372034707292160 ---
-int(-2147483649)
---- testing: 9223372036854775807 ^ 2147483648 ---
-int(9223372034707292159)
---- testing: 9223372036854775807 ^ -2147483649 ---
-int(-9223372034707292160)
---- testing: 9223372036854775807 ^ 4294967294 ---
-int(9223372032559808513)
---- testing: 9223372036854775807 ^ 4294967295 ---
-int(9223372032559808512)
---- testing: 9223372036854775807 ^ 4294967293 ---
-int(9223372032559808514)
---- testing: 9223372036854775807 ^ 9223372036854775806 ---
-int(1)
---- testing: 9223372036854775807 ^ 9.2233720368548E+18 ---
-int(-1)
---- testing: 9223372036854775807 ^ -9223372036854775807 ---
-int(-2)
---- testing: 9223372036854775807 ^ -9.2233720368548E+18 ---
-int(-1)
-int(34)
-string(34) "<title>The Grapes of Wrath</title>"
-DOMNode::C14NFile(): Argument #4 ($xpath) must have a "query" key
-DOMNode::C14NFile(): Argument #4 ($xpath) "query" option must be a string, array given
+float(-9.223372036854776E+18)
+float(-9.223372036854776E+18)
+Done
+*** Testing array_fill() : usage variations ***
+--- Testing array_fill() with different types of array values for 'val' argument ---
+-- Iteration 1 --
+array(2) {
+  [0]=>
+  array(0) {
+  }
+  [1]=>
+  array(0) {
+  }
+}
+-- Iteration 2 --
+array(2) {
+  [0]=>
+  array(4) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+    [2]=>
+    int(3)
+    [3]=>
+    int(4)
+  }
+  [1]=>
+  array(4) {
+    [0]=>
+    int(1)
+    [1]=>
+    int(2)
+    [2]=>
+    int(3)
+    [3]=>
+    int(4)
+  }
+}
+-- Iteration 3 --
+array(2) {
+  [0]=>
+  array(2) {
+    [1]=>
+    string(2) "Hi"
+    [2]=>
+    string(5) "Hello"
+  }
+  [1]=>
+  array(2) {
+    [1]=>
+    string(2) "Hi"
+    [2]=>
+    string(5) "Hello"
+  }
+}
+-- Iteration 4 --
+array(2) {
+  [0]=>
+  array(3) {
+    [0]=>
+    string(7) "Saffron"
+    [1]=>
+    string(5) "White"
+    [2]=>
+    string(5) "Green"
+  }
+  [1]=>
+  array(3) {
+    [0]=>
+    string(7) "Saffron"
+    [1]=>
+    string(5) "White"
+    [2]=>
+    string(5) "Green"
+  }
+}
+-- Iteration 5 --
+array(2) {
+  [0]=>
+  array(2) {
+    ["color"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+  [1]=>
+  array(2) {
+    ["color"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+}
+-- Iteration 6 --
+array(2) {
+  [0]=>
+  array(2) {
+    ["color"]=>
+    string(3) "red"
+    [2]=>
+    string(6) "green "
+  }
+  [1]=>
+  array(2) {
+    ["color"]=>
+    string(3) "red"
+    [2]=>
+    string(6) "green "
+  }
+}
+-- Iteration 7 --
+array(2) {
+  [0]=>
+  array(2) {
+    ["colour"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+  [1]=>
+  array(2) {
+    ["colour"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+}
+-- Iteration 8 --
+array(2) {
+  [0]=>
+  array(2) {
+    [1]=>
+    string(3) "red"
+    [0]=>
+    string(5) "green"
+  }
+  [1]=>
+  array(2) {
+    [1]=>
+    string(3) "red"
+    [0]=>
+    string(5) "green"
+  }
+}
+-- Iteration 9 --
+array(2) {
+  [0]=>
+  array(2) {
+    [1]=>
+    string(3) "red"
+    [0]=>
+    string(5) "green"
+  }
+  [1]=>
+  array(2) {
+    [1]=>
+    string(3) "red"
+    [0]=>
+    string(5) "green"
+  }
+}
+-- Iteration 10 --
+array(2) {
+  [0]=>
+  array(3) {
+    [1]=>
+    string(2) "Hi"
+    ["color"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+  [1]=>
+  array(3) {
+    [1]=>
+    string(2) "Hi"
+    ["color"]=>
+    string(3) "red"
+    ["item"]=>
+    string(3) "pen"
+  }
+}
+-- Iteration 11 --
+array(2) {
+  [0]=>
+  array(2) {
+    [""]=>
+    string(2) "Hi"
+    [1]=>
+    string(5) "Green"
+  }
+  [1]=>
+  array(2) {
+    [""]=>
+    string(2) "Hi"
+    [1]=>
+    string(5) "Green"
+  }
+}
+-- Iteration 12 --
+array(2) {
+  [0]=>
+  array(2) {
+    [""]=>
+    int(1)
+    ["color"]=>
+    string(5) "green"
+  }
+  [1]=>
+  array(2) {
+    [""]=>
+    int(1)
+    ["color"]=>
+    string(5) "green"
+  }
+}
+-- Iteration 13 --
+array(2) {
+  [0]=>
+  array(3) {
+    [0]=>
+    string(7) "Saffron"
+    [1]=>
+    string(5) "White"
+    [2]=>
+    string(5) "Green"
+  }
+  [1]=>
+  array(3) {
+    [0]=>
+    string(7) "Saffron"
+    [1]=>
+    string(5) "White"
+    [2]=>
+    string(5) "Green"
+  }
+}
+Done

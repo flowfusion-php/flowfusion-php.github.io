@@ -1,15 +1,16 @@
 --TEST--
-set $value parameter variance+FETCH_OBJ_IS on typed object property
+set $value parameter variance+Test function posix_errno() by calling it with with permission error
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-max_execution_time=60
-error_reporting=E_ALL & ~E_DEPRECATED
+internal_encoding=EUC-JP
+iconv.internal_charset=ISO-8859-1
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1104
+opcache.jit=1004
+--SKIPIF--
+<?php
+        if(posix_getuid()==0) print "skip - Cannot run test as root.";
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -41,7 +42,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -64,7 +65,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -82,21 +83,22 @@ class Test {
     }
 }
 ?>
-$fusion = $prop;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Test {
-    public stdClass $data;
-}
-function test() {
-    $fusion = new Test;
-    var_dump(isset($test->data[0]));
-}
-test();
+echo "*** Test by calling function with permission error ***\n";
+posix_setuid(0);
+var_dump(posix_errno());
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
+--EXTENSIONS--
+posix
+--CREDITS--
+Morten Amundsen mor10am@gmail.com
+Francesco Fullone ff@ideato.it
+#PHPTestFest Cesena Italia on 2009-06-20
 --EXPECT--
 ===DONE===
-bool(false)
+*** Test by calling function with permission error ***
+int(1)

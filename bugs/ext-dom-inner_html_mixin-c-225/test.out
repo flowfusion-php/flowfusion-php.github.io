@@ -1,4 +1,15 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
-
-Termsig=6
+<?xml version="1.0" encoding="UTF-8"?>
+<root><child></child><br xmlns="http://www.w3.org/1999/xhtml"></br></root>
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <child></child>
+  <br xmlns="http://www.w3.org/1999/xhtml"></br>
+</root>
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/inner_html_mixin.c:225:52: runtime error: member access within misaligned address 0xffffffffffffffff for type 'xmlNs' (aka 'struct _xmlNs'), which requires 8 byte alignment
+0xffffffffffffffff: note: pointer points here
+<memory cannot be printed>
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/inner_html_mixin.c:225:52 in

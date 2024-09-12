@@ -1,11 +1,16 @@
 --TEST--
-Test for bug #75851: Year component overflow with date formats "c", "o", "r" and "y"+GH-13178: Packed to hash must reset nInternalPointer
+Testing __construct and __destruct with Trait+Test is_finite function : 64bit long tests
 --INI--
-date.timezone = UTC
-precision=13
-date.timezone=America/New_York
+zend_test.observer.enabled=1
+date.timezone=Atlantic/Azores
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1212
 --SKIPIF--
-<?php if (PHP_INT_SIZE != 8) die("skip 64-bit only"); ?>
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -37,7 +42,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -60,7 +65,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -70,72 +75,67 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MIN);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532799);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", 67767976233532800);
-echo date(DATE_ATOM."\n".DATE_RFC2822."\nc\nr\no\ny\nY\nU\n\n", PHP_INT_MAX);
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$array = ['foo'];
-reset($array);
-while (true) {
-    $key = key($array);
-    next($array);
-    var_dump($key);
-    unset($array[$key]);
-    $array[] = 'foo';
-    if ($key === 10) {
-        break;
+trait foo {
+    public function __construct() {
+        var_dump(__FUNCTION__);
+    }
+    public function __destruct() {
+        var_dump(__FUNCTION__);
     }
 }
+class bar {
+    use foo;
+}
+new bar;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(is_finite($longVal));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXPECT--
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657-01-27T08:29:52+00:00
-Sun, 27 Jan -292277022657 08:29:52 +0000
--292277022657
--57
--292277022657
--9223372036854775808
-
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483647-12-31T23:59:59+00:00
-Tue, 31 Dec 2147483647 23:59:59 +0000
-2147483648
-47
-2147483647
-67767976233532799
-
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648-01-01T00:00:00+00:00
-Wed, 01 Jan 2147483648 00:00:00 +0000
-2147483648
-48
-2147483648
-67767976233532800
-
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596-12-04T15:30:07+00:00
-Sun, 04 Dec 292277026596 15:30:07 +0000
-292277026596
-96
-292277026596
-9223372036854775807
-int(0)
-int(1)
-int(2)
-int(3)
-int(4)
-int(5)
-int(6)
-int(7)
-int(8)
-int(9)
-int(10)
+string(11) "__construct"
+string(10) "__destruct"
+--- testing: 9223372036854775807 ---
+bool(true)
+--- testing: -9223372036854775808 ---
+bool(true)
+--- testing: 2147483647 ---
+bool(true)
+--- testing: -2147483648 ---
+bool(true)
+--- testing: 9223372034707292160 ---
+bool(true)
+--- testing: -9223372034707292160 ---
+bool(true)
+--- testing: 2147483648 ---
+bool(true)
+--- testing: -2147483649 ---
+bool(true)
+--- testing: 4294967294 ---
+bool(true)
+--- testing: 4294967295 ---
+bool(true)
+--- testing: 4294967293 ---
+bool(true)
+--- testing: 9223372036854775806 ---
+bool(true)
+--- testing: 9.2233720368548E+18 ---
+bool(true)
+--- testing: -9223372036854775807 ---
+bool(true)
+--- testing: -9.2233720368548E+18 ---
+bool(true)

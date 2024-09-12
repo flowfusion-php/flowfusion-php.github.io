@@ -1,12 +1,5 @@
 --TEST--
-Return from by-ref generator+Test typed properties error condition (read uninitialized)
---INI--
-opcache.max_accelerated_files=4000
-opcache.enable=1
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1043
+http_build_query() function with recursif object+Bug #65251: array_merge_recursive() recursion detection broken
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +31,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +54,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,29 +64,28 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function &gen() {
-    yield;
-    $arr = [42];
-    return $arr[0];
+class KeyVal {
+    public $public = "input";
+    protected $protected = "hello";
+    private $private = "world";
 }
-function gen2() {
-    var_dump(yield from gen());
-}
-gen2()->next();
-$fusion = $arr;
+$o = new KeyVal();
+$o->public = $o;
+var_dump(http_build_query($o));
+$fusion = $private;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$thing = new class() {
-    public int $int;
-};
-var_dump($fusion->int);
+/* This no longer involves any recursion. */
+try {
+    array_merge_recursive($GLOBALS, $GLOBALS);
+} catch (\Error $e) {
+    echo $fusion->getMessage() . "\n";
+}
+?>
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-int(42)
-Fatal error: Uncaught Error: Typed property class@anonymous::$int must not be accessed before initialization in %s:%d
-Stack trace:
-#0 {main}
-  thrown in %s on line 6
+--EXPECT--
+string(0) ""
+===DONE===

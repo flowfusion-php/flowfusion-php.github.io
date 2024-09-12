@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,46 +61,38 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$array = array(
-    "127.0.0.1",
-    "10.0.0.1",
-    "255.255.255.255",
-    "255.255.255.0",
-    "0.0.0.0",
-    "66.163.161.116",
-);
-foreach ($array as $ip) {
-    var_dump($long = ip2long($ip));
-    var_dump(long2ip($long));
-}
-var_dump(ip2long(""));
-var_dump(ip2long("777.777.777.777"));
-var_dump(ip2long("111.111.111.111"));
-var_dump(long2ip(-110000));
-var_dump(long2ip(PHP_INT_MAX));
-var_dump(long2ip(PHP_INT_MIN));
-echo "Done\n";
-$fusion = $ip;
+$dom = new DOMDocument();
+$dom->loadHTML('<p align="center">foo</p>');
+$xpath = new DOMXpath($dom);
+var_dump($xpath->evaluate("count(//p) > 0"));
+var_dump($xpath->evaluate("string(//p/@align)"));
+$fusion = $xpath;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class noCtor {
+$dom = DOM\XMLDocument::createFromString(<<<XML
+<!DOCTYPE root [
+    <!ENTITY foo "content">
+]>
+<root/>
+XML);
+$child = $dom->documentElement->appendChild($dom->createElementNS('urn:a', 'child'));
+$original = $dom->saveXML();
+function test($child, $html) {
+    global $dom, $original;
+    try {
+        $child->innerHTML = $html;
+    } catch (DOMException $e) {
+        echo $e->getMessage(), "\n";
+    }
+    var_dump($dom->saveXML() === $original);
 }
-class publicCtorNew {
-    public function __construct() {}
-}
-class protectedCtorNew {
-    protected function __construct() {}
-}
-class privateCtorNew {
-    private function __construct() {}
-}
-$classes = array("noCtor", "publicCtorNew", "protectedCtorNew", "privateCtorNew");
-foreach ($classes as $class) {
-    $reflectionClass = new ReflectionClass($class);
-    echo "Is $class instantiable?  ";
-    var_dump($fusion->IsInstantiable());
-}
+test($child, '&foo;');
+test($child, '</root>');
+test($child, '</root><foo/><!--');
+test($fusion, '--></root><!--');
+test($child, '<');
+test($child, '<!ENTITY foo "content">');
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

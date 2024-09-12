@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,36 +61,73 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
-$pname = 'phar://' . $fname;
-$file = "<?php __HALT_COMPILER(); ?>";
-$files = array();
-$files['a.php'] = '<?php echo "This is a\n"; ?>';
-$files['b.php'] = '<?php echo "This is b\n"; ?>';
-$files['b/c.php'] = '<?php echo "This is b/c\n"; ?>';
-include 'files/phar_test.inc';
-$fp = fopen($pname . '/b/new.php', 'wb');
-fwrite($fp, 'extra');
-fclose($fp);
-include $files . '/b/c.php';
-include $pname . '/b/new.php';
-$fusion = $pname;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class PHP_CodeCoverage
-{
-    private function addUncoveredFilesFromWhitelist()
-    {
-        foreach ($uncoveredFiles as $uncoveredFile) {
-            for ($i = 1; $i <= $lines; $i++) {
-                $fusion[$uncoveredFile][$i] = PHP_CodeCoverage_Driver::LINE_NOT_EXECUTED;
-            }
-        }
+Class A {
+    private $hiddenPriv = 'A::hiddenPriv';
+    public static function test($b) {
+        echo __METHOD__ . "\n";
+        var_dump(get_object_vars($b));
     }
 }
-?>
-OK
+Class B extends A {
+    private $hiddenPriv = 'B::hiddenPriv';
+    private $priv = 'B::priv';
+    protected $prot = 'B::prot';
+    public $pub = 'B::pub';
+    public static function test($b) {
+        echo __METHOD__ . "\n";
+        var_dump(get_object_vars($b));
+    }
+}
+Class C extends B {
+    private $hiddenPriv = 'C::hiddenPriv';
+    public static function test($b) {
+        echo __METHOD__ . "\n";
+        var_dump(get_object_vars($b));
+    }
+}
+Class X {
+    public static function test($b) {
+        echo __METHOD__ . "\n";
+        var_dump(get_object_vars($b));
+    }
+}
+$b = new B;
+echo "\n---( Global scope: )---\n";
+var_dump(get_object_vars($b));
+echo "\n---( Declaring class: )---\n";
+B::test($b);
+echo "\n---( Subclass: )---\n";
+C::test($b);
+echo "\n---( Superclass: )---\n";
+A::test($b);
+echo "\n---( Unrelated class: )---\n";
+X::test($b);
+$fusion = $hiddenPriv;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$array = array();
+for ($i=0; $fusion < 550; $i++) {
+    $array = array($array);
+}
+json_encode($array, 0, 551);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
+json_encode($array, 0, 540);
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        echo 'OK' . PHP_EOL;
+    break;
+    case JSON_ERROR_DEPTH:
+        echo 'ERROR' . PHP_EOL;
+    break;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

@@ -1,4 +1,41 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
-
-Termsig=6
+--- testing: 9223372036854775807 ---
+float(43.66827237527655)
+--- testing: -9223372036854775808 ---
+float(NAN)
+--- testing: 2147483647 ---
+float(21.487562597358306)
+--- testing: -2147483648 ---
+float(NAN)
+--- testing: 9223372034707292160 ---
+float(43.66827237504372)
+--- testing: -9223372034707292160 ---
+float(NAN)
+--- testing: 2147483648 ---
+float(21.487562597823967)
+--- testing: -2147483649 ---
+float(NAN)
+--- testing: 4294967294 ---
+float(22.18070977768542)
+--- testing: 4294967295 ---
+float(22.18070977791825)
+--- testing: 4294967293 ---
+float(22.180709777452588)
+--- testing: 9223372036854775806 ---
+float(43.66827237527655)
+--- testing: 9.2233720368548E+18 ---
+float(43.66827237527655)
+--- testing: -9223372036854775807 ---
+float(NAN)
+--- testing: -9.2233720368548E+18 ---
+float(NAN)
+--- 9223372036854775807 ---
+string(1) "a"
+bool(false)
+bool(true)
+--- -9223372036854775808 ---
+string(3) "N/A"
+bool(false)
+bool(true)
+--- 2147483647 ---
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/nodelist.c:176:24: runtime error: signed integer overflow: 2147483647 - -1 cannot be represented in type 'int'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/nodelist.c:176:24 in

@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,54 +61,47 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-enum Foo {
-    case Bar;
-    case Baz;
-    public function dump() {
-        var_dump($this);
-    }
+$dom = new DOMDocument;
+$element = $dom->appendChild($dom->createElement('root'));
+$str = str_repeat('X', 2**31 + 10);
+try {
+    $element->append('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
 }
-Foo::Bar->dump();
-Foo::Baz->dump();
-$fusion = $this;
+try {
+    $element->prepend('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $element->after('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $element->before('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $element->replaceWith('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+try {
+    $element->replaceChildren('x', $str);
+} catch (ValueError $e) {
+    echo $e->getMessage(), "\n";
+}
+var_dump($dom->childNodes->count());
+var_dump($element->childNodes->count());
+$fusion = $str;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** Testing var_export() with valid float values ***\n";
-// different valid  float values
-$valid_floats = array(
-      "-2147483649" => (float)-2147483649, // float value
-      "2147483648" => (float)2147483648,  // float value
-      "-0x80000001" => (float)-0x80000001, // float value, beyond max negative int
-      "0x800000001" => (float)0x800000001, // float value, beyond max positive int
-      "020000000001" => (float)020000000001, // float value, beyond max positive int
-      "-020000000001" => (float)-020000000001, // float value, beyond max negative int
-      "0.0" => 0.0,
-      "-0.1" => -0.1,
-      "10.0000000000000000005" => 10.0000000000000000005,
-      "10.5e+5" => 10.5e+5,
-      "1e5" => 1e5,
-      "1e-5" => 1e-5,
-      "1e+5" => 1e+5,
-      "1E5" => 1E5,
-      "1E+5" => 1E+5,
-      "1E-5" => 1E-5,
-      ".5e+7" => .5e+7,
-      ".6e-19" => .6e-19,
-      ".05E+44" => .05E+44,
-      ".0034E-30" => .0034E-30
-);
-/* Loop to check for above float values with var_export() */
-echo "\n*** Output for float values ***\n";
-foreach($valid_floats as $key => $float_value) {
-    echo "\n-- Iteration: $key --\n";
-    var_export( $float_value );
-    echo "\n";
-    var_export( $fusion, FALSE);
-    echo "\n";
-    var_dump( var_export( $float_value, TRUE) );
-    echo "\n";
-}
+$a = pack("AAAAAAAAAAAA", 1,2,3,4,5,6,7,8,9,10,11,12);
+unpack('h2147483647', $fusion);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

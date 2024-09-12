@@ -47,7 +47,7 @@
 
         <div class="php-commit">
             <div class="section-title">PHP Commit:</div>
-            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
+            <pre>e8fe7e4f528f403dd429c5a30f9365cf9363bdb5
 </pre>
         </div>
 
@@ -64,7 +64,7 @@
 
         <div class="keywords">
             <div class="section-title">Keywords:</div>
-            <pre>['core dumped']</pre>
+            <pre>['stack-overflow']</pre>
         </div>
 
         <div class="bughit">
@@ -75,10 +75,262 @@
         <div class="output">
             <div class="section-title">Output:</div>
             <pre>
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0&#x27; failed.
-Aborted (core dumped)
+bool(true)
+string(5) &quot;start&quot;
+string(3) &quot;end&quot;
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==3575976==ERROR: AddressSanitizer: stack-overflow on address 0x7fffc3c29ff8 (pc 0x560866915701 bp 0x7fffc3c2a0e0 sp 0x7fffc3c29fe0 T0)
+    #0 0x560866915701 in zend_hash_index_find_bucket /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:812:9
+    #1 0x5608669150cb in zend_hash_index_find /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:2715:6
+    #2 0x56086572293c in php_add_var_hash /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:734:7
+    #3 0x56086570fff8 in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1027:33
+    #4 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #5 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #6 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #7 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #8 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #9 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #10 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #11 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #12 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #13 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #14 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #15 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #16 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #17 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #18 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #19 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #20 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #21 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #22 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #23 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #24 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #25 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #26 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #27 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #28 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #29 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #30 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #31 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #32 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #33 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #34 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #35 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #36 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #37 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #38 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #39 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #40 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #41 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #42 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #43 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #44 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #45 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #46 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #47 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #48 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #49 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #50 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #51 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #52 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #53 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #54 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #55 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #56 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #57 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #58 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #59 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #60 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #61 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #62 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #63 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #64 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #65 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #66 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #67 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #68 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #69 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #70 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #71 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #72 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #73 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #74 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #75 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #76 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #77 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #78 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #79 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #80 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #81 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #82 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #83 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #84 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #85 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #86 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #87 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #88 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #89 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #90 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #91 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #92 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #93 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #94 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #95 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #96 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #97 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #98 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #99 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #100 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #101 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #102 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #103 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #104 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #105 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #106 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #107 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #108 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #109 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #110 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #111 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #112 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #113 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #114 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #115 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #116 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #117 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #118 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #119 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #120 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #121 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #122 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #123 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #124 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #125 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #126 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #127 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #128 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #129 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #130 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #131 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #132 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #133 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #134 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #135 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #136 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #137 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #138 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #139 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #140 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #141 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #142 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #143 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #144 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #145 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #146 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #147 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #148 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #149 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #150 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #151 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #152 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #153 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #154 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #155 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #156 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #157 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #158 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #159 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #160 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #161 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #162 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #163 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #164 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #165 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #166 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #167 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #168 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #169 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #170 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #171 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #172 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #173 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #174 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #175 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #176 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #177 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #178 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #179 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #180 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #181 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #182 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #183 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #184 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #185 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #186 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #187 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #188 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #189 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #190 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #191 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #192 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #193 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #194 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #195 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #196 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #197 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #198 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #199 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #200 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #201 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #202 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #203 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #204 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #205 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #206 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #207 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #208 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #209 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #210 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #211 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #212 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #213 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #214 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #215 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #216 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #217 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #218 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #219 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #220 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #221 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #222 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #223 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #224 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #225 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #226 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #227 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #228 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #229 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #230 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #231 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #232 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #233 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #234 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #235 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #236 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #237 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #238 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #239 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #240 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #241 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #242 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #243 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #244 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #245 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
+    #246 0x56086571601e in php_var_serialize_intern /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/var.c:1249:8
 
-Termsig=6
+SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:812:9 in zend_hash_index_find_bucket
+==3575976==ABORTING
             </pre>
         </div>
 
@@ -115,7 +367,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -138,7 +390,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -148,55 +400,40 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// Adapted from canonicalization.phpt
-$xml = &lt;&lt;&lt;EOXML
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; ?&gt;
-&lt;foo xmlns=&quot;http://www.example.com/ns/foo&quot;
-     xmlns:fubar=&quot;http://www.example.com/ns/fubar&quot; xmlns:test=&quot;urn::test&quot;&gt;&lt;contain&gt;
-  &lt;bar&gt;&lt;test1 /&gt;&lt;/bar&gt;
-  &lt;bar&gt;&lt;test2 /&gt;&lt;/bar&gt;
-  &lt;fubar:bar xmlns:fubar=&quot;http://www.example.com/ns/fubar&quot;&gt;&lt;test3 /&gt;&lt;/fubar:bar&gt;
-  &lt;fubar:bar&gt;&lt;test4 /&gt;&lt;/fubar:bar&gt;
-&lt;/contain&gt;
-&lt;/foo&gt;
-EOXML;
-$dom = new DOMDocument();
-$dom-&gt;loadXML($xml);
-$doc = $dom-&gt;documentElement-&gt;firstChild;
-$xpath = [
-    &#x27;query&#x27; =&gt; &#x27;(//a:contain | //a:bar | .//namespace::*)&#x27;,
-    &#x27;namespaces&#x27; =&gt; [&#x27;a&#x27; =&gt; &#x27;http://www.example.com/ns/foo&#x27;],
-];
-$prefixes = [&#x27;test&#x27;];
-foreach ($xpath[&#x27;namespaces&#x27;] as $k =&gt; &amp;$v);
-unset($v);
-foreach ($xpath as $k =&gt; &amp;$v);
-unset($v);
-foreach ($prefixes as $k =&gt; &amp;$v);
-unset($v);
-echo $doc-&gt;C14N(true, false, $xpath, $prefixes);
-$fusion = $xml;
+class Node
+{
+    /** @var Node */
+    public $previous;
+    /** @var Node */
+    public $next;
+}
+var_dump(gc_enabled());
+var_dump(&#x27;start&#x27;);
+$firstNode = new Node();
+$firstNode-&gt;previous = $firstNode;
+$firstNode-&gt;next = $firstNode;
+$circularDoublyLinkedList = $firstNode;
+for ($i = 0; $i &lt; 200000; $i++) {
+    $currentNode = $circularDoublyLinkedList;
+    $nextNode = $circularDoublyLinkedList-&gt;next;
+    $newNode = new Node();
+    $newNode-&gt;previous = $currentNode;
+    $currentNode-&gt;next = $newNode;
+    $newNode-&gt;next = $nextNode;
+    $nextNode-&gt;previous = $newNode;
+    $circularDoublyLinkedList = $nextNode;
+}
+var_dump(&#x27;end&#x27;);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function create_references(&amp;$array) {
-    foreach ($a as $key =&gt; $value) {
-        create_references($fusion[$key]);
-    }
-}
-function change_copy($copy) {
-        $copy[&#x27;b&#x27;][&#x27;z&#x27;][&#x27;z&#x27;] = $copy[&#x27;b&#x27;];
-}
-$data = [
-    &#x27;a&#x27; =&gt; [
-        &#x27;b&#x27; =&gt; [],
-    ],
-];
-@create_references($data);
-$copy = $data[&#x27;a&#x27;];
-var_dump($copy);
-change_copy($copy);
-var_dump($copy); //RECURSION
+$obj = new stdClass;
+$obj2 = new stdClass;
+$obj2-&gt;obj = $obj;
+$s = serialize($GLOBALS);
+$globals = unserialize($s);
+var_dump($obj);
+var_dump($obj2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
@@ -208,17 +445,11 @@ var_fusion($v1,$v2,$v3);
             <div class="section-title">Reproducing PHPT:</div>
             <pre>
 --TEST--
-Test: Canonicalization - C14N() with references+JIT FETCH_DIM_W: 004
+Bug #77345 (Segmentation faults stack overflow in cyclic garbage collector) (Bug #77427)+Reference IDs should be correctly generated when $GLOBALS is serialized
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-error_reporting=E_ALL
-error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1042
+zend.enable_gc = 1
+sendmail_path=&quot;cat &gt; /tmp/php_test_mailVariation2.out&quot;
+zend.script_encoding=UTF-8
 --FILE--
 &lt;?php
 function fuzz_internal_interface($vars) {
@@ -250,7 +481,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection-&gt;getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k &lt; $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -273,7 +504,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -283,70 +514,52 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-// Adapted from canonicalization.phpt
-$xml = &lt;&lt;&lt;EOXML
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; ?&gt;
-&lt;foo xmlns=&quot;http://www.example.com/ns/foo&quot;
-     xmlns:fubar=&quot;http://www.example.com/ns/fubar&quot; xmlns:test=&quot;urn::test&quot;&gt;&lt;contain&gt;
-  &lt;bar&gt;&lt;test1 /&gt;&lt;/bar&gt;
-  &lt;bar&gt;&lt;test2 /&gt;&lt;/bar&gt;
-  &lt;fubar:bar xmlns:fubar=&quot;http://www.example.com/ns/fubar&quot;&gt;&lt;test3 /&gt;&lt;/fubar:bar&gt;
-  &lt;fubar:bar&gt;&lt;test4 /&gt;&lt;/fubar:bar&gt;
-&lt;/contain&gt;
-&lt;/foo&gt;
-EOXML;
-$dom = new DOMDocument();
-$dom-&gt;loadXML($xml);
-$doc = $dom-&gt;documentElement-&gt;firstChild;
-$xpath = [
-    &#x27;query&#x27; =&gt; &#x27;(//a:contain | //a:bar | .//namespace::*)&#x27;,
-    &#x27;namespaces&#x27; =&gt; [&#x27;a&#x27; =&gt; &#x27;http://www.example.com/ns/foo&#x27;],
-];
-$prefixes = [&#x27;test&#x27;];
-foreach ($xpath[&#x27;namespaces&#x27;] as $k =&gt; &amp;$v);
-unset($v);
-foreach ($xpath as $k =&gt; &amp;$v);
-unset($v);
-foreach ($prefixes as $k =&gt; &amp;$v);
-unset($v);
-echo $doc-&gt;C14N(true, false, $xpath, $prefixes);
-$fusion = $xml;
+class Node
+{
+    /** @var Node */
+    public $previous;
+    /** @var Node */
+    public $next;
+}
+var_dump(gc_enabled());
+var_dump(&#x27;start&#x27;);
+$firstNode = new Node();
+$firstNode-&gt;previous = $firstNode;
+$firstNode-&gt;next = $firstNode;
+$circularDoublyLinkedList = $firstNode;
+for ($i = 0; $i &lt; 200000; $i++) {
+    $currentNode = $circularDoublyLinkedList;
+    $nextNode = $circularDoublyLinkedList-&gt;next;
+    $newNode = new Node();
+    $newNode-&gt;previous = $currentNode;
+    $currentNode-&gt;next = $newNode;
+    $newNode-&gt;next = $nextNode;
+    $nextNode-&gt;previous = $newNode;
+    $circularDoublyLinkedList = $nextNode;
+}
+var_dump(&#x27;end&#x27;);
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function create_references(&amp;$array) {
-    foreach ($a as $key =&gt; $value) {
-        create_references($fusion[$key]);
-    }
-}
-function change_copy($copy) {
-        $copy[&#x27;b&#x27;][&#x27;z&#x27;][&#x27;z&#x27;] = $copy[&#x27;b&#x27;];
-}
-$data = [
-    &#x27;a&#x27; =&gt; [
-        &#x27;b&#x27; =&gt; [],
-    ],
-];
-@create_references($data);
-$copy = $data[&#x27;a&#x27;];
-var_dump($copy);
-change_copy($copy);
-var_dump($copy); //RECURSION
+$obj = new stdClass;
+$obj2 = new stdClass;
+$obj2-&gt;obj = $obj;
+$s = serialize($GLOBALS);
+$globals = unserialize($s);
+var_dump($obj);
+var_dump($obj2);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?&gt;
---EXTENSIONS--
-dom
 --EXPECT--
-&lt;contain xmlns=&quot;http://www.example.com/ns/foo&quot; xmlns:test=&quot;urn::test&quot;&gt;&lt;bar&gt;&lt;/bar&gt;&lt;bar&gt;&lt;/bar&gt;&lt;/contain&gt;
-array(1) {
-  [&quot;b&quot;]=&gt;
-  array(0) {
-  }
+bool(true)
+string(5) &quot;start&quot;
+string(3) &quot;end&quot;
+object(stdClass)#1 (0) {
 }
-array(1) {
-  [&quot;b&quot;]=&gt;
-  array(0) {
+object(stdClass)#2 (1) {
+  [&quot;obj&quot;]=&gt;
+  object(stdClass)#1 (0) {
   }
 }
 
@@ -363,24 +576,25 @@ export CC=&#x27;clang-15&#x27;
 export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export SHELL=&#x27;/bin/sh&#x27;
 export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
-export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
-export HOSTNAME=&#x27;4c1800347231&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,262,0&#x27;
+export HOSTNAME=&#x27;ce1ee0c92a8c&#x27;
 export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
 export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
 export HOME=&#x27;/home/phpfuzz&#x27;
 export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
 export MFLAGS=&#x27;&#x27;
 export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
-export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j32&#x27;
 export TERM=&#x27;screen&#x27;
 export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
 export TMUX_PANE=&#x27;%0&#x27;
+export MAKE_TERMERR=&#x27;/dev/pts/2&#x27;
 export SHLVL=&#x27;3&#x27;
 export MAKELEVEL=&#x27;1&#x27;
 export LC_CTYPE=&#x27;C.UTF-8&#x27;
 export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
-export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
-export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export TEST_PHP_ARGS=&#x27;-j32&#x27;
 export TERM_PROGRAM=&#x27;tmux&#x27;
 export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
 export TEMP=&#x27;/tmp&#x27;
@@ -392,30 +606,30 @@ export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/s
 export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
 export REDIRECT_STATUS=&#x27;1&#x27;
 export QUERY_STRING=&#x27;&#x27;
-export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&#x27;
-export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&#x27;
 export REQUEST_METHOD=&#x27;GET&#x27;
 export CONTENT_TYPE=&#x27;&#x27;
 export CONTENT_LENGTH=&#x27;&#x27;
 export TZ=&#x27;&#x27;
-export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot;&#x27;
 export HTTP_COOKIE=&#x27;&#x27;
 
 case &quot;$1&quot; in
 &quot;gdb&quot;)
-    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&quot;  2&gt;&amp;1
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&quot;  2&gt;&amp;1
     ;;
 &quot;lldb&quot;)
-    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&quot;  2&gt;&amp;1
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&quot;  2&gt;&amp;1
     ;;
 &quot;valgrind&quot;)
-    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&quot;  2&gt;&amp;1
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&quot;  2&gt;&amp;1
     ;;
 &quot;rr&quot;)
-    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&quot;  2&gt;&amp;1
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&quot;  2&gt;&amp;1
     ;;
 *)
-    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=E_ALL &amp; ~E_WARNING &amp; ~E_NOTICE&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1042&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused95.php&quot;  2&gt;&amp;1
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker31&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.enable_gc=1&quot; -d &quot;sendmail_path=\&quot;cat &gt; /tmp/php_test_mailVariation2.out\&quot;&quot; -d &quot;zend.script_encoding=UTF-8&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1889.php&quot;  2&gt;&amp;1
     ;;
 esac
             </pre>

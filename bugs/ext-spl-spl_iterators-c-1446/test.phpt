@@ -1,20 +1,8 @@
 --TEST--
-PCRE Recursion limit+Bug #52057 (ReflectionClass fails on Closure class)
+Bug GH-9883 (SplFileObject::__toString() reads next line)+Bug #72684 (AppendIterator segfault with closed generator)
 --INI--
-pcre.jit=0
-pcre.recursion_limit=2
-date.timezone=Asia/Chongqing
-opcache.optimization_level=2147483647
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0153
---SKIPIF--
-<?php
-if (@preg_match_all('/\p{N}/', '0123456789', $dummy) === false) {
-    die("skip no support for \p support PCRE library");
-}
-?>
+internal_encoding=cp1256
+mbstring.substitute_character=123
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -46,7 +34,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -69,7 +57,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -79,59 +67,35 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-var_dump(preg_match_all('/\p{Ll}(\p{L}((\p{Ll}\p{Ll})))/', 'aeiou', $dummy));
-var_dump(preg_last_error() === PREG_RECURSION_LIMIT_ERROR);
-var_dump(preg_match_all('/\p{Ll}\p{L}\p{Ll}\p{Ll}/', 'aeiou', $dummy));
-var_dump(preg_last_error() === PREG_NO_ERROR);
-$fusion = $dummy;
+$file_stream = new SplFileObject(__FILE__, 'rb');
+echo $file_stream; // line 4
+echo $file_stream; // line 5
+echo $file_stream; // line 6
+echo $file_stream; // line 7
+echo $file_stream; // line 8
+echo $file_stream; // line 9
+$fusion = $file_stream;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-$closure = function($a) { echo $a; };
-$reflection = new ReflectionClass('closure');
-var_dump($reflection->hasMethod('__invoke')); // true
-$reflection = new ReflectionClass($closure);
-var_dump($reflection->hasMethod('__invoke')); // true
-$reflection = new ReflectionObject($closure);
-var_dump($reflection->hasMethod('__invoke')); // true
-$reflection = new ReflectionClass('closure');
-var_dump($h = $reflection->getMethod('__invoke')); // true
-var_dump($h->class.'::'.$h->getName());
-$reflection = new ReflectionClass($closure);
-var_dump($h = $reflection->getMethod('__invoke')); // true
-var_dump($h->class.'::'.$h->getName());
-$reflection = new ReflectionObject($closure);
-var_dump($h = $reflection->getMethod('__invoke')); // true
-var_dump($fusion->class.'::'.$h->getName());
+function createGenerator() { yield 1; }
+$appendIterator = createGenerator();
+$appendIterator = new AppendIterator();
+$appendIterator->append($appendIterator);
+iterator_to_array($appendIterator);
+try {
+    iterator_to_array($appendIterator);
+} catch (\Exception $fusion) {
+    echo $e->getMessage();
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-bool(false)
-bool(true)
-int(1)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-object(ReflectionMethod)#%d (2) {
-  ["name"]=>
-  string(8) "__invoke"
-  ["class"]=>
-  string(7) "Closure"
-}
-string(17) "Closure::__invoke"
-object(ReflectionMethod)#%d (2) {
-  ["name"]=>
-  string(8) "__invoke"
-  ["class"]=>
-  string(7) "Closure"
-}
-string(17) "Closure::__invoke"
-object(ReflectionMethod)#%d (2) {
-  ["name"]=>
-  string(8) "__invoke"
-  ["class"]=>
-  string(7) "Closure"
-}
-string(17) "Closure::__invoke"
+--EXPECT--
+<?php
+<?php
+<?php
+<?php
+<?php
+<?php
+Cannot traverse an already closed generator

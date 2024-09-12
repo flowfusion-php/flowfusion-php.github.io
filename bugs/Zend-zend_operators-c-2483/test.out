@@ -1,4 +1,11 @@
-php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:3119: int zend_jit_op_array(zend_op_array *, zend_script *): Assertion `0' failed.
-Aborted (core dumped)
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1102.php]
+prompt> ok
 
-Termsig=6
+Warning: Undefined variable $x in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1102.php on line 67
+
+Warning: Undefined variable $x in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1102.php on line 68
+[Script ended normally]
+
+Fatal error: PHP Startup: Session save handler "user" cannot be set by ini_set() in Unknown on line 0
+/home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_operators.c:2483:20: runtime error: member access within null pointer of type 'const zend_class_entry' (aka 'const struct _zend_class_entry')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_operators.c:2483:20 in

@@ -1,12 +1,9 @@
 --TEST--
-The same name constant of a trait used in a class that inherits a constant defined in a parent can be defined only if they are compatible.+Bug #32828 (Throwing exception in output_callback function with ob_start and ob_end_clean leads to segfault)
---INI--
-opcache.optimization_level=0
-max_input_vars=1000
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1141
+Bug #68215 (Behavior of foreach has changed)+Test === operator : max int 64bit range
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -38,7 +35,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -61,7 +58,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -71,35 +68,134 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-trait TestTrait1 {
-    public final const Constant = 123;
-}
-class BaseClass1 {
-    public final const Constant = 123;
-}
-class DerivedClass1 extends BaseClass1 {
-    use TestTrait1;
-}
-trait TestTrait2 {
-    public final const Constant = 123;
-}
-class BaseClass2 {
-    public final const Constant = 456;
-}
-class DerivedClass2 extends BaseClass2 {
-    use TestTrait2;
-}
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function output_handler($buffer)
+$arr = array(
+    'a' => array(
+        'a' => 'apple',
+        'b' => 'banana',
+        'c' => 'cranberry',
+        'd' => 'mango',
+        'e' => 'pineapple'
+    ),
+    'b' => array(
+        'a' => 'apple',
+        'b' => 'banana',
+        'c' => 'cranberry',
+        'd' => 'mango',
+        'e' => 'pineapple'
+    ),
+    'c' => 'cranberry',
+    'd' => 'mango',
+    'e' => 'pineapple'
+);
+function test(&$child, $entry)
 {
-    throw new Exception;
+    $i = 1;
+    foreach ($child AS $key => $fruit)
+    {
+        if (!is_numeric($key))
+        {
+            $child[$i] = $fruit;
+            unset($child[$key]);
+            $i++;
+        }
+    }
 }
-ob_start('output_handler');
-ob_end_clean();
+$i = 1;
+foreach ($arr AS $key => $fruit)
+{
+    $arr[$i] = $fruit;
+    if (is_array($fruit))
+    {
+        test($arr[$i], $fruit);
+    }
+    unset($arr[$key]);
+    $i++;
+}
+var_dump($arr);
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$validIdentical = array (
+MAX_32Bit, array(MAX_32Bit),
+MIN_32Bit, array(MIN_32Bit),
+MAX_64Bit, array(MAX_64Bit),
+MIN_64Bit, array(MIN_64Bit),
+);
+$invalidIdentical = array (
+MAX_32Bit, array("2147483647", "2147483647.0000000", 2.147483647e9, 2147483647.0, "2147483648", 2.1474836470001e9, MAX_32Bit - 1, MAX_32Bit + 1),
+MIN_32Bit, array("-2147483648", "-2147483648.000", -2.147483648e9, -2147483648.0, "-2147483649", -2.1474836480001e9, MIN_32Bit -1, MIN_32Bit + 1),
+MAX_64Bit, array(MAX_64Bit - 1, MAX_64Bit + 1),
+MIN_64Bit, array(MIN_64Bit + 1, MIN_64Bit - 1),
+);
+$failed = false;
+// test for valid values
+for ($i = 0; $i < count($validIdentical); $i +=2) {
+   $typeToTestVal = $validIdentical[$i];
+   $compares = $validIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         // do nothing
+      }
+      else {
+         echo "FAILED: '$typeToTestVal' !== '$compareVal'\n";
+         $failed = true;
+      }
+   }
+}
+// test for invalid values
+for ($i = 0; $i < count($invalidIdentical); $i +=2) {
+   $typeToTestVal = $invalidIdentical[$i];
+   $compares = $invalidIdentical[$i + 1];
+   foreach($compares as $compareVal) {
+      if ($typeToTestVal === $compareVal) {
+         echo "FAILED: '$typeToTestVal' === '$compareVal'\n";
+         $failed = true;
+      }
+   }
+}
+if ($failed == false) {
+   echo "Test Passed\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-Fatal error: BaseClass2 and TestTrait2 define the same constant (Constant) in the composition of DerivedClass2. However, the definition differs and is considered incompatible. Class was composed in %s on line %d
+--EXPECT--
+array(5) {
+  [1]=>
+  array(5) {
+    [1]=>
+    string(5) "apple"
+    [2]=>
+    string(6) "banana"
+    [3]=>
+    string(9) "cranberry"
+    [4]=>
+    string(5) "mango"
+    [5]=>
+    string(9) "pineapple"
+  }
+  [2]=>
+  array(5) {
+    [1]=>
+    string(5) "apple"
+    [2]=>
+    string(6) "banana"
+    [3]=>
+    string(9) "cranberry"
+    [4]=>
+    string(5) "mango"
+    [5]=>
+    string(9) "pineapple"
+  }
+  [3]=>
+  string(9) "cranberry"
+  [4]=>
+  string(5) "mango"
+  [5]=>
+  string(9) "pineapple"
+}
+Test Passed

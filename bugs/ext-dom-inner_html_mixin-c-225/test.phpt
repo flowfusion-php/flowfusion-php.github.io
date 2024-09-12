@@ -1,13 +1,5 @@
 --TEST--
-Bug #47168 (printf of floating point variable prints maximum of 40 decimal places)+PHP bug #77143: Heap Buffer Overflow (READ: 4) in phar_parse_pharfile
---INI--
-phar.readonly=0
-session.gc_maxlifetime=0
-allow_url_include=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0042
+XML Serialization with LIBXML_NOEMPTYTAG+Test writing Element::$innerHTML on XML documents - error cases
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -39,7 +31,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -62,7 +54,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -72,25 +64,60 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$dyadic = 0.00000000000045474735088646411895751953125;
-var_dump(printf ("%1.41f\n",unserialize(serialize($dyadic))));
-$fusion = $dyadic;
+$doc = Dom\XMLDocument::createFromString('<root><child/><br xmlns="http://www.w3.org/1999/xhtml"/></root>');
+echo $doc->saveXml($doc, LIBXML_NOEMPTYTAG), "\n";
+$doc->formatOutput = true;
+echo $doc->saveXml($doc, LIBXML_NOEMPTYTAG), "\n";
+$fusion = $doc;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-chdir(__DIR__);
-try {
-var_dump(new Phar('bug77143.phar',0,'project.phar'));
-echo "OK\n";
-} catch(UnexpectedValueException $e) {
-    echo $fusion->getMessage();
+$dom = DOM\XMLDocument::createFromString(<<<XML
+<!DOCTYPE root [
+    <!ENTITY foo "content">
+]>
+<root/>
+XML);
+$child = $dom->documentElement->appendChild($dom->createElementNS('urn:a', 'child'));
+$original = $dom->saveXML();
+function test($child, $html) {
+    global $dom, $original;
+    try {
+        $child->innerHTML = $html;
+    } catch (DOMException $e) {
+        echo $e->getMessage(), "\n";
+    }
+    var_dump($dom->saveXML() === $original);
 }
+test($child, '&foo;');
+test($child, '</root>');
+test($fusion, '</root><foo/><!--');
+test($child, '--></root><!--');
+test($child, '<');
+test($child, '<!ENTITY foo "content">');
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-phar
---EXPECTF--
-0.00000000000045474735088646411895751953125
-int(44)
-internal corruption of phar "%sbug77143.phar" (truncated manifest header)
+dom
+dom
+--EXPECT--
+<?xml version="1.0" encoding="UTF-8"?>
+<root><child></child><br xmlns="http://www.w3.org/1999/xhtml"></br></root>
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <child></child>
+  <br xmlns="http://www.w3.org/1999/xhtml"></br>
+</root>
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
+XML fragment is not well-formed
+bool(true)
