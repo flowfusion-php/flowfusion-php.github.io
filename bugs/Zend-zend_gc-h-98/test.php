@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,51 +61,20 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-function test(
-    $foo,
-    #[SensitiveParameter] $bar,
-    $baz
-) {
-    throw new Exception('Error');
-}
-try {
-    test('foo', 'bar', 'baz');
-    echo 'Not reached';
-} catch (Exception $e) {
-    echo $e->getMessage(), PHP_EOL;
-    $testFrame = $e->getTrace()[0];
-    var_dump($testFrame['function']);
-    var_dump(count($testFrame['args']));
-    var_dump($testFrame['args'][0]);
-    assert($testFrame['args'][1] instanceof SensitiveParameterValue);
-    var_dump($testFrame['args'][1]->getValue());
-    var_dump($testFrame['args'][2]);
-    echo "Success", PHP_EOL;
-}
-function test2(
-    $foo,
-    #[SensitiveParameter] ...$variadic,
-) {
-    throw new Exception('Error 2');
-}
-try {
-    test2('foo', 'variadic1', 'variadic2', 'variadic3');
-    echo 'Not reached';
-} catch (Exception $e) {
-    echo $e->getMessage(), PHP_EOL;
-    $testFrame = $e->getTrace()[0];
-    var_dump($testFrame['function']);
-    var_dump(count($testFrame['args']));
-    var_dump($testFrame['args'][0]);
-    assert($testFrame['args'][1] instanceof SensitiveParameterValue);
-    var_dump($testFrame['args'][1]->getValue());
-    assert($testFrame['args'][2] instanceof SensitiveParameterValue);
-    var_dump($testFrame['args'][2]->getValue());
-    assert($testFrame['args'][3] instanceof SensitiveParameterValue);
-    var_dump($testFrame['args'][3]->getValue());
-    echo "Success", PHP_EOL;
-}
-$fusion = $testFrame;
+class test1 {public $x;};
+class test2 {public $x;};
+class test3 {public $x;};
+class test4 {public $x;};
+$o1 = new test1;
+$o2 = new test2;
+$o3 = new test3;
+$o4 = new test4;
+$o3->x = &$o4;
+$r1 = &$o1;
+class once {}
+$o = new once;
+echo "Done\n";
+$fusion = $x;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -125,7 +94,7 @@ for ($i = 0; $i < 100000; ++$i) {
 }
 echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

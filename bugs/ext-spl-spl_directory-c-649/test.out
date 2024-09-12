@@ -1,0 +1,49 @@
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(12) "foo
+
+bar
+baz"
+    [1]=>
+    string(3) "qux"
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(11) "foo
+bar
+baz"
+    [1]=>
+    string(3) "qux"
+  }
+}
+
+====
+
+array(2) {
+  [0]=>
+  string(12) "foo
+
+bar
+baz"
+  [1]=>
+  string(3) "qux"
+}
+array(2) {
+  [0]=>
+  string(11) "foo
+bar
+baz"
+  [1]=>
+  string(3) "qux"
+}
+Cannot open phar file 'phar:///home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1799.phar/oops': internal corruption of phar "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1799.phar" (truncated entry)
+PharFileInfo::__construct(): Argument #1 ($filename) must be of type string, array given
+Cannot access phar file entry '/oops/I/do/not/exist' in archive '/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1799.phar'
+SplFileObject::__construct(oops): Failed to open stream: No such file or directory
+'/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1799.php' is not a valid phar archive URL (must have at least phar://filename.phar)
+string(11) "random_var:"
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_directory.c:649:3: runtime error: member access within null pointer of type 'zend_string' (aka 'struct _zend_string')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_directory.c:649:3 in

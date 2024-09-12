@@ -1,0 +1,5 @@
+string(32) "Fri, 01 Jan -1500 00:00:00 +0000"
+string(38) "Tue, 01 Jan -2147483648 00:00:00 +0000"
+string(32) "-2147483648-01-01T00:00:00+00:00"
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/interval.c:204:10: runtime error: 7.84353e+11 is outside the range of representable values of type 'int'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/interval.c:204:10 in

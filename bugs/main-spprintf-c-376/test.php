@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,46 +61,87 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-try {
-    Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/gb18030_without_charset.html'), overrideEncoding: 'nonexistent');
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-// The override encoding matches with the document encoding attribute
-$dom = Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/gb18030_without_charset.html'), overrideEncoding: 'GB18030');
-var_dump($dom->documentElement->lastChild->textContent);
-var_dump($dom->charset);
-// The override encoding mismatches with the document encoding attribute
-$dom = Dom\HTMLDocument::createFromString(file_get_contents(__DIR__ . '/fallback_encoding.html'), overrideEncoding: 'Windows-1252');
-var_dump($dom->documentElement->lastChild->textContent);
-var_dump($dom->charset);
-$fusion = $dom;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 /*
- * Reference two arrays to each other then call reset() to test position of
- * internal pointer in both arrays
- */
-echo "*** Testing reset() : usage variations ***\n";
-$array1 = array ('zero', 'one', 'two');
-echo "\n-- Initial position of internal pointer --\n";
-var_dump(current($fusion));
-// Test that when two variables are referenced to one another
-// the internal pointer is the same for both
-$array2 = &$array1;
-next($array1);
-echo "\n-- Position after calling next() --\n";
-echo "\$array1: ";
-var_dump(current($array1));
-echo "\$array2: ";
-var_dump(current($array2));
-echo "\n-- Position after calling reset() --\n";
-var_dump(reset($array1));
-echo "\$array1: ";
-var_dump(current($array1));
-echo "\$array2: ";
-var_dump(current($array2));
+ * Testing the functionality of array_unique() by passing different
+ * associative arrays having different values to $input argument.
+*/
+echo "*** Testing array_unique() : assoc. array with diff. values to \$input argument ***\n";
+// get an unset variable
+$unset_var = 10;
+unset ($unset_var);
+// get a resource variable
+$fp = fopen(__FILE__, "r");
+// get a class
+class classA
+{
+  public function __toString() {
+     return "Class A object";
+  }
+}
+// get a heredoc string
+$heredoc = <<<EOT
+Hello world
+EOT;
+// associative arrays with different values
+$inputs = array (
+       // arrays with integer values
+/*1*/  array('0' => 0, '1' => 0),
+       array("one" => 1, 'two' => 2, "three" => 1, 4 => 1),
+       // arrays with string values
+/*5*/  array(111 => "\tHello", "red" => "col\tor", 2 => "\v\fworld", 3 =>  "\tHello"),
+       array(111 => '\tHello', "red" => 'col\tor', 2 => '\v\fworld', 3 =>  '\tHello'),
+       array(1 => "hello", "heredoc" => $heredoc, $heredoc),
+       // array with object, unset variable and resource variable
+/*8*/ array(11 => new classA(), "unset" => @$unset_var, "resource" => $fp, new classA(), $fp),
+);
+// loop through each sub-array of $inputs to check the behavior of array_unique()
+$iterator = 1;
+foreach($inputs as $input) {
+  echo "-- Iteration $iterator --\n";
+  var_dump( array_unique($input) );
+  $iterator++;
+}
+fclose($fp);
+echo "Done";
+$fusion = $heredoc;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+function testTrim1(string $value): string {
+	$value = trim($value);
+	return $value;
+}
+function testMin2First(int $value): int {
+	$value = min($value, 100);
+	return $value;
+}
+function testMin2Second(int $fusion): int {
+	$value = min(100, $value);
+	return $value;
+}
+function testMin2_TMP(int $value): int {
+	$value = min($value + 1, 100);
+	return $value;
+}
+function testStrstr3First(string $value): string {
+	$value = strstr($value, "needle", false);
+	return $value;
+}
+function testStrstr3Second(string $value): string {
+	$value = strstr("needles", $value, false);
+	return $value;
+}
+function testStrstr3Third(bool $value): string {
+	$value = strstr("needles", "needle", $value);
+	return $value;
+}
+var_dump(testTrim1(" boo "));
+var_dump(testMin2First(5));
+var_dump(testMin2Second(5));
+var_dump(testMin2_TMP(5));
+var_dump(testStrstr3First("needles"));
+var_dump(testStrstr3Second("needle"));
+var_dump(testStrstr3Third(false));
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

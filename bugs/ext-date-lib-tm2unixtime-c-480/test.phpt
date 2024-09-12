@@ -1,9 +1,14 @@
 --TEST--
-Iterating an uninitialized RecursiveIteratorIterator+Bug #79948: Exit in auto-prepended file does not abort PHP execution
+Testing disk_total_space() functions : Usage Variations.+DCE 004: Elimination of assignment to non-escaping arrays
 --INI--
-auto_prepend_file={PWD}/bug79948.inc
-date.timezone=America/Mendoza
-magic_quotes_gpc=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.optimization_level=-1
+opcache.opt_debug_level=0x20000
+opcache.preload=
+zend_test.observer.enabled=0
+zend.multibyte=1
+zend.assertions=1
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,20 +73,126 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$rc = new ReflectionClass(RecursiveIteratorIterator::class);
-$it = $rc->newInstanceWithoutConstructor();
-try {
-    foreach ($it as $v) {}
-} catch (Error $e) {
+$file_path = __DIR__;
+echo "*** Testing with a directory ***\n";
+var_dump( disk_total_space($file_path."/..") );
+echo "\nTesting for the return type ***\n";
+$return_value = disk_total_space($file_path);
+var_dump( is_float($return_value) );
+echo "\n*** Testing with different directory combinations ***";
+$dir = "/disk_total_space";
+mkdir($file_path.$dir);
+$dirs_arr = array(
+  ".",
+  $file_path.$dir,
+  $file_path."/.".$dir,
+  /* Testing a file trailing slash */
+  $file_path."".$dir."/",
+  $file_path."/.".$dir."/",
+  /* Testing file with double trailing slashes */
+  $file_path.$dir."//",
+  $file_path."/.".$dir."//",
+  $file_path."/./".$dir."//",
+  /* Testing Binary safe */
+  $file_path.$dir.chr(0),
+  $file_path."/.".$dir.chr(0),
+  ".".chr(0).$file_path.$dir,
+  ".".chr(0).$file_path.$dir.chr(0)
+);
+$count = 1;
+/* loop through to test each element the above array */
+foreach($dirs_arr as $dir1) {
+  echo "\n-- Iteration $count --\n";
+  try {
+    var_dump( disk_total_space( $dir1 ) );
+  } catch (Error $e) {
     echo $e->getMessage(), "\n";
+  }
+  $count++;
 }
+echo "*** Testing with Binary Input ***\n";
+var_dump( disk_total_space(b"$file_path") );
+echo"\n--- Done ---";
+$fusion = $return_value;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "Should not be executed.\n";
+function foo(int $x, int $y) {
+    $fusion = [$x];
+    $a[1] = $y;
+    $a = $y;
+    return $a;
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-Object is not initialized
-Exiting...
+--EXTENSIONS--
+opcache
+--CLEAN--
+<?php
+$file_path = __DIR__;
+rmdir($file_path."/disk_total_space");
+?>
+--CONFLICTS--
+disk_total_space
+--EXPECTF--
+*** Testing with a directory ***
+float(%f)
+
+Testing for the return type ***
+bool(true)
+
+*** Testing with different directory combinations ***
+-- Iteration 1 --
+float(%f)
+
+-- Iteration 2 --
+float(%f)
+
+-- Iteration 3 --
+float(%f)
+
+-- Iteration 4 --
+float(%f)
+
+-- Iteration 5 --
+float(%f)
+
+-- Iteration 6 --
+float(%f)
+
+-- Iteration 7 --
+float(%f)
+
+-- Iteration 8 --
+float(%f)
+
+-- Iteration 9 --
+disk_total_space(): Argument #1 ($directory) must not contain any null bytes
+
+-- Iteration 10 --
+disk_total_space(): Argument #1 ($directory) must not contain any null bytes
+
+-- Iteration 11 --
+disk_total_space(): Argument #1 ($directory) must not contain any null bytes
+
+-- Iteration 12 --
+disk_total_space(): Argument #1 ($directory) must not contain any null bytes
+*** Testing with Binary Input ***
+float(%s)
+
+--- Done ---
+$_main:
+     ; (lines=1, args=0, vars=0, tmps=0)
+     ; (after optimizer)
+     ; %sdce_004.php:1-9
+0000 RETURN int(1)
+
+foo:
+     ; (lines=4, args=2, vars=3, tmps=0)
+     ; (after optimizer)
+     ; %sdce_004.php:2-7
+0000 CV0($x) = RECV 1
+0001 CV1($y) = RECV 2
+0002 CV2($a) = QM_ASSIGN CV1($y)
+0003 RETURN CV2($a)

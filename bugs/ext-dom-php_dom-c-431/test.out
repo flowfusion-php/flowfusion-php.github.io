@@ -1,0 +1,14 @@
+string(3) "foo"
+string(8) "my value"
+string(4) "foo2"
+string(12) "my new value"
+<?xml version="1.0"?>
+<container><foo2>my new value</foo2></container>
+<?xml version="1.0"?>
+<container><foo2>my new value</foo2><foo3>my new new value</foo3></container>
+
+Deprecated: Creation of dynamic property DOMDocument::$a is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused224.php on line 83
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:431:3: runtime error: member access within misaligned address 0xffffffffffffffff for type 'zend_property_info' (aka 'struct _zend_property_info'), which requires 8 byte alignment
+0xffffffffffffffff: note: pointer points here
+<memory cannot be printed>
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/php_dom.c:431:3 in

@@ -1,0 +1,4 @@
+int(-9223372036854775808)
+int(-9223372036854775808)
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1221:19: runtime error: negation of -9223372036854775808 cannot be represented in type 'zend_off_t' (aka 'long'); cast to an unsigned type to negate this value to itself
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/pcre/php_pcre.c:1221:19 in

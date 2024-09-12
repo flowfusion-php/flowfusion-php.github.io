@@ -1,0 +1,21 @@
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTime (inheriting DateTime) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTime (inheriting DateTime) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+DateObjectError: Object of type MyDateTimeZone (inheriting DateTimeZone) has not been correctly initialized by calling parent::__construct() in its constructor
+2005-07-14T22:30:41+0200
+2005-07-14T22:30:41+0000
+2005-07-14T22:30:41+0100
+2005-07-14T22:30:41+0200
+2005-07-14T22:30:41+0200
+2005-07-14T22:30:41-0700
+2005-07-14T22:30:41+0000
+2005-07-14T22:30:41+0100
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/parse_tz.c:800:11: runtime error: member access within null pointer of type 'timelib_tzinfo' (aka 'struct _timelib_tzinfo')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/parse_tz.c:800:11 in

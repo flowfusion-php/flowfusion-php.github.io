@@ -1,12 +1,13 @@
 --TEST--
-Bug #14293 (serialize() and __sleep())+Interfaces don't set prototypes to their parent method
+Test asinh function : 64bit long tests+Bug #81705 (type confusion/UAF on set_error_handler with concat operation)
 --INI--
-opcache.jit=1205
-opcache.file_cache_only=1
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=tracing
+serialize_precision=14
+opcache.preload={PWD}/preload_dynamic_def_removal.inc
+disable_functions=dl
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,55 +72,66 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class t
-{
-    public $a;
-    function __construct()
-    {
-        $this->a = 'hello';
-    }
-    function __sleep()
-    {
-        echo "__sleep called\n";
-        return array('a','b');
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(asinh($longVal));
 }
-$t = new t();
-$data = serialize($t);
-echo "$data\n";
-$t = unserialize($data);
-var_dump($t);
-$script1_dataflow = $t;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface A {
-    public function __construct(int|float $param);
-}
-interface B {
-    public function __construct(int $param);
-}
-class X implements A, B {
-    public function __construct(int|float $param) {}
-}
-class Y extends X {
-    public function __construct(int $script1_dataflow) {}
-}
-new Y(42);
+$fusion = [0];
+$my_var = str_repeat("a", 1);
+set_error_handler(
+    function() use(&$my_var) {
+        echo("error\n");
+        $my_var = 0x123;
+    }
+);
+$my_var .= $GLOBALS["arr"];
+var_dump($my_var);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---XFAIL--
-X::__constructor()'s prototype is set to B::__construct(). Y::__construct() then
-uses prototype to verify LSP, but misses A::__construct() which has a stricter
-signature.
---EXPECTF--
-__sleep called
-
-Warning: serialize(): "b" returned as member variable from __sleep() but does not exist in %s on line %d
-O:1:"t":1:{s:1:"a";s:5:"hello";}
-object(t)#%d (1) {
-  ["a"]=>
-  string(5) "hello"
-}
-Fatal error: Declaration of Y::__construct(int $param) must be compatible with A::__construct(int|float $param) in %s on line %d
+--EXPECT--
+--- testing: 9223372036854775807 ---
+float(44.361419555836)
+--- testing: -9223372036854775808 ---
+float(-44.361419555836)
+--- testing: 2147483647 ---
+float(22.180709777453)
+--- testing: -2147483648 ---
+float(-22.180709777918)
+--- testing: 9223372034707292160 ---
+float(44.361419555604)
+--- testing: -9223372034707292160 ---
+float(-44.361419555604)
+--- testing: 2147483648 ---
+float(22.180709777918)
+--- testing: -2147483649 ---
+float(-22.180709778384)
+--- testing: 4294967294 ---
+float(22.873856958013)
+--- testing: 4294967295 ---
+float(22.873856958245)
+--- testing: 4294967293 ---
+float(22.87385695778)
+--- testing: 9223372036854775806 ---
+float(44.361419555836)
+--- testing: 9.2233720368548E+18 ---
+float(44.361419555836)
+--- testing: -9223372036854775807 ---
+float(-44.361419555836)
+--- testing: -9.2233720368548E+18 ---
+float(-44.361419555836)
+error
+string(6) "aArray"

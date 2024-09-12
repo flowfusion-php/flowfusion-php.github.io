@@ -1,0 +1,4 @@
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2767:30: runtime error: member access within misaligned address 0x000100000003 for type 'zend_op_array' (aka 'struct _zend_op_array'), which requires 8 byte alignment
+0x000100000003: note: pointer points here
+<memory cannot be printed>
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/opcache/jit/zend_jit.c:2767:30 in

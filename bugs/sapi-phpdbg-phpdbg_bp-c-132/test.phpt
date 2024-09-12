@@ -1,12 +1,12 @@
 --TEST--
-GH-14961: Comment between -> and keyword+addslashes() and stripslashes() functions
+ZE2 Autoload and class_exists+Stdin and escaped args being passed to run command
 --INI--
-magic_quotes_gpc=1
-mysqli.allow_local_infile=0
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=tracing
+internal_encoding=big5
+mbstring.http_output_conv_mimetypes=plain
+--SKIPIF--
+<?php
+    if (class_exists('autoload_root', false)) die('skip Autoload test classes exist already');
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,39 +71,61 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class C {
-    public $class = C::class;
-}
-$c = new C();
-$c->/* comment */class = 42;
-var_dump($c->/** doc comment */class);
-var_dump($c->
-    // line comment
-    class);
-var_dump($c->
-    # hash comment
-    class);
-var_dump($c?->/* comment */class);
-$script1_dataflow = $c;
-$script1_connect=$class;
-$input = '';
-for($i=0; $i<512; $script1_dataflow++) {
-    $input .= chr($i%256);
-}
-echo "Normal: ";
-if($input === stripslashes(addslashes($input))) {
-    echo "OK\n";
-} else {
-    echo "FAILED\n";
-}
-$script2_connect=$input;
-$random_var=$GLOBALS[array_rand($GLOBALS)];
-var_dump('random_var:',$random_var);
-var_fusion($script1_connect, $script2_connect, $random_var);
+spl_autoload_register(function ($class_name) {
+    require_once(__DIR__ . '/' . $class_name . '.inc');
+    echo 'autoload(' . $class_name . ")\n";
+});
+var_dump(class_exists('autoload_root'));
+$fusion = $class_name;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump($fusion);
+var_dump(stream_get_contents(STDIN));
+echo "ok\n";
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-int(42)
-int(42)
-int(42)
-int(42)
-Normal: OK
+--CLEAN--
+<?php
+@unlink("run_002_tmp.fixture");
+?>
+--PHPDBG--
+ev file_put_contents("run_002_tmp.fixture", "stdin\ndata")
+b 6
+r <run_002_tmp.fixture
+r arg1 '_ \' arg2 "' < run_002_tmp.fixture
+y
+c
+q
+--EXPECTF--
+autoload(autoload_root)
+bool(true)
+[Successful compilation of %s]
+prompt> 10
+prompt> [Breakpoint #0 added at %s:6]
+prompt> array(1) {
+  [0]=>
+  string(%d) "%s"
+}
+string(10) "stdin
+data"
+[Breakpoint #0 at %s:6, hits: 1]
+>00006: echo "ok\n";
+ 00007: 
+prompt> Do you really want to restart execution? (type y or n): array(3) {
+  [0]=>
+  string(%d) "%s"
+  [1]=>
+  string(4) "arg1"
+  [2]=>
+  string(10) "_ ' arg2 ""
+}
+string(10) "stdin
+data"
+[Breakpoint #0 at %s:6, hits: 1]
+>00006: echo "ok\n";
+ 00007: 
+prompt> ok
+[Script ended normally]
+prompt> 

@@ -61,30 +61,45 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$array = array(array(7,8,9),1,2,3,array(4,5,6));
-$arrayIterator = new ArrayIterator($array);
-try {
-  $limitIterator = new LimitIterator($arrayIterator, -1);
-} catch (\ValueError $e){
-  print $e->getMessage(). "\n";
+class C {
+    public function __destruct() {
+        echo __METHOD__, "\n";
+    }
 }
-try {
-  $limitIterator = new LimitIterator($arrayIterator, 0, -2);
-} catch (\ValueError $e){
-  print $e->getMessage() . "\n";
+function f() {
+    // Force symbol table
+    get_defined_vars();
+    Fiber::suspend();
 }
-$limitIterator = new LimitIterator($arrayIterator, 0, -1);
+$fiber = new Fiber(function () {
+    $c = new C();
+    $fiber = Fiber::getCurrent();
+    // Force symbol table
+    get_defined_vars();
+    f();
+});
+print "1\n";
+$fiber->start();
+gc_collect_cycles();
+print "2\n";
+$fiber = null;
+gc_collect_cycles();
+print "3\n";
+$fusion = $c;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** testing stat ***\n";
-var_dump(stat(false));
-var_dump(stat(''));
-var_dump(stat(' '));
-var_dump(stat('|'));
-echo "*** testing lstat ***\n";
-var_dump(lstat(false));
-var_dump(lstat(''));
-var_dump(lstat(' '));
-var_dump(lstat('|'));
+foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
+    $foo = $bar = [];
+    for ($i = 0; $i < 3; $fusion++) {
+        $foo = [$foo, [&$bar]];
+    }
+    ob_start(function (string $buffer) use (&$bar) {
+        $bar[][] = null;
+        return '';
+    }, 64);
+    $output($foo[0]);
+    ob_end_clean();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

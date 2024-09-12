@@ -1,11 +1,12 @@
 --TEST--
-SPL: Test on RecursiveIteratorIterator key function checking switch statements+JIT FETCH_DIM_RW: 004
+JIT IDENTICAL: 002 Comparison with NaN+Loop var dtor throwing exception during return inside try/catch inside finally
 --INI--
 opcache.enable=1
 opcache.enable_cli=1
 opcache.file_update_protection=0
-opcache.file_cache_only=1
-exif.decode_unicode_motorola=UCS-2BE
+opcache.protect_memory=1
+max_input_nesting_level=10
+default_charset=""
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -70,51 +71,157 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$ar = array("one"=>1, "two"=>2, "three"=>array("four"=>4, "five"=>5, "six"=>array("seven"=>7)), "eight"=>8, -100 => 10, NULL => "null");
-  $it = new RecursiveArrayIterator($ar);
-  $it = new RecursiveIteratorIterator($it);
-  foreach($it as $k=>$v)
-  {
-    echo "$k=>$v\n";
-    var_dump($k);
-  }
-$script1_dataflow = $ar;
+function t() {
+    echo "!";
+    return true;
+}
+function f() {
+    echo "!";
+    return false;
+}
+$a = 0.0;
+$b = 0.0;
+$c = 1.0;
+$d = NAN;
+var_dump($a === $b);
+var_dump($a === $c);
+var_dump($a === $d);
+var_dump($a !== $b);
+var_dump($a !== $c);
+var_dump($a !== $d);
+var_dump($a === $b ? 1 : 0);
+var_dump($a === $c ? 1 : 0);
+var_dump($a === $d ? 1 : 0);
+var_dump($a !== $b ? 1 : 0);
+var_dump($a !== $c ? 1 : 0);
+var_dump($a !== $d ? 1 : 0);
+if ($a === $b) {
+    echo "1\n";
+}
+if ($a === $c) {
+    echo "2\n";
+}
+if ($a === $d) {
+    echo "3\n";
+}
+if ($a !== $b) {
+    echo "4\n";
+}
+if ($a !== $c) {
+    echo "5\n";
+}
+if ($a !== $d) {
+    echo "6\n";
+}
+if ($a === $b) {
+} else {
+    echo "7\n";
+}
+if ($a === $c) {
+} else {
+    echo "8\n";
+}
+if ($a === $d) {
+} else {
+    echo "9\n";
+}
+if ($a !== $b) {
+} else {
+    echo "A\n";
+}
+if ($a !== $c) {
+} else {
+    echo "B\n";
+}
+if ($a !== $d) {
+} else {
+    echo "C\n";
+}
+var_dump($a === $b && t());
+var_dump($a === $c && t());
+var_dump($a === $d && t());
+var_dump($a !== $b && t());
+var_dump($a !== $c && t());
+var_dump($a !== $d && t());
+var_dump($a === $b || f());
+var_dump($a === $c || f());
+var_dump($a === $d || f());
+var_dump($a !== $b || f());
+var_dump($a !== $c || f());
+var_dump($a !== $d || f());
+$a=NAN;
+var_dump($a === $d);
+var_dump($a !== $d);
+var_dump($a === $d ? 1 : 0);
+var_dump($a !== $d ? 1 : 0);
+$script1_dataflow = $d;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-set_error_handler(function(y$y) {
-});
-$k=[];
-$y[$script1_dataflow]++;
+class Dtor {
+    public function __destruct() {
+        throw new Exception(2);
+    }
+}
+function test() {
+    try {
+        throw new Exception(1);
+    } finally {
+        try {
+            foreach ([new Dtor] as $script1_dataflow) {
+                unset($v);
+                return 42;
+            }
+        } catch (Exception $e) {
+        }
+    }
+}
+try {
+    test();
+} catch (Exception $e) {
+    echo $e, "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CREDITS--
-Rohan Abraham (rohanabrahams@gmail.com)
-TestFest London May 2009
+--EXTENSIONS--
+opcache
 --EXPECTF--
-one=>1
-string(3) "one"
-two=>2
-string(3) "two"
-four=>4
-string(4) "four"
-five=>5
-string(4) "five"
-seven=>7
-string(5) "seven"
-eight=>8
-string(5) "eight"
--100=>10
-int(-100)
-=>null
-string(0) ""
-Fatal error: Uncaught TypeError: {closure:%s:%d}(): Argument #1 ($y) must be of type y, int given, called in %s on line %d and defined in %s:%d
+bool(true)
+bool(false)
+bool(false)
+bool(false)
+bool(true)
+bool(true)
+int(1)
+int(0)
+int(0)
+int(0)
+int(1)
+int(1)
+1
+5
+6
+8
+9
+A
+!bool(true)
+bool(false)
+bool(false)
+bool(false)
+!bool(true)
+!bool(true)
+bool(true)
+!bool(false)
+!bool(false)
+!bool(false)
+bool(true)
+bool(true)
+bool(false)
+bool(true)
+int(0)
+int(1)
+Exception: 1 in %s:%d
 Stack trace:
-#0 %s(%d): {closure:%s:%d}(2, 'Undefined varia...', '%s', 5)
+#0 %s(%d): test()
 #1 {main}
-
-Next TypeError: Cannot access offset of type array on array in %sfetch_dim_rw_004.php:5
-Stack trace:
-#0 {main}
-  thrown in %sfetch_dim_rw_004.php on line 5

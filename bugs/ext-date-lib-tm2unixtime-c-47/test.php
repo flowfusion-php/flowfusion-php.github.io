@@ -28,7 +28,7 @@ function fuzz_internal_interface($vars) {
                 // Get reflection of the function to determine the number of parameters
                 $reflection = new ReflectionFunction($randomFunction);
                 $numParams = $reflection->getNumberOfParameters();
-                // Prepare arguments alternating between v1 and v2
+                // Prepare arguments
                 $args = [];
                 for ($k = 0; $k < $numParams; $k++) {
                     $args[] = ($k % 2 == 0) ? $v1 : $v2;
@@ -51,7 +51,7 @@ function fuzz_internal_interface($vars) {
 function var_fusion($var1, $var2, $var3) {
     $result = array();
     $vars = [$var1, $var2, $var3];
-    try {
+    try{
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
         fuzz_internal_interface($vars);
@@ -61,56 +61,53 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$dom = DOM\XMLDocument::createFromString("<root/>");
-$list = $dom->documentElement->classList;
+$i = PHP_INT_MAX;
 try {
-    $list->add("");
-} catch (DOMException $e) {
+    $array = [$i => 42, new stdClass];
+    var_dump($array);
+} catch (Error $e) {
     echo $e->getMessage(), "\n";
 }
+function test($x = [PHP_INT_MAX => 42, "foo"]) {}
 try {
-    $list->add("  ");
-} catch (DOMException $e) {
+    test();
+} catch (Error $e) {
     echo $e->getMessage(), "\n";
 }
-try {
-    $list->add("\0");
-} catch (ValueError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $list->add(0);
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-echo $dom->saveXML(), "\n";
-$fusion = $e;
+$fusion = $array;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-define("MAX_64Bit", 9223372036854775807);
-define("MAX_32Bit", 2147483647);
-define("MIN_64Bit", -9223372036854775807 - 1);
-define("MIN_32Bit", -2147483647 - 1);
-$fusion = array(
-    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
-    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
-    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+echo "*** Testing var_export() with valid arrays ***\n";
+// different valid  arrays
+$valid_arrays = array(
+           "array()" => array(),
+           "array(NULL)" => array(NULL),
+           "array(null)" => array(null),
+           "array(true)" => array(true),
+           "array(\"\")" => array(""),
+           "array('')" => array(''),
+           "array(array(), array())" => array(array(), array()),
+           "array(array(1, 2), array('a', 'b'))" => array(array(1, 2), array('a', 'b')),
+           "array(1 => 'One')" => array(1 => 'One'),
+           "array(\"test\" => \"is_array\")" => array("test" => "is_array"),
+           "array(0)" => array(0),
+           "array(-1)" => array(-1),
+           "array(10.5, 5.6)" => array(10.5, 5.6),
+           "array(\"string\", \"test\")" => array("string", "test"),
+           "array('string', 'test')" => array('string', 'test')
 );
-$otherVals = array(0, 1, -1, 7, 9, 65, -44, MAX_32Bit, MAX_64Bit);
-error_reporting(E_ERROR);
-foreach ($longVals as $longVal) {
-   foreach($otherVals as $otherVal) {
-       echo "--- testing: $longVal + $otherVal ---\n";
-      var_dump($longVal+$otherVal);
-   }
-}
-foreach ($otherVals as $otherVal) {
-   foreach($longVals as $longVal) {
-       echo "--- testing: $otherVal + $longVal ---\n";
-      var_dump($otherVal+$longVal);
-   }
+/* Loop to check for above arrays with var_export() */
+echo "\n*** Output for arrays ***\n";
+foreach($valid_arrays as $fusion => $arr) {
+    echo "\n--Iteration: $key --\n";
+    var_export( $arr );
+    echo "\n";
+    var_export( $arr, FALSE);
+    echo "\n";
+    var_dump( var_export( $arr, TRUE) );
+    echo "\n";
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
-$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>

@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <title>foo</title>
+    </head>
+    <body>
+        <script>
+        var foo = "</p>";
+        </script>
+        <p test="<script>">bar <!-- hi --></p>
+    
+</body></html>
+
+        
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/html5_serializer.c:134:20: runtime error: member access within null pointer of type 'struct _xmlNode'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/html5_serializer.c:134:20 in

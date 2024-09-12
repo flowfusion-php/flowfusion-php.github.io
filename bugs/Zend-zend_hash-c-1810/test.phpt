@@ -1,18 +1,5 @@
 --TEST--
-SPL: LimitIterator check limits are valid+Test lstat() and stat() functions: usage variations - invalid filenames
---INI--
-default_charset=ISO-8859-1
-opcache.preload={PWD}/preload_parse_error.inc
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=tracing
---SKIPIF--
-<?php
-if (substr(PHP_OS, 0, 3) == 'WIN') {
-    die('skip ... not for Windows');
-}
-?>
+Bug GH-9735 006 (Fiber stack variables do not participate in cycle collector)+Bug #79821 (array grow during var_dump)
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -77,59 +64,53 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$array = array(array(7,8,9),1,2,3,array(4,5,6));
-$arrayIterator = new ArrayIterator($array);
-try {
-  $limitIterator = new LimitIterator($arrayIterator, -1);
-} catch (\ValueError $e){
-  print $e->getMessage(). "\n";
+class C {
+    public function __destruct() {
+        echo __METHOD__, "\n";
+    }
 }
-try {
-  $limitIterator = new LimitIterator($arrayIterator, 0, -2);
-} catch (\ValueError $e){
-  print $e->getMessage() . "\n";
+function f() {
+    // Force symbol table
+    get_defined_vars();
+    Fiber::suspend();
 }
-$limitIterator = new LimitIterator($arrayIterator, 0, -1);
+$fiber = new Fiber(function () {
+    $c = new C();
+    $fiber = Fiber::getCurrent();
+    // Force symbol table
+    get_defined_vars();
+    f();
+});
+print "1\n";
+$fiber->start();
+gc_collect_cycles();
+print "2\n";
+$fiber = null;
+gc_collect_cycles();
+print "3\n";
+$fusion = $c;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-echo "*** testing stat ***\n";
-var_dump(stat(false));
-var_dump(stat(''));
-var_dump(stat(' '));
-var_dump(stat('|'));
-echo "*** testing lstat ***\n";
-var_dump(lstat(false));
-var_dump(lstat(''));
-var_dump(lstat(' '));
-var_dump(lstat('|'));
+foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
+    $foo = $bar = [];
+    for ($i = 0; $i < 3; $fusion++) {
+        $foo = [$foo, [&$bar]];
+    }
+    ob_start(function (string $buffer) use (&$bar) {
+        $bar[][] = null;
+        return '';
+    }, 64);
+    $output($foo[0]);
+    ob_end_clean();
+}
+echo "OK\n";
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CREDITS--
-Sean Burlington www.practicalweb.co.uk
-TestFest London May 2009
-Dave Kelsey <d_kelsey@uk.ibm.com>
---CONFLICTS--
-obscure_filename
 --EXPECTF--
-LimitIterator::__construct(): Argument #2 ($offset) must be greater than or equal to 0
-LimitIterator::__construct(): Argument #3 ($limit) must be greater than or equal to -1
-*** testing stat ***
-bool(false)
-bool(false)
-
-Warning: stat(): stat failed for   in %s on line %d
-bool(false)
-
-Warning: stat(): stat failed for | in %s on line %d
-bool(false)
-*** testing lstat ***
-bool(false)
-bool(false)
-
-Warning: lstat(): Lstat failed for   in %s on line %d
-bool(false)
-
-Warning: lstat(): Lstat failed for | in %s on line %d
-bool(false)
+1
+2
+C::__destruct
+3
+OK

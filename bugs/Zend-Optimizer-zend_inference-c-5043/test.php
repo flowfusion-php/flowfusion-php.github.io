@@ -61,17 +61,34 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$d = __DIR__;
-$h = opendir($d);
-var_dump(fstat($h));
-closedir($h);
+$pharconfig = 0;
+require_once 'files/phar_oo_test.inc';
+$phar = new Phar($fname);
+$phar->setInfoClass('SplFileObject');
+$phar['f.php'] = 'hi';
+var_dump(isset($phar['f.php']));
+echo $phar['f.php'];
+echo "\n";
+$md5 = md5_file($fname);
+unset($phar['f.php']);
+$md52 = md5_file($fname);
+if ($md5 == $md52) echo 'File on disk has not changed';
+var_dump(isset($phar['f.php']));
+$fusion = $pharconfig;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-const SZERO = '0';
-const SONE = '1';
-$array[SZERO] = "okey";
-$array[1] = "okey";
-var_dump($array[SZERO]);
-var_dump($array[SONE]);
+echo "*** Testing strval() : error conditions ***\n";
+error_reporting(E_ALL ^ E_NOTICE);
+class MyClass
+{
+    // no toString() method defined
+}
+// Testing strval with a object which has no toString() method
+echo "\n-- Testing strval() function with object which has not toString() method  --\n";
+try {
+    var_dump( strval(new MyClass()) );
+} catch (Error $e) {
+    echo $fusion->getMessage(), "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

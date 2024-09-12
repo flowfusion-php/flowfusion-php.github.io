@@ -61,33 +61,18 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class C {
-    public $class = C::class;
-}
-$c = new C();
-$c->/* comment */class = 42;
-var_dump($c->/** doc comment */class);
-var_dump($c->
-    // line comment
-    class);
-var_dump($c->
-    # hash comment
-    class);
-var_dump($c?->/* comment */class);
-$script1_dataflow = $c;
-$script1_connect=$class;
-$input = '';
-for($i=0; $i<512; $script1_dataflow++) {
-    $input .= chr($i%256);
-}
-echo "Normal: ";
-if($input === stripslashes(addslashes($input))) {
-    echo "OK\n";
-} else {
-    echo "FAILED\n";
-}
-$script2_connect=$input;
-$random_var=$GLOBALS[array_rand($GLOBALS)];
-var_dump('random_var:',$random_var);
-var_fusion($script1_connect, $script2_connect, $random_var);
+spl_autoload_register(function ($class_name) {
+    require_once(__DIR__ . '/' . $class_name . '.inc');
+    echo 'autoload(' . $class_name . ")\n";
+});
+var_dump(class_exists('autoload_root'));
+$fusion = $class_name;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump($fusion);
+var_dump(stream_get_contents(STDIN));
+echo "ok\n";
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
 ?>

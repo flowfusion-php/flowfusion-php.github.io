@@ -1,0 +1,75 @@
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php]
+prompt> [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php:19]
+prompt> RecursiveArrayIteratorIterator::rewind
+RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=>a
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(1) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=>ba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=>bba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+1=>bbb
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=>bcaa
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(throw)
+[Uncaught Exception in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php on line 145: Thrown in callGetChildren()]
+>00145:             throw new Exception("Thrown in callGetChildren()");
+ 00146:         }
+ 00147:         echo __METHOD__ . "(ok:{$this->over})\n";
+prompt> RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+3=>d
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::valid
+MyRecursiveArrayIterator::valid = false
+[Uncaught Error in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused944.php on line 187: Cannot use a scalar value as an array]
+>00187:         $fusion[] = $value;
+ 00188:     } else {
+ 00189:         doCoolStuff($value);
+prompt> [Added watchpoint #0 for $value]
+prompt> prompt> /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_watch.c:915:17: runtime error: member access within null pointer of type 'phpdbg_watch_element' (aka 'struct _phpdbg_watch_element')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_watch.c:915:17 in

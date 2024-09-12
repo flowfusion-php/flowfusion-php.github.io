@@ -1,0 +1,118 @@
+<?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions['internal'];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, 'posix_') !== 0;
+    });
+    foreach ($vars as $i => $v1) {
+        foreach ($vars as $j => $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection->getNumberOfParameters();
+                // Prepare arguments
+                $args = [];
+                for ($k = 0; $k < $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo "Calling function: $randomFunction with arguments: ";
+                echo implode(', ', $args) . "
+";
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection->invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo "Error calling function $randomFunction: " . $e->getMessage() . "
+";
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try{
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo("Error: " . $e->getMessage());
+    }
+    return $result;
+}
+    
+function test_1() {
+    static $v = 0;
+    ++$v;
+    echo "Outer function increments \$v to $v\n";
+    $f = function() use($v) {
+        echo "Inner function reckons \$v is $v\n";
+    };
+    return $f;
+}
+$f = test_1(); $f();
+$f = test_1(); $f();
+function test_2() {
+    static $v = 0;
+    $f = function() use($v) {
+        echo "Inner function reckons \$v is $v\n";
+    };
+    ++$v;
+    echo "Outer function increments \$v to $v\n";
+    return $f;
+}
+$f = test_2(); $f();
+$f = test_2(); $f();
+function test_3() {
+    static $v = "";
+    $v .= 'b';
+    echo "Outer function catenates 'b' onto \$v to give $v\n";
+    $f = function() use($v) {
+        echo "Inner function reckons \$v is $v\n";
+    };
+    $v .= 'a';
+    echo "Outer function catenates 'a' onto \$v to give $v\n";
+    return $f;
+}
+$f = test_3(); $f();
+$f = test_3(); $f();
+$fusion = $v;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+foreach (['var_dump', 'debug_zval_dump', 'var_export'] as $output) {
+    $foo = $bar = [];
+    for ($i = 0; $fusion < 3; $i++) {
+        $foo = [$foo, [&$bar]];
+    }
+    ob_start(function (string $buffer) use (&$bar) {
+        $bar[][] = null;
+        return '';
+    }, 64);
+    $output($foo[0]);
+    ob_end_clean();
+}
+echo "OK\n";
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?>

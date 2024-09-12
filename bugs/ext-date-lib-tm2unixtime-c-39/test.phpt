@@ -1,12 +1,12 @@
 --TEST--
-GH-10271: Incorrect arithmetic calculations when using JIT+Bug #81433 (DOMElement::setIdAttribute(attr, true) called twice removes ID)
+Test ++N operator : 64bit long tests+Bug #72215.3 (Wrong return value if var modified in finally)
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-opcache.jit_hot_loop=1
-magic_quotes_gpc=1
-zend_test.observer.observe_includes=1
+opcache.revalidate_freq=0
+internal_encoding=ISO-8859-15
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -71,54 +71,63 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tang['KSI']=-9.1751656444142E-5;
-$tang['ETA']=8.5076090069491E-5;
-$sol['X']['k']=-222.45470924306;
-$sol['X']['e']=-8.1787760034414;
-$sol['X'][1]=-0.020231298698539;
-$sol['Y']['k']=-14.400586941152;
-$sol['Y']['e']=392.95090925357;
-$sol['Y'][1]=-0.035664413413272;
-$sol['xc']=968;
-$sol['yc']=548;
-for( $p=0; $p<3; $p++ )
-{
-	print($p.': ');
-	Tangential2XY($tang,$sol);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(++$longVal);
 }
-function Tangential2XY(array $tang, array $sol) : array
-{
-	$x = $sol['X']['k']*$tang['KSI'] + $sol['X']['e']*$tang['ETA'] + $sol['X'][1];
-	$y = $sol['Y']['k']*$tang['KSI'] + $sol['Y']['e']*$tang['ETA'] + $sol['Y'][1];
-	printf("In;%.12f;%.12f;%.12f;%.12f;",$x,$y,$sol['xc'],$sol['yc']);
-	$x = $sol['xc']*($x+1);
-	$y = $sol['yc']*($y+1);
-	printf("Out;%.12f;%.12f\n",$x,$y);
-	if( $x<100 )
-		exit("Mamy to!\n");
-	return ['x'=>$x,'y'=>$y];
+$fusion = $longVals;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+function &test() {
+    try {
+        return $fusion;
+    } finally {
+        $a = 2;
+    }
 }
-$script1_dataflow = $y;
-$script1_connect=$x;
-$dom = new DOMDocument('1.0', 'utf-8');
-$script1_dataflow = $dom->createElement('test', 'root');
-$dom->appendChild($element);
-$element->setAttribute("id", 123);
-$element->setIdAttribute("id", true);
-$node = $element->getAttributeNode("id");
-var_dump($node->isId());
-$element->setIdAttribute("id", true);
-var_dump($node->isId());
-$script2_connect=$script1_dataflow;
-$random_var=$GLOBALS[array_rand($GLOBALS)];
-var_dump('random_var:',$random_var);
-var_fusion($script1_connect, $script2_connect, $random_var);
+var_dump(test());
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
 ?>
---EXTENSIONS--
-dom
 --EXPECT--
-0: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
-1: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
-2: In;-0.000516528926;-0.000912408759;968.000000000000;548.000000000000;Out;967.500000000004;547.500000000009
-bool(true)
-bool(true)
+--- testing: 9223372036854775807 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775808 ---
+int(-9223372036854775807)
+--- testing: 2147483647 ---
+int(2147483648)
+--- testing: -2147483648 ---
+int(-2147483647)
+--- testing: 9223372034707292160 ---
+int(9223372034707292161)
+--- testing: -9223372034707292160 ---
+int(-9223372034707292159)
+--- testing: 2147483648 ---
+int(2147483649)
+--- testing: -2147483649 ---
+int(-2147483648)
+--- testing: 4294967294 ---
+int(4294967295)
+--- testing: 4294967295 ---
+int(4294967296)
+--- testing: 4294967293 ---
+int(4294967294)
+--- testing: 9223372036854775806 ---
+int(9223372036854775807)
+--- testing: 9.2233720368548E+18 ---
+float(9.223372036854776E+18)
+--- testing: -9223372036854775807 ---
+int(-9223372036854775806)
+--- testing: -9.2233720368548E+18 ---
+float(-9.223372036854776E+18)
+int(2)

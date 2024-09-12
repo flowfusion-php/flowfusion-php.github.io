@@ -61,39 +61,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class t
-{
-    public $a;
-    function __construct()
-    {
-        $this->a = 'hello';
-    }
-    function __sleep()
-    {
-        echo "__sleep called\n";
-        return array('a','b');
-    }
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(asinh($longVal));
 }
-$t = new t();
-$data = serialize($t);
-echo "$data\n";
-$t = unserialize($data);
-var_dump($t);
-$script1_dataflow = $t;
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-interface A {
-    public function __construct(int|float $param);
-}
-interface B {
-    public function __construct(int $param);
-}
-class X implements A, B {
-    public function __construct(int|float $param) {}
-}
-class Y extends X {
-    public function __construct(int $script1_dataflow) {}
-}
-new Y(42);
+$fusion = [0];
+$my_var = str_repeat("a", 1);
+set_error_handler(
+    function() use(&$my_var) {
+        echo("error\n");
+        $my_var = 0x123;
+    }
+);
+$my_var .= $GLOBALS["arr"];
+var_dump($my_var);
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
 var_dump('random_var:',$v1,$v2,$v3);

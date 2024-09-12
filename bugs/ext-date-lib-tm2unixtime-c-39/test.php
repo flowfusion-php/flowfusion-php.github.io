@@ -61,46 +61,31 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$tang['KSI']=-9.1751656444142E-5;
-$tang['ETA']=8.5076090069491E-5;
-$sol['X']['k']=-222.45470924306;
-$sol['X']['e']=-8.1787760034414;
-$sol['X'][1]=-0.020231298698539;
-$sol['Y']['k']=-14.400586941152;
-$sol['Y']['e']=392.95090925357;
-$sol['Y'][1]=-0.035664413413272;
-$sol['xc']=968;
-$sol['yc']=548;
-for( $p=0; $p<3; $p++ )
-{
-	print($p.': ');
-	Tangential2XY($tang,$sol);
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(++$longVal);
 }
-function Tangential2XY(array $tang, array $sol) : array
-{
-	$x = $sol['X']['k']*$tang['KSI'] + $sol['X']['e']*$tang['ETA'] + $sol['X'][1];
-	$y = $sol['Y']['k']*$tang['KSI'] + $sol['Y']['e']*$tang['ETA'] + $sol['Y'][1];
-	printf("In;%.12f;%.12f;%.12f;%.12f;",$x,$y,$sol['xc'],$sol['yc']);
-	$x = $sol['xc']*($x+1);
-	$y = $sol['yc']*($y+1);
-	printf("Out;%.12f;%.12f\n",$x,$y);
-	if( $x<100 )
-		exit("Mamy to!\n");
-	return ['x'=>$x,'y'=>$y];
+$fusion = $longVals;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+function &test() {
+    try {
+        return $fusion;
+    } finally {
+        $a = 2;
+    }
 }
-$script1_dataflow = $y;
-$script1_connect=$x;
-$dom = new DOMDocument('1.0', 'utf-8');
-$script1_dataflow = $dom->createElement('test', 'root');
-$dom->appendChild($element);
-$element->setAttribute("id", 123);
-$element->setIdAttribute("id", true);
-$node = $element->getAttributeNode("id");
-var_dump($node->isId());
-$element->setIdAttribute("id", true);
-var_dump($node->isId());
-$script2_connect=$script1_dataflow;
-$random_var=$GLOBALS[array_rand($GLOBALS)];
-var_dump('random_var:',$random_var);
-var_fusion($script1_connect, $script2_connect, $random_var);
+var_dump(test());
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];;
+var_dump('random_var:',$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
 ?>
