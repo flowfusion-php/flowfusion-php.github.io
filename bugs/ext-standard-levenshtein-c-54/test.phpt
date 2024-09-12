@@ -1,9 +1,9 @@
 --TEST--
-Bug #26090 (allow colons in time zone offset to strtotime())+Increment/decrement a typed property with int|float type
---INI--
-date.timezone=America/New_York
-memory_limit=32M
-memory_limit=5M
+Test expm1 function : 64bit long tests+Phar: bug #69441: Buffer Overflow when parsing tar/zip/phar in phar_set_inode
+--SKIPIF--
+<?php
+if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only");
+?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,123 +68,66 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$t = '2003-10-28 10:20:30-0800';
-echo date('Y-m-d H:i:s T', strtotime($t)) . "\n";
-$t = '2003-10-28 10:20:30-08:00';
-echo date('Y-m-d H:i:s T', strtotime($t)) . "\n";
-$fusion = $t;
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(expm1($longVal));
+}
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Test {
-    public int|float $prop;
-    public int|bool $prop2;
-}
-/* Incrementing a int|float property past int min/max is legal */
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-var_dump(is_double($test->prop));
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$r =& $test->prop;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-/* Incrementing a non-int|float property past int min/max is an error,
- * even if the result of the overflow (a float) would technically be allowed
- * under a type coercion. */
+$fname = __DIR__ . '/bug69441.phar';
 try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $fusion =& $test->prop2;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $r =& $test->prop2;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
+$fusion = new Phar($fname, 0);
+} catch(UnexpectedValueException $e) {
+    echo $e;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECT--
-2003-10-28 13:20:30 EST
-2003-10-28 13:20:30 EST
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
+--EXTENSIONS--
+phar
+--EXPECTF--
+--- testing: 9223372036854775807 ---
+float(INF)
+--- testing: -9223372036854775808 ---
+float(-1)
+--- testing: 2147483647 ---
+float(INF)
+--- testing: -2147483648 ---
+float(-1)
+--- testing: 9223372034707292160 ---
+float(INF)
+--- testing: -9223372034707292160 ---
+float(-1)
+--- testing: 2147483648 ---
+float(INF)
+--- testing: -2147483649 ---
+float(-1)
+--- testing: 4294967294 ---
+float(INF)
+--- testing: 4294967295 ---
+float(INF)
+--- testing: 4294967293 ---
+float(INF)
+--- testing: 9223372036854775806 ---
+float(INF)
+--- testing: 9.2233720368548E+18 ---
+float(INF)
+--- testing: -9223372036854775807 ---
+float(-1)
+--- testing: -9.2233720368548E+18 ---
+float(-1)
+UnexpectedValueException: phar error: end of central directory not found in zip-based phar "%sbug69441.phar" in %sbug69441.php:%d
+Stack trace:
+#0 %s%ebug69441.php(%d): Phar->__construct('%s', 0)
+#1 {main}

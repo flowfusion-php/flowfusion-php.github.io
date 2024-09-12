@@ -61,101 +61,26 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$t = '2003-10-28 10:20:30-0800';
-echo date('Y-m-d H:i:s T', strtotime($t)) . "\n";
-$t = '2003-10-28 10:20:30-08:00';
-echo date('Y-m-d H:i:s T', strtotime($t)) . "\n";
-$fusion = $t;
+define("MAX_64Bit", 9223372036854775807);
+define("MAX_32Bit", 2147483647);
+define("MIN_64Bit", -9223372036854775807 - 1);
+define("MIN_32Bit", -2147483647 - 1);
+$longVals = array(
+    MAX_64Bit, MIN_64Bit, MAX_32Bit, MIN_32Bit, MAX_64Bit - MAX_32Bit, MIN_64Bit - MIN_32Bit,
+    MAX_32Bit + 1, MIN_32Bit - 1, MAX_32Bit * 2, (MAX_32Bit * 2) + 1, (MAX_32Bit * 2) - 1,
+    MAX_64Bit -1, MAX_64Bit + 1, MIN_64Bit + 1, MIN_64Bit - 1
+);
+foreach ($longVals as $longVal) {
+   echo "--- testing: $longVal ---\n";
+   var_dump(expm1($longVal));
+}
+$fusion = $longVal;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class Test {
-    public int|float $prop;
-    public int|bool $prop2;
-}
-/* Incrementing a int|float property past int min/max is legal */
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-var_dump(is_double($test->prop));
-$test = new Test;
-$test->prop = PHP_INT_MAX;
-$r =& $test->prop;
-$x = $test->prop++;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MAX;
-$x = ++$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = $test->prop--;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-$test->prop = PHP_INT_MIN;
-$x = --$test->prop;
-$r =& $test->prop;
-var_dump(is_double($test->prop));
-/* Incrementing a non-int|float property past int min/max is an error,
- * even if the result of the overflow (a float) would technically be allowed
- * under a type coercion. */
+$fname = __DIR__ . '/bug69441.phar';
 try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $fusion =& $test->prop2;
-    $x = $test->prop2++;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MAX;
-    $r =& $test->prop2;
-    $x = ++$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = $test->prop2--;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
-}
-try {
-    $test->prop2 = PHP_INT_MIN;
-    $r =& $test->prop2;
-    $x = --$test->prop2;
-} catch (TypeError $e) {
-    echo $e->getMessage(), "\n";
+$fusion = new Phar($fname, 0);
+} catch(UnexpectedValueException $e) {
+    echo $e;
 }
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];

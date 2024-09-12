@@ -1,52 +1,190 @@
-2003-10-28 13:20:30 EST
-2003-10-28 13:20:30 EST
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-bool(true)
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot increment property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement property Test::$prop2 of type int|bool past its minimal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot increment a reference held by property Test::$prop2 of type int|bool past its maximal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-Cannot decrement a reference held by property Test::$prop2 of type int|bool past its minimal value
-string(11) "random_var:"
-array(1) {
-  [0]=>
-  string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php"
-}
+--- testing: 9223372036854775807 ---
+float(INF)
+--- testing: -9223372036854775808 ---
+float(-1)
+--- testing: 2147483647 ---
+float(INF)
+--- testing: -2147483648 ---
+float(-1)
+--- testing: 9223372034707292160 ---
+float(INF)
+--- testing: -9223372034707292160 ---
+float(-1)
+--- testing: 2147483648 ---
+float(INF)
+--- testing: -2147483649 ---
+float(-1)
+--- testing: 4294967294 ---
+float(INF)
+--- testing: 4294967295 ---
+float(INF)
+--- testing: 4294967293 ---
+float(INF)
+--- testing: 9223372036854775806 ---
+float(INF)
+--- testing: 9.2233720368548E+18 ---
+float(INF)
+--- testing: -9223372036854775807 ---
+float(-1)
+--- testing: -9.2233720368548E+18 ---
+float(-1)
+UnexpectedValueException: phar error: end of central directory not found in zip-based phar "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/bug69441.phar" in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php:81
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php(81): Phar->__construct('/home/phpfuzz/W...', 0)
+#1 {main}string(11) "random_var:"
 float(-9.223372036854776E+18)
-int(-9223372036854775808)
-Calling function: str_contains with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
-
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
-Array, Array
-Error calling function str_contains: str_contains(): Argument #1 ($haystack) must be of type string, array given
-Calling function: finfo_close with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
-Array
-Error calling function finfo_close: finfo_close(): Argument #1 ($finfo) must be of type finfo, array given
-Calling function: asinh with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
-Array
-Error calling function asinh: asinh(): Argument #1 ($num) must be of type float, array given
-Calling function: enum_exists with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
--9.2233720368548E+18, Array
-Error calling function enum_exists: enum_exists(): Argument #2 ($autoload) must be of type bool, array given
-Calling function: number_format with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
-Calling function: gettype with arguments: -9.2233720368548E+18
-Calling function: lchown with arguments: 
-Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 38
--9223372036854775808, Array
-Error calling function lchown: lchown(): Argument #2 ($user) must be of type string|int, array given
-Calling function: levenshtein with arguments: -9223372036854775808, -9.2233720368548E+18, -9223372036854775808, -9.2233720368548E+18, -9223372036854775808
+array(10) {
+  ["_GET"]=>
+  array(0) {
+  }
+  ["_POST"]=>
+  array(0) {
+  }
+  ["_COOKIE"]=>
+  array(0) {
+  }
+  ["_FILES"]=>
+  array(0) {
+  }
+  ["argv"]=>
+  array(1) {
+    [0]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+  }
+  ["argc"]=>
+  int(1)
+  ["_SERVER"]=>
+  array(43) {
+    ["LESSOPEN"]=>
+    string(22) "| /usr/bin/lesspipe %s"
+    ["TMUX"]=>
+    string(27) "/tmp/tmux-1000/default,76,0"
+    ["HOSTNAME"]=>
+    string(12) "4c1800347231"
+    ["SHLVL"]=>
+    string(1) "3"
+    ["TEST_PHP_SRCDIR"]=>
+    string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+    ["HOME"]=>
+    string(13) "/home/phpfuzz"
+    ["OLDPWD"]=>
+    string(23) "/home/phpfuzz/WorkSpace"
+    ["TERM_PROGRAM_VERSION"]=>
+    string(4) "3.2a"
+    ["TEST_PHP_ARGS"]=>
+    string(4) "-j16"
+    ["LC_CTYPE"]=>
+    string(7) "C.UTF-8"
+    ["TEST_PHP_CGI_EXECUTABLE"]=>
+    string(59) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi"
+    ["MAKEFLAGS"]=>
+    string(22) " -- TEST_PHP_ARGS=-j16"
+    ["PATH_TRANSLATED"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+    ["SCRIPT_FILENAME"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+    ["TEST_PHP_EXECUTABLE"]=>
+    string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+    ["_"]=>
+    string(55) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php"
+    ["TEMP"]=>
+    string(4) "/tmp"
+    ["TERM"]=>
+    string(6) "screen"
+    ["PATH"]=>
+    string(60) "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ["TEST_PHP_CGI_EXECUTABLE_ESCAPED"]=>
+    string(61) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi'"
+    ["MAKELEVEL"]=>
+    string(1) "1"
+    ["TEST_PHP_EXTRA_ARGS"]=>
+    string(1279) " -n -c '/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini'  -d "opcache.cache_id=worker12" -d "output_handler=" -d "open_basedir=" -d "disable_functions=" -d "output_buffering=Off" -d "error_reporting=32767" -d "display_errors=1" -d "display_startup_errors=1" -d "log_errors=0" -d "html_errors=0" -d "track_errors=0" -d "report_memleaks=1" -d "report_zend_debug=0" -d "docref_root=" -d "docref_ext=.html" -d "error_prepend_string=" -d "error_append_string=" -d "auto_prepend_file=" -d "auto_append_file=" -d "ignore_repeated_errors=0" -d "precision=14" -d "serialize_precision=-1" -d "memory_limit=128M" -d "opcache.fast_shutdown=0" -d "opcache.file_update_protection=0" -d "opcache.revalidate_freq=0" -d "opcache.jit_hot_loop=1" -d "opcache.jit_hot_func=1" -d "opcache.jit_hot_return=1" -d "opcache.jit_hot_side_exit=1" -d "opcache.jit_max_root_traces=100000" -d "opcache.jit_max_side_traces=100000" -d "opcache.jit_max_exit_counters=100000" -d "opcache.protect_memory=1" -d "zend.assertions=1" -d "zend.exception_ignore_args=0" -d "zend.exception_string_param_max_len=15" -d "short_open_tag=0" -d "extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/" -d "zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so" -d "session.auto_start=0""
+    ["MAKEOVERRIDES"]=>
+    string(26) "${-*-command-variables-*-}"
+    ["LS_COLORS"]=>
+    string(1508) "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+    ["TERM_PROGRAM"]=>
+    string(4) "tmux"
+    ["TEST_PHPDBG_EXECUTABLE"]=>
+    string(61) "/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg"
+    ["SHELL"]=>
+    string(7) "/bin/sh"
+    ["TEST_PHP_EXECUTABLE_ESCAPED"]=>
+    string(57) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php'"
+    ["REDIRECT_STATUS"]=>
+    string(1) "1"
+    ["LESSCLOSE"]=>
+    string(23) "/usr/bin/lesspipe %s %s"
+    ["REQUEST_METHOD"]=>
+    string(3) "GET"
+    ["PWD"]=>
+    string(42) "/home/phpfuzz/WorkSpace/flowfusion/php-src"
+    ["SKIP_ONLINE_TESTS"]=>
+    string(1) "1"
+    ["CC"]=>
+    string(8) "clang-15"
+    ["TMUX_PANE"]=>
+    string(2) "%0"
+    ["TEST_PHPDBG_EXECUTABLE_ESCAPED"]=>
+    string(63) "'/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg'"
+    ["PHP_SELF"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+    ["SCRIPT_NAME"]=>
+    string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+    ["DOCUMENT_ROOT"]=>
+    string(0) ""
+    ["REQUEST_TIME_FLOAT"]=>
+    float(1726107092.117317)
+    ["REQUEST_TIME"]=>
+    int(1726107092)
+    ["argv"]=>
+    array(1) {
+      [0]=>
+      string(67) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused646.php"
+    }
+    ["argc"]=>
+    int(1)
+  }
+  ["longVals"]=>
+  array(15) {
+    [0]=>
+    int(9223372036854775807)
+    [1]=>
+    int(-9223372036854775808)
+    [2]=>
+    int(2147483647)
+    [3]=>
+    int(-2147483648)
+    [4]=>
+    int(9223372034707292160)
+    [5]=>
+    int(-9223372034707292160)
+    [6]=>
+    int(2147483648)
+    [7]=>
+    int(-2147483649)
+    [8]=>
+    int(4294967294)
+    [9]=>
+    int(4294967295)
+    [10]=>
+    int(4294967293)
+    [11]=>
+    int(9223372036854775806)
+    [12]=>
+    float(9.223372036854776E+18)
+    [13]=>
+    int(-9223372036854775807)
+    [14]=>
+    float(-9.223372036854776E+18)
+  }
+  ["longVal"]=>
+  float(-9.223372036854776E+18)
+  ["fusion"]=>
+  float(-9.223372036854776E+18)
+}
+array(0) {
+}
+Calling function: levenshtein with arguments: -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18, -9.2233720368548E+18
 /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type 'long'
 SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:54:20 in

@@ -1,16 +1,17 @@
 --TEST--
-Test file_put_contents() function : variation - include path testing+JIT ASSIGN: 004
+Bug #35014 (array_product() always returns 0) (64bit)+Phar with metadata (write)
 --INI--
-opcache.enable=1
-opcache.enable_cli=1
-opcache.file_update_protection=0
-;opcache.jit_debug=257
-opcache.enable=1
-opcache.validate_timestamps=0
+precision=14
+phar.require_hash=0
+phar.readonly=0
+max_input_vars=4
+default_charset=UTF-8
 opcache.enable=1
 opcache.enable_cli=1
 opcache.jit_buffer_size=1024M
-opcache.jit=1001
+opcache.jit=0001
+--SKIPIF--
+<?php if (PHP_INT_SIZE != 8) die("skip this test is for 64bit platform only"); ?>
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -75,55 +76,84 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once('fopen_include_path.inc');
-$thisTestDir = basename(__FILE__, ".php") . ".dir";
-mkdir($thisTestDir);
-chdir($thisTestDir);
-$filename = basename(__FILE__, ".php") . ".tmp";
-$newpath = create_include_path();
-set_include_path($newpath);
-runtest();
-$newpath = generate_next_path();
-set_include_path($newpath);
-runtest();
-teardown_include_path();
-chdir("..");
-function runtest() {
-   global $filename;
-   //correct php53 behaviour is to ignore the FILE_USE_INCLUDE_PATH unless the file already exists
-   // in the include path. In this case it doesn't so the file should be written in the current dir.
-   file_put_contents($filename, "File in include path", FILE_USE_INCLUDE_PATH);
-   $line = file_get_contents($filename);
-   echo "$line\n";
-   unlink($filename);
+$tests = array(
+    array(0),
+    array(3),
+    array(3, 3),
+    array(0.5, 2),
+    array(99999999, 99999999),
+    array(8.993, 7443241,988, sprintf("%u", -1)+0.44),
+    array(2,sprintf("%u", -1)),
+);
+foreach ($tests as $v) {
+    var_dump(array_product($v));
 }
-$fusion = $filename;
+$fusion = $tests;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function foo() {
-    $fusion = null;
-    $b = $a;
-    $c = null;
-    $d = $c;
-    $a = 1;
-    $c = $a;
-    return $c;
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a'] = array('cont' => 'a');
+$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
+$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
+$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
+include 'files/phar_test.inc';
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$fusion));
 }
-var_dump(foo());
+$phar = new Phar($fname);
+var_dump($phar->getMetadata());
+$phar->setMetadata(array('my' => 'friend'));
+$phar->setMetadata(array('my' => 'friend'));
+var_dump($phar->getMetadata());
+$phar['a']->setMetadata(42);
+$phar['b']->setMetadata(NULL);
+$phar['c']->setMetadata(array(25, 'foo'=>'bar'));
+$phar['d']->setMetadata(true);
+foreach($files as $name => $cont) {
+    var_dump($phar[$name]->getMetadata());
+}
+unset($phar);
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
 --EXTENSIONS--
-opcache
+phar
 --CLEAN--
-<?php
-$thisTestDir = basename(__FILE__, ".clean.php") . ".dir";
-$filename = basename(__FILE__, ".clean.php") . ".tmp";
-@unlink($filename);
-rmdir($thisTestDir);
-?>
+<?php unlink(__DIR__ . '/' . basename(__FILE__, '.clean.php') . '.phar.php'); ?>
 --EXPECT--
-File in include path
-File in include path
-int(1)
+int(0)
+int(3)
+int(9)
+float(1)
+int(9999999800000001)
+float(1.219953680144986E+30)
+float(3.6893488147419103E+19)
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"
+NULL
+array(1) {
+  ["my"]=>
+  string(6) "friend"
+}
+int(42)
+NULL
+array(2) {
+  [0]=>
+  int(25)
+  ["foo"]=>
+  string(3) "bar"
+}
+bool(true)
+string(1) "a"
+string(1) "b"
+string(1) "c"
+string(1) "d"

@@ -1,9 +1,16 @@
 --TEST--
-Test that a notice is emitted when the tentative return type of the overridden method is omitted+Bug #71818 (Memory leak when array altered in destructor)
+Bug #65559 (cache not cleared if changes occur while running)+Bug #71818 (Memory leak when array altered in destructor)
 --INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=2
 zend.enable_gc = 1
-short_open_tag=on
-implicit_flush=0
+opcache.preload={PWD}/preload_ind.inc
+expose_php=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0235
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -68,13 +75,15 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class MyDateTimeZone extends DateTimeZone
-{
-    public static function listIdentifiers(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode = null)
-    {
-    }
-}
-$fusion = $timezoneGroup;
+$file =  __DIR__ . "/bug6559.inc.php";
+file_put_contents($file, '<?php return 1;');
+$var = include $file;
+var_dump($var);
+file_put_contents($file, '<?php return 2;');
+$var = include $file;
+var_dump($var);
+@unlink($file);
+$fusion = $var;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {
@@ -98,6 +107,9 @@ $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---EXPECTF--
-Deprecated: Return type of MyDateTimeZone::listIdentifiers(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode = null) should either be compatible with DateTimeZone::listIdentifiers(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode = null): array, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in %s on line %d
+--EXTENSIONS--
+opcache
+--EXPECT--
+int(1)
+int(2)
 OK

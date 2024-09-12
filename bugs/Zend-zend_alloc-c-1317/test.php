@@ -61,13 +61,15 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-class MyDateTimeZone extends DateTimeZone
-{
-    public static function listIdentifiers(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode = null)
-    {
-    }
-}
-$fusion = $timezoneGroup;
+$file =  __DIR__ . "/bug6559.inc.php";
+file_put_contents($file, '<?php return 1;');
+$var = include $file;
+var_dump($var);
+file_put_contents($file, '<?php return 2;');
+$var = include $file;
+var_dump($var);
+@unlink($file);
+$fusion = $var;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
 class MemoryLeak
 {

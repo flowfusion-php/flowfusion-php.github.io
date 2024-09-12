@@ -61,40 +61,48 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-require_once('fopen_include_path.inc');
-$thisTestDir = basename(__FILE__, ".php") . ".dir";
-mkdir($thisTestDir);
-chdir($thisTestDir);
-$filename = basename(__FILE__, ".php") . ".tmp";
-$newpath = create_include_path();
-set_include_path($newpath);
-runtest();
-$newpath = generate_next_path();
-set_include_path($newpath);
-runtest();
-teardown_include_path();
-chdir("..");
-function runtest() {
-   global $filename;
-   //correct php53 behaviour is to ignore the FILE_USE_INCLUDE_PATH unless the file already exists
-   // in the include path. In this case it doesn't so the file should be written in the current dir.
-   file_put_contents($filename, "File in include path", FILE_USE_INCLUDE_PATH);
-   $line = file_get_contents($filename);
-   echo "$line\n";
-   unlink($filename);
+$tests = array(
+    array(0),
+    array(3),
+    array(3, 3),
+    array(0.5, 2),
+    array(99999999, 99999999),
+    array(8.993, 7443241,988, sprintf("%u", -1)+0.44),
+    array(2,sprintf("%u", -1)),
+);
+foreach ($tests as $v) {
+    var_dump(array_product($v));
 }
-$fusion = $filename;
+$fusion = $tests;
 $v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-function foo() {
-    $fusion = null;
-    $b = $a;
-    $c = null;
-    $d = $c;
-    $a = 1;
-    $c = $a;
-    return $c;
+$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';
+$pname = 'phar://' . $fname;
+$file = "<?php __HALT_COMPILER(); ?>";
+$files = array();
+$files['a'] = array('cont' => 'a');
+$files['b'] = array('cont' => 'b', 'meta' => 'hi there');
+$files['c'] = array('cont' => 'c', 'meta' => array('hi', 'there'));
+$files['d'] = array('cont' => 'd', 'meta' => array('hi'=>'there','foo'=>'bar'));
+include 'files/phar_test.inc';
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$fusion));
 }
-var_dump(foo());
+$phar = new Phar($fname);
+var_dump($phar->getMetadata());
+$phar->setMetadata(array('my' => 'friend'));
+$phar->setMetadata(array('my' => 'friend'));
+var_dump($phar->getMetadata());
+$phar['a']->setMetadata(42);
+$phar['b']->setMetadata(NULL);
+$phar['c']->setMetadata(array(25, 'foo'=>'bar'));
+$phar['d']->setMetadata(true);
+foreach($files as $name => $cont) {
+    var_dump($phar[$name]->getMetadata());
+}
+unset($phar);
+foreach($files as $name => $cont) {
+    var_dump(file_get_contents($pname.'/'.$name));
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
