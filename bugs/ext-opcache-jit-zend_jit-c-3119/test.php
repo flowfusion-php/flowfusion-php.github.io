@@ -61,45 +61,48 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$priorityQueue = new SplPriorityQueue();
-var_dump($priorityQueue->getExtractFlags());
-$priorityQueue->insert("a", 1);
-$priorityQueue->insert("b", 2);
-$priorityQueue->insert("c", 0);
-echo "EXTR DEFAULT",PHP_EOL;
-echo "value: ",$priorityQueue->top(),PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);
-var_dump($priorityQueue->getExtractFlags() & SplPriorityQueue::EXTR_PRIORITY);
-echo "EXTR_PRIORITY",PHP_EOL;
-echo "priority: ",$priorityQueue->top(),PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
-echo "EXTR_BOTH",PHP_EOL;
-print_r($priorityQueue->top());
-echo "EXTR_DATA",PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
-echo "value: ",$priorityQueue->top(),PHP_EOL;
-$fusion = $priorityQueue;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class A
-{
-    public $q;
-    function __construct()
-    {
-        $this->q = 3;//array();
-    }
-    function __get($name)
-    {
-        return $this->q;
-    }
+namespace Foo {
+	class Bar {
+		function Foo($bar) {
+			var_dump($bar);
+		}
+		function baz() { }
+	}
 }
-$a = new A;
-$b = "short";
-$fusion =& $a->whatever;
-$c = "long";
-print_r($a);
-$a->whatever =& $b;
-$b = "much longer";
-print_r($a);
+namespace {
+	function foo($baz) {
+		var_dump(strrev($baz));
+	}
+	(new \Foo\Bar)->Foo("test");
+	foo("test");
+}
+$fusion = $baz;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+set_error_handler(function($_, $m){
+    throw new Exception($m);
+});
+function test1() {
+    $a = [];
+    $res = $a[$undef] = null;
+}
+function test2() {
+    $a = [];
+    $res = $a[$undef] += 1;
+}
+function test3() {
+    $a = [];
+    $res = isset($a[$undef]);
+}
+try {
+    test1();
+} catch (Exception $e) {
+    echo $fusion->getMessage(), "\n";
+}
+try {
+    test2();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);

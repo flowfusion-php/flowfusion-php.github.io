@@ -1,18 +1,12 @@
 --TEST--
-SPL: SplPriorityQueue: top and extract flags+Bug #32660 (Assignment by reference causes crash when field access is overloaded (__get))
+Test basic info functionality+Undef to exception for assign dim offset
 --INI--
-opcache.preload={PWD}/preload_bug81256.inc
-opcache.preload={PWD}/preload_user.inc
+auto_globals_jit=0
 opcache.enable=1
 opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=1040
+opcache.file_update_protection=0
 opcache.validate_timestamps=0
-memory_limit=16M
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=1024M
-opcache.jit=0054
+memory_limit=5M
 --FILE--
 <?php
 function fuzz_internal_interface($vars) {
@@ -77,77 +71,104 @@ function var_fusion($var1, $var2, $var3) {
     return $result;
 }
     
-$priorityQueue = new SplPriorityQueue();
-var_dump($priorityQueue->getExtractFlags());
-$priorityQueue->insert("a", 1);
-$priorityQueue->insert("b", 2);
-$priorityQueue->insert("c", 0);
-echo "EXTR DEFAULT",PHP_EOL;
-echo "value: ",$priorityQueue->top(),PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);
-var_dump($priorityQueue->getExtractFlags() & SplPriorityQueue::EXTR_PRIORITY);
-echo "EXTR_PRIORITY",PHP_EOL;
-echo "priority: ",$priorityQueue->top(),PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
-echo "EXTR_BOTH",PHP_EOL;
-print_r($priorityQueue->top());
-echo "EXTR_DATA",PHP_EOL;
-$priorityQueue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
-echo "value: ",$priorityQueue->top(),PHP_EOL;
-$fusion = $priorityQueue;
-$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
-class A
-{
-    public $q;
-    function __construct()
-    {
-        $this->q = 3;//array();
-    }
-    function __get($name)
-    {
-        return $this->q;
-    }
+namespace Foo {
+	class Bar {
+		function Foo($bar) {
+			var_dump($bar);
+		}
+		function baz() { }
+	}
 }
-$a = new A;
-$b = "short";
-$fusion =& $a->whatever;
-$c = "long";
-print_r($a);
-$a->whatever =& $b;
-$b = "much longer";
-print_r($a);
+namespace {
+	function foo($baz) {
+		var_dump(strrev($baz));
+	}
+	(new \Foo\Bar)->Foo("test");
+	foo("test");
+}
+$fusion = $baz;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+set_error_handler(function($_, $m){
+    throw new Exception($m);
+});
+function test1() {
+    $a = [];
+    $res = $a[$undef] = null;
+}
+function test2() {
+    $a = [];
+    $res = $a[$undef] += 1;
+}
+function test3() {
+    $a = [];
+    $res = isset($a[$undef]);
+}
+try {
+    test1();
+} catch (Exception $e) {
+    echo $fusion->getMessage(), "\n";
+}
+try {
+    test2();
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
 $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
 $v3=$definedVars[array_rand($definedVars = get_defined_vars())];
 var_dump('random_var:',$v1,$v2,$v3);
 var_fusion($v1,$v2,$v3);
 ?>
---CREDITS--
-Nathaniel McHugh nat@fishtrap.co.uk
-#testfest London 2009-05-09
+--PHPDBG--
+i classes
+i funcs
+b foo
+r
+i v
+i g
+i b
+i d
+i F
+i e
+i l
+c
+i v
+q
 --EXPECTF--
-int(1)
-EXTR DEFAULT
-value: b
-int(2)
-EXTR_PRIORITY
-priority: 2
-EXTR_BOTH
-Array
-(
-    [data] => b
-    [priority] => 2
-)
-EXTR_DATA
-value: b
-Notice: Indirect modification of overloaded property A::$whatever has no effect in %sbug32660.php on line 20
-A Object
-(
-    [q] => 3
-)
-
-Notice: Indirect modification of overloaded property A::$whatever has no effect in %sbug32660.php on line 23
-
-Fatal error: Uncaught Error: Cannot assign by reference to overloaded object in %sbug32660.php:23
-Stack trace:
-#0 {main}
-  thrown in %sbug32660.php on line 23
+[Successful compilation of %s]
+prompt> [User Classes (1)]
+User Class Foo\Bar (2)
+|---- in %s on line 4
+prompt> [User Functions (1)]
+|-------- foo in %s on line 14
+prompt> [Breakpoint #0 added at foo]
+prompt> string(4) "test"
+[Breakpoint #0 in foo() at %s:15, hits: 1]
+>00015: 		var_dump(strrev($baz));
+ 00016: 	}
+ 00017: 
+prompt> [Variables in foo() (1)]
+Address            Refs    Type      Variable
+%s %d       string    $baz
+string (4) "test"
+prompt> [Superglobal variables (7)]
+Address            Refs    Type      Variable
+%s 2       array     $_GET
+%s 2       array     $_POST
+%s 2       array     $_COOKIE
+%s 2       array     $_SERVER
+%s 2       array     $_ENV
+%s 1       array     $_REQUEST
+%s 2       array     $_FILES
+prompt> ------------------------------------------------
+Function Breakpoints:
+#0		foo
+prompt> [User-defined constants (0)]
+prompt> [Included files: %d]%A
+prompt> [No error found!]
+prompt> [Literal Constants in foo() (2)]
+|-------- C0 -------> [var_dump]
+|-------- C1 -------> [strrev]
+prompt> string(4) "tset"
+[Script ended normally]
+prompt> [No active op array!]
+prompt> 
