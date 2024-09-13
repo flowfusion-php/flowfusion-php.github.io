@@ -1,0 +1,87 @@
+[Successful compilation of /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php]
+prompt> [Breakpoint #0 added at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php:4]
+prompt> [Breakpoint #1 added at foo]
+prompt> int(2)
+123
+[Breakpoint #1 in foo() at /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php:78, hits: 1]
+>00078: 	echo 4;
+ 00079: }
+ 00080: $v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+prompt> Clearing Breakpoints
+File              1
+Functions         1
+Methods           0
+Oplines           0
+File oplines      0
+Function oplines  0
+Method oplines    0
+Conditionals      0
+prompt> 4string(11) "random_var:"
+int(1)
+int(1)
+int(1)
+Calling function: xmlwriter_full_end_element with arguments: 1
+Error calling function xmlwriter_full_end_element: xmlwriter_full_end_element(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: array_fill with arguments: 1, 1, 1
+Calling function: extension_loaded with arguments: 1
+Calling function: xmlwriter_set_indent with arguments: 1, 1
+Error calling function xmlwriter_set_indent: xmlwriter_set_indent(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: round with arguments: 1, 1, 1
+Calling function: convert_uudecode with arguments: 1
+
+Warning: convert_uudecode(): Argument #1 ($data) is not a valid uuencoded string in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: get_class_methods with arguments: 1
+Error calling function get_class_methods: get_class_methods(): Argument #1 ($object_or_class) must be an object or a valid class name, int given
+Calling function: xmlwriter_full_end_element with arguments: 1
+Error calling function xmlwriter_full_end_element: xmlwriter_full_end_element(): Argument #1 ($writer) must be of type XMLWriter, int given
+Calling function: phpdbg_break_function with arguments: 1
+[Breakpoint #0 added at 1]
+Calling function: array_replace_recursive with arguments: 1, 1
+Error calling function array_replace_recursive: array_replace_recursive(): Argument #1 ($array) must be of type array, int given
+Calling function: iterator_to_array with arguments: 1, 1
+Error calling function iterator_to_array: iterator_to_array(): Argument #1 ($iterator) must be of type Traversable|array, int given
+Calling function: var_export with arguments: 1, 1
+Calling function: is_infinite with arguments: 1
+Calling function: is_link with arguments: 1
+Calling function: class_exists with arguments: 1, 1
+Calling function: hash_init with arguments: 1, 1, 1, 1
+Error calling function hash_init: hash_init(): Argument #4 ($options) must be of type array, int given
+Calling function: getmxrr with arguments: 1, 1, 1
+
+Warning: getmxrr(): Argument #2 ($hosts) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: getmxrr(): Argument #3 ($weights) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: strncmp with arguments: 1, 1, 1
+Calling function: str_ends_with with arguments: 1, 1
+Calling function: date_interval_create_from_date_string with arguments: 1
+
+Warning: date_interval_create_from_date_string(): Unknown or bad format (1) at position 0 (1): Unexpected character in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Calling function: iterator_count with arguments: 1
+Error calling function iterator_count: iterator_count(): Argument #1 ($iterator) must be of type Traversable|array, int given
+Calling function: natcasesort with arguments: 1
+
+Warning: natcasesort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Error calling function natcasesort: natcasesort(): Argument #1 ($array) must be of type array, int given
+Calling function: is_readable with arguments: 1
+Calling function: stream_select with arguments: 1, 1, 1, 1, 1
+
+Warning: stream_select(): Argument #1 ($read) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: stream_select(): Argument #2 ($write) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+
+Warning: stream_select(): Argument #3 ($except) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused293.php on line 41
+Error calling function stream_select: stream_select(): Argument #1 ($read) must be of type ?array, int given
+Calling function: atan with arguments: 1
+Calling function: array_reverse with arguments: 1, 1
+Error calling function array_reverse: array_reverse(): Argument #1 ($array) must be of type array, int given
+Calling function: array_intersect with arguments: 1, 1
+Error calling function array_intersect: array_intersect(): Argument #1 ($array) must be of type array, int given
+[Script ended normally]
+
+Warning: Invalid "opcache.jit" setting. Should be "disable", "on", "off", "tracing", "function" or 4-digit number in Unknown on line 0
+prompt> ------------------------------------------------
+File Breakpoints:
+phpdbg: /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg_bp.c:1485: void phpdbg_print_breakpoints(zend_ulong): Assertion `!(((__ht)->u.flags & (1<<2)) != 0)' failed.
+Aborted (core dumped)
+
+Termsig=6

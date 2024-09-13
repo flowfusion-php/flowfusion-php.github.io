@@ -1,0 +1,72 @@
+Invalid State Error
+Invalid State Error
+
+11
+/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php
+66
+
+Warning: Undefined array key 0 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php on line 81
+
+Deprecated: token_name(): Passing null to parameter #1 ($id) of type int is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php on line 81
+
+Warning: Undefined array key 2 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php on line 82
+
+Warning: Undefined array key 1 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php on line 82
+L: UNKNOWN 
+
+Donestring(11) "random_var:"
+object(DOMException)#2 (7) {
+  ["message":protected]=>
+  string(19) "Invalid State Error"
+  ["string":"Exception":private]=>
+  string(0) ""
+  ["code"]=>
+  int(11)
+  ["file":protected]=>
+  string(66) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php"
+  ["line":protected]=>
+  int(66)
+  ["trace":"Exception":private]=>
+  array(0) {
+  }
+  ["previous":"Exception":private]=>
+  NULL
+}
+object(DOMException)#2 (7) {
+  ["message":protected]=>
+  string(19) "Invalid State Error"
+  ["string":"Exception":private]=>
+  string(0) ""
+  ["code"]=>
+  int(11)
+  ["file":protected]=>
+  string(66) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php"
+  ["line":protected]=>
+  int(66)
+  ["trace":"Exception":private]=>
+  array(0) {
+  }
+  ["previous":"Exception":private]=>
+  NULL
+}
+object(DOMException)#2 (7) {
+  ["message":protected]=>
+  string(19) "Invalid State Error"
+  ["string":"Exception":private]=>
+  string(0) ""
+  ["code"]=>
+  int(11)
+  ["file":protected]=>
+  string(66) "/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused55.php"
+  ["line":protected]=>
+  int(66)
+  ["trace":"Exception":private]=>
+  array(0) {
+  }
+  ["previous":"Exception":private]=>
+  NULL
+}
+Calling function: hash_equals with arguments: php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_exceptions.c:630: void zim_Exception_getTraceAsString(zend_execute_data *, zval *): Assertion `zval_get_type(&(*(trace))) == 7' failed.
+Aborted (core dumped)
+
+Termsig=6

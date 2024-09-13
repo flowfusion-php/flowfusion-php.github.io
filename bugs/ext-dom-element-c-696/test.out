@@ -1,0 +1,32 @@
+--- Changing the prefix to an empty string ---
+<?xml version="1.0"?>
+<container xmlns:conflict="urn:foo" xmlns:hello="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"/>
+--- Changing the prefix to an empty C-style string ---
+<?xml version="1.0"?>
+<container xmlns:conflict="urn:foo" xmlns:hello="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"/>
+--- Changing the prefix to "hello" ---
+<?xml version="1.0"?>
+<hello:container xmlns:conflict="urn:foo" xmlns:hello="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"/>
+--- Changing the prefix to that of a conflicting namespace ("conflict") ---
+Namespace Error
+<?xml version="1.0"?>
+<hello:container xmlns:conflict="urn:foo" xmlns:hello="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"/>
+--- Non-default namespace test case without a default namespace in the destination ---
+<?xml version="1.0"?>
+<container xmlns:foo="http://php.net" foo:bar="yes"/>
+<?xml version="1.0"?>
+<container xmlns:foo="http://php.net/2" xmlns:default="http://php.net" default:bar="yes"/>
+--- Non-default namespace test case with a default namespace in the destination ---
+string(7) "default"
+string(14) "http://php.net"
+string(7) "default"
+string(14) "http://php.net"
+<?xml version="1.0"?>
+<container xmlns:foo="http://php.net" foo:bar="yes"/>
+<?xml version="1.0"?>
+<container xmlns="http://php.net" xmlns:foo="http://php.net/2" xmlns:default="http://php.net" default:bar="yes"/>
+--- Default namespace test case ---
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/dom/element.c:696: void dom_element_set_attribute_node_common(zend_execute_data *, zval *, _Bool, _Bool): Assertion `attrp->type == XML_ATTRIBUTE_NODE' failed.
+Aborted (core dumped)
+
+Termsig=6

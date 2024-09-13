@@ -1,0 +1,12 @@
+int(1)
+
+Warning: Undefined variable $bar in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused119.php on line 70
+In destruct
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused119.php on line 76
+
+Fatal error: Allowed memory size of 134217728 bytes exhausted at /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:1316 (tried to allocate 41943040 bytes) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused119.php on line 79
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_weakrefs.c:198: void zend_weakrefs_notify(zend_object *): Assertion `tagged_ptr && "Tracking of the IS_OBJ_WEAKLY_REFERENCE flag should be precise"' failed.
+Aborted (core dumped)
+
+Termsig=6

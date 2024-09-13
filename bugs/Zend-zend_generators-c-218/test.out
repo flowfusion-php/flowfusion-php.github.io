@@ -1,0 +1,28 @@
+object(__PHP_Incomplete_Class)#1 (1) {
+  ["__PHP_Incomplete_Class_Name"]=>
+  string(9) "TestClass"
+}
+O:9:"TestClass":0:{}
+object(__PHP_Incomplete_Class)#1 (1) {
+  ["__PHP_Incomplete_Class_Name"]=>
+  string(9) "TestClass"
+}
+O:9:"TestClass":0:{}
+object(__PHP_Incomplete_Class)#1 (1) {
+  ["__PHP_Incomplete_Class_Name"]=>
+  string(9) "TestClass"
+}
+
+Deprecated: Creation of dynamic property Canary::$value is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused167.php on line 93
+object(Canary)#2 (2) {
+  ["fusion"]=>
+  NULL
+  ["value"]=>
+  object(Fiber)#4 (0) {
+  }
+}
+string(3) "foo"
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_generators.c:218: _Bool check_node_running_in_fiber(zend_generator *): Assertion `(executor_globals.flags) & (1<<0)' failed.
+Aborted (core dumped)
+
+Termsig=6

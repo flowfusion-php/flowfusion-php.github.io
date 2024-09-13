@@ -1,0 +1,1452 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>d670ee7d035aa5d2c098551ce5e9e0b202294bdd
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --silent --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/Zend/Optimizer/zend_inference.c:2086</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['core dumped']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 11 times</pre>
+        </div>
+
+        <div class="output">
+            <div class="section-title">Output:</div>
+            <pre>
+BOX DRAWINGS LIGHT HORIZONTAL: &amp;#x2500; =&gt; 80
+&amp;#x80; =&gt; &amp;#x80;
+
+BOX DRAWINGS LIGHT VERTICAL: &amp;#x2502; =&gt; 81
+&amp;#x81; =&gt; &amp;#x81;
+
+BOX DRAWINGS LIGHT DOWN AND RIGHT: &amp;#x250C; =&gt; 82
+&amp;#x82; =&gt; &amp;#x82;
+
+BOX DRAWINGS LIGHT DOWN AND LEFT: &amp;#x2510; =&gt; 83
+&amp;#x83; =&gt; &amp;#x83;
+
+BOX DRAWINGS LIGHT UP AND RIGHT: &amp;#x2514; =&gt; 84
+&amp;#x84; =&gt; &amp;#x84;
+
+BOX DRAWINGS LIGHT UP AND LEFT: &amp;#x2518; =&gt; 85
+&amp;#x85; =&gt; &amp;#x85;
+
+BOX DRAWINGS LIGHT VERTICAL AND RIGHT: &amp;#x251C; =&gt; 86
+&amp;#x86; =&gt; &amp;#x86;
+
+BOX DRAWINGS LIGHT VERTICAL AND LEFT: &amp;#x2524; =&gt; 87
+&amp;#x87; =&gt; &amp;#x87;
+
+BOX DRAWINGS LIGHT DOWN AND HORIZONTAL: &amp;#x252C; =&gt; 88
+&amp;#x88; =&gt; &amp;#x88;
+
+BOX DRAWINGS LIGHT UP AND HORIZONTAL: &amp;#x2534; =&gt; 89
+&amp;#x89; =&gt; &amp;#x89;
+
+BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL: &amp;#x253C; =&gt; 8a
+&amp;#x8A; =&gt; &amp;#x8A;
+
+UPPER HALF BLOCK: &amp;#x2580; =&gt; 8b
+&amp;#x8B; =&gt; &amp;#x8B;
+
+LOWER HALF BLOCK: &amp;#x2584; =&gt; 8c
+&amp;#x8C; =&gt; &amp;#x8C;
+
+FULL BLOCK: &amp;#x2588; =&gt; 8d
+&amp;#x8D; =&gt; &amp;#x8D;
+
+LEFT HALF BLOCK: &amp;#x258C; =&gt; 8e
+&amp;#x8E; =&gt; &amp;#x8E;
+
+RIGHT HALF BLOCK: &amp;#x2590; =&gt; 8f
+&amp;#x8F; =&gt; &amp;#x8F;
+
+LIGHT SHADE: &amp;#x2591; =&gt; 90
+&amp;#x90; =&gt; &amp;#x90;
+
+MEDIUM SHADE: &amp;#x2592; =&gt; 91
+&amp;#x91; =&gt; &amp;#x91;
+
+DARK SHADE: &amp;#x2593; =&gt; 92
+&amp;#x92; =&gt; &amp;#x92;
+
+TOP HALF INTEGRAL: &amp;#x2320; =&gt; 93
+&amp;#x93; =&gt; &amp;#x93;
+
+BLACK SQUARE: &amp;#x25A0; =&gt; 94
+&amp;#x94; =&gt; &amp;#x94;
+
+BULLET OPERATOR: &amp;#x2219; =&gt; 95
+&amp;#x95; =&gt; &amp;#x95;
+
+SQUARE ROOT: &amp;#x221A; =&gt; 96
+&amp;#x96; =&gt; &amp;#x96;
+
+ALMOST EQUAL TO: &amp;#x2248; =&gt; 97
+&amp;#x97; =&gt; &amp;#x97;
+
+LESS-THAN OR EQUAL TO: &amp;#x2264; =&gt; 98
+&amp;#x98; =&gt; &amp;#x98;
+
+GREATER-THAN OR EQUAL TO: &amp;#x2265; =&gt; 99
+&amp;#x99; =&gt; &amp;#x99;
+
+NO-BREAK SPACE: &amp;#xA0; =&gt; 9a
+&amp;#x9A; =&gt; &amp;#x9A;
+
+BOTTOM HALF INTEGRAL: &amp;#x2321; =&gt; 9b
+&amp;#x9B; =&gt; &amp;#x9B;
+
+DEGREE SIGN: &amp;#xB0; =&gt; 9c
+&amp;#x9C; =&gt; &amp;#x9C;
+
+SUPERSCRIPT TWO: &amp;#xB2; =&gt; 9d
+&amp;#x9D; =&gt; &amp;#x9D;
+
+MIDDLE DOT: &amp;#xB7; =&gt; 9e
+&amp;#x9E; =&gt; &amp;#x9E;
+
+DIVISION SIGN: &amp;#xF7; =&gt; 9f
+&amp;#x9F; =&gt; &amp;#x9F;
+
+BOX DRAWINGS DOUBLE HORIZONTAL: &amp;#x2550; =&gt; a0
+&amp;#xA0; =&gt; 9a
+
+BOX DRAWINGS DOUBLE VERTICAL: &amp;#x2551; =&gt; a1
+&amp;#xA1; =&gt; &amp;#xA1;
+
+BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE: &amp;#x2552; =&gt; a2
+&amp;#xA2; =&gt; &amp;#xA2;
+
+CYRILLIC SMALL LETTER IO: &amp;#x451; =&gt; a3
+&amp;#xA3; =&gt; &amp;#xA3;
+
+BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE: &amp;#x2553; =&gt; a4
+&amp;#xA4; =&gt; &amp;#xA4;
+
+BOX DRAWINGS DOUBLE DOWN AND RIGHT: &amp;#x2554; =&gt; a5
+&amp;#xA5; =&gt; &amp;#xA5;
+
+BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE: &amp;#x2555; =&gt; a6
+&amp;#xA6; =&gt; &amp;#xA6;
+
+BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE: &amp;#x2556; =&gt; a7
+&amp;#xA7; =&gt; &amp;#xA7;
+
+BOX DRAWINGS DOUBLE DOWN AND LEFT: &amp;#x2557; =&gt; a8
+&amp;#xA8; =&gt; &amp;#xA8;
+
+BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE: &amp;#x2558; =&gt; a9
+&amp;#xA9; =&gt; bf
+
+BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE: &amp;#x2559; =&gt; aa
+&amp;#xAA; =&gt; &amp;#xAA;
+
+BOX DRAWINGS DOUBLE UP AND RIGHT: &amp;#x255A; =&gt; ab
+&amp;#xAB; =&gt; &amp;#xAB;
+
+BOX DRAWINGS UP SINGLE AND LEFT DOUBLE: &amp;#x255B; =&gt; ac
+&amp;#xAC; =&gt; &amp;#xAC;
+
+BOX DRAWINGS UP DOUBLE AND LEFT SINGLE: &amp;#x255C; =&gt; ad
+&amp;#xAD; =&gt; &amp;#xAD;
+
+BOX DRAWINGS DOUBLE UP AND LEFT: &amp;#x255D; =&gt; ae
+&amp;#xAE; =&gt; &amp;#xAE;
+
+BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE: &amp;#x255E; =&gt; af
+&amp;#xAF; =&gt; &amp;#xAF;
+
+BOX DRAWINGS VERTICAL DOUBLE AND RIGHT SINGLE: &amp;#x255F; =&gt; b0
+&amp;#xB0; =&gt; 9c
+
+BOX DRAWINGS DOUBLE VERTICAL AND RIGHT: &amp;#x2560; =&gt; b1
+&amp;#xB1; =&gt; &amp;#xB1;
+
+BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE: &amp;#x2561; =&gt; b2
+&amp;#xB2; =&gt; 9d
+
+CYRILLIC CAPITAL LETTER IO: &amp;#x401; =&gt; b3
+&amp;#xB3; =&gt; &amp;#xB3;
+
+BOX DRAWINGS VERTICAL DOUBLE AND LEFT SINGLE: &amp;#x2562; =&gt; b4
+&amp;#xB4; =&gt; &amp;#xB4;
+
+BOX DRAWINGS DOUBLE VERTICAL AND LEFT: &amp;#x2563; =&gt; b5
+&amp;#xB5; =&gt; &amp;#xB5;
+
+BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE: &amp;#x2564; =&gt; b6
+&amp;#xB6; =&gt; &amp;#xB6;
+
+BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE: &amp;#x2565; =&gt; b7
+&amp;#xB7; =&gt; 9e
+
+BOX DRAWINGS DOUBLE DOWN AND HORIZONTAL: &amp;#x2566; =&gt; b8
+&amp;#xB8; =&gt; &amp;#xB8;
+
+BOX DRAWINGS UP SINGLE AND HORIZONTAL DOUBLE: &amp;#x2567; =&gt; b9
+&amp;#xB9; =&gt; &amp;#xB9;
+
+BOX DRAWINGS UP DOUBLE AND HORIZONTAL SINGLE: &amp;#x2568; =&gt; ba
+&amp;#xBA; =&gt; &amp;#xBA;
+
+BOX DRAWINGS DOUBLE UP AND HORIZONTAL: &amp;#x2569; =&gt; bb
+&amp;#xBB; =&gt; &amp;#xBB;
+
+BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE: &amp;#x256A; =&gt; bc
+&amp;#xBC; =&gt; &amp;#xBC;
+
+BOX DRAWINGS VERTICAL DOUBLE AND HORIZONTAL SINGLE: &amp;#x256B; =&gt; bd
+&amp;#xBD; =&gt; &amp;#xBD;
+
+BOX DRAWINGS DOUBLE VERTICAL AND HORIZONTAL: &amp;#x256C; =&gt; be
+&amp;#xBE; =&gt; &amp;#xBE;
+
+COPYRIGHT SIGN: &amp;#xA9; =&gt; bf
+&amp;#xBF; =&gt; &amp;#xBF;
+
+CYRILLIC SMALL LETTER YU: &amp;#x44E; =&gt; c0
+&amp;#xC0; =&gt; &amp;#xC0;
+
+CYRILLIC SMALL LETTER A: &amp;#x430; =&gt; c1
+&amp;#xC1; =&gt; &amp;#xC1;
+
+CYRILLIC SMALL LETTER BE: &amp;#x431; =&gt; c2
+&amp;#xC2; =&gt; &amp;#xC2;
+
+CYRILLIC SMALL LETTER TSE: &amp;#x446; =&gt; c3
+&amp;#xC3; =&gt; &amp;#xC3;
+
+CYRILLIC SMALL LETTER DE: &amp;#x434; =&gt; c4
+&amp;#xC4; =&gt; &amp;#xC4;
+
+CYRILLIC SMALL LETTER IE: &amp;#x435; =&gt; c5
+&amp;#xC5; =&gt; &amp;#xC5;
+
+CYRILLIC SMALL LETTER EF: &amp;#x444; =&gt; c6
+&amp;#xC6; =&gt; &amp;#xC6;
+
+CYRILLIC SMALL LETTER GHE: &amp;#x433; =&gt; c7
+&amp;#xC7; =&gt; &amp;#xC7;
+
+CYRILLIC SMALL LETTER HA: &amp;#x445; =&gt; c8
+&amp;#xC8; =&gt; &amp;#xC8;
+
+CYRILLIC SMALL LETTER I: &amp;#x438; =&gt; c9
+&amp;#xC9; =&gt; &amp;#xC9;
+
+CYRILLIC SMALL LETTER SHORT I: &amp;#x439; =&gt; ca
+&amp;#xCA; =&gt; &amp;#xCA;
+
+CYRILLIC SMALL LETTER KA: &amp;#x43A; =&gt; cb
+&amp;#xCB; =&gt; &amp;#xCB;
+
+CYRILLIC SMALL LETTER EL: &amp;#x43B; =&gt; cc
+&amp;#xCC; =&gt; &amp;#xCC;
+
+CYRILLIC SMALL LETTER EM: &amp;#x43C; =&gt; cd
+&amp;#xCD; =&gt; &amp;#xCD;
+
+CYRILLIC SMALL LETTER EN: &amp;#x43D; =&gt; ce
+&amp;#xCE; =&gt; &amp;#xCE;
+
+CYRILLIC SMALL LETTER O: &amp;#x43E; =&gt; cf
+&amp;#xCF; =&gt; &amp;#xCF;
+
+CYRILLIC SMALL LETTER PE: &amp;#x43F; =&gt; d0
+&amp;#xD0; =&gt; &amp;#xD0;
+
+CYRILLIC SMALL LETTER YA: &amp;#x44F; =&gt; d1
+&amp;#xD1; =&gt; &amp;#xD1;
+
+CYRILLIC SMALL LETTER ER: &amp;#x440; =&gt; d2
+&amp;#xD2; =&gt; &amp;#xD2;
+
+CYRILLIC SMALL LETTER ES: &amp;#x441; =&gt; d3
+&amp;#xD3; =&gt; &amp;#xD3;
+
+CYRILLIC SMALL LETTER TE: &amp;#x442; =&gt; d4
+&amp;#xD4; =&gt; &amp;#xD4;
+
+CYRILLIC SMALL LETTER U: &amp;#x443; =&gt; d5
+&amp;#xD5; =&gt; &amp;#xD5;
+
+CYRILLIC SMALL LETTER ZHE: &amp;#x436; =&gt; d6
+&amp;#xD6; =&gt; &amp;#xD6;
+
+CYRILLIC SMALL LETTER VE: &amp;#x432; =&gt; d7
+&amp;#xD7; =&gt; &amp;#xD7;
+
+CYRILLIC SMALL LETTER SOFT SIGN: &amp;#x44C; =&gt; d8
+&amp;#xD8; =&gt; &amp;#xD8;
+
+CYRILLIC SMALL LETTER YERU: &amp;#x44B; =&gt; d9
+&amp;#xD9; =&gt; &amp;#xD9;
+
+CYRILLIC SMALL LETTER ZE: &amp;#x437; =&gt; da
+&amp;#xDA; =&gt; &amp;#xDA;
+
+CYRILLIC SMALL LETTER SHA: &amp;#x448; =&gt; db
+&amp;#xDB; =&gt; &amp;#xDB;
+
+CYRILLIC SMALL LETTER E: &amp;#x44D; =&gt; dc
+&amp;#xDC; =&gt; &amp;#xDC;
+
+CYRILLIC SMALL LETTER SHCHA: &amp;#x449; =&gt; dd
+&amp;#xDD; =&gt; &amp;#xDD;
+
+CYRILLIC SMALL LETTER CHE: &amp;#x447; =&gt; de
+&amp;#xDE; =&gt; &amp;#xDE;
+
+CYRILLIC SMALL LETTER HARD SIGN: &amp;#x44A; =&gt; df
+&amp;#xDF; =&gt; &amp;#xDF;
+
+CYRILLIC CAPITAL LETTER YU: &amp;#x42E; =&gt; e0
+&amp;#xE0; =&gt; &amp;#xE0;
+
+CYRILLIC CAPITAL LETTER A: &amp;#x410; =&gt; e1
+&amp;#xE1; =&gt; &amp;#xE1;
+
+CYRILLIC CAPITAL LETTER BE: &amp;#x411; =&gt; e2
+&amp;#xE2; =&gt; &amp;#xE2;
+
+CYRILLIC CAPITAL LETTER TSE: &amp;#x426; =&gt; e3
+&amp;#xE3; =&gt; &amp;#xE3;
+
+CYRILLIC CAPITAL LETTER DE: &amp;#x414; =&gt; e4
+&amp;#xE4; =&gt; &amp;#xE4;
+
+CYRILLIC CAPITAL LETTER IE: &amp;#x415; =&gt; e5
+&amp;#xE5; =&gt; &amp;#xE5;
+
+CYRILLIC CAPITAL LETTER EF: &amp;#x424; =&gt; e6
+&amp;#xE6; =&gt; &amp;#xE6;
+
+CYRILLIC CAPITAL LETTER GHE: &amp;#x413; =&gt; e7
+&amp;#xE7; =&gt; &amp;#xE7;
+
+CYRILLIC CAPITAL LETTER HA: &amp;#x425; =&gt; e8
+&amp;#xE8; =&gt; &amp;#xE8;
+
+CYRILLIC CAPITAL LETTER I: &amp;#x418; =&gt; e9
+&amp;#xE9; =&gt; &amp;#xE9;
+
+CYRILLIC CAPITAL LETTER SHORT I: &amp;#x419; =&gt; ea
+&amp;#xEA; =&gt; &amp;#xEA;
+
+CYRILLIC CAPITAL LETTER KA: &amp;#x41A; =&gt; eb
+&amp;#xEB; =&gt; &amp;#xEB;
+
+CYRILLIC CAPITAL LETTER EL: &amp;#x41B; =&gt; ec
+&amp;#xEC; =&gt; &amp;#xEC;
+
+CYRILLIC CAPITAL LETTER EM: &amp;#x41C; =&gt; ed
+&amp;#xED; =&gt; &amp;#xED;
+
+CYRILLIC CAPITAL LETTER EN: &amp;#x41D; =&gt; ee
+&amp;#xEE; =&gt; &amp;#xEE;
+
+CYRILLIC CAPITAL LETTER O: &amp;#x41E; =&gt; ef
+&amp;#xEF; =&gt; &amp;#xEF;
+
+CYRILLIC CAPITAL LETTER PE: &amp;#x41F; =&gt; f0
+&amp;#xF0; =&gt; &amp;#xF0;
+
+CYRILLIC CAPITAL LETTER YA: &amp;#x42F; =&gt; f1
+&amp;#xF1; =&gt; &amp;#xF1;
+
+CYRILLIC CAPITAL LETTER ER: &amp;#x420; =&gt; f2
+&amp;#xF2; =&gt; &amp;#xF2;
+
+CYRILLIC CAPITAL LETTER ES: &amp;#x421; =&gt; f3
+&amp;#xF3; =&gt; &amp;#xF3;
+
+CYRILLIC CAPITAL LETTER TE: &amp;#x422; =&gt; f4
+&amp;#xF4; =&gt; &amp;#xF4;
+
+CYRILLIC CAPITAL LETTER U: &amp;#x423; =&gt; f5
+&amp;#xF5; =&gt; &amp;#xF5;
+
+CYRILLIC CAPITAL LETTER ZHE: &amp;#x416; =&gt; f6
+&amp;#xF6; =&gt; &amp;#xF6;
+
+CYRILLIC CAPITAL LETTER VE: &amp;#x412; =&gt; f7
+&amp;#xF7; =&gt; 9f
+
+CYRILLIC CAPITAL LETTER SOFT SIGN: &amp;#x42C; =&gt; f8
+&amp;#xF8; =&gt; &amp;#xF8;
+
+CYRILLIC CAPITAL LETTER YERU: &amp;#x42B; =&gt; f9
+&amp;#xF9; =&gt; &amp;#xF9;
+
+CYRILLIC CAPITAL LETTER ZE: &amp;#x417; =&gt; fa
+&amp;#xFA; =&gt; &amp;#xFA;
+
+CYRILLIC CAPITAL LETTER SHA: &amp;#x428; =&gt; fb
+&amp;#xFB; =&gt; &amp;#xFB;
+
+CYRILLIC CAPITAL LETTER E: &amp;#x42D; =&gt; fc
+&amp;#xFC; =&gt; &amp;#xFC;
+
+CYRILLIC CAPITAL LETTER SHCHA: &amp;#x429; =&gt; fd
+&amp;#xFD; =&gt; &amp;#xFD;
+
+CYRILLIC CAPITAL LETTER CHE: &amp;#x427; =&gt; fe
+&amp;#xFE; =&gt; &amp;#xFE;
+
+CYRILLIC CAPITAL LETTER HARD SIGN: &amp;#x42A; =&gt; ff
+&amp;#xFF; =&gt; &amp;#xFF;
+
+
+Warning: Undefined variable $fusion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php on line 214
+
+Warning: Narrowing occurred during type inference of ZEND_RECV. Please file a bug report on https://github.com/php/php-src/issues in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php on line 207
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_inference.c:2086: void emit_type_narrowing_warning(const zend_op_array *, zend_ssa *, int): Assertion `0 &amp;&amp; &quot;Narrowing during type inference&quot;&#x27; failed.
+Aborted (core dumped)
+
+Termsig=6
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$arr = array(
+0x2500 =&gt; array(0x80, &quot;BOX DRAWINGS LIGHT HORIZONTAL&quot;),
+0x2502 =&gt; array(0x81, &quot;BOX DRAWINGS LIGHT VERTICAL&quot;),
+0x250C =&gt; array(0x82, &quot;BOX DRAWINGS LIGHT DOWN AND RIGHT&quot;),
+0x2510 =&gt; array(0x83, &quot;BOX DRAWINGS LIGHT DOWN AND LEFT&quot;),
+0x2514 =&gt; array(0x84, &quot;BOX DRAWINGS LIGHT UP AND RIGHT&quot;),
+0x2518 =&gt; array(0x85, &quot;BOX DRAWINGS LIGHT UP AND LEFT&quot;),
+0x251C =&gt; array(0x86, &quot;BOX DRAWINGS LIGHT VERTICAL AND RIGHT&quot;),
+0x2524 =&gt; array(0x87, &quot;BOX DRAWINGS LIGHT VERTICAL AND LEFT&quot;),
+0x252C =&gt; array(0x88, &quot;BOX DRAWINGS LIGHT DOWN AND HORIZONTAL&quot;),
+0x2534 =&gt; array(0x89, &quot;BOX DRAWINGS LIGHT UP AND HORIZONTAL&quot;),
+0x253C =&gt; array(0x8A, &quot;BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL&quot;),
+0x2580 =&gt; array(0x8B, &quot;UPPER HALF BLOCK&quot;),
+0x2584 =&gt; array(0x8C, &quot;LOWER HALF BLOCK&quot;),
+0x2588 =&gt; array(0x8D, &quot;FULL BLOCK&quot;),
+0x258C =&gt; array(0x8E, &quot;LEFT HALF BLOCK&quot;),
+0x2590 =&gt; array(0x8F, &quot;RIGHT HALF BLOCK&quot;),
+0x2591 =&gt; array(0x90, &quot;LIGHT SHADE&quot;),
+0x2592 =&gt; array(0x91, &quot;MEDIUM SHADE&quot;),
+0x2593 =&gt; array(0x92, &quot;DARK SHADE&quot;),
+0x2320 =&gt; array(0x93, &quot;TOP HALF INTEGRAL&quot;),
+0x25A0 =&gt; array(0x94, &quot;BLACK SQUARE&quot;),
+0x2219 =&gt; array(0x95, &quot;BULLET OPERATOR&quot;),
+0x221A =&gt; array(0x96, &quot;SQUARE ROOT&quot;),
+0x2248 =&gt; array(0x97, &quot;ALMOST EQUAL TO&quot;),
+0x2264 =&gt; array(0x98, &quot;LESS-THAN OR EQUAL TO&quot;),
+0x2265 =&gt; array(0x99, &quot;GREATER-THAN OR EQUAL TO&quot;),
+0x00A0 =&gt; array(0x9A, &quot;NO-BREAK SPACE&quot;),
+0x2321 =&gt; array(0x9B, &quot;BOTTOM HALF INTEGRAL&quot;),
+0x00B0 =&gt; array(0x9C, &quot;DEGREE SIGN&quot;),
+0x00B2 =&gt; array(0x9D, &quot;SUPERSCRIPT TWO&quot;),
+0x00B7 =&gt; array(0x9E, &quot;MIDDLE DOT&quot;),
+0x00F7 =&gt; array(0x9F, &quot;DIVISION SIGN&quot;),
+0x2550 =&gt; array(0xA0, &quot;BOX DRAWINGS DOUBLE HORIZONTAL&quot;),
+0x2551 =&gt; array(0xA1, &quot;BOX DRAWINGS DOUBLE VERTICAL&quot;),
+0x2552 =&gt; array(0xA2, &quot;BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE&quot;),
+0x0451 =&gt; array(0xA3, &quot;CYRILLIC SMALL LETTER IO&quot;),
+0x2553 =&gt; array(0xA4, &quot;BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE&quot;),
+0x2554 =&gt; array(0xA5, &quot;BOX DRAWINGS DOUBLE DOWN AND RIGHT&quot;),
+0x2555 =&gt; array(0xA6, &quot;BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE&quot;),
+0x2556 =&gt; array(0xA7, &quot;BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE&quot;),
+0x2557 =&gt; array(0xA8, &quot;BOX DRAWINGS DOUBLE DOWN AND LEFT&quot;),
+0x2558 =&gt; array(0xA9, &quot;BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE&quot;),
+0x2559 =&gt; array(0xAA, &quot;BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE&quot;),
+0x255A =&gt; array(0xAB, &quot;BOX DRAWINGS DOUBLE UP AND RIGHT&quot;),
+0x255B =&gt; array(0xAC, &quot;BOX DRAWINGS UP SINGLE AND LEFT DOUBLE&quot;),
+0x255C =&gt; array(0xAD, &quot;BOX DRAWINGS UP DOUBLE AND LEFT SINGLE&quot;),
+0x255D =&gt; array(0xAE, &quot;BOX DRAWINGS DOUBLE UP AND LEFT&quot;),
+0x255E =&gt; array(0xAF, &quot;BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE&quot;),
+0x255F =&gt; array(0xB0, &quot;BOX DRAWINGS VERTICAL DOUBLE AND RIGHT SINGLE&quot;),
+0x2560 =&gt; array(0xB1, &quot;BOX DRAWINGS DOUBLE VERTICAL AND RIGHT&quot;),
+0x2561 =&gt; array(0xB2, &quot;BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE&quot;),
+0x0401 =&gt; array(0xB3, &quot;CYRILLIC CAPITAL LETTER IO&quot;),
+0x2562 =&gt; array(0xB4, &quot;BOX DRAWINGS VERTICAL DOUBLE AND LEFT SINGLE&quot;),
+0x2563 =&gt; array(0xB5, &quot;BOX DRAWINGS DOUBLE VERTICAL AND LEFT&quot;),
+0x2564 =&gt; array(0xB6, &quot;BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x2565 =&gt; array(0xB7, &quot;BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x2566 =&gt; array(0xB8, &quot;BOX DRAWINGS DOUBLE DOWN AND HORIZONTAL&quot;),
+0x2567 =&gt; array(0xB9, &quot;BOX DRAWINGS UP SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x2568 =&gt; array(0xBA, &quot;BOX DRAWINGS UP DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x2569 =&gt; array(0xBB, &quot;BOX DRAWINGS DOUBLE UP AND HORIZONTAL&quot;),
+0x256A =&gt; array(0xBC, &quot;BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x256B =&gt; array(0xBD, &quot;BOX DRAWINGS VERTICAL DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x256C =&gt; array(0xBE, &quot;BOX DRAWINGS DOUBLE VERTICAL AND HORIZONTAL&quot;),
+0x00A9 =&gt; array(0xBF, &quot;COPYRIGHT SIGN&quot;),
+0x044E =&gt; array(0xC0, &quot;CYRILLIC SMALL LETTER YU&quot;),
+0x0430 =&gt; array(0xC1, &quot;CYRILLIC SMALL LETTER A&quot;),
+0x0431 =&gt; array(0xC2, &quot;CYRILLIC SMALL LETTER BE&quot;),
+0x0446 =&gt; array(0xC3, &quot;CYRILLIC SMALL LETTER TSE&quot;),
+0x0434 =&gt; array(0xC4, &quot;CYRILLIC SMALL LETTER DE&quot;),
+0x0435 =&gt; array(0xC5, &quot;CYRILLIC SMALL LETTER IE&quot;),
+0x0444 =&gt; array(0xC6, &quot;CYRILLIC SMALL LETTER EF&quot;),
+0x0433 =&gt; array(0xC7, &quot;CYRILLIC SMALL LETTER GHE&quot;),
+0x0445 =&gt; array(0xC8, &quot;CYRILLIC SMALL LETTER HA&quot;),
+0x0438 =&gt; array(0xC9, &quot;CYRILLIC SMALL LETTER I&quot;),
+0x0439 =&gt; array(0xCA, &quot;CYRILLIC SMALL LETTER SHORT I&quot;),
+0x043A =&gt; array(0xCB, &quot;CYRILLIC SMALL LETTER KA&quot;),
+0x043B =&gt; array(0xCC, &quot;CYRILLIC SMALL LETTER EL&quot;),
+0x043C =&gt; array(0xCD, &quot;CYRILLIC SMALL LETTER EM&quot;),
+0x043D =&gt; array(0xCE, &quot;CYRILLIC SMALL LETTER EN&quot;),
+0x043E =&gt; array(0xCF, &quot;CYRILLIC SMALL LETTER O&quot;),
+0x043F =&gt; array(0xD0, &quot;CYRILLIC SMALL LETTER PE&quot;),
+0x044F =&gt; array(0xD1, &quot;CYRILLIC SMALL LETTER YA&quot;),
+0x0440 =&gt; array(0xD2, &quot;CYRILLIC SMALL LETTER ER&quot;),
+0x0441 =&gt; array(0xD3, &quot;CYRILLIC SMALL LETTER ES&quot;),
+0x0442 =&gt; array(0xD4, &quot;CYRILLIC SMALL LETTER TE&quot;),
+0x0443 =&gt; array(0xD5, &quot;CYRILLIC SMALL LETTER U&quot;),
+0x0436 =&gt; array(0xD6, &quot;CYRILLIC SMALL LETTER ZHE&quot;),
+0x0432 =&gt; array(0xD7, &quot;CYRILLIC SMALL LETTER VE&quot;),
+0x044C =&gt; array(0xD8, &quot;CYRILLIC SMALL LETTER SOFT SIGN&quot;),
+0x044B =&gt; array(0xD9, &quot;CYRILLIC SMALL LETTER YERU&quot;),
+0x0437 =&gt; array(0xDA, &quot;CYRILLIC SMALL LETTER ZE&quot;),
+0x0448 =&gt; array(0xDB, &quot;CYRILLIC SMALL LETTER SHA&quot;),
+0x044D =&gt; array(0xDC, &quot;CYRILLIC SMALL LETTER E&quot;),
+0x0449 =&gt; array(0xDD, &quot;CYRILLIC SMALL LETTER SHCHA&quot;),
+0x0447 =&gt; array(0xDE, &quot;CYRILLIC SMALL LETTER CHE&quot;),
+0x044A =&gt; array(0xDF, &quot;CYRILLIC SMALL LETTER HARD SIGN&quot;),
+0x042E =&gt; array(0xE0, &quot;CYRILLIC CAPITAL LETTER YU&quot;),
+0x0410 =&gt; array(0xE1, &quot;CYRILLIC CAPITAL LETTER A&quot;),
+0x0411 =&gt; array(0xE2, &quot;CYRILLIC CAPITAL LETTER BE&quot;),
+0x0426 =&gt; array(0xE3, &quot;CYRILLIC CAPITAL LETTER TSE&quot;),
+0x0414 =&gt; array(0xE4, &quot;CYRILLIC CAPITAL LETTER DE&quot;),
+0x0415 =&gt; array(0xE5, &quot;CYRILLIC CAPITAL LETTER IE&quot;),
+0x0424 =&gt; array(0xE6, &quot;CYRILLIC CAPITAL LETTER EF&quot;),
+0x0413 =&gt; array(0xE7, &quot;CYRILLIC CAPITAL LETTER GHE&quot;),
+0x0425 =&gt; array(0xE8, &quot;CYRILLIC CAPITAL LETTER HA&quot;),
+0x0418 =&gt; array(0xE9, &quot;CYRILLIC CAPITAL LETTER I&quot;),
+0x0419 =&gt; array(0xEA, &quot;CYRILLIC CAPITAL LETTER SHORT I&quot;),
+0x041A =&gt; array(0xEB, &quot;CYRILLIC CAPITAL LETTER KA&quot;),
+0x041B =&gt; array(0xEC, &quot;CYRILLIC CAPITAL LETTER EL&quot;),
+0x041C =&gt; array(0xED, &quot;CYRILLIC CAPITAL LETTER EM&quot;),
+0x041D =&gt; array(0xEE, &quot;CYRILLIC CAPITAL LETTER EN&quot;),
+0x041E =&gt; array(0xEF, &quot;CYRILLIC CAPITAL LETTER O&quot;),
+0x041F =&gt; array(0xF0, &quot;CYRILLIC CAPITAL LETTER PE&quot;),
+0x042F =&gt; array(0xF1, &quot;CYRILLIC CAPITAL LETTER YA&quot;),
+0x0420 =&gt; array(0xF2, &quot;CYRILLIC CAPITAL LETTER ER&quot;),
+0x0421 =&gt; array(0xF3, &quot;CYRILLIC CAPITAL LETTER ES&quot;),
+0x0422 =&gt; array(0xF4, &quot;CYRILLIC CAPITAL LETTER TE&quot;),
+0x0423 =&gt; array(0xF5, &quot;CYRILLIC CAPITAL LETTER U&quot;),
+0x0416 =&gt; array(0xF6, &quot;CYRILLIC CAPITAL LETTER ZHE&quot;),
+0x0412 =&gt; array(0xF7, &quot;CYRILLIC CAPITAL LETTER VE&quot;),
+0x042C =&gt; array(0xF8, &quot;CYRILLIC CAPITAL LETTER SOFT SIGN&quot;),
+0x042B =&gt; array(0xF9, &quot;CYRILLIC CAPITAL LETTER YERU&quot;),
+0x0417 =&gt; array(0xFA, &quot;CYRILLIC CAPITAL LETTER ZE&quot;),
+0x0428 =&gt; array(0xFB, &quot;CYRILLIC CAPITAL LETTER SHA&quot;),
+0x042D =&gt; array(0xFC, &quot;CYRILLIC CAPITAL LETTER E&quot;),
+0x0429 =&gt; array(0xFD, &quot;CYRILLIC CAPITAL LETTER SHCHA&quot;),
+0x0427 =&gt; array(0xFE, &quot;CYRILLIC CAPITAL LETTER CHE&quot;),
+0x042A =&gt; array(0xFF, &quot;CYRILLIC CAPITAL LETTER HARD SIGN&quot;),
+);
+foreach ($arr as $u =&gt; $v) {
+    $ent = sprintf(&quot;&amp;#x%X;&quot;, $u);
+    $res = html_entity_decode($ent, ENT_QUOTES, &#x27;KOI8-R&#x27;);
+    $d = unpack(&quot;H*&quot;, $res);
+    echo sprintf(&quot;%s: %s =&gt; %s\n&quot;, $v[1], $ent, $d[1]);
+    $ent = sprintf(&quot;&amp;#x%X;&quot;, $v[0]);
+    $res = html_entity_decode($ent, ENT_QUOTES, &#x27;KOI8-R&#x27;);
+    if ($res[0] != &quot;&amp;&quot; || $res[1] != &quot;#&quot;)
+        $res = unpack(&quot;H*&quot;, $res)[1];
+    echo sprintf(&quot;%s =&gt; %s\n\n&quot;, $ent, $res);
+}
+$fusion = $arr;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+function test($b) {
+    $a = &quot;0&quot;;
+    $i = 0;
+    while (is_numeric($a)) {
+        $a .= $b;
+        $a--;
+        $i .= $a;
+        $fusion++;
+    }
+    var_dump($a, $i);
+}
+test(&quot;0&quot;);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Translation of HTML entities for encoding KOI8-R+PRE_INC/DEC numeric string
+--INI--
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_update_protection=0
+opcache.protect_memory=1
+post_max_size=1
+precision=10
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0252
+--SKIPIF--
+&lt;?php if (PHP_INT_SIZE != 8) die(&quot;skip: 64-bit only&quot;); ?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$arr = array(
+0x2500 =&gt; array(0x80, &quot;BOX DRAWINGS LIGHT HORIZONTAL&quot;),
+0x2502 =&gt; array(0x81, &quot;BOX DRAWINGS LIGHT VERTICAL&quot;),
+0x250C =&gt; array(0x82, &quot;BOX DRAWINGS LIGHT DOWN AND RIGHT&quot;),
+0x2510 =&gt; array(0x83, &quot;BOX DRAWINGS LIGHT DOWN AND LEFT&quot;),
+0x2514 =&gt; array(0x84, &quot;BOX DRAWINGS LIGHT UP AND RIGHT&quot;),
+0x2518 =&gt; array(0x85, &quot;BOX DRAWINGS LIGHT UP AND LEFT&quot;),
+0x251C =&gt; array(0x86, &quot;BOX DRAWINGS LIGHT VERTICAL AND RIGHT&quot;),
+0x2524 =&gt; array(0x87, &quot;BOX DRAWINGS LIGHT VERTICAL AND LEFT&quot;),
+0x252C =&gt; array(0x88, &quot;BOX DRAWINGS LIGHT DOWN AND HORIZONTAL&quot;),
+0x2534 =&gt; array(0x89, &quot;BOX DRAWINGS LIGHT UP AND HORIZONTAL&quot;),
+0x253C =&gt; array(0x8A, &quot;BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL&quot;),
+0x2580 =&gt; array(0x8B, &quot;UPPER HALF BLOCK&quot;),
+0x2584 =&gt; array(0x8C, &quot;LOWER HALF BLOCK&quot;),
+0x2588 =&gt; array(0x8D, &quot;FULL BLOCK&quot;),
+0x258C =&gt; array(0x8E, &quot;LEFT HALF BLOCK&quot;),
+0x2590 =&gt; array(0x8F, &quot;RIGHT HALF BLOCK&quot;),
+0x2591 =&gt; array(0x90, &quot;LIGHT SHADE&quot;),
+0x2592 =&gt; array(0x91, &quot;MEDIUM SHADE&quot;),
+0x2593 =&gt; array(0x92, &quot;DARK SHADE&quot;),
+0x2320 =&gt; array(0x93, &quot;TOP HALF INTEGRAL&quot;),
+0x25A0 =&gt; array(0x94, &quot;BLACK SQUARE&quot;),
+0x2219 =&gt; array(0x95, &quot;BULLET OPERATOR&quot;),
+0x221A =&gt; array(0x96, &quot;SQUARE ROOT&quot;),
+0x2248 =&gt; array(0x97, &quot;ALMOST EQUAL TO&quot;),
+0x2264 =&gt; array(0x98, &quot;LESS-THAN OR EQUAL TO&quot;),
+0x2265 =&gt; array(0x99, &quot;GREATER-THAN OR EQUAL TO&quot;),
+0x00A0 =&gt; array(0x9A, &quot;NO-BREAK SPACE&quot;),
+0x2321 =&gt; array(0x9B, &quot;BOTTOM HALF INTEGRAL&quot;),
+0x00B0 =&gt; array(0x9C, &quot;DEGREE SIGN&quot;),
+0x00B2 =&gt; array(0x9D, &quot;SUPERSCRIPT TWO&quot;),
+0x00B7 =&gt; array(0x9E, &quot;MIDDLE DOT&quot;),
+0x00F7 =&gt; array(0x9F, &quot;DIVISION SIGN&quot;),
+0x2550 =&gt; array(0xA0, &quot;BOX DRAWINGS DOUBLE HORIZONTAL&quot;),
+0x2551 =&gt; array(0xA1, &quot;BOX DRAWINGS DOUBLE VERTICAL&quot;),
+0x2552 =&gt; array(0xA2, &quot;BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE&quot;),
+0x0451 =&gt; array(0xA3, &quot;CYRILLIC SMALL LETTER IO&quot;),
+0x2553 =&gt; array(0xA4, &quot;BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE&quot;),
+0x2554 =&gt; array(0xA5, &quot;BOX DRAWINGS DOUBLE DOWN AND RIGHT&quot;),
+0x2555 =&gt; array(0xA6, &quot;BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE&quot;),
+0x2556 =&gt; array(0xA7, &quot;BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE&quot;),
+0x2557 =&gt; array(0xA8, &quot;BOX DRAWINGS DOUBLE DOWN AND LEFT&quot;),
+0x2558 =&gt; array(0xA9, &quot;BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE&quot;),
+0x2559 =&gt; array(0xAA, &quot;BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE&quot;),
+0x255A =&gt; array(0xAB, &quot;BOX DRAWINGS DOUBLE UP AND RIGHT&quot;),
+0x255B =&gt; array(0xAC, &quot;BOX DRAWINGS UP SINGLE AND LEFT DOUBLE&quot;),
+0x255C =&gt; array(0xAD, &quot;BOX DRAWINGS UP DOUBLE AND LEFT SINGLE&quot;),
+0x255D =&gt; array(0xAE, &quot;BOX DRAWINGS DOUBLE UP AND LEFT&quot;),
+0x255E =&gt; array(0xAF, &quot;BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE&quot;),
+0x255F =&gt; array(0xB0, &quot;BOX DRAWINGS VERTICAL DOUBLE AND RIGHT SINGLE&quot;),
+0x2560 =&gt; array(0xB1, &quot;BOX DRAWINGS DOUBLE VERTICAL AND RIGHT&quot;),
+0x2561 =&gt; array(0xB2, &quot;BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE&quot;),
+0x0401 =&gt; array(0xB3, &quot;CYRILLIC CAPITAL LETTER IO&quot;),
+0x2562 =&gt; array(0xB4, &quot;BOX DRAWINGS VERTICAL DOUBLE AND LEFT SINGLE&quot;),
+0x2563 =&gt; array(0xB5, &quot;BOX DRAWINGS DOUBLE VERTICAL AND LEFT&quot;),
+0x2564 =&gt; array(0xB6, &quot;BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x2565 =&gt; array(0xB7, &quot;BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x2566 =&gt; array(0xB8, &quot;BOX DRAWINGS DOUBLE DOWN AND HORIZONTAL&quot;),
+0x2567 =&gt; array(0xB9, &quot;BOX DRAWINGS UP SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x2568 =&gt; array(0xBA, &quot;BOX DRAWINGS UP DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x2569 =&gt; array(0xBB, &quot;BOX DRAWINGS DOUBLE UP AND HORIZONTAL&quot;),
+0x256A =&gt; array(0xBC, &quot;BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE&quot;),
+0x256B =&gt; array(0xBD, &quot;BOX DRAWINGS VERTICAL DOUBLE AND HORIZONTAL SINGLE&quot;),
+0x256C =&gt; array(0xBE, &quot;BOX DRAWINGS DOUBLE VERTICAL AND HORIZONTAL&quot;),
+0x00A9 =&gt; array(0xBF, &quot;COPYRIGHT SIGN&quot;),
+0x044E =&gt; array(0xC0, &quot;CYRILLIC SMALL LETTER YU&quot;),
+0x0430 =&gt; array(0xC1, &quot;CYRILLIC SMALL LETTER A&quot;),
+0x0431 =&gt; array(0xC2, &quot;CYRILLIC SMALL LETTER BE&quot;),
+0x0446 =&gt; array(0xC3, &quot;CYRILLIC SMALL LETTER TSE&quot;),
+0x0434 =&gt; array(0xC4, &quot;CYRILLIC SMALL LETTER DE&quot;),
+0x0435 =&gt; array(0xC5, &quot;CYRILLIC SMALL LETTER IE&quot;),
+0x0444 =&gt; array(0xC6, &quot;CYRILLIC SMALL LETTER EF&quot;),
+0x0433 =&gt; array(0xC7, &quot;CYRILLIC SMALL LETTER GHE&quot;),
+0x0445 =&gt; array(0xC8, &quot;CYRILLIC SMALL LETTER HA&quot;),
+0x0438 =&gt; array(0xC9, &quot;CYRILLIC SMALL LETTER I&quot;),
+0x0439 =&gt; array(0xCA, &quot;CYRILLIC SMALL LETTER SHORT I&quot;),
+0x043A =&gt; array(0xCB, &quot;CYRILLIC SMALL LETTER KA&quot;),
+0x043B =&gt; array(0xCC, &quot;CYRILLIC SMALL LETTER EL&quot;),
+0x043C =&gt; array(0xCD, &quot;CYRILLIC SMALL LETTER EM&quot;),
+0x043D =&gt; array(0xCE, &quot;CYRILLIC SMALL LETTER EN&quot;),
+0x043E =&gt; array(0xCF, &quot;CYRILLIC SMALL LETTER O&quot;),
+0x043F =&gt; array(0xD0, &quot;CYRILLIC SMALL LETTER PE&quot;),
+0x044F =&gt; array(0xD1, &quot;CYRILLIC SMALL LETTER YA&quot;),
+0x0440 =&gt; array(0xD2, &quot;CYRILLIC SMALL LETTER ER&quot;),
+0x0441 =&gt; array(0xD3, &quot;CYRILLIC SMALL LETTER ES&quot;),
+0x0442 =&gt; array(0xD4, &quot;CYRILLIC SMALL LETTER TE&quot;),
+0x0443 =&gt; array(0xD5, &quot;CYRILLIC SMALL LETTER U&quot;),
+0x0436 =&gt; array(0xD6, &quot;CYRILLIC SMALL LETTER ZHE&quot;),
+0x0432 =&gt; array(0xD7, &quot;CYRILLIC SMALL LETTER VE&quot;),
+0x044C =&gt; array(0xD8, &quot;CYRILLIC SMALL LETTER SOFT SIGN&quot;),
+0x044B =&gt; array(0xD9, &quot;CYRILLIC SMALL LETTER YERU&quot;),
+0x0437 =&gt; array(0xDA, &quot;CYRILLIC SMALL LETTER ZE&quot;),
+0x0448 =&gt; array(0xDB, &quot;CYRILLIC SMALL LETTER SHA&quot;),
+0x044D =&gt; array(0xDC, &quot;CYRILLIC SMALL LETTER E&quot;),
+0x0449 =&gt; array(0xDD, &quot;CYRILLIC SMALL LETTER SHCHA&quot;),
+0x0447 =&gt; array(0xDE, &quot;CYRILLIC SMALL LETTER CHE&quot;),
+0x044A =&gt; array(0xDF, &quot;CYRILLIC SMALL LETTER HARD SIGN&quot;),
+0x042E =&gt; array(0xE0, &quot;CYRILLIC CAPITAL LETTER YU&quot;),
+0x0410 =&gt; array(0xE1, &quot;CYRILLIC CAPITAL LETTER A&quot;),
+0x0411 =&gt; array(0xE2, &quot;CYRILLIC CAPITAL LETTER BE&quot;),
+0x0426 =&gt; array(0xE3, &quot;CYRILLIC CAPITAL LETTER TSE&quot;),
+0x0414 =&gt; array(0xE4, &quot;CYRILLIC CAPITAL LETTER DE&quot;),
+0x0415 =&gt; array(0xE5, &quot;CYRILLIC CAPITAL LETTER IE&quot;),
+0x0424 =&gt; array(0xE6, &quot;CYRILLIC CAPITAL LETTER EF&quot;),
+0x0413 =&gt; array(0xE7, &quot;CYRILLIC CAPITAL LETTER GHE&quot;),
+0x0425 =&gt; array(0xE8, &quot;CYRILLIC CAPITAL LETTER HA&quot;),
+0x0418 =&gt; array(0xE9, &quot;CYRILLIC CAPITAL LETTER I&quot;),
+0x0419 =&gt; array(0xEA, &quot;CYRILLIC CAPITAL LETTER SHORT I&quot;),
+0x041A =&gt; array(0xEB, &quot;CYRILLIC CAPITAL LETTER KA&quot;),
+0x041B =&gt; array(0xEC, &quot;CYRILLIC CAPITAL LETTER EL&quot;),
+0x041C =&gt; array(0xED, &quot;CYRILLIC CAPITAL LETTER EM&quot;),
+0x041D =&gt; array(0xEE, &quot;CYRILLIC CAPITAL LETTER EN&quot;),
+0x041E =&gt; array(0xEF, &quot;CYRILLIC CAPITAL LETTER O&quot;),
+0x041F =&gt; array(0xF0, &quot;CYRILLIC CAPITAL LETTER PE&quot;),
+0x042F =&gt; array(0xF1, &quot;CYRILLIC CAPITAL LETTER YA&quot;),
+0x0420 =&gt; array(0xF2, &quot;CYRILLIC CAPITAL LETTER ER&quot;),
+0x0421 =&gt; array(0xF3, &quot;CYRILLIC CAPITAL LETTER ES&quot;),
+0x0422 =&gt; array(0xF4, &quot;CYRILLIC CAPITAL LETTER TE&quot;),
+0x0423 =&gt; array(0xF5, &quot;CYRILLIC CAPITAL LETTER U&quot;),
+0x0416 =&gt; array(0xF6, &quot;CYRILLIC CAPITAL LETTER ZHE&quot;),
+0x0412 =&gt; array(0xF7, &quot;CYRILLIC CAPITAL LETTER VE&quot;),
+0x042C =&gt; array(0xF8, &quot;CYRILLIC CAPITAL LETTER SOFT SIGN&quot;),
+0x042B =&gt; array(0xF9, &quot;CYRILLIC CAPITAL LETTER YERU&quot;),
+0x0417 =&gt; array(0xFA, &quot;CYRILLIC CAPITAL LETTER ZE&quot;),
+0x0428 =&gt; array(0xFB, &quot;CYRILLIC CAPITAL LETTER SHA&quot;),
+0x042D =&gt; array(0xFC, &quot;CYRILLIC CAPITAL LETTER E&quot;),
+0x0429 =&gt; array(0xFD, &quot;CYRILLIC CAPITAL LETTER SHCHA&quot;),
+0x0427 =&gt; array(0xFE, &quot;CYRILLIC CAPITAL LETTER CHE&quot;),
+0x042A =&gt; array(0xFF, &quot;CYRILLIC CAPITAL LETTER HARD SIGN&quot;),
+);
+foreach ($arr as $u =&gt; $v) {
+    $ent = sprintf(&quot;&amp;#x%X;&quot;, $u);
+    $res = html_entity_decode($ent, ENT_QUOTES, &#x27;KOI8-R&#x27;);
+    $d = unpack(&quot;H*&quot;, $res);
+    echo sprintf(&quot;%s: %s =&gt; %s\n&quot;, $v[1], $ent, $d[1]);
+    $ent = sprintf(&quot;&amp;#x%X;&quot;, $v[0]);
+    $res = html_entity_decode($ent, ENT_QUOTES, &#x27;KOI8-R&#x27;);
+    if ($res[0] != &quot;&amp;&quot; || $res[1] != &quot;#&quot;)
+        $res = unpack(&quot;H*&quot;, $res)[1];
+    echo sprintf(&quot;%s =&gt; %s\n\n&quot;, $ent, $res);
+}
+$fusion = $arr;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+function test($b) {
+    $a = &quot;0&quot;;
+    $i = 0;
+    while (is_numeric($a)) {
+        $a .= $b;
+        $a--;
+        $i .= $a;
+        $fusion++;
+    }
+    var_dump($a, $i);
+}
+test(&quot;0&quot;);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXPECTF--
+BOX DRAWINGS LIGHT HORIZONTAL: &amp;#x2500; =&gt; 80
+&amp;#x80; =&gt; &amp;#x80;
+
+BOX DRAWINGS LIGHT VERTICAL: &amp;#x2502; =&gt; 81
+&amp;#x81; =&gt; &amp;#x81;
+
+BOX DRAWINGS LIGHT DOWN AND RIGHT: &amp;#x250C; =&gt; 82
+&amp;#x82; =&gt; &amp;#x82;
+
+BOX DRAWINGS LIGHT DOWN AND LEFT: &amp;#x2510; =&gt; 83
+&amp;#x83; =&gt; &amp;#x83;
+
+BOX DRAWINGS LIGHT UP AND RIGHT: &amp;#x2514; =&gt; 84
+&amp;#x84; =&gt; &amp;#x84;
+
+BOX DRAWINGS LIGHT UP AND LEFT: &amp;#x2518; =&gt; 85
+&amp;#x85; =&gt; &amp;#x85;
+
+BOX DRAWINGS LIGHT VERTICAL AND RIGHT: &amp;#x251C; =&gt; 86
+&amp;#x86; =&gt; &amp;#x86;
+
+BOX DRAWINGS LIGHT VERTICAL AND LEFT: &amp;#x2524; =&gt; 87
+&amp;#x87; =&gt; &amp;#x87;
+
+BOX DRAWINGS LIGHT DOWN AND HORIZONTAL: &amp;#x252C; =&gt; 88
+&amp;#x88; =&gt; &amp;#x88;
+
+BOX DRAWINGS LIGHT UP AND HORIZONTAL: &amp;#x2534; =&gt; 89
+&amp;#x89; =&gt; &amp;#x89;
+
+BOX DRAWINGS LIGHT VERTICAL AND HORIZONTAL: &amp;#x253C; =&gt; 8a
+&amp;#x8A; =&gt; &amp;#x8A;
+
+UPPER HALF BLOCK: &amp;#x2580; =&gt; 8b
+&amp;#x8B; =&gt; &amp;#x8B;
+
+LOWER HALF BLOCK: &amp;#x2584; =&gt; 8c
+&amp;#x8C; =&gt; &amp;#x8C;
+
+FULL BLOCK: &amp;#x2588; =&gt; 8d
+&amp;#x8D; =&gt; &amp;#x8D;
+
+LEFT HALF BLOCK: &amp;#x258C; =&gt; 8e
+&amp;#x8E; =&gt; &amp;#x8E;
+
+RIGHT HALF BLOCK: &amp;#x2590; =&gt; 8f
+&amp;#x8F; =&gt; &amp;#x8F;
+
+LIGHT SHADE: &amp;#x2591; =&gt; 90
+&amp;#x90; =&gt; &amp;#x90;
+
+MEDIUM SHADE: &amp;#x2592; =&gt; 91
+&amp;#x91; =&gt; &amp;#x91;
+
+DARK SHADE: &amp;#x2593; =&gt; 92
+&amp;#x92; =&gt; &amp;#x92;
+
+TOP HALF INTEGRAL: &amp;#x2320; =&gt; 93
+&amp;#x93; =&gt; &amp;#x93;
+
+BLACK SQUARE: &amp;#x25A0; =&gt; 94
+&amp;#x94; =&gt; &amp;#x94;
+
+BULLET OPERATOR: &amp;#x2219; =&gt; 95
+&amp;#x95; =&gt; &amp;#x95;
+
+SQUARE ROOT: &amp;#x221A; =&gt; 96
+&amp;#x96; =&gt; &amp;#x96;
+
+ALMOST EQUAL TO: &amp;#x2248; =&gt; 97
+&amp;#x97; =&gt; &amp;#x97;
+
+LESS-THAN OR EQUAL TO: &amp;#x2264; =&gt; 98
+&amp;#x98; =&gt; &amp;#x98;
+
+GREATER-THAN OR EQUAL TO: &amp;#x2265; =&gt; 99
+&amp;#x99; =&gt; &amp;#x99;
+
+NO-BREAK SPACE: &amp;#xA0; =&gt; 9a
+&amp;#x9A; =&gt; &amp;#x9A;
+
+BOTTOM HALF INTEGRAL: &amp;#x2321; =&gt; 9b
+&amp;#x9B; =&gt; &amp;#x9B;
+
+DEGREE SIGN: &amp;#xB0; =&gt; 9c
+&amp;#x9C; =&gt; &amp;#x9C;
+
+SUPERSCRIPT TWO: &amp;#xB2; =&gt; 9d
+&amp;#x9D; =&gt; &amp;#x9D;
+
+MIDDLE DOT: &amp;#xB7; =&gt; 9e
+&amp;#x9E; =&gt; &amp;#x9E;
+
+DIVISION SIGN: &amp;#xF7; =&gt; 9f
+&amp;#x9F; =&gt; &amp;#x9F;
+
+BOX DRAWINGS DOUBLE HORIZONTAL: &amp;#x2550; =&gt; a0
+&amp;#xA0; =&gt; 9a
+
+BOX DRAWINGS DOUBLE VERTICAL: &amp;#x2551; =&gt; a1
+&amp;#xA1; =&gt; &amp;#xA1;
+
+BOX DRAWINGS DOWN SINGLE AND RIGHT DOUBLE: &amp;#x2552; =&gt; a2
+&amp;#xA2; =&gt; &amp;#xA2;
+
+CYRILLIC SMALL LETTER IO: &amp;#x451; =&gt; a3
+&amp;#xA3; =&gt; &amp;#xA3;
+
+BOX DRAWINGS DOWN DOUBLE AND RIGHT SINGLE: &amp;#x2553; =&gt; a4
+&amp;#xA4; =&gt; &amp;#xA4;
+
+BOX DRAWINGS DOUBLE DOWN AND RIGHT: &amp;#x2554; =&gt; a5
+&amp;#xA5; =&gt; &amp;#xA5;
+
+BOX DRAWINGS DOWN SINGLE AND LEFT DOUBLE: &amp;#x2555; =&gt; a6
+&amp;#xA6; =&gt; &amp;#xA6;
+
+BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE: &amp;#x2556; =&gt; a7
+&amp;#xA7; =&gt; &amp;#xA7;
+
+BOX DRAWINGS DOUBLE DOWN AND LEFT: &amp;#x2557; =&gt; a8
+&amp;#xA8; =&gt; &amp;#xA8;
+
+BOX DRAWINGS UP SINGLE AND RIGHT DOUBLE: &amp;#x2558; =&gt; a9
+&amp;#xA9; =&gt; bf
+
+BOX DRAWINGS UP DOUBLE AND RIGHT SINGLE: &amp;#x2559; =&gt; aa
+&amp;#xAA; =&gt; &amp;#xAA;
+
+BOX DRAWINGS DOUBLE UP AND RIGHT: &amp;#x255A; =&gt; ab
+&amp;#xAB; =&gt; &amp;#xAB;
+
+BOX DRAWINGS UP SINGLE AND LEFT DOUBLE: &amp;#x255B; =&gt; ac
+&amp;#xAC; =&gt; &amp;#xAC;
+
+BOX DRAWINGS UP DOUBLE AND LEFT SINGLE: &amp;#x255C; =&gt; ad
+&amp;#xAD; =&gt; &amp;#xAD;
+
+BOX DRAWINGS DOUBLE UP AND LEFT: &amp;#x255D; =&gt; ae
+&amp;#xAE; =&gt; &amp;#xAE;
+
+BOX DRAWINGS VERTICAL SINGLE AND RIGHT DOUBLE: &amp;#x255E; =&gt; af
+&amp;#xAF; =&gt; &amp;#xAF;
+
+BOX DRAWINGS VERTICAL DOUBLE AND RIGHT SINGLE: &amp;#x255F; =&gt; b0
+&amp;#xB0; =&gt; 9c
+
+BOX DRAWINGS DOUBLE VERTICAL AND RIGHT: &amp;#x2560; =&gt; b1
+&amp;#xB1; =&gt; &amp;#xB1;
+
+BOX DRAWINGS VERTICAL SINGLE AND LEFT DOUBLE: &amp;#x2561; =&gt; b2
+&amp;#xB2; =&gt; 9d
+
+CYRILLIC CAPITAL LETTER IO: &amp;#x401; =&gt; b3
+&amp;#xB3; =&gt; &amp;#xB3;
+
+BOX DRAWINGS VERTICAL DOUBLE AND LEFT SINGLE: &amp;#x2562; =&gt; b4
+&amp;#xB4; =&gt; &amp;#xB4;
+
+BOX DRAWINGS DOUBLE VERTICAL AND LEFT: &amp;#x2563; =&gt; b5
+&amp;#xB5; =&gt; &amp;#xB5;
+
+BOX DRAWINGS DOWN SINGLE AND HORIZONTAL DOUBLE: &amp;#x2564; =&gt; b6
+&amp;#xB6; =&gt; &amp;#xB6;
+
+BOX DRAWINGS DOWN DOUBLE AND HORIZONTAL SINGLE: &amp;#x2565; =&gt; b7
+&amp;#xB7; =&gt; 9e
+
+BOX DRAWINGS DOUBLE DOWN AND HORIZONTAL: &amp;#x2566; =&gt; b8
+&amp;#xB8; =&gt; &amp;#xB8;
+
+BOX DRAWINGS UP SINGLE AND HORIZONTAL DOUBLE: &amp;#x2567; =&gt; b9
+&amp;#xB9; =&gt; &amp;#xB9;
+
+BOX DRAWINGS UP DOUBLE AND HORIZONTAL SINGLE: &amp;#x2568; =&gt; ba
+&amp;#xBA; =&gt; &amp;#xBA;
+
+BOX DRAWINGS DOUBLE UP AND HORIZONTAL: &amp;#x2569; =&gt; bb
+&amp;#xBB; =&gt; &amp;#xBB;
+
+BOX DRAWINGS VERTICAL SINGLE AND HORIZONTAL DOUBLE: &amp;#x256A; =&gt; bc
+&amp;#xBC; =&gt; &amp;#xBC;
+
+BOX DRAWINGS VERTICAL DOUBLE AND HORIZONTAL SINGLE: &amp;#x256B; =&gt; bd
+&amp;#xBD; =&gt; &amp;#xBD;
+
+BOX DRAWINGS DOUBLE VERTICAL AND HORIZONTAL: &amp;#x256C; =&gt; be
+&amp;#xBE; =&gt; &amp;#xBE;
+
+COPYRIGHT SIGN: &amp;#xA9; =&gt; bf
+&amp;#xBF; =&gt; &amp;#xBF;
+
+CYRILLIC SMALL LETTER YU: &amp;#x44E; =&gt; c0
+&amp;#xC0; =&gt; &amp;#xC0;
+
+CYRILLIC SMALL LETTER A: &amp;#x430; =&gt; c1
+&amp;#xC1; =&gt; &amp;#xC1;
+
+CYRILLIC SMALL LETTER BE: &amp;#x431; =&gt; c2
+&amp;#xC2; =&gt; &amp;#xC2;
+
+CYRILLIC SMALL LETTER TSE: &amp;#x446; =&gt; c3
+&amp;#xC3; =&gt; &amp;#xC3;
+
+CYRILLIC SMALL LETTER DE: &amp;#x434; =&gt; c4
+&amp;#xC4; =&gt; &amp;#xC4;
+
+CYRILLIC SMALL LETTER IE: &amp;#x435; =&gt; c5
+&amp;#xC5; =&gt; &amp;#xC5;
+
+CYRILLIC SMALL LETTER EF: &amp;#x444; =&gt; c6
+&amp;#xC6; =&gt; &amp;#xC6;
+
+CYRILLIC SMALL LETTER GHE: &amp;#x433; =&gt; c7
+&amp;#xC7; =&gt; &amp;#xC7;
+
+CYRILLIC SMALL LETTER HA: &amp;#x445; =&gt; c8
+&amp;#xC8; =&gt; &amp;#xC8;
+
+CYRILLIC SMALL LETTER I: &amp;#x438; =&gt; c9
+&amp;#xC9; =&gt; &amp;#xC9;
+
+CYRILLIC SMALL LETTER SHORT I: &amp;#x439; =&gt; ca
+&amp;#xCA; =&gt; &amp;#xCA;
+
+CYRILLIC SMALL LETTER KA: &amp;#x43A; =&gt; cb
+&amp;#xCB; =&gt; &amp;#xCB;
+
+CYRILLIC SMALL LETTER EL: &amp;#x43B; =&gt; cc
+&amp;#xCC; =&gt; &amp;#xCC;
+
+CYRILLIC SMALL LETTER EM: &amp;#x43C; =&gt; cd
+&amp;#xCD; =&gt; &amp;#xCD;
+
+CYRILLIC SMALL LETTER EN: &amp;#x43D; =&gt; ce
+&amp;#xCE; =&gt; &amp;#xCE;
+
+CYRILLIC SMALL LETTER O: &amp;#x43E; =&gt; cf
+&amp;#xCF; =&gt; &amp;#xCF;
+
+CYRILLIC SMALL LETTER PE: &amp;#x43F; =&gt; d0
+&amp;#xD0; =&gt; &amp;#xD0;
+
+CYRILLIC SMALL LETTER YA: &amp;#x44F; =&gt; d1
+&amp;#xD1; =&gt; &amp;#xD1;
+
+CYRILLIC SMALL LETTER ER: &amp;#x440; =&gt; d2
+&amp;#xD2; =&gt; &amp;#xD2;
+
+CYRILLIC SMALL LETTER ES: &amp;#x441; =&gt; d3
+&amp;#xD3; =&gt; &amp;#xD3;
+
+CYRILLIC SMALL LETTER TE: &amp;#x442; =&gt; d4
+&amp;#xD4; =&gt; &amp;#xD4;
+
+CYRILLIC SMALL LETTER U: &amp;#x443; =&gt; d5
+&amp;#xD5; =&gt; &amp;#xD5;
+
+CYRILLIC SMALL LETTER ZHE: &amp;#x436; =&gt; d6
+&amp;#xD6; =&gt; &amp;#xD6;
+
+CYRILLIC SMALL LETTER VE: &amp;#x432; =&gt; d7
+&amp;#xD7; =&gt; &amp;#xD7;
+
+CYRILLIC SMALL LETTER SOFT SIGN: &amp;#x44C; =&gt; d8
+&amp;#xD8; =&gt; &amp;#xD8;
+
+CYRILLIC SMALL LETTER YERU: &amp;#x44B; =&gt; d9
+&amp;#xD9; =&gt; &amp;#xD9;
+
+CYRILLIC SMALL LETTER ZE: &amp;#x437; =&gt; da
+&amp;#xDA; =&gt; &amp;#xDA;
+
+CYRILLIC SMALL LETTER SHA: &amp;#x448; =&gt; db
+&amp;#xDB; =&gt; &amp;#xDB;
+
+CYRILLIC SMALL LETTER E: &amp;#x44D; =&gt; dc
+&amp;#xDC; =&gt; &amp;#xDC;
+
+CYRILLIC SMALL LETTER SHCHA: &amp;#x449; =&gt; dd
+&amp;#xDD; =&gt; &amp;#xDD;
+
+CYRILLIC SMALL LETTER CHE: &amp;#x447; =&gt; de
+&amp;#xDE; =&gt; &amp;#xDE;
+
+CYRILLIC SMALL LETTER HARD SIGN: &amp;#x44A; =&gt; df
+&amp;#xDF; =&gt; &amp;#xDF;
+
+CYRILLIC CAPITAL LETTER YU: &amp;#x42E; =&gt; e0
+&amp;#xE0; =&gt; &amp;#xE0;
+
+CYRILLIC CAPITAL LETTER A: &amp;#x410; =&gt; e1
+&amp;#xE1; =&gt; &amp;#xE1;
+
+CYRILLIC CAPITAL LETTER BE: &amp;#x411; =&gt; e2
+&amp;#xE2; =&gt; &amp;#xE2;
+
+CYRILLIC CAPITAL LETTER TSE: &amp;#x426; =&gt; e3
+&amp;#xE3; =&gt; &amp;#xE3;
+
+CYRILLIC CAPITAL LETTER DE: &amp;#x414; =&gt; e4
+&amp;#xE4; =&gt; &amp;#xE4;
+
+CYRILLIC CAPITAL LETTER IE: &amp;#x415; =&gt; e5
+&amp;#xE5; =&gt; &amp;#xE5;
+
+CYRILLIC CAPITAL LETTER EF: &amp;#x424; =&gt; e6
+&amp;#xE6; =&gt; &amp;#xE6;
+
+CYRILLIC CAPITAL LETTER GHE: &amp;#x413; =&gt; e7
+&amp;#xE7; =&gt; &amp;#xE7;
+
+CYRILLIC CAPITAL LETTER HA: &amp;#x425; =&gt; e8
+&amp;#xE8; =&gt; &amp;#xE8;
+
+CYRILLIC CAPITAL LETTER I: &amp;#x418; =&gt; e9
+&amp;#xE9; =&gt; &amp;#xE9;
+
+CYRILLIC CAPITAL LETTER SHORT I: &amp;#x419; =&gt; ea
+&amp;#xEA; =&gt; &amp;#xEA;
+
+CYRILLIC CAPITAL LETTER KA: &amp;#x41A; =&gt; eb
+&amp;#xEB; =&gt; &amp;#xEB;
+
+CYRILLIC CAPITAL LETTER EL: &amp;#x41B; =&gt; ec
+&amp;#xEC; =&gt; &amp;#xEC;
+
+CYRILLIC CAPITAL LETTER EM: &amp;#x41C; =&gt; ed
+&amp;#xED; =&gt; &amp;#xED;
+
+CYRILLIC CAPITAL LETTER EN: &amp;#x41D; =&gt; ee
+&amp;#xEE; =&gt; &amp;#xEE;
+
+CYRILLIC CAPITAL LETTER O: &amp;#x41E; =&gt; ef
+&amp;#xEF; =&gt; &amp;#xEF;
+
+CYRILLIC CAPITAL LETTER PE: &amp;#x41F; =&gt; f0
+&amp;#xF0; =&gt; &amp;#xF0;
+
+CYRILLIC CAPITAL LETTER YA: &amp;#x42F; =&gt; f1
+&amp;#xF1; =&gt; &amp;#xF1;
+
+CYRILLIC CAPITAL LETTER ER: &amp;#x420; =&gt; f2
+&amp;#xF2; =&gt; &amp;#xF2;
+
+CYRILLIC CAPITAL LETTER ES: &amp;#x421; =&gt; f3
+&amp;#xF3; =&gt; &amp;#xF3;
+
+CYRILLIC CAPITAL LETTER TE: &amp;#x422; =&gt; f4
+&amp;#xF4; =&gt; &amp;#xF4;
+
+CYRILLIC CAPITAL LETTER U: &amp;#x423; =&gt; f5
+&amp;#xF5; =&gt; &amp;#xF5;
+
+CYRILLIC CAPITAL LETTER ZHE: &amp;#x416; =&gt; f6
+&amp;#xF6; =&gt; &amp;#xF6;
+
+CYRILLIC CAPITAL LETTER VE: &amp;#x412; =&gt; f7
+&amp;#xF7; =&gt; 9f
+
+CYRILLIC CAPITAL LETTER SOFT SIGN: &amp;#x42C; =&gt; f8
+&amp;#xF8; =&gt; &amp;#xF8;
+
+CYRILLIC CAPITAL LETTER YERU: &amp;#x42B; =&gt; f9
+&amp;#xF9; =&gt; &amp;#xF9;
+
+CYRILLIC CAPITAL LETTER ZE: &amp;#x417; =&gt; fa
+&amp;#xFA; =&gt; &amp;#xFA;
+
+CYRILLIC CAPITAL LETTER SHA: &amp;#x428; =&gt; fb
+&amp;#xFB; =&gt; &amp;#xFB;
+
+CYRILLIC CAPITAL LETTER E: &amp;#x42D; =&gt; fc
+&amp;#xFC; =&gt; &amp;#xFC;
+
+CYRILLIC CAPITAL LETTER SHCHA: &amp;#x429; =&gt; fd
+&amp;#xFD; =&gt; &amp;#xFD;
+
+CYRILLIC CAPITAL LETTER CHE: &amp;#x427; =&gt; fe
+&amp;#xFE; =&gt; &amp;#xFE;
+
+CYRILLIC CAPITAL LETTER HARD SIGN: &amp;#x42A; =&gt; ff
+&amp;#xFF; =&gt; &amp;#xFF;
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+
+Deprecated: Decrement on non-numeric string has no effect and is deprecated in %s on line %d
+
+Deprecated: Increment on non-alphanumeric string is deprecated in %s on line %d
+string(5) &quot;-INF0&quot;
+string(260) &quot;0-2-12-112-1112-11112-111112-1111112-11111112-111111112-1111111112-11111111112-111111111112-1111111111112-11111111111112-111111111111112-1111111111111112-11111111111111112-111111111111111112-1111111111111111112-1.1111111111111E+20-1.1111111111111E+191-ING-INF1&quot;
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker8&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=10&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;post_max_size=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0252&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused348.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

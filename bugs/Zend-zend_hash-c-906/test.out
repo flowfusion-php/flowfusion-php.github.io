@@ -1,0 +1,12 @@
+int(1)
+int(1)
+open
+string(9) "CONTAINER"
+array(0) {
+}
+
+Warning: Undefined variable $parser in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused462.php on line 85
+php: /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_hash.c:906: zval *_zend_hash_str_add_or_update_i(HashTable *, const char *, size_t, zend_ulong, zval *, uint32_t): Assertion `(zend_gc_refcount(&(ht)->gc) == 1) || ((ht)->u.flags & (1<<6))' failed.
+Aborted (core dumped)
+
+Termsig=6
