@@ -41,7 +41,7 @@
         // Function to format the identifier to a corresponding HTML file path
         function formatIdentifier(crashSite) {
             let formatted = crashSite.replace("/php-src/", "");
-            formatted = formatted.replace(/[\/:.]/g, "-");
+            formatted = formatted.replace(/[\/:.]/g, "_");
             return formatted + "/index.html";
         }
 
