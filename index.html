@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+        }
+        .bug-content {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        // Function to format the identifier to a corresponding HTML file path
+        function formatIdentifier(crashSite) {
+            let formatted = crashSite.replace("/php-src/", "");
+            formatted = formatted.replace(/[\/:.]/g, "_");
+            return formatted + "/index.html";
+        }
+
+        // Function to parse and format the mtime for sorting
+        function parseMtime(mtime) {
+            return new Date(mtime).getTime();
+        }
+
+        // Function to read the JSON file and display bugs in a table, sorted by mtime
+        async function loadBugs() {
+            try {
+                const response = await fetch('./bugs.json');
+                const bugs = await response.json();
+
+                // Sort bugs by mtime (latest first)
+                bugs.sort((a, b) => parseMtime(b.mtime) - parseMtime(a.mtime));
+
+                const bugTableBody = document.getElementById('bug-table-body');
+
+                bugs.forEach(bug => {
+                    // Create a new table row
+                    const row = document.createElement('tr');
+
+                    // Time (mtime) column
+                    const timeCell = document.createElement('td');
+                    timeCell.textContent = bug.mtime;
+                    row.appendChild(timeCell);
+
+                    // Crash site column
+                    const crashSiteCell = document.createElement('td');
+                    crashSiteCell.textContent = bug.identifier; // renamed from 'identifier' to 'crash site'
+                    row.appendChild(crashSiteCell);
+
+                    // Bug Hits column
+                    const bugHitsCell = document.createElement('td');
+                    bugHitsCell.textContent = bug.bugHit;
+                    row.appendChild(bugHitsCell);
+
+                    // Link to bug details
+                    const linkCell = document.createElement('td');
+                    const bugLink = document.createElement('a');
+                    bugLink.href = formatIdentifier(bug.identifier);
+                    bugLink.textContent = "View Details";
+                    bugLink.target = "_blank"; // Opens in a new tab
+                    linkCell.appendChild(bugLink);
+                    row.appendChild(linkCell);
+
+                    // Append the row to the table body
+                    bugTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading bugs:', error);
+            }
+        }
+
+        // Load bugs on page load
+        window.onload = loadBugs;
+    </script>
+    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=0&t=n&d=722xZS4m73ptjDnGqbpSHLBh-TI5_r8x-uVLxCejFfE&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+</head>
+<body>
+    <h1>Bug List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Last Detected Time (UTC)</th>
+                <th>Crash Site</th>
+                <th>Bug Hits</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody id="bug-table-body">
+            <!-- Bugs will be dynamically loaded here -->
+        </tbody>
+    </table>
+</body>
+</html>

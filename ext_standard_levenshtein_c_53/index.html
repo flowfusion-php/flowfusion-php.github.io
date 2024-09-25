@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>e2da65de2acae5eb17de4dd6a34bd1f8f5d8c007
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --silent --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/standard/levenshtein.c:53</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['integer overflow']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 5 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(0) &quot;&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(1)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; float(2.5)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(0)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(6) &quot;string&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(3) &quot;123&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(3) &quot;2.5&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; NULL
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= bool(true)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; bool(false)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(stdClass)#1 (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(stdClass)#2 (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(test)#3 (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; array(0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(-9223372036854775808)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(20) &quot;-9223372036854775808&quot;
+string(0) &quot;&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(0) &quot;&quot; &lt;= string(0) &quot;&quot;
+string(0) &quot;&quot; &lt;= int(1)
+string(0) &quot;&quot; &lt;= float(2.5)
+string(0) &quot;&quot; &lt;= int(0)
+string(0) &quot;&quot; &lt;= string(6) &quot;string&quot;
+string(0) &quot;&quot; &lt;= string(3) &quot;123&quot;
+string(0) &quot;&quot; &lt;= string(3) &quot;2.5&quot;
+string(0) &quot;&quot; &lt;= NULL
+string(0) &quot;&quot; &lt;= bool(true)
+string(0) &quot;&quot; &lt;= bool(false)
+string(0) &quot;&quot; &lt;= object(stdClass)#1 (0) {}
+string(0) &quot;&quot; &lt;= object(stdClass)#2 (0) {}
+string(0) &quot;&quot; &lt;= object(test)#3 (0) {}
+string(0) &quot;&quot; &lt;= array(0) {}
+string(0) &quot;&quot; &lt;= int(-9223372036854775808)
+string(0) &quot;&quot; &lt;= string(20) &quot;-9223372036854775808&quot;
+int(1) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(1) &gt; string(0) &quot;&quot;
+int(1) &lt;= int(1)
+int(1) &lt;= float(2.5)
+int(1) &gt; int(0)
+int(1) &lt;= string(6) &quot;string&quot;
+int(1) &lt;= string(3) &quot;123&quot;
+int(1) &lt;= string(3) &quot;2.5&quot;
+int(1) &gt; NULL
+int(1) &lt;= bool(true)
+int(1) &gt; bool(false)
+int(1)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#1 (0) {}
+int(1)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#2 (0) {}
+int(1)
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(test)#3 (0) {}
+int(1) &lt;= array(0) {}
+int(1) &gt; int(-9223372036854775808)
+int(1) &gt; string(20) &quot;-9223372036854775808&quot;
+float(2.5) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+float(2.5) &gt; string(0) &quot;&quot;
+float(2.5) &gt; int(1)
+float(2.5) &lt;= float(2.5)
+float(2.5) &gt; int(0)
+float(2.5) &lt;= string(6) &quot;string&quot;
+float(2.5) &lt;= string(3) &quot;123&quot;
+float(2.5) &lt;= string(3) &quot;2.5&quot;
+float(2.5) &gt; NULL
+float(2.5) &lt;= bool(true)
+float(2.5) &gt; bool(false)
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; object(stdClass)#1 (0) {}
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; object(stdClass)#2 (0) {}
+float(2.5)
+Notice: Object of class test could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; object(test)#3 (0) {}
+float(2.5) &lt;= array(0) {}
+float(2.5) &gt; int(-9223372036854775808)
+float(2.5) &gt; string(20) &quot;-9223372036854775808&quot;
+int(0) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(0) &gt; string(0) &quot;&quot;
+int(0) &lt;= int(1)
+int(0) &lt;= float(2.5)
+int(0) &lt;= int(0)
+int(0) &lt;= string(6) &quot;string&quot;
+int(0) &lt;= string(3) &quot;123&quot;
+int(0) &lt;= string(3) &quot;2.5&quot;
+int(0) &lt;= NULL
+int(0) &lt;= bool(true)
+int(0) &lt;= bool(false)
+int(0)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#1 (0) {}
+int(0)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#2 (0) {}
+int(0)
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(test)#3 (0) {}
+int(0) &lt;= array(0) {}
+int(0) &gt; int(-9223372036854775808)
+int(0) &gt; string(20) &quot;-9223372036854775808&quot;
+string(6) &quot;string&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(6) &quot;string&quot; &gt; string(0) &quot;&quot;
+string(6) &quot;string&quot; &gt; int(1)
+string(6) &quot;string&quot; &gt; float(2.5)
+string(6) &quot;string&quot; &gt; int(0)
+string(6) &quot;string&quot; &lt;= string(6) &quot;string&quot;
+string(6) &quot;string&quot; &gt; string(3) &quot;123&quot;
+string(6) &quot;string&quot; &gt; string(3) &quot;2.5&quot;
+string(6) &quot;string&quot; &gt; NULL
+string(6) &quot;string&quot; &lt;= bool(true)
+string(6) &quot;string&quot; &gt; bool(false)
+string(6) &quot;string&quot; &lt;= object(stdClass)#1 (0) {}
+string(6) &quot;string&quot; &lt;= object(stdClass)#2 (0) {}
+string(6) &quot;string&quot; &lt;= object(test)#3 (0) {}
+string(6) &quot;string&quot; &lt;= array(0) {}
+string(6) &quot;string&quot; &gt; int(-9223372036854775808)
+string(6) &quot;string&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+string(3) &quot;123&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(3) &quot;123&quot; &gt; string(0) &quot;&quot;
+string(3) &quot;123&quot; &gt; int(1)
+string(3) &quot;123&quot; &gt; float(2.5)
+string(3) &quot;123&quot; &gt; int(0)
+string(3) &quot;123&quot; &lt;= string(6) &quot;string&quot;
+string(3) &quot;123&quot; &lt;= string(3) &quot;123&quot;
+string(3) &quot;123&quot; &gt; string(3) &quot;2.5&quot;
+string(3) &quot;123&quot; &gt; NULL
+string(3) &quot;123&quot; &lt;= bool(true)
+string(3) &quot;123&quot; &gt; bool(false)
+string(3) &quot;123&quot; &lt;= object(stdClass)#1 (0) {}
+string(3) &quot;123&quot; &lt;= object(stdClass)#2 (0) {}
+string(3) &quot;123&quot; &lt;= object(test)#3 (0) {}
+string(3) &quot;123&quot; &lt;= array(0) {}
+string(3) &quot;123&quot; &gt; int(-9223372036854775808)
+string(3) &quot;123&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+string(3) &quot;2.5&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(3) &quot;2.5&quot; &gt; string(0) &quot;&quot;
+string(3) &quot;2.5&quot; &gt; int(1)
+string(3) &quot;2.5&quot; &lt;= float(2.5)
+string(3) &quot;2.5&quot; &gt; int(0)
+string(3) &quot;2.5&quot; &lt;= string(6) &quot;string&quot;
+string(3) &quot;2.5&quot; &lt;= string(3) &quot;123&quot;
+string(3) &quot;2.5&quot; &lt;= string(3) &quot;2.5&quot;
+string(3) &quot;2.5&quot; &gt; NULL
+string(3) &quot;2.5&quot; &lt;= bool(true)
+string(3) &quot;2.5&quot; &gt; bool(false)
+string(3) &quot;2.5&quot; &lt;= object(stdClass)#1 (0) {}
+string(3) &quot;2.5&quot; &lt;= object(stdClass)#2 (0) {}
+string(3) &quot;2.5&quot; &lt;= object(test)#3 (0) {}
+string(3) &quot;2.5&quot; &lt;= array(0) {}
+string(3) &quot;2.5&quot; &gt; int(-9223372036854775808)
+string(3) &quot;2.5&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+NULL &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+NULL &lt;= string(0) &quot;&quot;
+NULL &lt;= int(1)
+NULL &lt;= float(2.5)
+NULL &lt;= int(0)
+NULL &lt;= string(6) &quot;string&quot;
+NULL &lt;= string(3) &quot;123&quot;
+NULL &lt;= string(3) &quot;2.5&quot;
+NULL &lt;= NULL
+NULL &lt;= bool(true)
+NULL &lt;= bool(false)
+NULL &lt;= object(stdClass)#1 (0) {}
+NULL &lt;= object(stdClass)#2 (0) {}
+NULL &lt;= object(test)#3 (0) {}
+NULL &lt;= array(0) {}
+NULL &lt;= int(-9223372036854775808)
+NULL &lt;= string(20) &quot;-9223372036854775808&quot;
+bool(true) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+bool(true) &gt; string(0) &quot;&quot;
+bool(true) &lt;= int(1)
+bool(true) &lt;= float(2.5)
+bool(true) &gt; int(0)
+bool(true) &lt;= string(6) &quot;string&quot;
+bool(true) &lt;= string(3) &quot;123&quot;
+bool(true) &lt;= string(3) &quot;2.5&quot;
+bool(true) &gt; NULL
+bool(true) &lt;= bool(true)
+bool(true) &gt; bool(false)
+bool(true) &lt;= object(stdClass)#1 (0) {}
+bool(true) &lt;= object(stdClass)#2 (0) {}
+bool(true) &lt;= object(test)#3 (0) {}
+bool(true) &gt; array(0) {}
+bool(true) &lt;= int(-9223372036854775808)
+bool(true) &lt;= string(20) &quot;-9223372036854775808&quot;
+bool(false) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+bool(false) &lt;= string(0) &quot;&quot;
+bool(false) &lt;= int(1)
+bool(false) &lt;= float(2.5)
+bool(false) &lt;= int(0)
+bool(false) &lt;= string(6) &quot;string&quot;
+bool(false) &lt;= string(3) &quot;123&quot;
+bool(false) &lt;= string(3) &quot;2.5&quot;
+bool(false) &lt;= NULL
+bool(false) &lt;= bool(true)
+bool(false) &lt;= bool(false)
+bool(false) &lt;= object(stdClass)#1 (0) {}
+bool(false) &lt;= object(stdClass)#2 (0) {}
+bool(false) &lt;= object(test)#3 (0) {}
+bool(false) &lt;= array(0) {}
+bool(false) &lt;= int(-9223372036854775808)
+bool(false) &lt;= string(20) &quot;-9223372036854775808&quot;
+object(stdClass)#1 (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(stdClass)#1 (0) {} &gt; string(0) &quot;&quot;
+object(stdClass)#1 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= int(1)
+object(stdClass)#1 (0) {}
+Notice: Object of class stdClass could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= float(2.5)
+object(stdClass)#1 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(0)
+object(stdClass)#1 (0) {} &gt; string(6) &quot;string&quot;
+object(stdClass)#1 (0) {} &gt; string(3) &quot;123&quot;
+object(stdClass)#1 (0) {} &gt; string(3) &quot;2.5&quot;
+object(stdClass)#1 (0) {} &gt; NULL
+object(stdClass)#1 (0) {} &lt;= bool(true)
+object(stdClass)#1 (0) {} &gt; bool(false)
+object(stdClass)#1 (0) {} &lt;= object(stdClass)#1 (0) {}
+object(stdClass)#1 (0) {} &lt;= object(stdClass)#2 (0) {}
+object(stdClass)#1 (0) {} &lt;= object(test)#3 (0) {}
+object(stdClass)#1 (0) {} &gt; array(0) {}
+object(stdClass)#1 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(-9223372036854775808)
+object(stdClass)#1 (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+object(stdClass)#2 (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(stdClass)#2 (0) {} &gt; string(0) &quot;&quot;
+object(stdClass)#2 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= int(1)
+object(stdClass)#2 (0) {}
+Notice: Object of class stdClass could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= float(2.5)
+object(stdClass)#2 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(0)
+object(stdClass)#2 (0) {} &gt; string(6) &quot;string&quot;
+object(stdClass)#2 (0) {} &gt; string(3) &quot;123&quot;
+object(stdClass)#2 (0) {} &gt; string(3) &quot;2.5&quot;
+object(stdClass)#2 (0) {} &gt; NULL
+object(stdClass)#2 (0) {} &lt;= bool(true)
+object(stdClass)#2 (0) {} &gt; bool(false)
+object(stdClass)#2 (0) {} &lt;= object(stdClass)#1 (0) {}
+object(stdClass)#2 (0) {} &lt;= object(stdClass)#2 (0) {}
+object(stdClass)#2 (0) {} &lt;= object(test)#3 (0) {}
+object(stdClass)#2 (0) {} &gt; array(0) {}
+object(stdClass)#2 (0) {}
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(-9223372036854775808)
+object(stdClass)#2 (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+object(test)#3 (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(test)#3 (0) {} &gt; string(0) &quot;&quot;
+object(test)#3 (0) {}
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= int(1)
+object(test)#3 (0) {}
+Notice: Object of class test could not be converted to float in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= float(2.5)
+object(test)#3 (0) {}
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(0)
+object(test)#3 (0) {} &gt; string(6) &quot;string&quot;
+object(test)#3 (0) {} &gt; string(3) &quot;123&quot;
+object(test)#3 (0) {} &gt; string(3) &quot;2.5&quot;
+object(test)#3 (0) {} &gt; NULL
+object(test)#3 (0) {} &lt;= bool(true)
+object(test)#3 (0) {} &gt; bool(false)
+object(test)#3 (0) {} &lt;= object(stdClass)#1 (0) {}
+object(test)#3 (0) {} &lt;= object(stdClass)#2 (0) {}
+object(test)#3 (0) {} &lt;= object(test)#3 (0) {}
+object(test)#3 (0) {} &gt; array(0) {}
+object(test)#3 (0) {}
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &gt; int(-9223372036854775808)
+object(test)#3 (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+array(0) {} &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+array(0) {} &gt; string(0) &quot;&quot;
+array(0) {} &gt; int(1)
+array(0) {} &gt; float(2.5)
+array(0) {} &gt; int(0)
+array(0) {} &gt; string(6) &quot;string&quot;
+array(0) {} &gt; string(3) &quot;123&quot;
+array(0) {} &gt; string(3) &quot;2.5&quot;
+array(0) {} &lt;= NULL
+array(0) {} &lt;= bool(true)
+array(0) {} &lt;= bool(false)
+array(0) {} &lt;= object(stdClass)#1 (0) {}
+array(0) {} &lt;= object(stdClass)#2 (0) {}
+array(0) {} &lt;= object(test)#3 (0) {}
+array(0) {} &lt;= array(0) {}
+array(0) {} &gt; int(-9223372036854775808)
+array(0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+int(-9223372036854775808) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(-9223372036854775808) &gt; string(0) &quot;&quot;
+int(-9223372036854775808) &lt;= int(1)
+int(-9223372036854775808) &lt;= float(2.5)
+int(-9223372036854775808) &lt;= int(0)
+int(-9223372036854775808) &lt;= string(6) &quot;string&quot;
+int(-9223372036854775808) &lt;= string(3) &quot;123&quot;
+int(-9223372036854775808) &lt;= string(3) &quot;2.5&quot;
+int(-9223372036854775808) &gt; NULL
+int(-9223372036854775808) &lt;= bool(true)
+int(-9223372036854775808) &gt; bool(false)
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#1 (0) {}
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(stdClass)#2 (0) {}
+int(-9223372036854775808)
+Notice: Object of class test could not be converted to int in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 95
+ &lt;= object(test)#3 (0) {}
+int(-9223372036854775808) &lt;= array(0) {}
+int(-9223372036854775808) &lt;= int(-9223372036854775808)
+int(-9223372036854775808) &lt;= string(20) &quot;-9223372036854775808&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(20) &quot;-9223372036854775808&quot; &gt; string(0) &quot;&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= int(1)
+string(20) &quot;-9223372036854775808&quot; &lt;= float(2.5)
+string(20) &quot;-9223372036854775808&quot; &lt;= int(0)
+string(20) &quot;-9223372036854775808&quot; &lt;= string(6) &quot;string&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= string(3) &quot;123&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= string(3) &quot;2.5&quot;
+string(20) &quot;-9223372036854775808&quot; &gt; NULL
+string(20) &quot;-9223372036854775808&quot; &lt;= bool(true)
+string(20) &quot;-9223372036854775808&quot; &gt; bool(false)
+string(20) &quot;-9223372036854775808&quot; &lt;= object(stdClass)#1 (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= object(stdClass)#2 (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= object(test)#3 (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= array(0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= int(-9223372036854775808)
+string(20) &quot;-9223372036854775808&quot; &lt;= string(20) &quot;-9223372036854775808&quot;
+Done
+*** Testing addslashes() : basic functionality ***
+
+Warning: Undefined variable $str in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+
+Deprecated: addslashes(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+string(0) &quot;&quot;
+
+Warning: Undefined variable $str in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+
+Deprecated: addslashes(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+string(0) &quot;&quot;
+
+Warning: Undefined variable $str in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+
+Deprecated: addslashes(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+string(0) &quot;&quot;
+
+Warning: Undefined variable $str in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+
+Deprecated: addslashes(): Passing null to parameter #1 ($string) of type string is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 116
+string(0) &quot;&quot;
+Done
+string(11) &quot;random_var:&quot;
+array(17) {
+  [0]=&gt;
+  array(3) {
+    [0]=&gt;
+    int(1)
+    [1]=&gt;
+    int(2)
+    [2]=&gt;
+    int(3)
+  }
+  [1]=&gt;
+  string(0) &quot;&quot;
+  [2]=&gt;
+  int(1)
+  [3]=&gt;
+  float(2.5)
+  [4]=&gt;
+  int(0)
+  [5]=&gt;
+  string(6) &quot;string&quot;
+  [6]=&gt;
+  string(3) &quot;123&quot;
+  [7]=&gt;
+  string(3) &quot;2.5&quot;
+  [8]=&gt;
+  NULL
+  [9]=&gt;
+  bool(true)
+  [10]=&gt;
+  bool(false)
+  [11]=&gt;
+  object(stdClass)#1 (0) {
+  }
+  [12]=&gt;
+  object(stdClass)#2 (0) {
+  }
+  [13]=&gt;
+  object(test)#3 (0) {
+  }
+  [14]=&gt;
+  array(0) {
+  }
+  [15]=&gt;
+  int(-9223372036854775808)
+  [16]=&gt;
+  string(20) &quot;-9223372036854775808&quot;
+}
+string(20) &quot;-9223372036854775808&quot;
+int(17)
+Calling function: phpversion with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array
+Error calling function phpversion: phpversion(): Argument #1 ($extension) must be of type ?string, array given
+Calling function: xmlwriter_start_element with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, -9223372036854775808
+Error calling function xmlwriter_start_element: xmlwriter_start_element(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: date_parse_from_format with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, 17
+Error calling function date_parse_from_format: date_parse_from_format(): Argument #1 ($format) must be of type string, array given
+Calling function: image_type_to_mime_type with arguments: -9223372036854775808
+Calling function: rmdir with arguments: -9223372036854775808, -9223372036854775808
+Error calling function rmdir: rmdir(): Argument #2 ($context) must be of type resource or null, string given
+Calling function: filter_input with arguments: -9223372036854775808, 17, -9223372036854775808, 17
+
+Warning: filter_input(): Unknown filter with ID -9223372036854775808 in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: fpow with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+17, Array
+Error calling function fpow: fpow(): Argument #2 ($num2) must be of type float, array given
+Calling function: pfsockopen with arguments: 17, -9223372036854775808, 17, -9223372036854775808, 17
+
+Warning: pfsockopen(): Argument #3 ($error_code) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+
+Warning: pfsockopen(): Argument #4 ($error_message) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+
+Warning: pfsockopen(): Unable to connect to 17:-9223372036854775808 (Failed to parse address &quot;17&quot;) in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: preg_replace with arguments: 17, 17, 17, 17, 17
+
+Warning: preg_replace(): Argument #5 ($count) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+
+Warning: preg_replace(): Delimiter must not be alphanumeric, backslash, or NUL byte in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: token_get_all with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, Array
+Error calling function token_get_all: token_get_all(): Argument #1 ($code) must be of type string, array given
+Calling function: strpbrk with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, -9223372036854775808
+Error calling function strpbrk: strpbrk(): Argument #1 ($string) must be of type string, array given
+Calling function: stream_set_read_buffer with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, 17
+Error calling function stream_set_read_buffer: stream_set_read_buffer(): Argument #1 ($stream) must be of type resource, array given
+Calling function: array_walk with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+-9223372036854775808, Array, -9223372036854775808
+
+Warning: array_walk(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Error calling function array_walk: array_walk(): Argument #1 ($array) must be of type array, string given
+Calling function: stream_socket_sendto with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
+Error calling function stream_socket_sendto: stream_socket_sendto(): Argument #1 ($socket) must be of type resource, string given
+Calling function: libxml_disable_entity_loader with arguments: -9223372036854775808
+
+Deprecated: Function libxml_disable_entity_loader() is deprecated since 8.0, as external entity loading is disabled by default in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: strpbrk with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+17, Array
+Error calling function strpbrk: strpbrk(): Argument #2 ($characters) must be of type string, array given
+Calling function: array_intersect_uassoc with arguments: 17, -9223372036854775808
+Error calling function array_intersect_uassoc: array_intersect_uassoc(): Argument #2 must be a valid callback, function &quot;-9223372036854775808&quot; not found or invalid function name
+Calling function: hash_algos with arguments: 
+Calling function: clearstatcache with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, Array
+Error calling function clearstatcache: clearstatcache(): Argument #1 ($clear_realpath_cache) must be of type bool, array given
+Calling function: phpinfo with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array
+Error calling function phpinfo: phpinfo(): Argument #1 ($flags) must be of type int, array given
+Calling function: array_replace_recursive with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 38
+Array, 17
+Error calling function array_replace_recursive: array_replace_recursive(): Argument #2 must be of type array, int given
+Calling function: session_destroy with arguments: 
+
+Warning: session_destroy(): Trying to destroy uninitialized session in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: preg_match with arguments: -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808, -9223372036854775808
+
+Warning: preg_match(): Argument #3 ($matches) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+
+Warning: preg_match(): No ending delimiter &#x27;-&#x27; found in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php on line 41
+Calling function: getprotobyname with arguments: -9223372036854775808
+Calling function: get_loaded_extensions with arguments: 17
+Calling function: levenshtein with arguments: 17, -9223372036854775808, 17, -9223372036854775808, 17
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:53:16: runtime error: signed integer overflow: -9223372036854775808 + -9223372036854775808 cannot be represented in type &#x27;long&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/levenshtein.c:53:16 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class test {
+}
+$a = array(
+    array(1,2,3),
+    &quot;&quot;,
+    1,
+    2.5,
+    0,
+    &quot;string&quot;,
+    &quot;123&quot;,
+    &quot;2.5&quot;,
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+);
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace(&quot;\n&quot;, &quot;&quot;, $buf);
+}
+foreach($a as $var) {
+    for ($i = 0; $i &lt; $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var &gt; $a[$i]) ? &quot; &gt; &quot; : &quot; &lt;= &quot;;
+        my_dump($a[$i]);
+        echo &quot;\n&quot;;
+    }
+}
+echo &quot;Done\n&quot;;
+$fusion = $a;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Testing addslashes() with strings containing characters that can be prefixed with backslash
+ * by the function
+*/
+echo &quot;*** Testing addslashes() : basic functionality ***\n&quot;;
+// Initialize all required variables
+$str_array = array( &quot;How&#x27;s everybody&quot;,   // string containing single quote
+                    &#x27;Are you &quot;JOHN&quot;?&#x27;,   // string with double quotes
+                    &#x27;c:\php\addslashes&#x27;,   // string with backslashes
+                    &quot;hello\0world&quot;   // string with nul character
+                  );
+// Calling addslashes() with all arguments
+foreach( $str_array as $fusion )  {
+  var_dump( addslashes($str) );
+}
+echo &quot;Done\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+comparing different variables (greater than)+Test addslashes() function : basic functionality
+--INI--
+allow_url_include=0
+session.use_trans_sid=0
+--SKIPIF--
+&lt;?php if (PHP_INT_SIZE != 8) die(&quot;skip this test is for 64bit platform only&quot;); ?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class test {
+}
+$a = array(
+    array(1,2,3),
+    &quot;&quot;,
+    1,
+    2.5,
+    0,
+    &quot;string&quot;,
+    &quot;123&quot;,
+    &quot;2.5&quot;,
+    NULL,
+    true,
+    false,
+    new stdclass,
+    new stdclass,
+    new test,
+    array(),
+    -PHP_INT_MAX-1,
+    (string)(-PHP_INT_MAX-1),
+);
+$var_cnt = count($a);
+function my_dump($var) {
+    ob_start();
+    var_dump($var);
+    $buf = ob_get_clean();
+    echo str_replace(&quot;\n&quot;, &quot;&quot;, $buf);
+}
+foreach($a as $var) {
+    for ($i = 0; $i &lt; $var_cnt; $i++) {
+        my_dump($var);
+        echo ($var &gt; $a[$i]) ? &quot; &gt; &quot; : &quot; &lt;= &quot;;
+        my_dump($a[$i]);
+        echo &quot;\n&quot;;
+    }
+}
+echo &quot;Done\n&quot;;
+$fusion = $a;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Testing addslashes() with strings containing characters that can be prefixed with backslash
+ * by the function
+*/
+echo &quot;*** Testing addslashes() : basic functionality ***\n&quot;;
+// Initialize all required variables
+$str_array = array( &quot;How&#x27;s everybody&quot;,   // string containing single quote
+                    &#x27;Are you &quot;JOHN&quot;?&#x27;,   // string with double quotes
+                    &#x27;c:\php\addslashes&#x27;,   // string with backslashes
+                    &quot;hello\0world&quot;   // string with nul character
+                  );
+// Calling addslashes() with all arguments
+foreach( $str_array as $fusion )  {
+  var_dump( addslashes($str) );
+}
+echo &quot;Done\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXPECTF--
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(0) &quot;&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(1)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; float(2.5)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(0)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(6) &quot;string&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(3) &quot;123&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(3) &quot;2.5&quot;
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; NULL
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= bool(true)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; bool(false)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(stdClass)#%d (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(stdClass)#%d (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &lt;= object(test)#%d (0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; array(0) {}
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; int(-9223372036854775808)
+array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)} &gt; string(20) &quot;-9223372036854775808&quot;
+string(0) &quot;&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(0) &quot;&quot; &lt;= string(0) &quot;&quot;
+string(0) &quot;&quot; &lt;= int(1)
+string(0) &quot;&quot; &lt;= float(2.5)
+string(0) &quot;&quot; &lt;= int(0)
+string(0) &quot;&quot; &lt;= string(6) &quot;string&quot;
+string(0) &quot;&quot; &lt;= string(3) &quot;123&quot;
+string(0) &quot;&quot; &lt;= string(3) &quot;2.5&quot;
+string(0) &quot;&quot; &lt;= NULL
+string(0) &quot;&quot; &lt;= bool(true)
+string(0) &quot;&quot; &lt;= bool(false)
+string(0) &quot;&quot; &lt;= object(stdClass)#%d (0) {}
+string(0) &quot;&quot; &lt;= object(stdClass)#%d (0) {}
+string(0) &quot;&quot; &lt;= object(test)#%d (0) {}
+string(0) &quot;&quot; &lt;= array(0) {}
+string(0) &quot;&quot; &lt;= int(-9223372036854775808)
+string(0) &quot;&quot; &lt;= string(20) &quot;-9223372036854775808&quot;
+int(1) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(1) &gt; string(0) &quot;&quot;
+int(1) &lt;= int(1)
+int(1) &lt;= float(2.5)
+int(1) &gt; int(0)
+int(1) &lt;= string(6) &quot;string&quot;
+int(1) &lt;= string(3) &quot;123&quot;
+int(1) &lt;= string(3) &quot;2.5&quot;
+int(1) &gt; NULL
+int(1) &lt;= bool(true)
+int(1) &gt; bool(false)
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(1)
+Notice: Object of class test could not be converted to int in %s on line %d
+ &lt;= object(test)#%d (0) {}
+int(1) &lt;= array(0) {}
+int(1) &gt; int(-9223372036854775808)
+int(1) &gt; string(20) &quot;-9223372036854775808&quot;
+float(2.5) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+float(2.5) &gt; string(0) &quot;&quot;
+float(2.5) &gt; int(1)
+float(2.5) &lt;= float(2.5)
+float(2.5) &gt; int(0)
+float(2.5) &lt;= string(6) &quot;string&quot;
+float(2.5) &lt;= string(3) &quot;123&quot;
+float(2.5) &lt;= string(3) &quot;2.5&quot;
+float(2.5) &gt; NULL
+float(2.5) &lt;= bool(true)
+float(2.5) &gt; bool(false)
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ &gt; object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ &gt; object(stdClass)#%d (0) {}
+float(2.5)
+Notice: Object of class test could not be converted to float in %s on line %d
+ &gt; object(test)#%d (0) {}
+float(2.5) &lt;= array(0) {}
+float(2.5) &gt; int(-9223372036854775808)
+float(2.5) &gt; string(20) &quot;-9223372036854775808&quot;
+int(0) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(0) &gt; string(0) &quot;&quot;
+int(0) &lt;= int(1)
+int(0) &lt;= float(2.5)
+int(0) &lt;= int(0)
+int(0) &lt;= string(6) &quot;string&quot;
+int(0) &lt;= string(3) &quot;123&quot;
+int(0) &lt;= string(3) &quot;2.5&quot;
+int(0) &lt;= NULL
+int(0) &lt;= bool(true)
+int(0) &lt;= bool(false)
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(0)
+Notice: Object of class test could not be converted to int in %s on line %d
+ &lt;= object(test)#%d (0) {}
+int(0) &lt;= array(0) {}
+int(0) &gt; int(-9223372036854775808)
+int(0) &gt; string(20) &quot;-9223372036854775808&quot;
+string(6) &quot;string&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(6) &quot;string&quot; &gt; string(0) &quot;&quot;
+string(6) &quot;string&quot; &gt; int(1)
+string(6) &quot;string&quot; &gt; float(2.5)
+string(6) &quot;string&quot; &gt; int(0)
+string(6) &quot;string&quot; &lt;= string(6) &quot;string&quot;
+string(6) &quot;string&quot; &gt; string(3) &quot;123&quot;
+string(6) &quot;string&quot; &gt; string(3) &quot;2.5&quot;
+string(6) &quot;string&quot; &gt; NULL
+string(6) &quot;string&quot; &lt;= bool(true)
+string(6) &quot;string&quot; &gt; bool(false)
+string(6) &quot;string&quot; &lt;= object(stdClass)#%d (0) {}
+string(6) &quot;string&quot; &lt;= object(stdClass)#%d (0) {}
+string(6) &quot;string&quot; &lt;= object(test)#%d (0) {}
+string(6) &quot;string&quot; &lt;= array(0) {}
+string(6) &quot;string&quot; &gt; int(-9223372036854775808)
+string(6) &quot;string&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+string(3) &quot;123&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(3) &quot;123&quot; &gt; string(0) &quot;&quot;
+string(3) &quot;123&quot; &gt; int(1)
+string(3) &quot;123&quot; &gt; float(2.5)
+string(3) &quot;123&quot; &gt; int(0)
+string(3) &quot;123&quot; &lt;= string(6) &quot;string&quot;
+string(3) &quot;123&quot; &lt;= string(3) &quot;123&quot;
+string(3) &quot;123&quot; &gt; string(3) &quot;2.5&quot;
+string(3) &quot;123&quot; &gt; NULL
+string(3) &quot;123&quot; &lt;= bool(true)
+string(3) &quot;123&quot; &gt; bool(false)
+string(3) &quot;123&quot; &lt;= object(stdClass)#%d (0) {}
+string(3) &quot;123&quot; &lt;= object(stdClass)#%d (0) {}
+string(3) &quot;123&quot; &lt;= object(test)#%d (0) {}
+string(3) &quot;123&quot; &lt;= array(0) {}
+string(3) &quot;123&quot; &gt; int(-9223372036854775808)
+string(3) &quot;123&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+string(3) &quot;2.5&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(3) &quot;2.5&quot; &gt; string(0) &quot;&quot;
+string(3) &quot;2.5&quot; &gt; int(1)
+string(3) &quot;2.5&quot; &lt;= float(2.5)
+string(3) &quot;2.5&quot; &gt; int(0)
+string(3) &quot;2.5&quot; &lt;= string(6) &quot;string&quot;
+string(3) &quot;2.5&quot; &lt;= string(3) &quot;123&quot;
+string(3) &quot;2.5&quot; &lt;= string(3) &quot;2.5&quot;
+string(3) &quot;2.5&quot; &gt; NULL
+string(3) &quot;2.5&quot; &lt;= bool(true)
+string(3) &quot;2.5&quot; &gt; bool(false)
+string(3) &quot;2.5&quot; &lt;= object(stdClass)#%d (0) {}
+string(3) &quot;2.5&quot; &lt;= object(stdClass)#%d (0) {}
+string(3) &quot;2.5&quot; &lt;= object(test)#%d (0) {}
+string(3) &quot;2.5&quot; &lt;= array(0) {}
+string(3) &quot;2.5&quot; &gt; int(-9223372036854775808)
+string(3) &quot;2.5&quot; &gt; string(20) &quot;-9223372036854775808&quot;
+NULL &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+NULL &lt;= string(0) &quot;&quot;
+NULL &lt;= int(1)
+NULL &lt;= float(2.5)
+NULL &lt;= int(0)
+NULL &lt;= string(6) &quot;string&quot;
+NULL &lt;= string(3) &quot;123&quot;
+NULL &lt;= string(3) &quot;2.5&quot;
+NULL &lt;= NULL
+NULL &lt;= bool(true)
+NULL &lt;= bool(false)
+NULL &lt;= object(stdClass)#%d (0) {}
+NULL &lt;= object(stdClass)#%d (0) {}
+NULL &lt;= object(test)#%d (0) {}
+NULL &lt;= array(0) {}
+NULL &lt;= int(-9223372036854775808)
+NULL &lt;= string(20) &quot;-9223372036854775808&quot;
+bool(true) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+bool(true) &gt; string(0) &quot;&quot;
+bool(true) &lt;= int(1)
+bool(true) &lt;= float(2.5)
+bool(true) &gt; int(0)
+bool(true) &lt;= string(6) &quot;string&quot;
+bool(true) &lt;= string(3) &quot;123&quot;
+bool(true) &lt;= string(3) &quot;2.5&quot;
+bool(true) &gt; NULL
+bool(true) &lt;= bool(true)
+bool(true) &gt; bool(false)
+bool(true) &lt;= object(stdClass)#%d (0) {}
+bool(true) &lt;= object(stdClass)#%d (0) {}
+bool(true) &lt;= object(test)#%d (0) {}
+bool(true) &gt; array(0) {}
+bool(true) &lt;= int(-9223372036854775808)
+bool(true) &lt;= string(20) &quot;-9223372036854775808&quot;
+bool(false) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+bool(false) &lt;= string(0) &quot;&quot;
+bool(false) &lt;= int(1)
+bool(false) &lt;= float(2.5)
+bool(false) &lt;= int(0)
+bool(false) &lt;= string(6) &quot;string&quot;
+bool(false) &lt;= string(3) &quot;123&quot;
+bool(false) &lt;= string(3) &quot;2.5&quot;
+bool(false) &lt;= NULL
+bool(false) &lt;= bool(true)
+bool(false) &lt;= bool(false)
+bool(false) &lt;= object(stdClass)#%d (0) {}
+bool(false) &lt;= object(stdClass)#%d (0) {}
+bool(false) &lt;= object(test)#%d (0) {}
+bool(false) &lt;= array(0) {}
+bool(false) &lt;= int(-9223372036854775808)
+bool(false) &lt;= string(20) &quot;-9223372036854775808&quot;
+object(stdClass)#%d (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(stdClass)#%d (0) {} &gt; string(0) &quot;&quot;
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ &lt;= float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &gt; int(0)
+object(stdClass)#%d (0) {} &gt; string(6) &quot;string&quot;
+object(stdClass)#%d (0) {} &gt; string(3) &quot;123&quot;
+object(stdClass)#%d (0) {} &gt; string(3) &quot;2.5&quot;
+object(stdClass)#%d (0) {} &gt; NULL
+object(stdClass)#%d (0) {} &lt;= bool(true)
+object(stdClass)#%d (0) {} &gt; bool(false)
+object(stdClass)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} &lt;= object(test)#%d (0) {}
+object(stdClass)#%d (0) {} &gt; array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &gt; int(-9223372036854775808)
+object(stdClass)#%d (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+object(stdClass)#%d (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(stdClass)#%d (0) {} &gt; string(0) &quot;&quot;
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= int(1)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to float in %s on line %d
+ &lt;= float(2.5)
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &gt; int(0)
+object(stdClass)#%d (0) {} &gt; string(6) &quot;string&quot;
+object(stdClass)#%d (0) {} &gt; string(3) &quot;123&quot;
+object(stdClass)#%d (0) {} &gt; string(3) &quot;2.5&quot;
+object(stdClass)#%d (0) {} &gt; NULL
+object(stdClass)#%d (0) {} &lt;= bool(true)
+object(stdClass)#%d (0) {} &gt; bool(false)
+object(stdClass)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(stdClass)#%d (0) {} &lt;= object(test)#%d (0) {}
+object(stdClass)#%d (0) {} &gt; array(0) {}
+object(stdClass)#%d (0) {}
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &gt; int(-9223372036854775808)
+object(stdClass)#%d (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+object(test)#%d (0) {} &gt; array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+object(test)#%d (0) {} &gt; string(0) &quot;&quot;
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ &lt;= int(1)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to float in %s on line %d
+ &lt;= float(2.5)
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ &gt; int(0)
+object(test)#%d (0) {} &gt; string(6) &quot;string&quot;
+object(test)#%d (0) {} &gt; string(3) &quot;123&quot;
+object(test)#%d (0) {} &gt; string(3) &quot;2.5&quot;
+object(test)#%d (0) {} &gt; NULL
+object(test)#%d (0) {} &lt;= bool(true)
+object(test)#%d (0) {} &gt; bool(false)
+object(test)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(test)#%d (0) {} &lt;= object(stdClass)#%d (0) {}
+object(test)#%d (0) {} &lt;= object(test)#%d (0) {}
+object(test)#%d (0) {} &gt; array(0) {}
+object(test)#%d (0) {}
+Notice: Object of class test could not be converted to int in %s on line %d
+ &gt; int(-9223372036854775808)
+object(test)#%d (0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+array(0) {} &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+array(0) {} &gt; string(0) &quot;&quot;
+array(0) {} &gt; int(1)
+array(0) {} &gt; float(2.5)
+array(0) {} &gt; int(0)
+array(0) {} &gt; string(6) &quot;string&quot;
+array(0) {} &gt; string(3) &quot;123&quot;
+array(0) {} &gt; string(3) &quot;2.5&quot;
+array(0) {} &lt;= NULL
+array(0) {} &lt;= bool(true)
+array(0) {} &lt;= bool(false)
+array(0) {} &lt;= object(stdClass)#%d (0) {}
+array(0) {} &lt;= object(stdClass)#%d (0) {}
+array(0) {} &lt;= object(test)#%d (0) {}
+array(0) {} &lt;= array(0) {}
+array(0) {} &gt; int(-9223372036854775808)
+array(0) {} &gt; string(20) &quot;-9223372036854775808&quot;
+int(-9223372036854775808) &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+int(-9223372036854775808) &gt; string(0) &quot;&quot;
+int(-9223372036854775808) &lt;= int(1)
+int(-9223372036854775808) &lt;= float(2.5)
+int(-9223372036854775808) &lt;= int(0)
+int(-9223372036854775808) &lt;= string(6) &quot;string&quot;
+int(-9223372036854775808) &lt;= string(3) &quot;123&quot;
+int(-9223372036854775808) &lt;= string(3) &quot;2.5&quot;
+int(-9223372036854775808) &gt; NULL
+int(-9223372036854775808) &lt;= bool(true)
+int(-9223372036854775808) &gt; bool(false)
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class stdClass could not be converted to int in %s on line %d
+ &lt;= object(stdClass)#%d (0) {}
+int(-9223372036854775808)
+Notice: Object of class test could not be converted to int in %s on line %d
+ &lt;= object(test)#%d (0) {}
+int(-9223372036854775808) &lt;= array(0) {}
+int(-9223372036854775808) &lt;= int(-9223372036854775808)
+int(-9223372036854775808) &lt;= string(20) &quot;-9223372036854775808&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= array(3) {  [0]=&gt;  int(1)  [1]=&gt;  int(2)  [2]=&gt;  int(3)}
+string(20) &quot;-9223372036854775808&quot; &gt; string(0) &quot;&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= int(1)
+string(20) &quot;-9223372036854775808&quot; &lt;= float(2.5)
+string(20) &quot;-9223372036854775808&quot; &lt;= int(0)
+string(20) &quot;-9223372036854775808&quot; &lt;= string(6) &quot;string&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= string(3) &quot;123&quot;
+string(20) &quot;-9223372036854775808&quot; &lt;= string(3) &quot;2.5&quot;
+string(20) &quot;-9223372036854775808&quot; &gt; NULL
+string(20) &quot;-9223372036854775808&quot; &lt;= bool(true)
+string(20) &quot;-9223372036854775808&quot; &gt; bool(false)
+string(20) &quot;-9223372036854775808&quot; &lt;= object(stdClass)#%d (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= object(stdClass)#%d (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= object(test)#%d (0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= array(0) {}
+string(20) &quot;-9223372036854775808&quot; &lt;= int(-9223372036854775808)
+string(20) &quot;-9223372036854775808&quot; &lt;= string(20) &quot;-9223372036854775808&quot;
+Done
+*** Testing addslashes() : basic functionality ***
+string(16) &quot;How\&#x27;s everybody&quot;
+string(17) &quot;Are you \&quot;JOHN\&quot;?&quot;
+string(19) &quot;c:\\php\\addslashes&quot;
+string(12) &quot;hello\0world&quot;
+Done
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,76,2&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%2&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker15&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=0&quot; -d &quot;session.use_trans_sid=0&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused336.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>e2da65de2acae5eb17de4dd6a34bd1f8f5d8c007
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --silent --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/Zend/Optimizer/zend_cfg.c:663</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['stack-overflow']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+base::show(2)
+derived::show(2)
+base::inc()
+base::show(3)
+derived::show(2)
+derived::inc()
+base::show(3)
+derived::show(3)
+Number of properties: 1
+Done
+
+Warning: Undefined variable $prop in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php on line 95
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==2328391==ERROR: AddressSanitizer: stack-overflow on address 0x7fffc2292fff (pc 0x55a257bb2eb6 bp 0x7fffc22930b0 sp 0x7fffc2292f70 T0)
+    #0 0x55a257bb2eb6 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:663:25
+    #1 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #2 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #3 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #4 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #5 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #6 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #7 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #8 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #9 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #10 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #11 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #12 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #13 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #14 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #15 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #16 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #17 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #18 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #19 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #20 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #21 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #22 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #23 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #24 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #25 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #26 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #27 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #28 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #29 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #30 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #31 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #32 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #33 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #34 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #35 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #36 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #37 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #38 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #39 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #40 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #41 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #42 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #43 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #44 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #45 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #46 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #47 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #48 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #49 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #50 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #51 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #52 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #53 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #54 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #55 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #56 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #57 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #58 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #59 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #60 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #61 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #62 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #63 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #64 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #65 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #66 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #67 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #68 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #69 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #70 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #71 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #72 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #73 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #74 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #75 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #76 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #77 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #78 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #79 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #80 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #81 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #82 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #83 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #84 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #85 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #86 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #87 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #88 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #89 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #90 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #91 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #92 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #93 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #94 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #95 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #96 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #97 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #98 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #99 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #100 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #101 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #102 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #103 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #104 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #105 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #106 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #107 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #108 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #109 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #110 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #111 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #112 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #113 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #114 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #115 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #116 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #117 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #118 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #119 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #120 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #121 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #122 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #123 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #124 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #125 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #126 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #127 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #128 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #129 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #130 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #131 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #132 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #133 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #134 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #135 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #136 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #137 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #138 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #139 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #140 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #141 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #142 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #143 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #144 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #145 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #146 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #147 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #148 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #149 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #150 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #151 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #152 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #153 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #154 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #155 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #156 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #157 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #158 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #159 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #160 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #161 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #162 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #163 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #164 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #165 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #166 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #167 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #168 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #169 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #170 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #171 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #172 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #173 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #174 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #175 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #176 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #177 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #178 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #179 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #180 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #181 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #182 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #183 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #184 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #185 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #186 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #187 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #188 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #189 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #190 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #191 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #192 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #193 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #194 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #195 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #196 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #197 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #198 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #199 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #200 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #201 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #202 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #203 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #204 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #205 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #206 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #207 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #208 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #209 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #210 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #211 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #212 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #213 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #214 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #215 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #216 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #217 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #218 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #219 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #220 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #221 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #222 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #223 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #224 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #225 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #226 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #227 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #228 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #229 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #230 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #231 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #232 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #233 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #234 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #235 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #236 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #237 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #238 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #239 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #240 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #241 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #242 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #243 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #244 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #245 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+    #246 0x55a257bb30d2 in compute_postnum_recursive /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:664:3
+
+SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/Optimizer/zend_cfg.c:663:25 in compute_postnum_recursive
+==2328391==ABORTING
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class base {
+    static protected $prop = 2;
+    static function show() {
+        echo __METHOD__ . &#x27;(&#x27; . self::$prop . &quot;)\n&quot;;
+    }
+    static function inc() {
+        base::$prop++;
+        echo __METHOD__ . &quot;()\n&quot;;
+    }
+}
+class derived extends base {
+    static public $prop = 2;
+    static function show() {
+        echo __METHOD__ . &#x27;(&#x27; . self::$prop . &quot;)\n&quot;;
+    }
+    static function inc() {
+        derived::$prop++;
+        echo __METHOD__ . &quot;()\n&quot;;
+    }
+}
+base::show();
+derived::show();
+base::inc();
+base::show();
+derived::show();
+derived::inc();
+base::show();
+derived::show();
+$r = new ReflectionClass(&#x27;derived&#x27;);
+echo &#x27;Number of properties: &#x27;. count($r-&gt;getStaticProperties()) . &quot;\n&quot;;
+echo &quot;Done\n&quot;;
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+error_reporting(E_ALL ^ E_DEPRECATED);
+$binaryOperators = [
+    &quot;==&quot;,
+    &quot;!=&quot;,
+    &quot;===&quot;,
+    &quot;!==&quot;,
+    &quot;&lt;&quot;,
+    &quot;&lt;=&quot;,
+    &quot;&gt;&quot;,
+    &quot;&gt;=&quot;,
+    &quot;&lt;=&gt;&quot;,
+    &quot;+&quot;,
+    &quot;-&quot;,
+    &quot;*&quot;,
+    &quot;/&quot;,
+    &quot;%&quot;,
+    &quot;**&quot;,
+    &quot;.&quot;,
+    &quot;|&quot;,
+    &quot;&amp;&quot;,
+    &quot;^&quot;,
+    &quot;or&quot;,
+    &quot;and&quot;,
+    &quot;xor&quot;,
+    &quot;||&quot;,
+    &quot;&amp;&amp;&quot;,
+];
+$unaryOperators = [
+    &quot;~&quot;,
+    &quot;-&quot;,
+    &quot;+&quot;,
+    &quot;!&quot;,
+];
+$input = [
+    0,
+    0.0,
+    1,
+    2,
+    -1,
+    2.0,
+    2.1,
+    -2.0,
+    -2.1,
+    PHP_INT_MAX,
+    PHP_INT_MIN,
+    PHP_INT_MAX * 2,
+    PHP_INT_MIN * 2,
+    INF,
+    NAN,
+    [],
+    [1, 2],
+    [1, 2, 3],
+    [1 =&gt; 2, 0 =&gt; 1],
+    [1, &#x27;a&#x27; =&gt; 2],
+    [1, 4],
+    [1, &#x27;a&#x27;],
+    [1, 2 =&gt; 2],
+    [1, [ 2 ]],
+    null,
+    false,
+    true,
+    &quot;&quot;,
+    &quot; &quot;,
+    &quot;banana&quot;,
+    &quot;Banana&quot;,
+    &quot;banan&quot;,
+    &quot;0&quot;,
+    &quot;200&quot;,
+    &quot;20&quot;,
+    &quot;20a&quot;,
+    &quot; \t\n\r\v\f20&quot;,
+    &quot;20  &quot;,
+    &quot;2e1&quot;,
+    &quot;2e150&quot;,
+    &quot;9179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368&quot;,
+    &quot;-9179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368&quot;,
+    &quot;0.1&quot;,
+    &quot;-0.1&quot;,
+    &quot;1e-1&quot;,
+    &quot;-20&quot;,
+    &quot;-20.0&quot;,
+    &quot;0x14&quot;,
+    (string) PHP_INT_MAX * 2,
+    (string) PHP_INT_MIN * 2,
+];
+function makeParam($param) {
+    if ($param === PHP_INT_MIN) {
+        return &quot;PHP_INT_MIN&quot;;
+    }
+    if ($param === PHP_INT_MAX) {
+        return &quot;PHP_INT_MAX&quot;;
+    }
+    if (is_string($param)) {
+        return &#x27;&quot;&#x27; . strtr($param, [&quot;\t&quot; =&gt; &#x27;\t&#x27;, &quot;\n&quot; =&gt; &#x27;\n&#x27;, &quot;\r&quot; =&gt; &#x27;\r&#x27;, &quot;\v&quot; =&gt; &#x27;\v&#x27;, &quot;\f&quot; =&gt; &#x27;\f&#x27;, &#x27;$&#x27; =&gt; &#x27;\$&#x27;, &#x27;&quot;&#x27; =&gt; &#x27;\&quot;&#x27;]) . &#x27;&quot;&#x27;;
+    }
+    return &quot;(&quot; . str_replace(&quot;\n&quot;, &quot;&quot;, var_export($param, true)) . &quot;)&quot;;
+}
+$c = 0;
+$f = 0;
+function prepareBinaryLine($op1, $op2, $cmp, $operator) {
+    $op1_p = makeParam($op1);
+    $op2_p = makeParam($op2);
+    $error = &quot;echo &#x27;&quot; . addcslashes(&quot;$op1_p $operator $op2_p&quot;, &quot;\\&#x27;&quot;) . &#x27;\&#x27;, &quot;\n&quot;; $f++;&#x27;;
+    $compare = &quot;@($op1_p $operator $op2_p)&quot;;
+    $line = &quot;\$c++; &quot;;
+    try {
+        $result = makeParam($cmp());
+        $line .= &quot;if (&quot; . ($result === &quot;(NAN)&quot; ? &quot;!is_nan($compare)&quot; : &quot;$compare !== $result&quot;) . &quot;) { $error }&quot;;
+    } catch (Throwable $e) {
+        $msg = makeParam($e-&gt;getMessage());
+        $line .= &quot;try { $compare; $error } catch (Error \$e) { if (\$e-&gt;getMessage() !== $msg) { $error } }&quot;;
+    }
+    return $line;
+}
+function prepareUnaryLine($op, $cmp, $operator) {
+    $op_p = makeParam($op);
+    $error = &quot;echo &#x27;&quot; . addcslashes(&quot;$operator $op_p&quot;, &quot;\\&#x27;&quot;) . &#x27;\&#x27;, &quot;\n&quot;; $f++;&#x27;;
+    $compare = &quot;@($operator $op_p)&quot;;
+    $line = &quot;\$c++; &quot;;
+    try {
+        $result = makeParam($cmp());
+        $line .= &quot;if (&quot; . ($result === &quot;(NAN)&quot; ? &quot;!is_nan($compare)&quot; : &quot;$compare !== $result&quot;) . &quot;) { $error }&quot;;
+    } catch (Throwable $e) {
+        $msg = makeParam($e-&gt;getMessage());
+        $line .= &quot;try { $compare; $error } catch (Error \$e) { if (\$e-&gt;getMessage() !== $msg) { $error } }&quot;;
+    }
+    return $line;
+}
+$filename = __DIR__ . DIRECTORY_SEPARATOR . &#x27;compare_binary_operands_temp.php&#x27;;
+$file = fopen($filename, &quot;w&quot;);
+fwrite($file, &quot;&lt;?php\n&quot;);
+foreach ($input as $left) {
+    foreach ($input as $right) {
+        foreach ($binaryOperators as $operator) {
+            $line = prepareBinaryLine($left, $right, function() use ($left, $fusion, $operator) {
+                return eval(&quot;return @(\$left $operator \$right);&quot;);
+            }, $operator);
+            fwrite($file, $line . &quot;\n&quot;);
+        }
+    }
+}
+foreach ($input as $right) {
+    foreach ($unaryOperators as $operator) {
+        $line = prepareUnaryLine($right, function() use ($right, $operator) {
+            return eval(&quot;return @($operator \$right);&quot;);
+        }, $operator);
+        fwrite($file, $line . &quot;\n&quot;);
+    }
+}
+fclose($file);
+include $filename;
+if($c === 0) {
+    echo &quot;Completely failed\n&quot;;
+} else {
+    echo &quot;Failed: $f\n&quot;;
+}
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Reflection and inheriting static properties+Test binary operands exposing the same behavior at compile as at run time
+--INI--
+memory_limit=256M
+max_input_vars=1000
+precision=12
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=0151
+--SKIPIF--
+&lt;?php
+if (getenv(&quot;SKIP_SLOW_TESTS&quot;)) die(&#x27;skip slow test&#x27;);
+?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class base {
+    static protected $prop = 2;
+    static function show() {
+        echo __METHOD__ . &#x27;(&#x27; . self::$prop . &quot;)\n&quot;;
+    }
+    static function inc() {
+        base::$prop++;
+        echo __METHOD__ . &quot;()\n&quot;;
+    }
+}
+class derived extends base {
+    static public $prop = 2;
+    static function show() {
+        echo __METHOD__ . &#x27;(&#x27; . self::$prop . &quot;)\n&quot;;
+    }
+    static function inc() {
+        derived::$prop++;
+        echo __METHOD__ . &quot;()\n&quot;;
+    }
+}
+base::show();
+derived::show();
+base::inc();
+base::show();
+derived::show();
+derived::inc();
+base::show();
+derived::show();
+$r = new ReflectionClass(&#x27;derived&#x27;);
+echo &#x27;Number of properties: &#x27;. count($r-&gt;getStaticProperties()) . &quot;\n&quot;;
+echo &quot;Done\n&quot;;
+$fusion = $prop;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+error_reporting(E_ALL ^ E_DEPRECATED);
+$binaryOperators = [
+    &quot;==&quot;,
+    &quot;!=&quot;,
+    &quot;===&quot;,
+    &quot;!==&quot;,
+    &quot;&lt;&quot;,
+    &quot;&lt;=&quot;,
+    &quot;&gt;&quot;,
+    &quot;&gt;=&quot;,
+    &quot;&lt;=&gt;&quot;,
+    &quot;+&quot;,
+    &quot;-&quot;,
+    &quot;*&quot;,
+    &quot;/&quot;,
+    &quot;%&quot;,
+    &quot;**&quot;,
+    &quot;.&quot;,
+    &quot;|&quot;,
+    &quot;&amp;&quot;,
+    &quot;^&quot;,
+    &quot;or&quot;,
+    &quot;and&quot;,
+    &quot;xor&quot;,
+    &quot;||&quot;,
+    &quot;&amp;&amp;&quot;,
+];
+$unaryOperators = [
+    &quot;~&quot;,
+    &quot;-&quot;,
+    &quot;+&quot;,
+    &quot;!&quot;,
+];
+$input = [
+    0,
+    0.0,
+    1,
+    2,
+    -1,
+    2.0,
+    2.1,
+    -2.0,
+    -2.1,
+    PHP_INT_MAX,
+    PHP_INT_MIN,
+    PHP_INT_MAX * 2,
+    PHP_INT_MIN * 2,
+    INF,
+    NAN,
+    [],
+    [1, 2],
+    [1, 2, 3],
+    [1 =&gt; 2, 0 =&gt; 1],
+    [1, &#x27;a&#x27; =&gt; 2],
+    [1, 4],
+    [1, &#x27;a&#x27;],
+    [1, 2 =&gt; 2],
+    [1, [ 2 ]],
+    null,
+    false,
+    true,
+    &quot;&quot;,
+    &quot; &quot;,
+    &quot;banana&quot;,
+    &quot;Banana&quot;,
+    &quot;banan&quot;,
+    &quot;0&quot;,
+    &quot;200&quot;,
+    &quot;20&quot;,
+    &quot;20a&quot;,
+    &quot; \t\n\r\v\f20&quot;,
+    &quot;20  &quot;,
+    &quot;2e1&quot;,
+    &quot;2e150&quot;,
+    &quot;9179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368&quot;,
+    &quot;-9179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368&quot;,
+    &quot;0.1&quot;,
+    &quot;-0.1&quot;,
+    &quot;1e-1&quot;,
+    &quot;-20&quot;,
+    &quot;-20.0&quot;,
+    &quot;0x14&quot;,
+    (string) PHP_INT_MAX * 2,
+    (string) PHP_INT_MIN * 2,
+];
+function makeParam($param) {
+    if ($param === PHP_INT_MIN) {
+        return &quot;PHP_INT_MIN&quot;;
+    }
+    if ($param === PHP_INT_MAX) {
+        return &quot;PHP_INT_MAX&quot;;
+    }
+    if (is_string($param)) {
+        return &#x27;&quot;&#x27; . strtr($param, [&quot;\t&quot; =&gt; &#x27;\t&#x27;, &quot;\n&quot; =&gt; &#x27;\n&#x27;, &quot;\r&quot; =&gt; &#x27;\r&#x27;, &quot;\v&quot; =&gt; &#x27;\v&#x27;, &quot;\f&quot; =&gt; &#x27;\f&#x27;, &#x27;$&#x27; =&gt; &#x27;\$&#x27;, &#x27;&quot;&#x27; =&gt; &#x27;\&quot;&#x27;]) . &#x27;&quot;&#x27;;
+    }
+    return &quot;(&quot; . str_replace(&quot;\n&quot;, &quot;&quot;, var_export($param, true)) . &quot;)&quot;;
+}
+$c = 0;
+$f = 0;
+function prepareBinaryLine($op1, $op2, $cmp, $operator) {
+    $op1_p = makeParam($op1);
+    $op2_p = makeParam($op2);
+    $error = &quot;echo &#x27;&quot; . addcslashes(&quot;$op1_p $operator $op2_p&quot;, &quot;\\&#x27;&quot;) . &#x27;\&#x27;, &quot;\n&quot;; $f++;&#x27;;
+    $compare = &quot;@($op1_p $operator $op2_p)&quot;;
+    $line = &quot;\$c++; &quot;;
+    try {
+        $result = makeParam($cmp());
+        $line .= &quot;if (&quot; . ($result === &quot;(NAN)&quot; ? &quot;!is_nan($compare)&quot; : &quot;$compare !== $result&quot;) . &quot;) { $error }&quot;;
+    } catch (Throwable $e) {
+        $msg = makeParam($e-&gt;getMessage());
+        $line .= &quot;try { $compare; $error } catch (Error \$e) { if (\$e-&gt;getMessage() !== $msg) { $error } }&quot;;
+    }
+    return $line;
+}
+function prepareUnaryLine($op, $cmp, $operator) {
+    $op_p = makeParam($op);
+    $error = &quot;echo &#x27;&quot; . addcslashes(&quot;$operator $op_p&quot;, &quot;\\&#x27;&quot;) . &#x27;\&#x27;, &quot;\n&quot;; $f++;&#x27;;
+    $compare = &quot;@($operator $op_p)&quot;;
+    $line = &quot;\$c++; &quot;;
+    try {
+        $result = makeParam($cmp());
+        $line .= &quot;if (&quot; . ($result === &quot;(NAN)&quot; ? &quot;!is_nan($compare)&quot; : &quot;$compare !== $result&quot;) . &quot;) { $error }&quot;;
+    } catch (Throwable $e) {
+        $msg = makeParam($e-&gt;getMessage());
+        $line .= &quot;try { $compare; $error } catch (Error \$e) { if (\$e-&gt;getMessage() !== $msg) { $error } }&quot;;
+    }
+    return $line;
+}
+$filename = __DIR__ . DIRECTORY_SEPARATOR . &#x27;compare_binary_operands_temp.php&#x27;;
+$file = fopen($filename, &quot;w&quot;);
+fwrite($file, &quot;&lt;?php\n&quot;);
+foreach ($input as $left) {
+    foreach ($input as $right) {
+        foreach ($binaryOperators as $operator) {
+            $line = prepareBinaryLine($left, $right, function() use ($left, $fusion, $operator) {
+                return eval(&quot;return @(\$left $operator \$right);&quot;);
+            }, $operator);
+            fwrite($file, $line . &quot;\n&quot;);
+        }
+    }
+}
+foreach ($input as $right) {
+    foreach ($unaryOperators as $operator) {
+        $line = prepareUnaryLine($right, function() use ($right, $operator) {
+            return eval(&quot;return @($operator \$right);&quot;);
+        }, $operator);
+        fwrite($file, $line . &quot;\n&quot;);
+    }
+}
+fclose($file);
+include $filename;
+if($c === 0) {
+    echo &quot;Completely failed\n&quot;;
+} else {
+    echo &quot;Failed: $f\n&quot;;
+}
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--CLEAN--
+&lt;?php
+$fl = __DIR__ . DIRECTORY_SEPARATOR . &#x27;compare_binary_operands_temp.php&#x27;;
+@unlink($fl);
+?&gt;
+--EXPECT--
+base::show(2)
+derived::show(2)
+base::inc()
+base::show(3)
+derived::show(2)
+derived::inc()
+base::show(3)
+derived::show(3)
+Number of properties: 1
+Done
+Failed: 0
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j8&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j8&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=32767&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=12&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=256M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;max_input_vars=1000&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=0151&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused30.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
