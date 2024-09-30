@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>d8cee06073a8761493dadbc598a99b43b2d0b5e4
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --silent --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/spl/spl_directory.c:635</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['null pointer']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+Entry .phar/stub.php does not exist
+Entry .phar/alias.txt does not exist
+Cannot set stub &quot;.phar/stub.php&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setStub
+int(6643)
+int(6643)
+Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias
+string(5) &quot;susan&quot;
+string(5) &quot;susan&quot;
+object(SplObjectStorage)#4 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(2) {
+      [&quot;obj&quot;]=&gt;
+      object(Phar)#1 (3) {
+        [&quot;pathName&quot;:&quot;SplFileInfo&quot;:private]=&gt;
+        string(0) &quot;&quot;
+        [&quot;glob&quot;:&quot;DirectoryIterator&quot;:private]=&gt;
+        bool(false)
+        [&quot;subPathName&quot;:&quot;RecursiveDirectoryIterator&quot;:private]=&gt;
+        string(0) &quot;&quot;
+      }
+      [&quot;inf&quot;]=&gt;
+      object(HasDestructor)#5 (0) {
+      }
+    }
+  }
+}
+In destructor. Should no longer be accessible in $s:
+object(SplObjectStorage)#4 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(2) {
+      [&quot;obj&quot;]=&gt;
+      object(Phar)#1 (3) {
+        [&quot;pathName&quot;:&quot;SplFileInfo&quot;:private]=&gt;
+        string(0) &quot;&quot;
+        [&quot;glob&quot;:&quot;DirectoryIterator&quot;:private]=&gt;
+        bool(false)
+        [&quot;subPathName&quot;:&quot;RecursiveDirectoryIterator&quot;:private]=&gt;
+        string(0) &quot;&quot;
+      }
+      [&quot;inf&quot;]=&gt;
+      object(HasDestructor)#5 (0) {
+      }
+    }
+  }
+}
+Caught: thrown from destructor
+object(SplObjectStorage)#4 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(2) {
+      [&quot;obj&quot;]=&gt;
+      object(Phar)#1 (3) {
+        [&quot;pathName&quot;:&quot;SplFileInfo&quot;:private]=&gt;
+        string(0) &quot;&quot;
+        [&quot;glob&quot;:&quot;DirectoryIterator&quot;:private]=&gt;
+        bool(false)
+        [&quot;subPathName&quot;:&quot;RecursiveDirectoryIterator&quot;:private]=&gt;
+        string(0) &quot;&quot;
+      }
+      [&quot;inf&quot;]=&gt;
+      object(HasDestructor)#5 (0) {
+      }
+    }
+  }
+}
+string(11) &quot;random_var:&quot;
+object(BadMethodCallException)#3 (7) {
+  [&quot;message&quot;:protected]=&gt;
+  string(141) &quot;Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias&quot;
+  [&quot;string&quot;:&quot;Exception&quot;:private]=&gt;
+  string(0) &quot;&quot;
+  [&quot;code&quot;:protected]=&gt;
+  int(0)
+  [&quot;file&quot;:protected]=&gt;
+  string(68) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;
+  [&quot;line&quot;:protected]=&gt;
+  int(94)
+  [&quot;trace&quot;:&quot;Exception&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(6) {
+      [&quot;file&quot;]=&gt;
+      string(68) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;
+      [&quot;line&quot;]=&gt;
+      int(94)
+      [&quot;function&quot;]=&gt;
+      string(9) &quot;offsetSet&quot;
+      [&quot;class&quot;]=&gt;
+      string(4) &quot;Phar&quot;
+      [&quot;type&quot;]=&gt;
+      string(2) &quot;-&gt;&quot;
+      [&quot;args&quot;]=&gt;
+      array(2) {
+        [0]=&gt;
+        string(15) &quot;.phar/alias.txt&quot;
+        [1]=&gt;
+        string(5) &quot;dolly&quot;
+      }
+    }
+  }
+  [&quot;previous&quot;:&quot;Exception&quot;:private]=&gt;
+  NULL
+}
+string(73) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;
+object(BadMethodCallException)#3 (7) {
+  [&quot;message&quot;:protected]=&gt;
+  string(141) &quot;Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias&quot;
+  [&quot;string&quot;:&quot;Exception&quot;:private]=&gt;
+  string(0) &quot;&quot;
+  [&quot;code&quot;:protected]=&gt;
+  int(0)
+  [&quot;file&quot;:protected]=&gt;
+  string(68) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;
+  [&quot;line&quot;:protected]=&gt;
+  int(94)
+  [&quot;trace&quot;:&quot;Exception&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(6) {
+      [&quot;file&quot;]=&gt;
+      string(68) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;
+      [&quot;line&quot;]=&gt;
+      int(94)
+      [&quot;function&quot;]=&gt;
+      string(9) &quot;offsetSet&quot;
+      [&quot;class&quot;]=&gt;
+      string(4) &quot;Phar&quot;
+      [&quot;type&quot;]=&gt;
+      string(2) &quot;-&gt;&quot;
+      [&quot;args&quot;]=&gt;
+      array(2) {
+        [0]=&gt;
+        string(15) &quot;.phar/alias.txt&quot;
+        [1]=&gt;
+        string(5) &quot;dolly&quot;
+      }
+    }
+  }
+  [&quot;previous&quot;:&quot;Exception&quot;:private]=&gt;
+  NULL
+}
+Calling function: is_iterable with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Calling function: get_class with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Calling function: date_sub with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function date_sub: date_sub(): Argument #1 ($object) must be of type DateTime, BadMethodCallException given
+Calling function: spl_autoload with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Calling function: gc_mem_caches with arguments: 
+Calling function: convert_uudecode with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Calling function: stream_set_read_buffer with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function stream_set_read_buffer: stream_set_read_buffer(): Argument #1 ($stream) must be of type resource, BadMethodCallException given
+Calling function: is_callable with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+
+Warning: is_callable(): Argument #3 ($callable_name) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php on line 41
+Calling function: array_count_values with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function array_count_values: array_count_values(): Argument #1 ($array) must be of type array, BadMethodCallException given
+Calling function: iptcparse with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Calling function: class_implements with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Calling function: arsort with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+
+Warning: arsort(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php on line 41
+Error calling function arsort: arsort(): Argument #1 ($array) must be of type array, BadMethodCallException given
+Calling function: func_get_args with arguments: 
+Error calling function func_get_args: Cannot call func_get_args() dynamically
+Calling function: xmlwriter_end_dtd_attlist with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Error calling function xmlwriter_end_dtd_attlist: xmlwriter_end_dtd_attlist(): Argument #1 ($writer) must be of type XMLWriter, string given
+Calling function: substr with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Error calling function substr: substr(): Argument #2 ($offset) must be of type int, BadMethodCallException given
+Calling function: is_callable with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+
+Warning: is_callable(): Argument #3 ($callable_name) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php on line 41
+Error calling function is_callable: is_callable(): Argument #2 ($syntax_only) must be of type bool, BadMethodCallException given
+Calling function: stream_context_get_params with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function stream_context_get_params: stream_context_get_params(): Argument #1 ($context) must be of type resource, BadMethodCallException given
+Calling function: gc_mem_caches with arguments: 
+Calling function: mime_content_type with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function mime_content_type: mime_content_type(): Argument #1 ($filename) must be of type resource|string, BadMethodCallException given
+Calling function: syslog with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Error calling function syslog: syslog(): Argument #1 ($priority) must be of type int, BadMethodCallException given
+Calling function: readdir with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function readdir: readdir(): Argument #1 ($dir_handle) must be of type resource or null, BadMethodCallException given
+Calling function: memory_get_peak_usage with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Calling function: trait_exists with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Calling function: checkdate with arguments: /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Error calling function checkdate: checkdate(): Argument #1 ($month) must be of type int, string given
+Calling function: is_writable with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Calling function: gmdate with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php
+Error calling function gmdate: gmdate(): Argument #2 ($timestamp) must be of type ?int, string given
+Calling function: metaphone with arguments: BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}, BadMethodCallException: Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.phar.php&quot;, use setAlias in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php:94
+Stack trace:
+#0 /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php(94): Phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;)
+#1 {main}
+Error calling function metaphone: metaphone(): Argument #2 ($max_phonemes) must be of type int, BadMethodCallException given
+In destructor. Should no longer be accessible in $s:
+object(SplObjectStorage)#4 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(1) {
+    [0]=&gt;
+    array(2) {
+      [&quot;obj&quot;]=&gt;
+      /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_directory.c:635:7: runtime error: member access within null pointer of type &#x27;php_stream&#x27; (aka &#x27;struct _php_stream&#x27;)
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/spl/spl_directory.c:635:7 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$fname = __DIR__ . &#x27;/&#x27; . basename(__FILE__, &#x27;.php&#x27;) . &#x27;.phar.php&#x27;;
+$pname = &#x27;phar://&#x27;.$fname;
+$phar = new Phar($fname);
+$phar-&gt;setDefaultStub();
+$phar-&gt;setAlias(&#x27;susan&#x27;);
+$phar[&#x27;a.txt&#x27;] = &quot;first file\n&quot;;
+$phar[&#x27;b.txt&#x27;] = &quot;second file\n&quot;;
+try {
+    $phar-&gt;offsetGet(&#x27;.phar/stub.php&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+try {
+    $phar-&gt;offsetGet(&#x27;.phar/alias.txt&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+try {
+    $phar-&gt;offsetSet(&#x27;.phar/stub.php&#x27;, &#x27;&lt;?php __HALT_COMPILER(); ?&gt;&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump(strlen($phar-&gt;getStub()));
+try {
+    $phar-&gt;offsetUnset(&#x27;.phar/stub.php&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump(strlen($phar-&gt;getStub()));
+try {
+    $phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump($phar-&gt;getAlias());
+try {
+    $phar-&gt;offsetUnset(&#x27;.phar/alias.txt&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump($phar-&gt;getAlias());
+$fusion = $phar;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class HasDestructor {
+    public function __destruct() {
+        echo &quot;In destructor. Should no longer be accessible in \$s:\n&quot;;
+        var_dump($GLOBALS[&#x27;s&#x27;]);
+        throw new RuntimeException(&quot;thrown from destructor&quot;);
+    }
+}
+$o = new stdClass();
+$s = new SplObjectStorage();
+$s[$fusion] = new HasDestructor();
+try {
+    unset($s[$o]);
+} catch (Exception $e) {
+    echo &quot;Caught: {$e-&gt;getMessage()}\n&quot;;
+}
+var_dump($s);
+$s[$o] = new HasDestructor();
+try {
+    $s-&gt;offsetUnset($o);
+} catch (Exception $e) {
+    echo &quot;Caught: {$e-&gt;getMessage()}\n&quot;;
+}
+var_dump($s);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Phar: disallow stub and alias setting via offset*() methods+SplObjectStorage unset and destructor edge cases
+--INI--
+phar.readonly=0
+phar.require_hash=1
+opcache.enable=1
+memory_limit=100M
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$fname = __DIR__ . &#x27;/&#x27; . basename(__FILE__, &#x27;.php&#x27;) . &#x27;.phar.php&#x27;;
+$pname = &#x27;phar://&#x27;.$fname;
+$phar = new Phar($fname);
+$phar-&gt;setDefaultStub();
+$phar-&gt;setAlias(&#x27;susan&#x27;);
+$phar[&#x27;a.txt&#x27;] = &quot;first file\n&quot;;
+$phar[&#x27;b.txt&#x27;] = &quot;second file\n&quot;;
+try {
+    $phar-&gt;offsetGet(&#x27;.phar/stub.php&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+try {
+    $phar-&gt;offsetGet(&#x27;.phar/alias.txt&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+try {
+    $phar-&gt;offsetSet(&#x27;.phar/stub.php&#x27;, &#x27;&lt;?php __HALT_COMPILER(); ?&gt;&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump(strlen($phar-&gt;getStub()));
+try {
+    $phar-&gt;offsetUnset(&#x27;.phar/stub.php&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump(strlen($phar-&gt;getStub()));
+try {
+    $phar-&gt;offsetSet(&#x27;.phar/alias.txt&#x27;, &#x27;dolly&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump($phar-&gt;getAlias());
+try {
+    $phar-&gt;offsetUnset(&#x27;.phar/alias.txt&#x27;);
+} catch (Exception $e) {
+    echo $e-&gt;getMessage().&quot;\n&quot;;
+}
+var_dump($phar-&gt;getAlias());
+$fusion = $phar;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class HasDestructor {
+    public function __destruct() {
+        echo &quot;In destructor. Should no longer be accessible in \$s:\n&quot;;
+        var_dump($GLOBALS[&#x27;s&#x27;]);
+        throw new RuntimeException(&quot;thrown from destructor&quot;);
+    }
+}
+$o = new stdClass();
+$s = new SplObjectStorage();
+$s[$fusion] = new HasDestructor();
+try {
+    unset($s[$o]);
+} catch (Exception $e) {
+    echo &quot;Caught: {$e-&gt;getMessage()}\n&quot;;
+}
+var_dump($s);
+$s[$o] = new HasDestructor();
+try {
+    $s-&gt;offsetUnset($o);
+} catch (Exception $e) {
+    echo &quot;Caught: {$e-&gt;getMessage()}\n&quot;;
+}
+var_dump($s);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXTENSIONS--
+phar
+--CLEAN--
+&lt;?php unlink(__DIR__ . &#x27;/&#x27; . basename(__FILE__, &#x27;.clean.php&#x27;) . &#x27;.phar.php&#x27;); ?&gt;
+--EXPECTF--
+Entry .phar/stub.php does not exist
+Entry .phar/alias.txt does not exist
+Cannot set stub &quot;.phar/stub.php&quot; directly in phar &quot;%sphar_offset_check.phar.php&quot;, use setStub
+int(6643)
+int(6643)
+Cannot set alias &quot;.phar/alias.txt&quot; directly in phar &quot;%sphar_offset_check.phar.php&quot;, use setAlias
+string(5) &quot;susan&quot;
+string(5) &quot;susan&quot;
+In destructor. Should no longer be accessible in $s:
+object(SplObjectStorage)#2 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(0) {
+  }
+}
+Caught: thrown from destructor
+object(SplObjectStorage)#2 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(0) {
+  }
+}
+In destructor. Should no longer be accessible in $s:
+object(SplObjectStorage)#2 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(0) {
+  }
+}
+Caught: thrown from destructor
+object(SplObjectStorage)#2 (1) {
+  [&quot;storage&quot;:&quot;SplObjectStorage&quot;:private]=&gt;
+  array(0) {
+  }
+}
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker3&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=100M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;phar.readonly=0&quot; -d &quot;phar.require_hash=1&quot; -d &quot;opcache.enable=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2113.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
