@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>c8791e5581f50025b0a90bd01a54e8eb122852a9
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/Zend/zend_lazy_objects.h:83</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['stack-overflow']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+Warning: Invalid &quot;opcache.jit&quot; setting. Should be &quot;disable&quot;, &quot;on&quot;, &quot;off&quot;, &quot;tracing&quot;, &quot;function&quot; or 4-digit number in Unknown on line 0
+bool(false)
+int(1)
+string(28) &quot;Maximum stack depth exceeded&quot;
+
+Warning: Undefined variable $black in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 167
+
+Deprecated: imagefilledpolygon(): Passing null to parameter #3 ($num_points_or_color) of type int is deprecated in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 167
+The images differ in 2356 pixels.
+string(11) &quot;random_var:&quot;
+array(1) {
+  [0]=&gt;
+  string(68) &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;
+}
+int(30000)
+array(10) {
+  [0]=&gt;
+  int(30)
+  [1]=&gt;
+  int(100)
+  [2]=&gt;
+  int(90)
+  [3]=&gt;
+  int(100)
+  [4]=&gt;
+  int(90)
+  [5]=&gt;
+  int(150)
+  [6]=&gt;
+  int(60)
+  [7]=&gt;
+  int(125)
+  [8]=&gt;
+  int(30)
+  [9]=&gt;
+  int(150)
+}
+Calling function: imagecreatefrompng with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function imagecreatefrompng: imagecreatefrompng(): Argument #1 ($filename) must be of type string, array given
+Calling function: property_exists with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, 30000
+Error calling function property_exists: property_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
+Calling function: expm1 with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function expm1: expm1(): Argument #1 ($num) must be of type float, array given
+Calling function: mb_ucfirst with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+30000, Array
+Error calling function mb_ucfirst: mb_ucfirst(): Argument #2 ($encoding) must be of type ?string, array given
+Calling function: socket_create_listen with arguments: 30000, 30000
+Calling function: stream_copy_to_stream with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+30000, Array, 30000, Array
+Error calling function stream_copy_to_stream: stream_copy_to_stream(): Argument #1 ($from) must be of type resource, int given
+Calling function: mb_decode_mimeheader with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function mb_decode_mimeheader: mb_decode_mimeheader(): Argument #1 ($string) must be of type string, array given
+Calling function: array_unshift with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, 30000
+
+Warning: array_unshift(): Argument #1 ($array) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 41
+Calling function: fputcsv with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, Array, Array, Array, Array, Array
+Error calling function fputcsv: fputcsv(): Argument #1 ($stream) must be of type resource, array given
+Calling function: zend_weakmap_dump with arguments: 
+Calling function: socket_cmsg_space with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, 30000, Array
+Error calling function socket_cmsg_space: socket_cmsg_space(): Argument #1 ($level) must be of type int, array given
+Calling function: mb_convert_variables with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, Array, Array, Array
+
+Warning: mb_convert_variables(): Argument #3 ($var) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 41
+
+Warning: mb_convert_variables(): Argument #4 must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 41
+Error calling function mb_convert_variables: mb_convert_variables(): Argument #1 ($to_encoding) must be of type string, array given
+Calling function: stream_context_get_default with arguments: 30000
+Error calling function stream_context_get_default: stream_context_get_default(): Argument #1 ($options) must be of type ?array, int given
+Calling function: bcceil with arguments: 30000
+Calling function: get_object_vars with arguments: 30000
+Error calling function get_object_vars: get_object_vars(): Argument #1 ($object) must be of type object, int given
+Calling function: log1p with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function log1p: log1p(): Argument #1 ($num) must be of type float, array given
+Calling function: dba_firstkey with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function dba_firstkey: dba_firstkey(): Argument #1 ($dba) must be of type Dba\Connection, array given
+Calling function: zend_test_cast_fread with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function zend_test_cast_fread: zend_test_cast_fread(): Argument #1 ($stream) must be of type resource, array given
+Calling function: mb_ereg_search_regs with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, Array
+Error calling function mb_ereg_search_regs: mb_ereg_search_regs(): Argument #1 ($pattern) must be of type ?string, array given
+Calling function: imageaffine with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, 30000, Array
+Error calling function imageaffine: imageaffine(): Argument #1 ($image) must be of type GdImage, array given
+Calling function: random_int with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array, Array
+Error calling function random_int: random_int(): Argument #1 ($min) must be of type int, array given
+Calling function: basename with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+30000, Array
+Error calling function basename: basename(): Argument #2 ($suffix) must be of type string, array given
+Calling function: substr_compare with arguments: 30000, 30000, 30000, 30000, 30000
+Error calling function substr_compare: substr_compare(): Argument #3 ($offset) must be contained in argument #1 ($haystack)
+Calling function: jewishtojd with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+30000, Array, 30000
+Error calling function jewishtojd: jewishtojd(): Argument #2 ($day) must be of type int, array given
+Calling function: zend_test_crash with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function zend_test_crash: zend_test_crash(): Argument #1 ($message) must be of type ?string, array given
+Calling function: gc_disable with arguments: 
+Calling function: die with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php on line 38
+Array
+Error calling function die: die(): Argument #1 ($status) must be of type string|int, array given
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==3435764==ERROR: AddressSanitizer: stack-overflow on address 0x7ffea3e68ff8 (pc 0x560688e32e08 bp 0x7ffea3e69010 sp 0x7ffea3e68ff0 T0)
+    #0 0x560688e32e08 in zend_object_is_lazy /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_lazy_objects.h:83:10
+    #1 0x560688e32605 in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:85:6
+    #2 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #3 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #4 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #5 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #6 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #7 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #8 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #9 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #10 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #11 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #12 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #13 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #14 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #15 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #16 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #17 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #18 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #19 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #20 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #21 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #22 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #23 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #24 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #25 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #26 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #27 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #28 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #29 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #30 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #31 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #32 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #33 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #34 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #35 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #36 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #37 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #38 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #39 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #40 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #41 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #42 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #43 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #44 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #45 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #46 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #47 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #48 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #49 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #50 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #51 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #52 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #53 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #54 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #55 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #56 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #57 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #58 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #59 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #60 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #61 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #62 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #63 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #64 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #65 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #66 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #67 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #68 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #69 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #70 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #71 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #72 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #73 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #74 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #75 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #76 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #77 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #78 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #79 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #80 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #81 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #82 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #83 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #84 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #85 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #86 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #87 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #88 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #89 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #90 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #91 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #92 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #93 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #94 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #95 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #96 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #97 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #98 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #99 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #100 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #101 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #102 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #103 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #104 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #105 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #106 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #107 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #108 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #109 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #110 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #111 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #112 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #113 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #114 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #115 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #116 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #117 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #118 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #119 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #120 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #121 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #122 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #123 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #124 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #125 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #126 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #127 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #128 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #129 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #130 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #131 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #132 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #133 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #134 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #135 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #136 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #137 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #138 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #139 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #140 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #141 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #142 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #143 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #144 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #145 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #146 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #147 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #148 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #149 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #150 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #151 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #152 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #153 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #154 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #155 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #156 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #157 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #158 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #159 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #160 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #161 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #162 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #163 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #164 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #165 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #166 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #167 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #168 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #169 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #170 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #171 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #172 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #173 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #174 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #175 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #176 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #177 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #178 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #179 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #180 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #181 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #182 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #183 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #184 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #185 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #186 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #187 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #188 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #189 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #190 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #191 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #192 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #193 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #194 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #195 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #196 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #197 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #198 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #199 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #200 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #201 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #202 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #203 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #204 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #205 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #206 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #207 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #208 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #209 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #210 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #211 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #212 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #213 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #214 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #215 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #216 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #217 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #218 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #219 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #220 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #221 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #222 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #223 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #224 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #225 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #226 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #227 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #228 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #229 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #230 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #231 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #232 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #233 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #234 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #235 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #236 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #237 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #238 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #239 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #240 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #241 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+    #242 0x560688e2f97c in zend_objects_store_del /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects_API.c:194:4
+    #243 0x560688f33ba9 in rc_dtor_func /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.c:57:2
+    #244 0x560688e3244e in i_zval_ptr_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_variables.h:45:4
+    #245 0x560688e31cf8 in zend_object_dtor_property /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:73:3
+    #246 0x560688e329ad in zend_object_std_dtor /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_objects.c:95:4
+
+SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_lazy_objects.h:83:10 in zend_object_is_lazy
+==3435764==ABORTING
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class Node
+{
+    public $next;
+}
+$firstNode = new Node();
+$node = $firstNode;
+for ($i = 0; $i &lt; 30000; $i++) {
+    $newNode = new Node();
+    $node-&gt;next = $newNode;
+    $node = $newNode;
+}
+var_dump(json_encode($firstNode, depth: 500000));
+var_dump(json_last_error());
+var_dump(json_last_error_msg());
+$fusion = $newNode;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$im = imagecreatetruecolor(256, 256);
+$white   = imagecolorallocatealpha($im, 255, 255, 255, 10);
+$fusion   = imagecolorallocatealpha($im,   0,   0,   0, 10);
+$red     = imagecolorallocatealpha($im, 255,   0,   0, 10);
+$green   = imagecolorallocatealpha($im,   0, 255,   0, 10);
+$blue    = imagecolorallocatealpha($im,   0,   0, 255, 10);
+$yellow  = imagecolorallocatealpha($im, 255, 255,   0, 10);
+$cyan    = imagecolorallocatealpha($im,   0, 255, 255, 10);
+$magenta = imagecolorallocatealpha($im, 255,   0, 255, 10);
+$purple  = imagecolorallocatealpha($im, 100,   0, 100, 10);
+imagefilledrectangle($im, 0, 0, 255, 255, $white);
+// M (bridge)
+$top = 240;
+$bot = 255;
+$d = 30;
+$x = 100;
+$points = array(
+  $x,      $top,
+  $x+2*$d, $top,
+  $x+2*$d, $bot,
+  $x+$d,   (int) (($top+$bot)/2),
+  $x,      $bot
+);
+imagefilledpolygon($im, $points, $yellow);
+// left-facing M not on baseline
+$top = 40;
+$bot = 70;
+$left = 120;
+$right = 180;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $purple);
+// left-facing M on baseline
+$top = 240;
+$bot = 270;
+$left = 20;
+$right = 80;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $magenta);
+// left-facing M on ceiling
+$top = -15;
+$bot = 15;
+$left = 20;
+$right = 80;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $blue);
+$d = 30;
+$x = 150;
+$y = 150;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $green);
+$x = 180;
+$y = 225;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $red);
+$x = 225;
+$y = 255;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $cyan);
+// M (bridge) not touching bottom boundary
+$top = 100;
+$bot = 150;
+$x = 30;
+$points = array(
+  $x,      $top,
+  $x+2*$d, $top,
+  $x+2*$d, $bot,
+  $x+$d,   ($top+$bot)/2,
+  $x,      $bot
+);
+imagefilledpolygon($im, $points, $black);
+include_once __DIR__ . &#x27;/func.inc&#x27;;
+test_image_equals_file(__DIR__ . &#x27;/libgd00100.png&#x27;, $im);
+imagedestroy($im);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+GH-15168 (stack overflow in json_encode())+libgd #100 (spurious horizontal line drawn by gdImageFilledPolygon)
+--INI--
+zend.max_allowed_stack_size=512K
+implicit_flush=0
+opcache.enable=0
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1010
+--SKIPIF--
+&lt;?php
+if (ini_get(&#x27;zend.max_allowed_stack_size&#x27;) === false) {
+    die(&#x27;skip No stack limit support&#x27;);
+}
+if (getenv(&#x27;SKIP_ASAN&#x27;)) {
+    die(&#x27;skip ASAN needs different stack limit setting due to more stack space usage&#x27;);
+}
+?&gt;
+&lt;?php
+    if (!GD_BUNDLED) die(&quot;skip requires bundled GD library\n&quot;);
+?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class Node
+{
+    public $next;
+}
+$firstNode = new Node();
+$node = $firstNode;
+for ($i = 0; $i &lt; 30000; $i++) {
+    $newNode = new Node();
+    $node-&gt;next = $newNode;
+    $node = $newNode;
+}
+var_dump(json_encode($firstNode, depth: 500000));
+var_dump(json_last_error());
+var_dump(json_last_error_msg());
+$fusion = $newNode;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+$im = imagecreatetruecolor(256, 256);
+$white   = imagecolorallocatealpha($im, 255, 255, 255, 10);
+$fusion   = imagecolorallocatealpha($im,   0,   0,   0, 10);
+$red     = imagecolorallocatealpha($im, 255,   0,   0, 10);
+$green   = imagecolorallocatealpha($im,   0, 255,   0, 10);
+$blue    = imagecolorallocatealpha($im,   0,   0, 255, 10);
+$yellow  = imagecolorallocatealpha($im, 255, 255,   0, 10);
+$cyan    = imagecolorallocatealpha($im,   0, 255, 255, 10);
+$magenta = imagecolorallocatealpha($im, 255,   0, 255, 10);
+$purple  = imagecolorallocatealpha($im, 100,   0, 100, 10);
+imagefilledrectangle($im, 0, 0, 255, 255, $white);
+// M (bridge)
+$top = 240;
+$bot = 255;
+$d = 30;
+$x = 100;
+$points = array(
+  $x,      $top,
+  $x+2*$d, $top,
+  $x+2*$d, $bot,
+  $x+$d,   (int) (($top+$bot)/2),
+  $x,      $bot
+);
+imagefilledpolygon($im, $points, $yellow);
+// left-facing M not on baseline
+$top = 40;
+$bot = 70;
+$left = 120;
+$right = 180;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $purple);
+// left-facing M on baseline
+$top = 240;
+$bot = 270;
+$left = 20;
+$right = 80;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $magenta);
+// left-facing M on ceiling
+$top = -15;
+$bot = 15;
+$left = 20;
+$right = 80;
+$points = array(
+  $left,  $top,
+  $right, $top,
+  $right, $bot,
+  $left,  $bot,
+  ($left+$right)/2, ($top+$bot)/2
+);
+imagefilledpolygon($im, $points, $blue);
+$d = 30;
+$x = 150;
+$y = 150;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $green);
+$x = 180;
+$y = 225;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $red);
+$x = 225;
+$y = 255;
+$diamond = array($x-$d, $y, $x, $y+$d, $x+$d, $y, $x, $y-$d);
+imagefilledpolygon($im, $diamond, $cyan);
+// M (bridge) not touching bottom boundary
+$top = 100;
+$bot = 150;
+$x = 30;
+$points = array(
+  $x,      $top,
+  $x+2*$d, $top,
+  $x+2*$d, $bot,
+  $x+$d,   ($top+$bot)/2,
+  $x,      $bot
+);
+imagefilledpolygon($im, $points, $black);
+include_once __DIR__ . &#x27;/func.inc&#x27;;
+test_image_equals_file(__DIR__ . &#x27;/libgd00100.png&#x27;, $im);
+imagedestroy($im);
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXTENSIONS--
+gd
+--EXPECT--
+bool(false)
+int(1)
+string(28) &quot;Maximum stack depth exceeded&quot;
+The images are equal.
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j24&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j24&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker13&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zend.max_allowed_stack_size=512K&quot; -d &quot;implicit_flush=0&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1010&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2770.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
