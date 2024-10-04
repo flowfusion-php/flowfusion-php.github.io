@@ -1,0 +1,1164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>c8791e5581f50025b0a90bd01a54e8eb122852a9
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/standard/array.c:4612</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>[]</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+*** Testing array_column() : basic functionality ***
+-- first_name column from recordset --
+array(3) {
+  [0]=&gt;
+  string(4) &quot;John&quot;
+  [1]=&gt;
+  string(5) &quot;Sally&quot;
+  [2]=&gt;
+  string(4) &quot;Jane&quot;
+}
+-- id column from recordset --
+array(3) {
+  [0]=&gt;
+  int(1)
+  [1]=&gt;
+  int(2)
+  [2]=&gt;
+  int(3)
+}
+-- last_name column from recordset, keyed by value from id column --
+array(3) {
+  [1]=&gt;
+  string(3) &quot;Doe&quot;
+  [2]=&gt;
+  string(5) &quot;Smith&quot;
+  [3]=&gt;
+  string(5) &quot;Jones&quot;
+}
+-- last_name column from recordset, keyed by value from first_name column --
+array(3) {
+  [&quot;John&quot;]=&gt;
+  string(3) &quot;Doe&quot;
+  [&quot;Sally&quot;]=&gt;
+  string(5) &quot;Smith&quot;
+  [&quot;Jane&quot;]=&gt;
+  string(5) &quot;Jones&quot;
+}
+
+*** Testing multiple data types ***
+array(8) {
+  [0]=&gt;
+  object(stdClass)#1 (0) {
+  }
+  [1]=&gt;
+  float(34.2345)
+  [2]=&gt;
+  bool(true)
+  [3]=&gt;
+  bool(false)
+  [4]=&gt;
+  NULL
+  [5]=&gt;
+  int(1234)
+  [6]=&gt;
+  string(3) &quot;Foo&quot;
+  [7]=&gt;
+  resource(5) of type (stream)
+}
+array(8) {
+  [1]=&gt;
+  object(stdClass)#1 (0) {
+  }
+  [2]=&gt;
+  float(34.2345)
+  [3]=&gt;
+  bool(true)
+  [4]=&gt;
+  bool(false)
+  [5]=&gt;
+  NULL
+  [6]=&gt;
+  int(1234)
+  [7]=&gt;
+  string(3) &quot;Foo&quot;
+  [8]=&gt;
+  resource(5) of type (stream)
+}
+
+*** Testing numeric column keys ***
+array(3) {
+  [0]=&gt;
+  string(3) &quot;111&quot;
+  [1]=&gt;
+  string(3) &quot;222&quot;
+  [2]=&gt;
+  string(3) &quot;333&quot;
+}
+array(3) {
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;111&quot;
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ccc&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+
+Deprecated: Implicit conversion from float 0.123 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 137
+array(3) {
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;111&quot;
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ccc&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;111&quot;
+  [1]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ddd&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+
+*** Testing failure to find specified column ***
+array(0) {
+}
+array(0) {
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;aaa&quot;
+  [1]=&gt;
+  string(3) &quot;bbb&quot;
+  [2]=&gt;
+  string(3) &quot;ccc&quot;
+}
+
+Deprecated: Implicit conversion from float 3.14 to int loses precision in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php on line 143
+array(0) {
+}
+
+*** Testing single dimensional array ***
+array(0) {
+}
+
+*** Testing columns not present in all rows ***
+array(1) {
+  [0]=&gt;
+  string(3) &quot;qux&quot;
+}
+array(1) {
+  [&quot;baz&quot;]=&gt;
+  string(3) &quot;qux&quot;
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;foo&quot;
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;baz&quot;
+  [1]=&gt;
+  string(3) &quot;eee&quot;
+}
+array(3) {
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;foo&quot;
+  [0]=&gt;
+  string(3) &quot;baz&quot;
+  [&quot;ggg&quot;]=&gt;
+  string(3) &quot;eee&quot;
+}
+array(2) {
+  [0]=&gt;
+  string(3) &quot;bar&quot;
+  [1]=&gt;
+  string(3) &quot;fff&quot;
+}
+array(2) {
+  [&quot;foo&quot;]=&gt;
+  string(3) &quot;bar&quot;
+  [&quot;eee&quot;]=&gt;
+  string(3) &quot;fff&quot;
+}
+
+*** Testing use of object converted to string ***
+==3297980==WARNING: MemorySanitizer: use-of-uninitialized-value
+LLVMSymbolizer: error reading file: No such file or directory
+    #0 0x55e26f709218 in array_column_fetch_prop /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4612:7
+    #1 0x55e26f7037dd in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4660:26
+    #2 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+
+  Uninitialized value was stored to memory at
+    #0 0x55e26f707f4b in array_column_fetch_prop /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4585
+    #1 0x55e26f7037dd in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4660:26
+    #2 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #3 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #4 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #5 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #6 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #7 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #8 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #9 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was stored to memory at
+    #0 0x55e270c44543 in zend_parse_arg_str_weak /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:764:10
+    #1 0x55e270c46587 in zend_parse_arg_str_or_long_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:800:13
+    #2 0x55e26f707bbf in zend_parse_arg_str_or_long /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:2545:10
+    #3 0x55e26f701387 in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4642:3
+    #4 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #5 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #6 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #7 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #8 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #9 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #10 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #11 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was stored to memory at
+    #0 0x55e270c442f3 in zend_parse_arg_str_weak /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:763:4
+    #1 0x55e270c46587 in zend_parse_arg_str_or_long_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:800:13
+    #2 0x55e26f707bbf in zend_parse_arg_str_or_long /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:2545:10
+    #3 0x55e26f701387 in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4642:3
+    #4 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #5 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #6 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #7 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #8 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #9 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #10 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #11 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was stored to memory at
+    #0 0x55e270c440d8 in zend_parse_arg_str_weak /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:763:4
+    #1 0x55e270c46587 in zend_parse_arg_str_or_long_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:800:13
+    #2 0x55e26f707bbf in zend_parse_arg_str_or_long /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:2545:10
+    #3 0x55e26f701387 in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4642:3
+    #4 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #5 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #6 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #7 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #8 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #9 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #10 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #11 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was stored to memory at
+    #0 0x55e271ea434c in zend_std_cast_object_tostring /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_object_handlers.c:2333:6
+    #1 0x55e270c43df0 in zend_parse_arg_str_weak /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:761:7
+    #2 0x55e270c46587 in zend_parse_arg_str_or_long_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:800:13
+    #3 0x55e26f707bbf in zend_parse_arg_str_or_long /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:2545:10
+    #4 0x55e26f701387 in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4642:3
+    #5 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #6 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #7 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #8 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #9 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #10 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #11 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #12 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was stored to memory at
+    #0 0x55e271ea4131 in zend_std_cast_object_tostring /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_object_handlers.c:2333:6
+    #1 0x55e270c43df0 in zend_parse_arg_str_weak /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:761:7
+    #2 0x55e270c46587 in zend_parse_arg_str_or_long_slow /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.c:800:13
+    #3 0x55e26f707bbf in zend_parse_arg_str_or_long /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_API.h:2545:10
+    #4 0x55e26f701387 in zif_array_column /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4642:3
+    #5 0x55e22b809723  (/dev/zero (deleted)+0x8009723)
+    #6 0x55e271163100 in zend_execute /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_vm_execute.h:64217:2
+    #7 0x55e2720c7eb1 in zend_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend.c:1928:3
+    #8 0x55e270499878 in php_execute_script_ex /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2574:13
+    #9 0x55e27049af05 in php_execute_script /home/phpfuzz/WorkSpace/flowfusion/php-src/main/main.c:2614:9
+    #10 0x55e2720e6e72 in do_cli /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:935:5
+    #11 0x55e2720df813 in main /home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php_cli.c:1310:18
+    #12 0x7fa6a6d12d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+  Uninitialized value was created by an allocation of &#x27;retval2&#x27; in the stack frame of function &#x27;zend_std_cast_object_tostring&#x27;
+    #0 0x55e271ea3750 in zend_std_cast_object_tostring /home/phpfuzz/WorkSpace/flowfusion/php-src/Zend/zend_object_handlers.c:2323
+
+SUMMARY: MemorySanitizer: use-of-uninitialized-value /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/standard/array.c:4612:7 in array_column_fetch_prop
+Exiting
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+echo &quot;*** Testing array_column() : basic functionality ***\n&quot;;
+/* Array representing a possible record set returned from a database */
+$records = array(
+    array(
+        &#x27;id&#x27; =&gt; 1,
+        &#x27;first_name&#x27; =&gt; &#x27;John&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Doe&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 2,
+        &#x27;first_name&#x27; =&gt; &#x27;Sally&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Smith&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 3,
+        &#x27;first_name&#x27; =&gt; &#x27;Jane&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Jones&#x27;
+    )
+);
+echo &quot;-- first_name column from recordset --\n&quot;;
+var_dump(array_column($records, &#x27;first_name&#x27;));
+echo &quot;-- id column from recordset --\n&quot;;
+var_dump(array_column($records, &#x27;id&#x27;));
+echo &quot;-- last_name column from recordset, keyed by value from id column --\n&quot;;
+var_dump(array_column($records, &#x27;last_name&#x27;, &#x27;id&#x27;));
+echo &quot;-- last_name column from recordset, keyed by value from first_name column --\n&quot;;
+var_dump(array_column($records, &#x27;last_name&#x27;, &#x27;first_name&#x27;));
+echo &quot;\n*** Testing multiple data types ***\n&quot;;
+$fh = fopen(__FILE__, &#x27;r&#x27;, true);
+$values = array(
+    array(
+        &#x27;id&#x27; =&gt; 1,
+        &#x27;value&#x27; =&gt; new stdClass
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 2,
+        &#x27;value&#x27; =&gt; 34.2345
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 3,
+        &#x27;value&#x27; =&gt; true
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 4,
+        &#x27;value&#x27; =&gt; false
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 5,
+        &#x27;value&#x27; =&gt; null
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 6,
+        &#x27;value&#x27; =&gt; 1234
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 7,
+        &#x27;value&#x27; =&gt; &#x27;Foo&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 8,
+        &#x27;value&#x27; =&gt; $fh
+    )
+);
+var_dump(array_column($values, &#x27;value&#x27;));
+var_dump(array_column($values, &#x27;value&#x27;, &#x27;id&#x27;));
+echo &quot;\n*** Testing numeric column keys ***\n&quot;;
+$numericCols = array(
+    array(&#x27;aaa&#x27;, &#x27;111&#x27;),
+    array(&#x27;bbb&#x27;, &#x27;222&#x27;),
+    array(&#x27;ccc&#x27;, &#x27;333&#x27;, -1 =&gt; &#x27;ddd&#x27;)
+);
+var_dump(array_column($numericCols, 1));
+var_dump(array_column($numericCols, 1, 0));
+var_dump(array_column($numericCols, 1, 0.123));
+var_dump(array_column($numericCols, 1, -1));
+echo &quot;\n*** Testing failure to find specified column ***\n&quot;;
+var_dump(array_column($numericCols, 2));
+var_dump(array_column($numericCols, &#x27;foo&#x27;));
+var_dump(array_column($numericCols, 0, &#x27;foo&#x27;));
+var_dump(array_column($numericCols, 3.14));
+echo &quot;\n*** Testing single dimensional array ***\n&quot;;
+$singleDimension = array(&#x27;foo&#x27;, &#x27;bar&#x27;, &#x27;baz&#x27;);
+var_dump(array_column($singleDimension, 1));
+echo &quot;\n*** Testing columns not present in all rows ***\n&quot;;
+$mismatchedColumns = array(
+    array(&#x27;a&#x27; =&gt; &#x27;foo&#x27;, &#x27;b&#x27; =&gt; &#x27;bar&#x27;, &#x27;e&#x27; =&gt; &#x27;bbb&#x27;),
+    array(&#x27;a&#x27; =&gt; &#x27;baz&#x27;, &#x27;c&#x27; =&gt; &#x27;qux&#x27;, &#x27;d&#x27; =&gt; &#x27;aaa&#x27;),
+    array(&#x27;a&#x27; =&gt; &#x27;eee&#x27;, &#x27;b&#x27; =&gt; &#x27;fff&#x27;, &#x27;e&#x27; =&gt; &#x27;ggg&#x27;),
+);
+var_dump(array_column($mismatchedColumns, &#x27;c&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;c&#x27;, &#x27;a&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;a&#x27;, &#x27;d&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;a&#x27;, &#x27;e&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;b&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;b&#x27;, &#x27;a&#x27;));
+echo &quot;\n*** Testing use of object converted to string ***\n&quot;;
+class Foo
+{
+    public function __toString()
+    {
+        return &#x27;last_name&#x27;;
+    }
+}
+class Bar
+{
+    public function __toString()
+    {
+        return &#x27;first_name&#x27;;
+    }
+}
+$f = new Foo();
+$b = new Bar();
+var_dump(array_column($records, $f));
+var_dump(array_column($records, $f, $b));
+echo &quot;Done\n&quot;;
+$fusion = $f;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/* Creating unique files in various dirs by passing relative paths to $dir arg */
+echo &quot;*** Testing rename() with absolute and relative paths ***\n&quot;;
+$mainDir = &quot;renameVar12&quot;;
+$subDir = &quot;renameVar12Sub&quot;;
+$absMainDir = __DIR__.&quot;/&quot;.$mainDir;
+mkdir($absMainDir);
+$absSubDir = $absMainDir.&quot;/&quot;.$subDir;
+mkdir($absSubDir);
+$fromFile = &quot;renameMe.tmp&quot;;
+$toFile = &quot;IwasRenamed.tmp&quot;;
+$old_dir_path = getcwd();
+chdir(__DIR__);
+$allDirs = array(
+  // absolute paths
+  &quot;$absSubDir/&quot;,
+  &quot;$absSubDir/../&quot;.$subDir,
+  &quot;$absSubDir//.././&quot;.$subDir,
+  &quot;$absSubDir/../../&quot;.$mainDir.&quot;/./&quot;.$subDir,
+  &quot;$fusion/..///&quot;.$subDir.&quot;//..//../&quot;.$subDir,
+  &quot;$absSubDir/BADDIR&quot;,
+  // relative paths
+  $mainDir.&quot;/&quot;.$subDir,
+  $mainDir.&quot;//&quot;.$subDir,
+   $mainDir.&quot;///&quot;.$subDir,
+  &quot;./&quot;.$mainDir.&quot;/../&quot;.$mainDir.&quot;/&quot;.$subDir,
+  &quot;BADDIR&quot;,
+);
+for($i = 0; $i&lt;count($allDirs); $i++) {
+  $j = $i+1;
+  $dir = $allDirs[$i];
+  echo &quot;\n-- Iteration $j --\n&quot;;
+  touch($absSubDir.&quot;/&quot;.$fromFile);
+  $res = rename($dir.&quot;/&quot;.$fromFile, $dir.&quot;/&quot;.$toFile);
+  var_dump($res);
+  if ($res == true) {
+     $res = rename($dir.&quot;/&quot;.$toFile, $dir.&quot;/&quot;.$fromFile);
+     var_dump($res);
+  }
+  unlink($absSubDir.&quot;/&quot;.$fromFile);
+}
+chdir($old_dir_path);
+rmdir($absSubDir);
+rmdir($absMainDir);
+echo &quot;\n*** Done ***\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Test array_column() function: basic functionality+Test rename() function : variation - various relative, absolute paths
+--INI--
+default_charset=cp932
+session.gc_probability=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1204
+--SKIPIF--
+&lt;?php
+if (substr(PHP_OS, 0, 3) == &#x27;WIN&#x27;) die(&#x27;skip..  not for Windows&#x27;);
+?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+echo &quot;*** Testing array_column() : basic functionality ***\n&quot;;
+/* Array representing a possible record set returned from a database */
+$records = array(
+    array(
+        &#x27;id&#x27; =&gt; 1,
+        &#x27;first_name&#x27; =&gt; &#x27;John&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Doe&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 2,
+        &#x27;first_name&#x27; =&gt; &#x27;Sally&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Smith&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 3,
+        &#x27;first_name&#x27; =&gt; &#x27;Jane&#x27;,
+        &#x27;last_name&#x27; =&gt; &#x27;Jones&#x27;
+    )
+);
+echo &quot;-- first_name column from recordset --\n&quot;;
+var_dump(array_column($records, &#x27;first_name&#x27;));
+echo &quot;-- id column from recordset --\n&quot;;
+var_dump(array_column($records, &#x27;id&#x27;));
+echo &quot;-- last_name column from recordset, keyed by value from id column --\n&quot;;
+var_dump(array_column($records, &#x27;last_name&#x27;, &#x27;id&#x27;));
+echo &quot;-- last_name column from recordset, keyed by value from first_name column --\n&quot;;
+var_dump(array_column($records, &#x27;last_name&#x27;, &#x27;first_name&#x27;));
+echo &quot;\n*** Testing multiple data types ***\n&quot;;
+$fh = fopen(__FILE__, &#x27;r&#x27;, true);
+$values = array(
+    array(
+        &#x27;id&#x27; =&gt; 1,
+        &#x27;value&#x27; =&gt; new stdClass
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 2,
+        &#x27;value&#x27; =&gt; 34.2345
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 3,
+        &#x27;value&#x27; =&gt; true
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 4,
+        &#x27;value&#x27; =&gt; false
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 5,
+        &#x27;value&#x27; =&gt; null
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 6,
+        &#x27;value&#x27; =&gt; 1234
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 7,
+        &#x27;value&#x27; =&gt; &#x27;Foo&#x27;
+    ),
+    array(
+        &#x27;id&#x27; =&gt; 8,
+        &#x27;value&#x27; =&gt; $fh
+    )
+);
+var_dump(array_column($values, &#x27;value&#x27;));
+var_dump(array_column($values, &#x27;value&#x27;, &#x27;id&#x27;));
+echo &quot;\n*** Testing numeric column keys ***\n&quot;;
+$numericCols = array(
+    array(&#x27;aaa&#x27;, &#x27;111&#x27;),
+    array(&#x27;bbb&#x27;, &#x27;222&#x27;),
+    array(&#x27;ccc&#x27;, &#x27;333&#x27;, -1 =&gt; &#x27;ddd&#x27;)
+);
+var_dump(array_column($numericCols, 1));
+var_dump(array_column($numericCols, 1, 0));
+var_dump(array_column($numericCols, 1, 0.123));
+var_dump(array_column($numericCols, 1, -1));
+echo &quot;\n*** Testing failure to find specified column ***\n&quot;;
+var_dump(array_column($numericCols, 2));
+var_dump(array_column($numericCols, &#x27;foo&#x27;));
+var_dump(array_column($numericCols, 0, &#x27;foo&#x27;));
+var_dump(array_column($numericCols, 3.14));
+echo &quot;\n*** Testing single dimensional array ***\n&quot;;
+$singleDimension = array(&#x27;foo&#x27;, &#x27;bar&#x27;, &#x27;baz&#x27;);
+var_dump(array_column($singleDimension, 1));
+echo &quot;\n*** Testing columns not present in all rows ***\n&quot;;
+$mismatchedColumns = array(
+    array(&#x27;a&#x27; =&gt; &#x27;foo&#x27;, &#x27;b&#x27; =&gt; &#x27;bar&#x27;, &#x27;e&#x27; =&gt; &#x27;bbb&#x27;),
+    array(&#x27;a&#x27; =&gt; &#x27;baz&#x27;, &#x27;c&#x27; =&gt; &#x27;qux&#x27;, &#x27;d&#x27; =&gt; &#x27;aaa&#x27;),
+    array(&#x27;a&#x27; =&gt; &#x27;eee&#x27;, &#x27;b&#x27; =&gt; &#x27;fff&#x27;, &#x27;e&#x27; =&gt; &#x27;ggg&#x27;),
+);
+var_dump(array_column($mismatchedColumns, &#x27;c&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;c&#x27;, &#x27;a&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;a&#x27;, &#x27;d&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;a&#x27;, &#x27;e&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;b&#x27;));
+var_dump(array_column($mismatchedColumns, &#x27;b&#x27;, &#x27;a&#x27;));
+echo &quot;\n*** Testing use of object converted to string ***\n&quot;;
+class Foo
+{
+    public function __toString()
+    {
+        return &#x27;last_name&#x27;;
+    }
+}
+class Bar
+{
+    public function __toString()
+    {
+        return &#x27;first_name&#x27;;
+    }
+}
+$f = new Foo();
+$b = new Bar();
+var_dump(array_column($records, $f));
+var_dump(array_column($records, $f, $b));
+echo &quot;Done\n&quot;;
+$fusion = $f;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/* Creating unique files in various dirs by passing relative paths to $dir arg */
+echo &quot;*** Testing rename() with absolute and relative paths ***\n&quot;;
+$mainDir = &quot;renameVar12&quot;;
+$subDir = &quot;renameVar12Sub&quot;;
+$absMainDir = __DIR__.&quot;/&quot;.$mainDir;
+mkdir($absMainDir);
+$absSubDir = $absMainDir.&quot;/&quot;.$subDir;
+mkdir($absSubDir);
+$fromFile = &quot;renameMe.tmp&quot;;
+$toFile = &quot;IwasRenamed.tmp&quot;;
+$old_dir_path = getcwd();
+chdir(__DIR__);
+$allDirs = array(
+  // absolute paths
+  &quot;$absSubDir/&quot;,
+  &quot;$absSubDir/../&quot;.$subDir,
+  &quot;$absSubDir//.././&quot;.$subDir,
+  &quot;$absSubDir/../../&quot;.$mainDir.&quot;/./&quot;.$subDir,
+  &quot;$fusion/..///&quot;.$subDir.&quot;//..//../&quot;.$subDir,
+  &quot;$absSubDir/BADDIR&quot;,
+  // relative paths
+  $mainDir.&quot;/&quot;.$subDir,
+  $mainDir.&quot;//&quot;.$subDir,
+   $mainDir.&quot;///&quot;.$subDir,
+  &quot;./&quot;.$mainDir.&quot;/../&quot;.$mainDir.&quot;/&quot;.$subDir,
+  &quot;BADDIR&quot;,
+);
+for($i = 0; $i&lt;count($allDirs); $i++) {
+  $j = $i+1;
+  $dir = $allDirs[$i];
+  echo &quot;\n-- Iteration $j --\n&quot;;
+  touch($absSubDir.&quot;/&quot;.$fromFile);
+  $res = rename($dir.&quot;/&quot;.$fromFile, $dir.&quot;/&quot;.$toFile);
+  var_dump($res);
+  if ($res == true) {
+     $res = rename($dir.&quot;/&quot;.$toFile, $dir.&quot;/&quot;.$fromFile);
+     var_dump($res);
+  }
+  unlink($absSubDir.&quot;/&quot;.$fromFile);
+}
+chdir($old_dir_path);
+rmdir($absSubDir);
+rmdir($absMainDir);
+echo &quot;\n*** Done ***\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXPECTF--
+*** Testing array_column() : basic functionality ***
+-- first_name column from recordset --
+array(3) {
+  [0]=&gt;
+  string(4) &quot;John&quot;
+  [1]=&gt;
+  string(5) &quot;Sally&quot;
+  [2]=&gt;
+  string(4) &quot;Jane&quot;
+}
+-- id column from recordset --
+array(3) {
+  [0]=&gt;
+  int(1)
+  [1]=&gt;
+  int(2)
+  [2]=&gt;
+  int(3)
+}
+-- last_name column from recordset, keyed by value from id column --
+array(3) {
+  [1]=&gt;
+  string(3) &quot;Doe&quot;
+  [2]=&gt;
+  string(5) &quot;Smith&quot;
+  [3]=&gt;
+  string(5) &quot;Jones&quot;
+}
+-- last_name column from recordset, keyed by value from first_name column --
+array(3) {
+  [&quot;John&quot;]=&gt;
+  string(3) &quot;Doe&quot;
+  [&quot;Sally&quot;]=&gt;
+  string(5) &quot;Smith&quot;
+  [&quot;Jane&quot;]=&gt;
+  string(5) &quot;Jones&quot;
+}
+
+*** Testing multiple data types ***
+array(8) {
+  [0]=&gt;
+  object(stdClass)#%d (0) {
+  }
+  [1]=&gt;
+  float(34.2345)
+  [2]=&gt;
+  bool(true)
+  [3]=&gt;
+  bool(false)
+  [4]=&gt;
+  NULL
+  [5]=&gt;
+  int(1234)
+  [6]=&gt;
+  string(3) &quot;Foo&quot;
+  [7]=&gt;
+  resource(%d) of type (stream)
+}
+array(8) {
+  [1]=&gt;
+  object(stdClass)#%d (0) {
+  }
+  [2]=&gt;
+  float(34.2345)
+  [3]=&gt;
+  bool(true)
+  [4]=&gt;
+  bool(false)
+  [5]=&gt;
+  NULL
+  [6]=&gt;
+  int(1234)
+  [7]=&gt;
+  string(3) &quot;Foo&quot;
+  [8]=&gt;
+  resource(%d) of type (stream)
+}
+
+*** Testing numeric column keys ***
+array(3) {
+  [0]=&gt;
+  string(3) &quot;111&quot;
+  [1]=&gt;
+  string(3) &quot;222&quot;
+  [2]=&gt;
+  string(3) &quot;333&quot;
+}
+array(3) {
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;111&quot;
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ccc&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+
+Deprecated: Implicit conversion from float 0.123 to int loses precision in %s on line %d
+array(3) {
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;111&quot;
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ccc&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;111&quot;
+  [1]=&gt;
+  string(3) &quot;222&quot;
+  [&quot;ddd&quot;]=&gt;
+  string(3) &quot;333&quot;
+}
+
+*** Testing failure to find specified column ***
+array(0) {
+}
+array(0) {
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;aaa&quot;
+  [1]=&gt;
+  string(3) &quot;bbb&quot;
+  [2]=&gt;
+  string(3) &quot;ccc&quot;
+}
+
+Deprecated: Implicit conversion from float 3.14 to int loses precision in %s on line %d
+array(0) {
+}
+
+*** Testing single dimensional array ***
+array(0) {
+}
+
+*** Testing columns not present in all rows ***
+array(1) {
+  [0]=&gt;
+  string(3) &quot;qux&quot;
+}
+array(1) {
+  [&quot;baz&quot;]=&gt;
+  string(3) &quot;qux&quot;
+}
+array(3) {
+  [0]=&gt;
+  string(3) &quot;foo&quot;
+  [&quot;aaa&quot;]=&gt;
+  string(3) &quot;baz&quot;
+  [1]=&gt;
+  string(3) &quot;eee&quot;
+}
+array(3) {
+  [&quot;bbb&quot;]=&gt;
+  string(3) &quot;foo&quot;
+  [0]=&gt;
+  string(3) &quot;baz&quot;
+  [&quot;ggg&quot;]=&gt;
+  string(3) &quot;eee&quot;
+}
+array(2) {
+  [0]=&gt;
+  string(3) &quot;bar&quot;
+  [1]=&gt;
+  string(3) &quot;fff&quot;
+}
+array(2) {
+  [&quot;foo&quot;]=&gt;
+  string(3) &quot;bar&quot;
+  [&quot;eee&quot;]=&gt;
+  string(3) &quot;fff&quot;
+}
+
+*** Testing use of object converted to string ***
+array(3) {
+  [0]=&gt;
+  string(3) &quot;Doe&quot;
+  [1]=&gt;
+  string(5) &quot;Smith&quot;
+  [2]=&gt;
+  string(5) &quot;Jones&quot;
+}
+array(3) {
+  [&quot;John&quot;]=&gt;
+  string(3) &quot;Doe&quot;
+  [&quot;Sally&quot;]=&gt;
+  string(5) &quot;Smith&quot;
+  [&quot;Jane&quot;]=&gt;
+  string(5) &quot;Jones&quot;
+}
+Done
+*** Testing rename() with absolute and relative paths ***
+
+-- Iteration 1 --
+bool(true)
+bool(true)
+
+-- Iteration 2 --
+bool(true)
+bool(true)
+
+-- Iteration 3 --
+bool(true)
+bool(true)
+
+-- Iteration 4 --
+bool(true)
+bool(true)
+
+-- Iteration 5 --
+
+Warning: rename(%s/renameVar12/renameVar12Sub/..///renameVar12Sub//..//../renameVar12Sub/renameMe.tmp,%s/renameVar12/renameVar12Sub/..///renameVar12Sub//..//../renameVar12Sub/IwasRenamed.tmp): %s in %s on line %d
+bool(false)
+
+-- Iteration 6 --
+
+Warning: rename(%s/renameVar12/renameVar12Sub/BADDIR/renameMe.tmp,%s/renameVar12/renameVar12Sub/BADDIR/IwasRenamed.tmp): %s in %s on line %d
+bool(false)
+
+-- Iteration 7 --
+bool(true)
+bool(true)
+
+-- Iteration 8 --
+bool(true)
+bool(true)
+
+-- Iteration 9 --
+bool(true)
+bool(true)
+
+-- Iteration 10 --
+bool(true)
+bool(true)
+
+-- Iteration 11 --
+
+Warning: rename(BADDIR/renameMe.tmp,BADDIR/IwasRenamed.tmp): %s in %s on line %d
+bool(false)
+
+*** Done ***
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j24&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j24&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;default_charset=cp932&quot; -d &quot;session.gc_probability=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1204&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused163.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>c8791e5581f50025b0a90bd01a54e8eb122852a9
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/gd/gd.c:1367</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>[]</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 22 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+bug not reproduced when reducing
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+bug not reproduced when reducing
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+Deprecated: Directive &#x27;allow_url_include&#x27; is deprecated in Unknown on line 0
+1: &amp;#194;&amp;#161;&amp;#194;&amp;#162;&amp;#194;&amp;#163;&amp;#194;&amp;#164;&amp;#194;&amp;#165;&amp;#194;&amp;#166;&amp;#194;&amp;#167;&amp;#194;&amp;#168;&amp;#194;&amp;#169;&amp;#194;&amp;#170;&amp;#194;&amp;#171;&amp;#194;&amp;#172;&amp;#194;&amp;#173;&amp;#194;&amp;#174;&amp;#194;&amp;#175;&amp;#194;&amp;#176;&amp;#194;&amp;#177;&amp;#194;&amp;#178;&amp;#194;&amp;#179;&amp;#194;&amp;#180;&amp;#194;&amp;#181;&amp;#194;&amp;#182;&amp;#194;&amp;#183;&amp;#194;&amp;#184;&amp;#194;&amp;#185;&amp;#194;&amp;#186;&amp;#194;&amp;#187;&amp;#194;&amp;#188;&amp;#194;&amp;#189;&amp;#194;&amp;#190;&amp;#194;&amp;#191;&amp;#195;&amp;#128;&amp;#195;&amp;#129;&amp;#195;&amp;#130;&amp;#195;&amp;#131;&amp;#195;&amp;#132;&amp;#195;&amp;#133;&amp;#195;&amp;#134;&amp;#195;&amp;#135;&amp;#195;&amp;#136;&amp;#195;&amp;#137;&amp;#195;&amp;#138;&amp;#195;&amp;#139;&amp;#195;&amp;#140;&amp;#195;&amp;#141;&amp;#195;&amp;#142;&amp;#195;&amp;#143;&amp;#195;&amp;#144;&amp;#195;&amp;#145;&amp;#195;&amp;#146;&amp;#195;&amp;#147;&amp;#195;&amp;#148;&amp;#195;&amp;#149;&amp;#195;&amp;#150;&amp;#195;&amp;#151;&amp;#195;&amp;#152;&amp;#195;&amp;#153;&amp;#195;&amp;#154;&amp;#195;&amp;#155;&amp;#195;&amp;#156;&amp;#195;&amp;#157;&amp;#195;&amp;#158;&amp;#195;&amp;#159;&amp;#195;&amp;#160;&amp;#195;&amp;#161;&amp;#195;&amp;#162;&amp;#195;&amp;#163;&amp;#195;&amp;#164;&amp;#195;&amp;#165;&amp;#195;&amp;#166;&amp;#195;&amp;#167;&amp;#195;&amp;#168;&amp;#195;&amp;#169;&amp;#195;&amp;#170;&amp;#195;&amp;#171;&amp;#195;&amp;#172;&amp;#195;&amp;#173;&amp;#195;&amp;#174;&amp;#195;&amp;#175;&amp;#195;&amp;#176;&amp;#195;&amp;#177;&amp;#195;&amp;#178;&amp;#195;&amp;#179;&amp;#195;&amp;#180;&amp;#195;&amp;#181;&amp;#195;&amp;#182;&amp;#195;&amp;#183;&amp;#195;&amp;#184;&amp;#195;&amp;#185;&amp;#195;&amp;#186;&amp;#195;&amp;#187;&amp;#195;&amp;#188;&amp;#195;&amp;#189;&amp;#195;&amp;#190;&amp;#195;&amp;#191;
+1 (hex): &amp;#xC2;&amp;#xA1;&amp;#xC2;&amp;#xA2;&amp;#xC2;&amp;#xA3;&amp;#xC2;&amp;#xA4;&amp;#xC2;&amp;#xA5;&amp;#xC2;&amp;#xA6;&amp;#xC2;&amp;#xA7;&amp;#xC2;&amp;#xA8;&amp;#xC2;&amp;#xA9;&amp;#xC2;&amp;#xAA;&amp;#xC2;&amp;#xAB;&amp;#xC2;&amp;#xAC;&amp;#xC2;&amp;#xAD;&amp;#xC2;&amp;#xAE;&amp;#xC2;&amp;#xAF;&amp;#xC2;&amp;#xB0;&amp;#xC2;&amp;#xB1;&amp;#xC2;&amp;#xB2;&amp;#xC2;&amp;#xB3;&amp;#xC2;&amp;#xB4;&amp;#xC2;&amp;#xB5;&amp;#xC2;&amp;#xB6;&amp;#xC2;&amp;#xB7;&amp;#xC2;&amp;#xB8;&amp;#xC2;&amp;#xB9;&amp;#xC2;&amp;#xBA;&amp;#xC2;&amp;#xBB;&amp;#xC2;&amp;#xBC;&amp;#xC2;&amp;#xBD;&amp;#xC2;&amp;#xBE;&amp;#xC2;&amp;#xBF;&amp;#xC3;&amp;#x80;&amp;#xC3;&amp;#x81;&amp;#xC3;&amp;#x82;&amp;#xC3;&amp;#x83;&amp;#xC3;&amp;#x84;&amp;#xC3;&amp;#x85;&amp;#xC3;&amp;#x86;&amp;#xC3;&amp;#x87;&amp;#xC3;&amp;#x88;&amp;#xC3;&amp;#x89;&amp;#xC3;&amp;#x8A;&amp;#xC3;&amp;#x8B;&amp;#xC3;&amp;#x8C;&amp;#xC3;&amp;#x8D;&amp;#xC3;&amp;#x8E;&amp;#xC3;&amp;#x8F;&amp;#xC3;&amp;#x90;&amp;#xC3;&amp;#x91;&amp;#xC3;&amp;#x92;&amp;#xC3;&amp;#x93;&amp;#xC3;&amp;#x94;&amp;#xC3;&amp;#x95;&amp;#xC3;&amp;#x96;&amp;#xC3;&amp;#x97;&amp;#xC3;&amp;#x98;&amp;#xC3;&amp;#x99;&amp;#xC3;&amp;#x9A;&amp;#xC3;&amp;#x9B;&amp;#xC3;&amp;#x9C;&amp;#xC3;&amp;#x9D;&amp;#xC3;&amp;#x9E;&amp;#xC3;&amp;#x9F;&amp;#xC3;&amp;#xA0;&amp;#xC3;&amp;#xA1;&amp;#xC3;&amp;#xA2;&amp;#xC3;&amp;#xA3;&amp;#xC3;&amp;#xA4;&amp;#xC3;&amp;#xA5;&amp;#xC3;&amp;#xA6;&amp;#xC3;&amp;#xA7;&amp;#xC3;&amp;#xA8;&amp;#xC3;&amp;#xA9;&amp;#xC3;&amp;#xAA;&amp;#xC3;&amp;#xAB;&amp;#xC3;&amp;#xAC;&amp;#xC3;&amp;#xAD;&amp;#xC3;&amp;#xAE;&amp;#xC3;&amp;#xAF;&amp;#xC3;&amp;#xB0;&amp;#xC3;&amp;#xB1;&amp;#xC3;&amp;#xB2;&amp;#xC3;&amp;#xB3;&amp;#xC3;&amp;#xB4;&amp;#xC3;&amp;#xB5;&amp;#xC3;&amp;#xB6;&amp;#xC3;&amp;#xB7;&amp;#xC3;&amp;#xB8;&amp;#xC3;&amp;#xB9;&amp;#xC3;&amp;#xBA;&amp;#xC3;&amp;#xBB;&amp;#xC3;&amp;#xBC;&amp;#xC3;&amp;#xBD;&amp;#xC3;&amp;#xBE;&amp;#xC3;&amp;#xBF;
+2: &amp;#198;&amp;#146;&amp;#206;&amp;#145;&amp;#206;&amp;#146;&amp;#206;&amp;#147;&amp;#206;&amp;#148;&amp;#206;&amp;#149;&amp;#206;&amp;#150;&amp;#206;&amp;#151;&amp;#206;&amp;#152;&amp;#206;&amp;#153;&amp;#206;&amp;#154;&amp;#206;&amp;#155;&amp;#206;&amp;#156;&amp;#206;&amp;#157;&amp;#206;&amp;#158;&amp;#206;&amp;#159;&amp;#206;&amp;#160;&amp;#206;&amp;#161;&amp;#206;&amp;#163;&amp;#206;&amp;#164;&amp;#206;&amp;#165;&amp;#206;&amp;#166;&amp;#206;&amp;#167;&amp;#206;&amp;#168;&amp;#206;&amp;#169;&amp;#206;&amp;#177;&amp;#206;&amp;#178;&amp;#206;&amp;#179;&amp;#206;&amp;#180;&amp;#206;&amp;#181;&amp;#206;&amp;#182;&amp;#206;&amp;#183;&amp;#206;&amp;#184;&amp;#206;&amp;#185;&amp;#206;&amp;#186;&amp;#206;&amp;#187;&amp;#206;&amp;#188;&amp;#206;&amp;#189;&amp;#206;&amp;#190;&amp;#206;&amp;#191;&amp;#207;&amp;#128;&amp;#207;&amp;#129;&amp;#207;&amp;#130;&amp;#207;&amp;#131;&amp;#207;&amp;#132;&amp;#207;&amp;#133;&amp;#207;&amp;#134;&amp;#207;&amp;#135;&amp;#207;&amp;#136;&amp;#207;&amp;#137;&amp;#207;&amp;#145;&amp;#207;&amp;#146;&amp;#207;&amp;#150;&amp;#226;&amp;#128;&amp;#162;&amp;#226;&amp;#128;&amp;#166;&amp;#226;&amp;#128;&amp;#178;&amp;#226;&amp;#128;&amp;#179;&amp;#226;&amp;#128;&amp;#190;&amp;#226;&amp;#129;&amp;#132;&amp;#226;&amp;#132;&amp;#152;&amp;#226;&amp;#132;&amp;#145;&amp;#226;&amp;#132;&amp;#156;&amp;#226;&amp;#132;&amp;#162;&amp;#226;&amp;#132;&amp;#181;&amp;#226;&amp;#134;&amp;#144;&amp;#226;&amp;#134;&amp;#145;&amp;#226;&amp;#134;&amp;#146;&amp;#226;&amp;#134;&amp;#147;&amp;#226;&amp;#134;&amp;#148;&amp;#226;&amp;#134;&amp;#181;&amp;#226;&amp;#135;&amp;#144;&amp;#226;&amp;#135;&amp;#145;&amp;#226;&amp;#135;&amp;#146;&amp;#226;&amp;#135;&amp;#147;&amp;#226;&amp;#135;&amp;#148;&amp;#226;&amp;#136;&amp;#128;&amp;#226;&amp;#136;&amp;#130;&amp;#226;&amp;#136;&amp;#131;&amp;#226;&amp;#136;&amp;#133;&amp;#226;&amp;#136;&amp;#135;&amp;#226;&amp;#136;&amp;#136;&amp;#226;&amp;#136;&amp;#137;&amp;#226;&amp;#136;&amp;#139;&amp;#226;&amp;#136;&amp;#143;&amp;#226;&amp;#136;&amp;#145;&amp;#226;&amp;#136;&amp;#146;&amp;#226;&amp;#136;&amp;#151;&amp;#226;&amp;#136;&amp;#154;&amp;#226;&amp;#136;&amp;#157;&amp;#226;&amp;#136;&amp;#158;&amp;#226;&amp;#136;&amp;#160;&amp;#226;&amp;#136;&amp;#167;&amp;#226;&amp;#136;&amp;#168;&amp;#226;&amp;#136;&amp;#169;&amp;#226;&amp;#136;&amp;#170;&amp;#226;&amp;#136;&amp;#171;&amp;#226;&amp;#136;&amp;#180;&amp;#226;&amp;#136;&amp;#188;&amp;#226;&amp;#137;&amp;#133;&amp;#226;&amp;#137;&amp;#136;&amp;#226;&amp;#137;&amp;#160;&amp;#226;&amp;#137;&amp;#161;&amp;#226;&amp;#137;&amp;#164;&amp;#226;&amp;#137;&amp;#165;&amp;#226;&amp;#138;&amp;#130;&amp;#226;&amp;#138;&amp;#131;&amp;#226;&amp;#138;&amp;#132;&amp;#226;&amp;#138;&amp;#134;&amp;#226;&amp;#138;&amp;#135;&amp;#226;&amp;#138;&amp;#149;&amp;#226;&amp;#138;&amp;#151;&amp;#226;&amp;#138;&amp;#165;&amp;#226;&amp;#139;&amp;#133;&amp;#226;&amp;#140;&amp;#136;&amp;#226;&amp;#140;&amp;#137;&amp;#226;&amp;#140;&amp;#138;&amp;#226;&amp;#140;&amp;#139;&amp;#226;&amp;#140;&amp;#169;&amp;#226;&amp;#140;&amp;#170;&amp;#226;&amp;#151;&amp;#138;&amp;#226;&amp;#153;&amp;#160;&amp;#226;&amp;#153;&amp;#163;&amp;#226;&amp;#153;&amp;#165;&amp;#226;&amp;#153;&amp;#166;
+3: aÃÂbÃÂcÃÂ dÃÂ¡eÃ¢ÂÂ¬fg
+4: fÃÂ¶o
+6: &amp;#0;
+6 (hex): &amp;#x0;
+7: fÃÂ¶o
+7 (hex): fÃÂ¶o
+8: &amp;#1001;&amp;#1002;&amp;#1003;
+8 (hex): &amp;#x3E9;&amp;#x3EA;&amp;#x3EB;
+9: &amp;#16677217;&amp;#16677218;&amp;#16677219;
+9 (hex): &amp;#xFE7961;&amp;#xFE7962;&amp;#xFE7963;
+10: &amp;#34;&amp;#3;&amp;#34;&amp;#35;
+10 (hex): &amp;#x22;&amp;#x3;&amp;#x22;&amp;#x23;
+11: &amp;#12288;&amp;#163;&amp;#65;&amp;#66;&amp;#67;
+11 (hex): &amp;#x3000;&amp;#xA3;&amp;#x41;&amp;#x42;&amp;#x43;
+12: &amp;#1701127233;
+*** Testing mb_ereg() : usage variations ***
+Regex encoding set to utf-8
+bool(true)
+array(5) {
+  [0]=&gt;
+  string(52) &quot;VGhpcyBpcyBhbiBFbmdsaXNoIHN0cmluZy4gMDEyMzQ1Njc4OS4=&quot;
+  [1]=&gt;
+  string(8) &quot;VGhpcyBp&quot;
+  [2]=&gt;
+  string(4) &quot;IGk=&quot;
+  [3]=&gt;
+  string(8) &quot;NTY3ODk=&quot;
+  [4]=&gt;
+  string(4) &quot;ODk=&quot;
+}
+bool(false)
+NULL
+Donestring(11) &quot;random_var:&quot;
+string(380) &quot;ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿&quot;
+array(0) {
+}
+string(380) &quot;ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿&quot;
+Calling function: mb_trim with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function mb_trim: mb_trim(): Argument #3 ($encoding) must be a valid encoding, &quot;ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿&quot; given
+Calling function: syslog with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, Array
+Error calling function syslog: syslog(): Argument #1 ($priority) must be of type int, string given
+Calling function: fclose with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function fclose: fclose(): Argument #1 ($stream) must be of type resource, string given
+Calling function: zend_test_nullable_array_return with arguments: 
+Calling function: xmlwriter_start_attribute with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+Array, Array
+Error calling function xmlwriter_start_attribute: xmlwriter_start_attribute(): Argument #1 ($writer) must be of type XMLWriter, array given
+Calling function: zend_test_deprecated_attr with arguments: 
+
+Deprecated: Function zend_test_deprecated_attr() is deprecated, custom message in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 41
+Calling function: func_get_arg with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function func_get_arg: func_get_arg(): Argument #1 ($position) must be of type int, string given
+Calling function: array_fill_keys with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, Array
+Error calling function array_fill_keys: array_fill_keys(): Argument #1 ($keys) must be of type array, string given
+Calling function: array_pad with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function array_pad: array_pad(): Argument #1 ($array) must be of type array, string given
+Calling function: zend_test_attribute_with_named_argument with arguments: 
+Calling function: jdtounix with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function jdtounix: jdtounix(): Argument #1 ($julian_day) must be of type int, string given
+Calling function: array_sum with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function array_sum: array_sum(): Argument #1 ($array) must be of type array, string given
+Calling function: rewind with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+Array
+Error calling function rewind: rewind(): Argument #1 ($stream) must be of type resource, array given
+Calling function: bin2hex with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+Array
+Error calling function bin2hex: bin2hex(): Argument #1 ($string) must be of type string, array given
+Calling function: class_implements with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+Array, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function class_implements: class_implements(): Argument #1 ($object_or_class) must be of type object|string, array given
+Calling function: mb_convert_kana with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Error calling function mb_convert_kana: mb_convert_kana(): Argument #2 ($mode) contains invalid flag: &#x27;Ã&#x27;
+Calling function: xml_set_notation_decl_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 38
+ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, Array
+Error calling function xml_set_notation_decl_handler: xml_set_notation_decl_handler(): Argument #1 ($parser) must be of type XMLParser, string given
+Calling function: getopt with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿, ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+
+Warning: getopt(): Argument #3 ($rest_index) must be passed by reference, value given in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php on line 41
+Error calling function getopt: getopt(): Argument #2 ($long_options) must be of type array, string given
+Calling function: date_parse with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+Calling function: imagecreatefromstring with arguments: ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ÃÂ¡ÃÂ¢ÃÂ£ÃÂ¤ÃÂ¥ÃÂ¦ÃÂ§ÃÂ¨ÃÂ©ÃÂªÃÂ«ÃÂ¬ÃÂ­ÃÂ®ÃÂ¯ÃÂ°ÃÂ±ÃÂ²ÃÂ³ÃÂ´ÃÂµÃÂ¶ÃÂ·ÃÂ¸ÃÂ¹ÃÂºÃÂ»ÃÂ¼ÃÂ½ÃÂ¾ÃÂ¿
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/gd/gd.c:1367:14: runtime error: left shift of 140550433 by 7 places cannot be represented in type &#x27;int&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/gd/gd.c:1367:14 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$str1 = &#x27;Â¡Â¢Â£Â¤Â¥Â¦Â§Â¨Â©ÂªÂ«Â¬Â­Â®Â¯Â°Â±Â²Â³Â´ÂµÂ¶Â·Â¸Â¹ÂºÂ»Â¼Â½Â¾Â¿ÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã·Ã¸Ã¹ÃºÃ»Ã¼Ã½Ã¾Ã¿&#x27;;
+$str2 = &#x27;ÆÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎ Î¡Î£Î¤Î¥Î¦Î§Î¨Î©Î±Î²Î³Î´ÎµÎ¶Î·Î¸Î¹ÎºÎ»Î¼Î½Î¾Î¿ÏÏÏÏÏÏÏÏÏÏÏÏÏâ¢â¦â²â³â¾âââââ¢âµââââââµâââââââââââââââââââââ â§â¨â©âªâ«â´â¼âââ â¡â¤â¥ââââââââ¥ââââââ©âªââ â£â¥â¦&#x27;;
+$convmap = array(0x0, 0x2FFFF, 0, 0xFFFF);
+echo &quot;1: &quot; . mb_encode_numericentity($str1, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;1 (hex): &quot; . mb_encode_numericentity($str1, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+echo &quot;2: &quot; . mb_encode_numericentity($str2, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+$convmap = array(0xFF, 0x2FFFF, 0, 0xFFFF);
+echo &quot;3: &quot; . mb_encode_numericentity(&#x27;aÅbÅcÅ dÅ¡eâ¬fg&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+$convmap = [];
+echo &quot;4: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+// HTML-encode a null byte
+echo &quot;6: &quot; . mb_encode_numericentity(&quot;\x00&quot;, array(0, 1, 0, 0xFFFF), &quot;UTF-8&quot;, false) . &quot;\n&quot;;
+echo &quot;6 (hex): &quot; . mb_encode_numericentity(&quot;\x00&quot;, array(0, 1, 0, 0xFFFF), &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try doing weird things with convmap
+$convmap = [
+    0, 0, 0, 0,        // Only one codepoint, empty mask
+    100, 50, 0, 0xFFFF // &#x27;End&#x27; codepoint is before &#x27;start&#x27; codepoint
+];
+echo &quot;7: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;7 (hex): &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using positive offset
+$convmap = [0, 10, 1000, 0xFFFF];
+echo &quot;8: &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;8 (hex): &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using negative offset
+$convmap = [0, 10, -100000, 0xFFFFFF];
+echo &quot;9: &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;9 (hex): &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using mask to remove some bits
+$convmap = [0, 1000, 0, 0x123];
+echo &quot;10: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;10 (hex): &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try different text encoding
+$convmap = [0, 0xFFFF, 0, 0xFFFF];
+$iso2022jp = &quot;\x1B\$B\x21\x21!r\x1B(BABC&quot;;
+echo &quot;11: &quot; . mb_encode_numericentity($iso2022jp, $convmap, &quot;ISO-2022-JP&quot;) . &quot;\n&quot;;
+echo &quot;11 (hex): &quot; . mb_encode_numericentity($iso2022jp, $convmap, &quot;ISO-2022-JP&quot;, true) . &quot;\n&quot;;
+// Regression test; the old implementation could only emit decimal entities with about 7 digits
+$convmap = [0x2b, 0x2d4, 0x75656500, 0x656d2c53];
+echo &quot;12: &quot; . mb_encode_numericentity(&quot;m&quot;, $convmap, &quot;ASCII&quot;) . &quot;\n&quot;;
+$fusion = $str1;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Testing the following regular expression features match correctly:
+ * 1. definite quantifiers
+ * 2. Alternation
+ * 3. subpatterns in parentheses
+ */
+echo &quot;*** Testing mb_ereg() : usage variations ***\n&quot;;
+if(mb_regex_encoding(&#x27;utf-8&#x27;) == true) {
+    echo &quot;Regex encoding set to utf-8\n&quot;;
+} else {
+    echo &quot;Could not set regex encoding to utf-8\n&quot;;
+}
+$string_ascii = &#x27;This is an English string. 0123456789.&#x27;;
+$regex_ascii = &#x27;([A-Z]\w{1,4}is( [aeiou]|h)) ?.*\.\s[0-9]+(5([6-9][79]){2})[[:punct:]]$&#x27;;
+var_dump(mb_ereg($regex_ascii, $string_ascii, $regs_ascii));
+base64_encode_var_dump($regs_ascii);
+$string_mb = base64_decode(&#x27;zpHPhc+Ez4wgzrXOr869zrHOuSDOtc67zrvOt869zrnOus+MIM66zrXOr868zrXOvc6/LiAwMTIzNDU2Nzg5Lg==&#x27;);
+$regex_mb = base64_decode(&quot;W86RLc6pXShcdysgKSvOtVvOsS3PiVxzXSvOui4qKM+MfM6/KS4qXC5cc1swLTldKyg1KFs2LTldWzc5XSl7Mn0pW1s6cHVuY3Q6XV0k&quot;);
+var_dump(mb_ereg($regex_mb, $fusion, $regs_mb));
+base64_encode_var_dump($regs_mb);
+/**
+ * replicate a var dump of an array but outputted string values are base64 encoded
+ *
+ * @param array $regs
+ */
+function base64_encode_var_dump($regs) {
+    if ($regs) {
+        echo &quot;array(&quot; . count($regs) . &quot;) {\n&quot;;
+        foreach ($regs as $key =&gt; $value) {
+            echo &quot;  [$key]=&gt;\n  &quot;;
+            if (is_string($value)) {
+                var_dump(base64_encode($value));
+            } else {
+                var_dump($value);
+            }
+        }
+        echo &quot;}\n&quot;;
+    } else {
+        echo &quot;NULL\n&quot;;
+    }
+}
+echo &quot;Done&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Test mb_encode_numericentity() function: Convert text to HTML entities+Test mb_ereg() function : usage variations - different regex features in $pattern
+--INI--
+allow_url_include=1
+session.save_handler=non-existent
+--SKIPIF--
+&lt;?php
+function_exists(&#x27;mb_ereg&#x27;) or die(&quot;skip mb_ereg() is not available in this build&quot;);
+?&gt;
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+$str1 = &#x27;Â¡Â¢Â£Â¤Â¥Â¦Â§Â¨Â©ÂªÂ«Â¬Â­Â®Â¯Â°Â±Â²Â³Â´ÂµÂ¶Â·Â¸Â¹ÂºÂ»Â¼Â½Â¾Â¿ÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã·Ã¸Ã¹ÃºÃ»Ã¼Ã½Ã¾Ã¿&#x27;;
+$str2 = &#x27;ÆÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎÎ Î¡Î£Î¤Î¥Î¦Î§Î¨Î©Î±Î²Î³Î´ÎµÎ¶Î·Î¸Î¹ÎºÎ»Î¼Î½Î¾Î¿ÏÏÏÏÏÏÏÏÏÏÏÏÏâ¢â¦â²â³â¾âââââ¢âµââââââµâââââââââââââââââââââ â§â¨â©âªâ«â´â¼âââ â¡â¤â¥ââââââââ¥ââââââ©âªââ â£â¥â¦&#x27;;
+$convmap = array(0x0, 0x2FFFF, 0, 0xFFFF);
+echo &quot;1: &quot; . mb_encode_numericentity($str1, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;1 (hex): &quot; . mb_encode_numericentity($str1, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+echo &quot;2: &quot; . mb_encode_numericentity($str2, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+$convmap = array(0xFF, 0x2FFFF, 0, 0xFFFF);
+echo &quot;3: &quot; . mb_encode_numericentity(&#x27;aÅbÅcÅ dÅ¡eâ¬fg&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+$convmap = [];
+echo &quot;4: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+// HTML-encode a null byte
+echo &quot;6: &quot; . mb_encode_numericentity(&quot;\x00&quot;, array(0, 1, 0, 0xFFFF), &quot;UTF-8&quot;, false) . &quot;\n&quot;;
+echo &quot;6 (hex): &quot; . mb_encode_numericentity(&quot;\x00&quot;, array(0, 1, 0, 0xFFFF), &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try doing weird things with convmap
+$convmap = [
+    0, 0, 0, 0,        // Only one codepoint, empty mask
+    100, 50, 0, 0xFFFF // &#x27;End&#x27; codepoint is before &#x27;start&#x27; codepoint
+];
+echo &quot;7: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;7 (hex): &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using positive offset
+$convmap = [0, 10, 1000, 0xFFFF];
+echo &quot;8: &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;8 (hex): &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using negative offset
+$convmap = [0, 10, -100000, 0xFFFFFF];
+echo &quot;9: &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;9 (hex): &quot; . mb_encode_numericentity(&quot;\x01\x02\x03&quot;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try using mask to remove some bits
+$convmap = [0, 1000, 0, 0x123];
+echo &quot;10: &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;) . &quot;\n&quot;;
+echo &quot;10 (hex): &quot; . mb_encode_numericentity(&#x27;fÃ¶o&#x27;, $convmap, &quot;UTF-8&quot;, true) . &quot;\n&quot;;
+// Try different text encoding
+$convmap = [0, 0xFFFF, 0, 0xFFFF];
+$iso2022jp = &quot;\x1B\$B\x21\x21!r\x1B(BABC&quot;;
+echo &quot;11: &quot; . mb_encode_numericentity($iso2022jp, $convmap, &quot;ISO-2022-JP&quot;) . &quot;\n&quot;;
+echo &quot;11 (hex): &quot; . mb_encode_numericentity($iso2022jp, $convmap, &quot;ISO-2022-JP&quot;, true) . &quot;\n&quot;;
+// Regression test; the old implementation could only emit decimal entities with about 7 digits
+$convmap = [0x2b, 0x2d4, 0x75656500, 0x656d2c53];
+echo &quot;12: &quot; . mb_encode_numericentity(&quot;m&quot;, $convmap, &quot;ASCII&quot;) . &quot;\n&quot;;
+$fusion = $str1;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+/*
+ * Testing the following regular expression features match correctly:
+ * 1. definite quantifiers
+ * 2. Alternation
+ * 3. subpatterns in parentheses
+ */
+echo &quot;*** Testing mb_ereg() : usage variations ***\n&quot;;
+if(mb_regex_encoding(&#x27;utf-8&#x27;) == true) {
+    echo &quot;Regex encoding set to utf-8\n&quot;;
+} else {
+    echo &quot;Could not set regex encoding to utf-8\n&quot;;
+}
+$string_ascii = &#x27;This is an English string. 0123456789.&#x27;;
+$regex_ascii = &#x27;([A-Z]\w{1,4}is( [aeiou]|h)) ?.*\.\s[0-9]+(5([6-9][79]){2})[[:punct:]]$&#x27;;
+var_dump(mb_ereg($regex_ascii, $string_ascii, $regs_ascii));
+base64_encode_var_dump($regs_ascii);
+$string_mb = base64_decode(&#x27;zpHPhc+Ez4wgzrXOr869zrHOuSDOtc67zrvOt869zrnOus+MIM66zrXOr868zrXOvc6/LiAwMTIzNDU2Nzg5Lg==&#x27;);
+$regex_mb = base64_decode(&quot;W86RLc6pXShcdysgKSvOtVvOsS3PiVxzXSvOui4qKM+MfM6/KS4qXC5cc1swLTldKyg1KFs2LTldWzc5XSl7Mn0pW1s6cHVuY3Q6XV0k&quot;);
+var_dump(mb_ereg($regex_mb, $fusion, $regs_mb));
+base64_encode_var_dump($regs_mb);
+/**
+ * replicate a var dump of an array but outputted string values are base64 encoded
+ *
+ * @param array $regs
+ */
+function base64_encode_var_dump($regs) {
+    if ($regs) {
+        echo &quot;array(&quot; . count($regs) . &quot;) {\n&quot;;
+        foreach ($regs as $key =&gt; $value) {
+            echo &quot;  [$key]=&gt;\n  &quot;;
+            if (is_string($value)) {
+                var_dump(base64_encode($value));
+            } else {
+                var_dump($value);
+            }
+        }
+        echo &quot;}\n&quot;;
+    } else {
+        echo &quot;NULL\n&quot;;
+    }
+}
+echo &quot;Done&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXTENSIONS--
+mbstring
+mbstring
+--EXPECT--
+1: &amp;#161;&amp;#162;&amp;#163;&amp;#164;&amp;#165;&amp;#166;&amp;#167;&amp;#168;&amp;#169;&amp;#170;&amp;#171;&amp;#172;&amp;#173;&amp;#174;&amp;#175;&amp;#176;&amp;#177;&amp;#178;&amp;#179;&amp;#180;&amp;#181;&amp;#182;&amp;#183;&amp;#184;&amp;#185;&amp;#186;&amp;#187;&amp;#188;&amp;#189;&amp;#190;&amp;#191;&amp;#192;&amp;#193;&amp;#194;&amp;#195;&amp;#196;&amp;#197;&amp;#198;&amp;#199;&amp;#200;&amp;#201;&amp;#202;&amp;#203;&amp;#204;&amp;#205;&amp;#206;&amp;#207;&amp;#208;&amp;#209;&amp;#210;&amp;#211;&amp;#212;&amp;#213;&amp;#214;&amp;#215;&amp;#216;&amp;#217;&amp;#218;&amp;#219;&amp;#220;&amp;#221;&amp;#222;&amp;#223;&amp;#224;&amp;#225;&amp;#226;&amp;#227;&amp;#228;&amp;#229;&amp;#230;&amp;#231;&amp;#232;&amp;#233;&amp;#234;&amp;#235;&amp;#236;&amp;#237;&amp;#238;&amp;#239;&amp;#240;&amp;#241;&amp;#242;&amp;#243;&amp;#244;&amp;#245;&amp;#246;&amp;#247;&amp;#248;&amp;#249;&amp;#250;&amp;#251;&amp;#252;&amp;#253;&amp;#254;&amp;#255;
+1 (hex): &amp;#xA1;&amp;#xA2;&amp;#xA3;&amp;#xA4;&amp;#xA5;&amp;#xA6;&amp;#xA7;&amp;#xA8;&amp;#xA9;&amp;#xAA;&amp;#xAB;&amp;#xAC;&amp;#xAD;&amp;#xAE;&amp;#xAF;&amp;#xB0;&amp;#xB1;&amp;#xB2;&amp;#xB3;&amp;#xB4;&amp;#xB5;&amp;#xB6;&amp;#xB7;&amp;#xB8;&amp;#xB9;&amp;#xBA;&amp;#xBB;&amp;#xBC;&amp;#xBD;&amp;#xBE;&amp;#xBF;&amp;#xC0;&amp;#xC1;&amp;#xC2;&amp;#xC3;&amp;#xC4;&amp;#xC5;&amp;#xC6;&amp;#xC7;&amp;#xC8;&amp;#xC9;&amp;#xCA;&amp;#xCB;&amp;#xCC;&amp;#xCD;&amp;#xCE;&amp;#xCF;&amp;#xD0;&amp;#xD1;&amp;#xD2;&amp;#xD3;&amp;#xD4;&amp;#xD5;&amp;#xD6;&amp;#xD7;&amp;#xD8;&amp;#xD9;&amp;#xDA;&amp;#xDB;&amp;#xDC;&amp;#xDD;&amp;#xDE;&amp;#xDF;&amp;#xE0;&amp;#xE1;&amp;#xE2;&amp;#xE3;&amp;#xE4;&amp;#xE5;&amp;#xE6;&amp;#xE7;&amp;#xE8;&amp;#xE9;&amp;#xEA;&amp;#xEB;&amp;#xEC;&amp;#xED;&amp;#xEE;&amp;#xEF;&amp;#xF0;&amp;#xF1;&amp;#xF2;&amp;#xF3;&amp;#xF4;&amp;#xF5;&amp;#xF6;&amp;#xF7;&amp;#xF8;&amp;#xF9;&amp;#xFA;&amp;#xFB;&amp;#xFC;&amp;#xFD;&amp;#xFE;&amp;#xFF;
+2: &amp;#402;&amp;#913;&amp;#914;&amp;#915;&amp;#916;&amp;#917;&amp;#918;&amp;#919;&amp;#920;&amp;#921;&amp;#922;&amp;#923;&amp;#924;&amp;#925;&amp;#926;&amp;#927;&amp;#928;&amp;#929;&amp;#931;&amp;#932;&amp;#933;&amp;#934;&amp;#935;&amp;#936;&amp;#937;&amp;#945;&amp;#946;&amp;#947;&amp;#948;&amp;#949;&amp;#950;&amp;#951;&amp;#952;&amp;#953;&amp;#954;&amp;#955;&amp;#956;&amp;#957;&amp;#958;&amp;#959;&amp;#960;&amp;#961;&amp;#962;&amp;#963;&amp;#964;&amp;#965;&amp;#966;&amp;#967;&amp;#968;&amp;#969;&amp;#977;&amp;#978;&amp;#982;&amp;#8226;&amp;#8230;&amp;#8242;&amp;#8243;&amp;#8254;&amp;#8260;&amp;#8472;&amp;#8465;&amp;#8476;&amp;#8482;&amp;#8501;&amp;#8592;&amp;#8593;&amp;#8594;&amp;#8595;&amp;#8596;&amp;#8629;&amp;#8656;&amp;#8657;&amp;#8658;&amp;#8659;&amp;#8660;&amp;#8704;&amp;#8706;&amp;#8707;&amp;#8709;&amp;#8711;&amp;#8712;&amp;#8713;&amp;#8715;&amp;#8719;&amp;#8721;&amp;#8722;&amp;#8727;&amp;#8730;&amp;#8733;&amp;#8734;&amp;#8736;&amp;#8743;&amp;#8744;&amp;#8745;&amp;#8746;&amp;#8747;&amp;#8756;&amp;#8764;&amp;#8773;&amp;#8776;&amp;#8800;&amp;#8801;&amp;#8804;&amp;#8805;&amp;#8834;&amp;#8835;&amp;#8836;&amp;#8838;&amp;#8839;&amp;#8853;&amp;#8855;&amp;#8869;&amp;#8901;&amp;#8968;&amp;#8969;&amp;#8970;&amp;#8971;&amp;#9001;&amp;#9002;&amp;#9674;&amp;#9824;&amp;#9827;&amp;#9829;&amp;#9830;
+3: a&amp;#338;b&amp;#339;c&amp;#352;d&amp;#353;e&amp;#8364;fg
+4: fÃ¶o
+6: &amp;#0;
+6 (hex): &amp;#x0;
+7: fÃ¶o
+7 (hex): fÃ¶o
+8: &amp;#1001;&amp;#1002;&amp;#1003;
+8 (hex): &amp;#x3E9;&amp;#x3EA;&amp;#x3EB;
+9: &amp;#16677217;&amp;#16677218;&amp;#16677219;
+9 (hex): &amp;#xFE7961;&amp;#xFE7962;&amp;#xFE7963;
+10: &amp;#34;&amp;#34;&amp;#35;
+10 (hex): &amp;#x22;&amp;#x22;&amp;#x23;
+11: &amp;#12288;&amp;#163;&amp;#65;&amp;#66;&amp;#67;
+11 (hex): &amp;#x3000;&amp;#xA3;&amp;#x41;&amp;#x42;&amp;#x43;
+12: &amp;#1701127233;
+*** Testing mb_ereg() : usage variations ***
+Regex encoding set to utf-8
+bool(true)
+array(5) {
+  [0]=&gt;
+  string(52) &quot;VGhpcyBpcyBhbiBFbmdsaXNoIHN0cmluZy4gMDEyMzQ1Njc4OS4=&quot;
+  [1]=&gt;
+  string(8) &quot;VGhpcyBp&quot;
+  [2]=&gt;
+  string(4) &quot;IGk=&quot;
+  [3]=&gt;
+  string(8) &quot;NTY3ODk=&quot;
+  [4]=&gt;
+  string(4) &quot;ODk=&quot;
+}
+bool(true)
+array(5) {
+  [0]=&gt;
+  string(88) &quot;zpHPhc+Ez4wgzrXOr869zrHOuSDOtc67zrvOt869zrnOus+MIM66zrXOr868zrXOvc6/LiAwMTIzNDU2Nzg5Lg==&quot;
+  [1]=&gt;
+  string(16) &quot;zrXOr869zrHOuSA=&quot;
+  [2]=&gt;
+  string(4) &quot;zr8=&quot;
+  [3]=&gt;
+  string(8) &quot;NTY3ODk=&quot;
+  [4]=&gt;
+  string(4) &quot;ODk=&quot;
+}
+Done
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j24&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j24&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker18&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;allow_url_include=1&quot; -d &quot;session.save_handler=non-existent&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1188.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
