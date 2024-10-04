@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>c8791e5581f50025b0a90bd01a54e8eb122852a9
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/bcmath/libbcmath/src/convert.c:155</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>[]</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+-
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+Warning: Invalid &quot;opcache.jit&quot; setting. Should be &quot;disable&quot;, &quot;on&quot;, &quot;off&quot;, &quot;tracing&quot;, &quot;function&quot; or 4-digit number in Unknown on line 0
+*** Test substituting argument 1 with float values ***
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+Number &quot;15&quot; (scale 0)
+15 / 10.5                           = 1
+15 / -10.5                          = -1
+15 / 123456789000                   = 0
+15 / -123456789000                  = 0
+15 / 0.5                            = 30
+
+Number &quot;-15&quot; (scale 0)
+-15 / 10.5                           = -1
+-15 / -10.5                          = 1
+-15 / 123456789000                   = 0
+-15 / -123456789000                  = 0
+-15 / 0.5                            = -30
+
+Number &quot;1&quot; (scale 0)
+1 / 10.5                           = 0
+1 / -10.5                          = 0
+1 / 123456789000                   = 0
+1 / -123456789000                  = 0
+1 / 0.5                            = 2
+
+Number &quot;-9&quot; (scale 0)
+-9 / 10.5                           = 0
+-9 / -10.5                          = 0
+-9 / 123456789000                   = 0
+-9 / -123456789000                  = 0
+-9 / 0.5                            = -18
+
+Number &quot;14.14&quot; (scale 0)
+14.14 / 10.5                           = 1
+14.14 / -10.5                          = -1
+14.14 / 123456789000                   = 0
+14.14 / -123456789000                  = 0
+14.14 / 0.5                            = 28
+
+Number &quot;-16.60&quot; (scale 0)
+-16.60 / 10.5                           = -1
+-16.60 / -10.5                          = 1
+-16.60 / 123456789000                   = 0
+-16.60 / -123456789000                  = 0
+-16.60 / 0.5                            = -33
+
+Number &quot;0.15&quot; (scale 0)
+0.15 / 10.5                           = 0
+0.15 / -10.5                          = 0
+0.15 / 123456789000                   = 0
+0.15 / -123456789000                  = 0
+0.15 / 0.5                            = 0
+
+Number &quot;-0.01&quot; (scale 0)
+-0.01 / 10.5                           = 0
+-0.01 / -10.5                          = 0
+-0.01 / 123456789000                   = 0
+-0.01 / -123456789000                  = 0
+-0.01 / 0.5                            = 0
+
+Number &quot;15&quot; (scale 10)
+15 / 10.5                           = 1.4285714285
+15 / -10.5                          = -1.4285714285
+15 / 123456789000                   = 0.0000000001
+15 / -123456789000                  = -0.0000000001
+15 / 0.5                            = 30.0000000000
+
+Number &quot;-15&quot; (scale 10)
+-15 / 10.5                           = -1.4285714285
+-15 / -10.5                          = 1.4285714285
+-15 / 123456789000                   = -0.0000000001
+-15 / -123456789000                  = 0.0000000001
+-15 / 0.5                            = -30.0000000000
+
+Number &quot;1&quot; (scale 10)
+1 / 10.5                           = 0.0952380952
+1 / -10.5                          = -0.0952380952
+1 / 123456789000                   = /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/bcmath/libbcmath/src/convert.c:155:68: runtime error: index 7935345 out of bounds for type &#x27;const unsigned char[100]&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/bcmath/libbcmath/src/convert.c:155:68 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+echo &quot;*** Test substituting argument 1 with float values ***\n&quot;;
+$variation_array = array(
+  &#x27;float 10.5&#x27; =&gt; 10.5,
+  &#x27;float -10.5&#x27; =&gt; -10.5,
+  &#x27;float 12.3456789000e10&#x27; =&gt; 12.3456789000e10,
+  &#x27;float -12.3456789000e10&#x27; =&gt; -12.3456789000e10,
+  &#x27;float .5&#x27; =&gt; .5,
+  );
+foreach ( $variation_array as $var ) {
+  var_dump(get_cfg_var( $var  ) );
+}
+$fusion = $variation_array;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+require(__DIR__ . &quot;/run_bcmath_tests_function.inc&quot;);
+$dividends = [&quot;15&quot;, &quot;-15&quot;, &quot;1&quot;, &quot;-9&quot;, &quot;14.14&quot;, &quot;-16.60&quot;, &quot;0.15&quot;, &quot;-0.01&quot;];
+$divisors = array_merge($dividends, [
+    &quot;15151324141414.412312232141241&quot;,
+    &quot;-132132245132134.1515123765412&quot;,
+    &quot;141241241241241248267654747412&quot;,
+    &quot;-149143276547656984948124912&quot;,
+    &quot;0.1322135476547459213732911312&quot;,
+    &quot;-0.123912932193769965476541321&quot;,
+]);
+run_bcmath_tests($dividends, $fusion, &quot;/&quot;, bcdiv(...));
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Test function get_cfg_var() by substituting argument 1 with float values.+bcdiv() function
+--INI--
+session.use_cookies=0
+session.serialize_handler=php
+session.save_handler=files
+bcmath.scale=0
+session.use_cookies=0
+implicit_flush=1
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=1024M
+opcache.jit=1043
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;
+&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;
+&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+echo &quot;*** Test substituting argument 1 with float values ***\n&quot;;
+$variation_array = array(
+  &#x27;float 10.5&#x27; =&gt; 10.5,
+  &#x27;float -10.5&#x27; =&gt; -10.5,
+  &#x27;float 12.3456789000e10&#x27; =&gt; 12.3456789000e10,
+  &#x27;float -12.3456789000e10&#x27; =&gt; -12.3456789000e10,
+  &#x27;float .5&#x27; =&gt; .5,
+  );
+foreach ( $variation_array as $var ) {
+  var_dump(get_cfg_var( $var  ) );
+}
+$fusion = $variation_array;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+require(__DIR__ . &quot;/run_bcmath_tests_function.inc&quot;);
+$dividends = [&quot;15&quot;, &quot;-15&quot;, &quot;1&quot;, &quot;-9&quot;, &quot;14.14&quot;, &quot;-16.60&quot;, &quot;0.15&quot;, &quot;-0.01&quot;];
+$divisors = array_merge($dividends, [
+    &quot;15151324141414.412312232141241&quot;,
+    &quot;-132132245132134.1515123765412&quot;,
+    &quot;141241241241241248267654747412&quot;,
+    &quot;-149143276547656984948124912&quot;,
+    &quot;0.1322135476547459213732911312&quot;,
+    &quot;-0.123912932193769965476541321&quot;,
+]);
+run_bcmath_tests($dividends, $fusion, &quot;/&quot;, bcdiv(...));
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXTENSIONS--
+bcmath
+--EXPECT--
+*** Test substituting argument 1 with float values ***
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+bool(false)
+Number &quot;15&quot; (scale 0)
+15 / 15                             = 1
+15 / -15                            = -1
+15 / 1                              = 15
+15 / -9                             = -1
+15 / 14.14                          = 1
+15 / -16.60                         = 0
+15 / 0.15                           = 100
+15 / -0.01                          = -1500
+15 / 15151324141414.412312232141241 = 0
+15 / -132132245132134.1515123765412 = 0
+15 / 141241241241241248267654747412 = 0
+15 / -149143276547656984948124912   = 0
+15 / 0.1322135476547459213732911312 = 113
+15 / -0.123912932193769965476541321 = -121
+
+Number &quot;-15&quot; (scale 0)
+-15 / 15                             = -1
+-15 / -15                            = 1
+-15 / 1                              = -15
+-15 / -9                             = 1
+-15 / 14.14                          = -1
+-15 / -16.60                         = 0
+-15 / 0.15                           = -100
+-15 / -0.01                          = 1500
+-15 / 15151324141414.412312232141241 = 0
+-15 / -132132245132134.1515123765412 = 0
+-15 / 141241241241241248267654747412 = 0
+-15 / -149143276547656984948124912   = 0
+-15 / 0.1322135476547459213732911312 = -113
+-15 / -0.123912932193769965476541321 = 121
+
+Number &quot;1&quot; (scale 0)
+1 / 15                             = 0
+1 / -15                            = 0
+1 / 1                              = 1
+1 / -9                             = 0
+1 / 14.14                          = 0
+1 / -16.60                         = 0
+1 / 0.15                           = 6
+1 / -0.01                          = -100
+1 / 15151324141414.412312232141241 = 0
+1 / -132132245132134.1515123765412 = 0
+1 / 141241241241241248267654747412 = 0
+1 / -149143276547656984948124912   = 0
+1 / 0.1322135476547459213732911312 = 7
+1 / -0.123912932193769965476541321 = -8
+
+Number &quot;-9&quot; (scale 0)
+-9 / 15                             = 0
+-9 / -15                            = 0
+-9 / 1                              = -9
+-9 / -9                             = 1
+-9 / 14.14                          = 0
+-9 / -16.60                         = 0
+-9 / 0.15                           = -60
+-9 / -0.01                          = 900
+-9 / 15151324141414.412312232141241 = 0
+-9 / -132132245132134.1515123765412 = 0
+-9 / 141241241241241248267654747412 = 0
+-9 / -149143276547656984948124912   = 0
+-9 / 0.1322135476547459213732911312 = -68
+-9 / -0.123912932193769965476541321 = 72
+
+Number &quot;14.14&quot; (scale 0)
+14.14 / 15                             = 0
+14.14 / -15                            = 0
+14.14 / 1                              = 14
+14.14 / -9                             = -1
+14.14 / 14.14                          = 1
+14.14 / -16.60                         = 0
+14.14 / 0.15                           = 94
+14.14 / -0.01                          = -1414
+14.14 / 15151324141414.412312232141241 = 0
+14.14 / -132132245132134.1515123765412 = 0
+14.14 / 141241241241241248267654747412 = 0
+14.14 / -149143276547656984948124912   = 0
+14.14 / 0.1322135476547459213732911312 = 106
+14.14 / -0.123912932193769965476541321 = -114
+
+Number &quot;-16.60&quot; (scale 0)
+-16.60 / 15                             = -1
+-16.60 / -15                            = 1
+-16.60 / 1                              = -16
+-16.60 / -9                             = 1
+-16.60 / 14.14                          = -1
+-16.60 / -16.60                         = 1
+-16.60 / 0.15                           = -110
+-16.60 / -0.01                          = 1660
+-16.60 / 15151324141414.412312232141241 = 0
+-16.60 / -132132245132134.1515123765412 = 0
+-16.60 / 141241241241241248267654747412 = 0
+-16.60 / -149143276547656984948124912   = 0
+-16.60 / 0.1322135476547459213732911312 = -125
+-16.60 / -0.123912932193769965476541321 = 133
+
+Number &quot;0.15&quot; (scale 0)
+0.15 / 15                             = 0
+0.15 / -15                            = 0
+0.15 / 1                              = 0
+0.15 / -9                             = 0
+0.15 / 14.14                          = 0
+0.15 / -16.60                         = 0
+0.15 / 0.15                           = 1
+0.15 / -0.01                          = -15
+0.15 / 15151324141414.412312232141241 = 0
+0.15 / -132132245132134.1515123765412 = 0
+0.15 / 141241241241241248267654747412 = 0
+0.15 / -149143276547656984948124912   = 0
+0.15 / 0.1322135476547459213732911312 = 1
+0.15 / -0.123912932193769965476541321 = -1
+
+Number &quot;-0.01&quot; (scale 0)
+-0.01 / 15                             = 0
+-0.01 / -15                            = 0
+-0.01 / 1                              = 0
+-0.01 / -9                             = 0
+-0.01 / 14.14                          = 0
+-0.01 / -16.60                         = 0
+-0.01 / 0.15                           = 0
+-0.01 / -0.01                          = 1
+-0.01 / 15151324141414.412312232141241 = 0
+-0.01 / -132132245132134.1515123765412 = 0
+-0.01 / 141241241241241248267654747412 = 0
+-0.01 / -149143276547656984948124912   = 0
+-0.01 / 0.1322135476547459213732911312 = 0
+-0.01 / -0.123912932193769965476541321 = 0
+
+Number &quot;15&quot; (scale 10)
+15 / 15                             = 1.0000000000
+15 / -15                            = -1.0000000000
+15 / 1                              = 15.0000000000
+15 / -9                             = -1.6666666666
+15 / 14.14                          = 1.0608203677
+15 / -16.60                         = -0.9036144578
+15 / 0.15                           = 100.0000000000
+15 / -0.01                          = -1500.0000000000
+15 / 15151324141414.412312232141241 = 0.0000000000
+15 / -132132245132134.1515123765412 = 0.0000000000
+15 / 141241241241241248267654747412 = 0.0000000000
+15 / -149143276547656984948124912   = 0.0000000000
+15 / 0.1322135476547459213732911312 = 113.4528213339
+15 / -0.123912932193769965476541321 = -121.0527402946
+
+Number &quot;-15&quot; (scale 10)
+-15 / 15                             = -1.0000000000
+-15 / -15                            = 1.0000000000
+-15 / 1                              = -15.0000000000
+-15 / -9                             = 1.6666666666
+-15 / 14.14                          = -1.0608203677
+-15 / -16.60                         = 0.9036144578
+-15 / 0.15                           = -100.0000000000
+-15 / -0.01                          = 1500.0000000000
+-15 / 15151324141414.412312232141241 = 0.0000000000
+-15 / -132132245132134.1515123765412 = 0.0000000000
+-15 / 141241241241241248267654747412 = 0.0000000000
+-15 / -149143276547656984948124912   = 0.0000000000
+-15 / 0.1322135476547459213732911312 = -113.4528213339
+-15 / -0.123912932193769965476541321 = 121.0527402946
+
+Number &quot;1&quot; (scale 10)
+1 / 15                             = 0.0666666666
+1 / -15                            = -0.0666666666
+1 / 1                              = 1.0000000000
+1 / -9                             = -0.1111111111
+1 / 14.14                          = 0.0707213578
+1 / -16.60                         = -0.0602409638
+1 / 0.15                           = 6.6666666666
+1 / -0.01                          = -100.0000000000
+1 / 15151324141414.412312232141241 = 0.0000000000
+1 / -132132245132134.1515123765412 = 0.0000000000
+1 / 141241241241241248267654747412 = 0.0000000000
+1 / -149143276547656984948124912   = 0.0000000000
+1 / 0.1322135476547459213732911312 = 7.5635214222
+1 / -0.123912932193769965476541321 = -8.0701826863
+
+Number &quot;-9&quot; (scale 10)
+-9 / 15                             = -0.6000000000
+-9 / -15                            = 0.6000000000
+-9 / 1                              = -9.0000000000
+-9 / -9                             = 1.0000000000
+-9 / 14.14                          = -0.6364922206
+-9 / -16.60                         = 0.5421686746
+-9 / 0.15                           = -60.0000000000
+-9 / -0.01                          = 900.0000000000
+-9 / 15151324141414.412312232141241 = 0.0000000000
+-9 / -132132245132134.1515123765412 = 0.0000000000
+-9 / 141241241241241248267654747412 = 0.0000000000
+-9 / -149143276547656984948124912   = 0.0000000000
+-9 / 0.1322135476547459213732911312 = -68.0716928003
+-9 / -0.123912932193769965476541321 = 72.6316441767
+
+Number &quot;14.14&quot; (scale 10)
+14.14 / 15                             = 0.9426666666
+14.14 / -15                            = -0.9426666666
+14.14 / 1                              = 14.1400000000
+14.14 / -9                             = -1.5711111111
+14.14 / 14.14                          = 1.0000000000
+14.14 / -16.60                         = -0.8518072289
+14.14 / 0.15                           = 94.2666666666
+14.14 / -0.01                          = -1414.0000000000
+14.14 / 15151324141414.412312232141241 = 0.0000000000
+14.14 / -132132245132134.1515123765412 = 0.0000000000
+14.14 / 141241241241241248267654747412 = 0.0000000000
+14.14 / -149143276547656984948124912   = 0.0000000000
+14.14 / 0.1322135476547459213732911312 = 106.9481929107
+14.14 / -0.123912932193769965476541321 = -114.1123831844
+
+Number &quot;-16.60&quot; (scale 10)
+-16.60 / 15                             = -1.1066666666
+-16.60 / -15                            = 1.1066666666
+-16.60 / 1                              = -16.6000000000
+-16.60 / -9                             = 1.8444444444
+-16.60 / 14.14                          = -1.1739745403
+-16.60 / -16.60                         = 1.0000000000
+-16.60 / 0.15                           = -110.6666666666
+-16.60 / -0.01                          = 1660.0000000000
+-16.60 / 15151324141414.412312232141241 = 0.0000000000
+-16.60 / -132132245132134.1515123765412 = 0.0000000000
+-16.60 / 141241241241241248267654747412 = 0.0000000000
+-16.60 / -149143276547656984948124912   = 0.0000000000
+-16.60 / 0.1322135476547459213732911312 = -125.5544556095
+-16.60 / -0.123912932193769965476541321 = 133.9650325927
+
+Number &quot;0.15&quot; (scale 10)
+0.15 / 15                             = 0.0100000000
+0.15 / -15                            = -0.0100000000
+0.15 / 1                              = 0.1500000000
+0.15 / -9                             = -0.0166666666
+0.15 / 14.14                          = 0.0106082036
+0.15 / -16.60                         = -0.0090361445
+0.15 / 0.15                           = 1.0000000000
+0.15 / -0.01                          = -15.0000000000
+0.15 / 15151324141414.412312232141241 = 0.0000000000
+0.15 / -132132245132134.1515123765412 = 0.0000000000
+0.15 / 141241241241241248267654747412 = 0.0000000000
+0.15 / -149143276547656984948124912   = 0.0000000000
+0.15 / 0.1322135476547459213732911312 = 1.1345282133
+0.15 / -0.123912932193769965476541321 = -1.2105274029
+
+Number &quot;-0.01&quot; (scale 10)
+-0.01 / 15                             = -0.0006666666
+-0.01 / -15                            = 0.0006666666
+-0.01 / 1                              = -0.0100000000
+-0.01 / -9                             = 0.0011111111
+-0.01 / 14.14                          = -0.0007072135
+-0.01 / -16.60                         = 0.0006024096
+-0.01 / 0.15                           = -0.0666666666
+-0.01 / -0.01                          = 1.0000000000
+-0.01 / 15151324141414.412312232141241 = 0.0000000000
+-0.01 / -132132245132134.1515123765412 = 0.0000000000
+-0.01 / 141241241241241248267654747412 = 0.0000000000
+-0.01 / -149143276547656984948124912   = 0.0000000000
+-0.01 / 0.1322135476547459213732911312 = -0.0756352142
+-0.01 / -0.123912932193769965476541321 = 0.0807018268
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,41,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j24&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j24&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker23&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;session.use_cookies=0&quot; -d &quot;session.serialize_handler=php&quot; -d &quot;session.save_handler=files&quot; -d &quot;bcmath.scale=0&quot; -d &quot;implicit_flush=1&quot; -d &quot;opcache.enable=1&quot; -d &quot;opcache.enable_cli=1&quot; -d &quot;opcache.jit_buffer_size=1024M&quot; -d &quot;opcache.jit=1043&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1622.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
