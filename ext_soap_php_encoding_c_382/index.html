@@ -1,0 +1,1000 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>c8791e5581f50025b0a90bd01a54e8eb122852a9
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/soap/php_encoding.c:382</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['stack-overflow']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+&lt;?php
+$tmp = &amp;$utf8_string;
+$utf8_string[] = $tmp;
+$fusion = $utf8_string;
+$client = new SoapClient(NULL,array(&quot;location&quot;=&gt;&quot;test://&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;trace&quot;=&gt;1,&quot;exceptions&quot;=&gt;0));
+$client-&gt;__soapCall(&quot;echoStructArray&quot;, array(array($struct1,$fusion)), array(&quot;soapaction&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;));
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+*** Testing mb_convert_encoding() : Circular references ***
+
+-- Convert to JIS --
+JIS encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 94
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 95
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 96
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+-- Convert to EUC-JP --
+EUC-JP encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 101
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 102
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 103
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+-- Convert to SJIS --
+SJIS encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 108
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 109
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 110
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+-- Convert to UTF-8 --
+UTF-8 encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 115
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 116
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php on line 117
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+DoneAddressSanitizer:DEADLYSIGNAL
+=================================================================
+==1148814==ERROR: AddressSanitizer: stack-overflow on address 0x7ffca443bd58 (pc 0x564db5fe6c83 bp 0x7ffca443c7b0 sp 0x7ffca443bd60 T0)
+    #0 0x564db5fe6c83 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:382
+    #1 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #2 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #3 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #4 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #5 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #6 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #7 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #8 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #9 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #10 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #11 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #12 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #13 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #14 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #15 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #16 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #17 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #18 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #19 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #20 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #21 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #22 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #23 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #24 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #25 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #26 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #27 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #28 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #29 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #30 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #31 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #32 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #33 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #34 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #35 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #36 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #37 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #38 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #39 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #40 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #41 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #42 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #43 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #44 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #45 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #46 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #47 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #48 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #49 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #50 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #51 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #52 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #53 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #54 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #55 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #56 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #57 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #58 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #59 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #60 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #61 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #62 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #63 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #64 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #65 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #66 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #67 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #68 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #69 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #70 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #71 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #72 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #73 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #74 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #75 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #76 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #77 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #78 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #79 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #80 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #81 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #82 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #83 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #84 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #85 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #86 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #87 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #88 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #89 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #90 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #91 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #92 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #93 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #94 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #95 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #96 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #97 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #98 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #99 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #100 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #101 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #102 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #103 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #104 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #105 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #106 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #107 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #108 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #109 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #110 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #111 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #112 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #113 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #114 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #115 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #116 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #117 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #118 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #119 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #120 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #121 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #122 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #123 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #124 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #125 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #126 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #127 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #128 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #129 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #130 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #131 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #132 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #133 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #134 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #135 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #136 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #137 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #138 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #139 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #140 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #141 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #142 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #143 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #144 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #145 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #146 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #147 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #148 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #149 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #150 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #151 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #152 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #153 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #154 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #155 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #156 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #157 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #158 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #159 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #160 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #161 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #162 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #163 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #164 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #165 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #166 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #167 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #168 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #169 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #170 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #171 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #172 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #173 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #174 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #175 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #176 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #177 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #178 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #179 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #180 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #181 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #182 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #183 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #184 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #185 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #186 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #187 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #188 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #189 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #190 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #191 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #192 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #193 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #194 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #195 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #196 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #197 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #198 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #199 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #200 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #201 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #202 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #203 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #204 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #205 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #206 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #207 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #208 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #209 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #210 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #211 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #212 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #213 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #214 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #215 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #216 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #217 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #218 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #219 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #220 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #221 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #222 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #223 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #224 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #225 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #226 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #227 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #228 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #229 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #230 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #231 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #232 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #233 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #234 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #235 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #236 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #237 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #238 0x564db6024202 in add_xml_array_elements /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2151:15
+    #239 0x564db5fe3695 in to_xml_array /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2471:3
+    #240 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #241 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+    #242 0x564db5fc7ca3 in guess_array_map /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2031:9
+    #243 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #244 0x564db5fb5480 in guess_xml_convert /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:2798:8
+    #245 0x564db5fed0e4 in master_to_xml_int /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:505:11
+    #246 0x564db5fe6c20 in master_to_xml /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:516:9
+
+SUMMARY: AddressSanitizer: stack-overflow /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/soap/php_encoding.c:382 in master_to_xml_int
+==1148814==ABORTING
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+/*
+ * Test basic functionality of mb_convert_encoding()
+ */
+echo &quot;*** Testing mb_convert_encoding() : Circular references ***\n&quot;;
+//All strings are the same when displayed in their respective encodings
+$sjis_string[] = base64_decode(&#x27;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&#x27;);
+$sjis_string[] = base64_decode(&#x27;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&#x27;);
+$tmp = &amp;$sjis_string;
+$sjis_string[] = $tmp;
+$jis_string[] = base64_decode(&#x27;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&#x27;);
+$jis_string[] = base64_decode(&#x27;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&#x27;);
+$tmp = &amp;$jis_string;
+$jis_string[] = $tmp;
+$euc_jp_string[] = base64_decode(&#x27;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&#x27;);
+$euc_jp_string[] = base64_decode(&#x27;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&#x27;);
+$tmp = &amp;$euc_jp_string;
+$euc_jp_string[] = $tmp;
+$utf8_string[] = base64_decode(&#x27;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&#x27;);
+$utf8_string[] = base64_decode(&#x27;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&#x27;);
+$tmp = &amp;$utf8_string;
+$utf8_string[] = $tmp;
+function base64_encode_array($input) {
+    foreach ($input as $var) {
+        if (is_scalar($var))
+            $ret[] = base64_encode($var);
+    }
+    return $ret;
+}
+echo &quot;\n-- Convert to JIS --\n&quot;;
+echo &quot;JIS encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($jis_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;JIS&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;JIS&#x27;, &#x27;EUC-JP&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;JIS&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to EUC-JP --\n&quot;;
+echo &quot;EUC-JP encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($euc_jp_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;EUC-JP&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;EUC-JP&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;EUC-JP&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to SJIS --\n&quot;;
+echo &quot;SJIS encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($sjis_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;SJIS&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;SJIS&#x27;, &#x27;EUC-JP&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;SJIS&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to UTF-8 --\n&quot;;
+echo &quot;UTF-8 encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($utf8_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;UTF-8&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;UTF-8&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;UTF-8&#x27;, &#x27;EUC-JP&#x27;)));
+echo &quot;Done&quot;;
+$fusion = $utf8_string;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class SOAPStruct {
+    function __construct(public $varString, public $varInt, public $varFloat) {}
+}
+$struct1 = new SOAPStruct(&#x27;arg&#x27;,34,325.325);
+$struct2 = new SOAPStruct(&#x27;arg&#x27;,34,325.325);
+$client = new SoapClient(NULL,array(&quot;location&quot;=&gt;&quot;test://&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;trace&quot;=&gt;1,&quot;exceptions&quot;=&gt;0));
+$client-&gt;__soapCall(&quot;echoStructArray&quot;, array(array($struct1,$fusion)), array(&quot;soapaction&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;));
+echo $client-&gt;__getlastrequest();
+$HTTP_RAW_POST_DATA = $client-&gt;__getlastrequest();
+include(&quot;round2_base.inc&quot;);
+echo &quot;ok\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Test mb_convert_encoding() function : Circular references+SOAP Interop Round2 base 015 (php/direct): echoStructArray
+--INI--
+precision=14
+short_open_tag=1
+opcache.max_accelerated_files=4000
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+/*
+ * Test basic functionality of mb_convert_encoding()
+ */
+echo &quot;*** Testing mb_convert_encoding() : Circular references ***\n&quot;;
+//All strings are the same when displayed in their respective encodings
+$sjis_string[] = base64_decode(&#x27;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&#x27;);
+$sjis_string[] = base64_decode(&#x27;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&#x27;);
+$tmp = &amp;$sjis_string;
+$sjis_string[] = $tmp;
+$jis_string[] = base64_decode(&#x27;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&#x27;);
+$jis_string[] = base64_decode(&#x27;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&#x27;);
+$tmp = &amp;$jis_string;
+$jis_string[] = $tmp;
+$euc_jp_string[] = base64_decode(&#x27;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&#x27;);
+$euc_jp_string[] = base64_decode(&#x27;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&#x27;);
+$tmp = &amp;$euc_jp_string;
+$euc_jp_string[] = $tmp;
+$utf8_string[] = base64_decode(&#x27;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&#x27;);
+$utf8_string[] = base64_decode(&#x27;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&#x27;);
+$tmp = &amp;$utf8_string;
+$utf8_string[] = $tmp;
+function base64_encode_array($input) {
+    foreach ($input as $var) {
+        if (is_scalar($var))
+            $ret[] = base64_encode($var);
+    }
+    return $ret;
+}
+echo &quot;\n-- Convert to JIS --\n&quot;;
+echo &quot;JIS encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($jis_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;JIS&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;JIS&#x27;, &#x27;EUC-JP&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;JIS&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to EUC-JP --\n&quot;;
+echo &quot;EUC-JP encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($euc_jp_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;EUC-JP&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;EUC-JP&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;EUC-JP&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to SJIS --\n&quot;;
+echo &quot;SJIS encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($sjis_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;SJIS&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;SJIS&#x27;, &#x27;EUC-JP&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($utf8_string, &#x27;SJIS&#x27;, &#x27;UTF-8&#x27;)));
+echo &quot;\n-- Convert to UTF-8 --\n&quot;;
+echo &quot;UTF-8 encoded string in base64:\n&quot;;
+var_dump(base64_encode_array($utf8_string));
+echo &quot;Converted Strings:\n&quot;;
+var_dump(base64_encode_array(mb_convert_encoding($sjis_string, &#x27;UTF-8&#x27;, &#x27;SJIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($jis_string, &#x27;UTF-8&#x27;, &#x27;JIS&#x27;)));
+var_dump(base64_encode_array(mb_convert_encoding($euc_jp_string, &#x27;UTF-8&#x27;, &#x27;EUC-JP&#x27;)));
+echo &quot;Done&quot;;
+$fusion = $utf8_string;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+class SOAPStruct {
+    function __construct(public $varString, public $varInt, public $varFloat) {}
+}
+$struct1 = new SOAPStruct(&#x27;arg&#x27;,34,325.325);
+$struct2 = new SOAPStruct(&#x27;arg&#x27;,34,325.325);
+$client = new SoapClient(NULL,array(&quot;location&quot;=&gt;&quot;test://&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;trace&quot;=&gt;1,&quot;exceptions&quot;=&gt;0));
+$client-&gt;__soapCall(&quot;echoStructArray&quot;, array(array($struct1,$fusion)), array(&quot;soapaction&quot;=&gt;&quot;http://soapinterop.org/&quot;,&quot;uri&quot;=&gt;&quot;http://soapinterop.org/&quot;));
+echo $client-&gt;__getlastrequest();
+$HTTP_RAW_POST_DATA = $client-&gt;__getlastrequest();
+include(&quot;round2_base.inc&quot;);
+echo &quot;ok\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXTENSIONS--
+mbstring
+soap
+--EXPECTF--
+*** Testing mb_convert_encoding() : Circular references ***
+
+-- Convert to JIS --
+JIS encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+  [1]=&gt;
+  string(68) &quot;GyRCRnxLXDhsJUYlLSU5JUgkRyQ5ISMbKEIwMTIzNBskQiM1IzYjNyM4IzkhIxsoQg==&quot;
+}
+
+-- Convert to EUC-JP --
+EUC-JP encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+  [1]=&gt;
+  string(52) &quot;xvzL3LjspcalraW5pcikx6S5oaMwMTIzNKO1o7ajt6O4o7mhow==&quot;
+}
+
+-- Convert to SJIS --
+SJIS encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+  [1]=&gt;
+  string(52) &quot;k/qWe4zqg2WDTINYg2eCxYK3gUIwMTIzNIJUglWCVoJXgliBQg==&quot;
+}
+
+-- Convert to UTF-8 --
+UTF-8 encoded string in base64:
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+Converted Strings:
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+
+Warning: mb_convert_encoding(): Cannot convert recursively referenced values in %s on line %d
+array(2) {
+  [0]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+  [1]=&gt;
+  string(72) &quot;5pel5pys6Kqe44OG44Kt44K544OI44Gn44GZ44CCMDEyMzTvvJXvvJbvvJfvvJjvvJnjgII=&quot;
+}
+Done
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ns1=&quot;http://soapinterop.org/&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;SOAP-ENV:Body&gt;&lt;ns1:echoStructArray&gt;&lt;param0 SOAP-ENC:arrayType=&quot;SOAP-ENC:Struct[2]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item xsi:type=&quot;SOAP-ENC:Struct&quot;&gt;&lt;varString xsi:type=&quot;xsd:string&quot;&gt;arg&lt;/varString&gt;&lt;varInt xsi:type=&quot;xsd:int&quot;&gt;34&lt;/varInt&gt;&lt;varFloat xsi:type=&quot;xsd:float&quot;&gt;325.325&lt;/varFloat&gt;&lt;/item&gt;&lt;item xsi:type=&quot;SOAP-ENC:Struct&quot;&gt;&lt;varString xsi:type=&quot;xsd:string&quot;&gt;arg&lt;/varString&gt;&lt;varInt xsi:type=&quot;xsd:int&quot;&gt;34&lt;/varInt&gt;&lt;varFloat xsi:type=&quot;xsd:float&quot;&gt;325.325&lt;/varFloat&gt;&lt;/item&gt;&lt;/param0&gt;&lt;/ns1:echoStructArray&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ns1=&quot;http://soapinterop.org/&quot; xmlns:ns2=&quot;http://soapinterop.org/xsd&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;SOAP-ENV:Body&gt;&lt;ns1:echoStructArrayResponse&gt;&lt;outputStructArray SOAP-ENC:arrayType=&quot;ns2:SOAPStruct[2]&quot; xsi:type=&quot;ns2:ArrayOfSOAPStruct&quot;&gt;&lt;item xsi:type=&quot;ns2:SOAPStruct&quot;&gt;&lt;varString xsi:type=&quot;xsd:string&quot;&gt;arg&lt;/varString&gt;&lt;varInt xsi:type=&quot;xsd:int&quot;&gt;34&lt;/varInt&gt;&lt;varFloat xsi:type=&quot;xsd:float&quot;&gt;325.325&lt;/varFloat&gt;&lt;/item&gt;&lt;item xsi:type=&quot;ns2:SOAPStruct&quot;&gt;&lt;varString xsi:type=&quot;xsd:string&quot;&gt;arg&lt;/varString&gt;&lt;varInt xsi:type=&quot;xsd:int&quot;&gt;34&lt;/varInt&gt;&lt;varFloat xsi:type=&quot;xsd:float&quot;&gt;325.325&lt;/varFloat&gt;&lt;/item&gt;&lt;/outputStructArray&gt;&lt;/ns1:echoStructArrayResponse&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;
+ok
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,1599267,0&#x27;
+export HOSTNAME=&#x27;4c1800347231&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/bugs&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker7&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=1&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;opcache.max_accelerated_files=4000&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1893.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
