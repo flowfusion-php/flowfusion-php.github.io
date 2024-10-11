@@ -1,0 +1,859 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>b675db4c56dd0de4ea1f5195d587ed90f0096ed8
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test --with-openssl --with-zlib --with-bz2 --with-curl --with-enchant --with-ffi --with-gettext --with-gmp --with-mhash --with-ldap --with-libedit --with-readline --with-snmp --with-sodium --with-xsl --with-zip
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/gd/gd.c:1372</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>[]</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 17 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+bug not reproduced when reducing
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+bug not reproduced when reducing
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+RecursiveArrayIteratorIterator::rewind
+RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;a
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(1) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;ba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;bba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+1=&gt;bbb
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;bcaa
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(throw)
+RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+3=&gt;d
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::valid
+MyRecursiveArrayIterator::valid = false
+
+Warning: Undefined variable $skip in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 169
+*** Testing strval() : usage variations  - Pass all valid char codes ***
+000102030405060708090a0b0c0d0e0f
+101112131415161718191a1b1c1d1e1f
+202122232425262728292a2b2c2d2e2f
+303132333435363738393a3b3c3d3e3f
+404142434445464748494a4b4c4d4e4f
+505152535455565758595a5b5c5d5e5f
+606162636465666768696a6b6c6d6e6f
+707172737475767778797a7b7c7d7e7f
+808182838485868788898a8b8c8d8e8f
+909192939495969798999a9b9c9d9e9f
+a0a1a2a3a4a5a6a7a8a9aaabacadaeaf
+b0b1b2b3b4b5b6b7b8b9babbbcbdbebf
+c0c1c2c3c4c5c6c7c8c9cacbcccdcecf
+d0d1d2d3d4d5d6d7d8d9dadbdcdddedf
+
+Warning: Undefined variable $se in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 216
+
+f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff
+string(11) &quot;random_var:&quot;
+array(0) {
+}
+string(16) &quot;ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß&quot;
+string(16) &quot;àáâãäåæçèéêëìíîï&quot;
+Calling function: version_compare with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+Array, Array, Array
+Error calling function version_compare: version_compare(): Argument #1 ($version1) must be of type string, array given
+Calling function: getrandmax with arguments: 
+Calling function: is_countable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+Array
+Calling function: xml_set_external_entity_ref_handler with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß, Array
+Error calling function xml_set_external_entity_ref_handler: xml_set_external_entity_ref_handler(): Argument #1 ($parser) must be of type XMLParser, string given
+Calling function: sodium_crypto_aead_aes256gcm_keygen with arguments: 
+Calling function: curl_multi_setopt with arguments: ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß, àáâãäåæçèéêëìíîï, ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+Error calling function curl_multi_setopt: curl_multi_setopt(): Argument #1 ($multi_handle) must be of type CurlMultiHandle, string given
+Calling function: sodium_crypto_kdf_derive_from_key with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+àáâãäåæçèéêëìíîï, Array, àáâãäåæçèéêëìíîï, Array
+Error calling function sodium_crypto_kdf_derive_from_key: sodium_crypto_kdf_derive_from_key(): Argument #1 ($subkey_length) must be of type int, string given
+Calling function: xml_set_processing_instruction_handler with arguments: àáâãäåæçèéêëìíîï, ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+Error calling function xml_set_processing_instruction_handler: xml_set_processing_instruction_handler(): Argument #1 ($parser) must be of type XMLParser, string given
+Calling function: hash_final with arguments: àáâãäåæçèéêëìíîï, àáâãäåæçèéêëìíîï
+Error calling function hash_final: hash_final(): Argument #1 ($context) must be of type HashContext, string given
+Calling function: is_writable with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+Array
+Error calling function is_writable: is_writable(): Argument #1 ($filename) must be of type string, array given
+Calling function: ctype_print with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+Array
+
+Deprecated: ctype_print(): Argument of type array will be interpreted as string in the future in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 40
+Calling function: gzfile with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+Array, àáâãäåæçèéêëìíîï
+Error calling function gzfile: gzfile(): Argument #1 ($filename) must be of type string, array given
+Calling function: var_export with arguments: 
+Warning: Array to string conversion in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 38
+ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß, Array
+Error calling function var_export: var_export(): Argument #2 ($return) must be of type bool, array given
+Calling function: xmlwriter_start_cdata with arguments: ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+Error calling function xmlwriter_start_cdata: xmlwriter_start_cdata(): Argument #1 ($writer) must be of type XMLWriter, string given
+Calling function: imageloadfont with arguments: ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+
+Warning: imageloadfont(): End of file while reading header in /home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php on line 40
+Calling function: imagefontwidth with arguments: àáâãäåæçèéêëìíîï
+Error calling function imagefontwidth: imagefontwidth(): Argument #1 ($font) must be of type GdFont|int, string given
+Calling function: mb_strwidth with arguments: àáâãäåæçèéêëìíîï, ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß
+Error calling function mb_strwidth: mb_strwidth(): Argument #2 ($encoding) must be a valid encoding, &quot;ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß&quot; given
+Calling function: imagecreatefromstring with arguments: àáâãäåæçèéêëìíîï
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/gd/gd.c:1372:14: runtime error: left shift of 202928483 by 7 places cannot be represented in type &#x27;int&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/gd/gd.c:1372:14 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class MyRecursiveArrayIterator extends RecursiveArrayIterator
+{
+    function getChildren(): ?RecursiveArrayIterator
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return $this-&gt;current();
+    }
+    function valid(): bool
+    {
+        if (!parent::valid())
+        {
+            echo __METHOD__ . &quot; = false\n&quot;;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+class RecursiveArrayIteratorIterator extends RecursiveIteratorIterator
+{
+    private $max_depth;
+    private $over = 0;
+    private $skip = false;
+    function __construct($it, $max_depth)
+    {
+        $this-&gt;max_depth = $max_depth;
+        parent::__construct($it, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
+    }
+    function rewind(): void
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        $this-&gt;skip = false;
+        parent::rewind();
+    }
+    function valid(): bool
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        if ($this-&gt;skip)
+        {
+            $this-&gt;skip = false;
+            $this-&gt;next();
+        }
+        return parent::valid();
+    }
+    function current(): mixed
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return parent::current();
+    }
+    function key(): int
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return parent::key();
+    }
+    function next(): void
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        parent::next();
+    }
+    function callHasChildren(): bool
+    {
+        $this-&gt;skip = false;
+        $has = parent::callHasChildren();
+        $res = $this-&gt;getDepth() &lt; $this-&gt;max_depth &amp;&amp; $has;
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;) = &quot;.($res?&quot;yes&quot;:&quot;no&quot;).&quot;/&quot;.($has?&quot;yes&quot;:&quot;no&quot;).&quot;\n&quot;;
+        if ($has &amp;&amp; !$res)
+        {
+            $this-&gt;over++;
+            if ($this-&gt;over == 2) {
+                $this-&gt;skip = true;
+            }
+        }
+        return $res;
+    }
+    function callGetChildren(): MyRecursiveArrayIterator
+    {
+        if ($this-&gt;over == 2)
+        {
+            echo __METHOD__ . &quot;(throw)\n&quot;;
+            throw new Exception(&quot;Thrown in callGetChildren()&quot;);
+        }
+        echo __METHOD__ . &quot;(ok:{$this-&gt;over})\n&quot;;
+        return new MyRecursiveArrayIterator($this-&gt;current());
+    }
+    function beginChildren(): void
+    {
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
+    }
+    function endChildren(): void
+    {
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
+    }
+}
+try
+{
+    foreach(new RecursiveArrayIteratorIterator(new MyRecursiveArrayIterator(array(&quot;a&quot;, array(&quot;ba&quot;, array(&quot;bba&quot;, &quot;bbb&quot;), array(array(&quot;bcaa&quot;), array(&quot;bcba&quot;))), array(&quot;ca&quot;), &quot;d&quot;)), 2) as $k=&gt;$v)
+    {
+        if (is_array($v)) $v = join(&#x27;&#x27;,$v);
+        echo &quot;$k=&gt;$v\n&quot;;
+    }
+}
+catch(UnexpectedValueException $e)
+{
+    echo $e-&gt;getMessage() . &quot;\n&quot;;
+}
+$fusion = $skip;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo &quot;*** Testing strval() : usage variations  - Pass all valid char codes ***\n&quot;;
+$s0 = &quot;\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f&quot;;
+$s1 = &quot;\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f&quot;;
+$s2 = &quot;\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f&quot;;
+$s3 = &quot;\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f&quot;;
+$s4 = &quot;\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f&quot;;
+$s5 = &quot;\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f&quot;;
+$s6 = &quot;\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f&quot;;
+$s7 = &quot;\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f&quot;;
+$s8 = &quot;\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f&quot;;
+$s9 = &quot;\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f&quot;;
+$sa = &quot;\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf&quot;;
+$sb = &quot;\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf&quot;;
+$sc = &quot;\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf&quot;;
+$sd = &quot;\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf&quot;;
+$fusion = &quot;\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef&quot;;
+$sf = &quot;\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;;
+echo bin2hex(strval($s0));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s1));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s2));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s3));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s4));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s5));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s6));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s7));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s8));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s9));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sa));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sb));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sc));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sd));
+echo &quot;\n&quot;;
+echo bin2hex(strval($se));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sf));
+echo &quot;\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+SPL: RecursiveIteratorIterator and catch getChildren+Test strval() function : usage variations  - Pass all valid char codes
+--INI--
+opcache.preload={PWD}/preload_inheritance_error_ind.inc
+opcache.revalidate_freq=0
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+class MyRecursiveArrayIterator extends RecursiveArrayIterator
+{
+    function getChildren(): ?RecursiveArrayIterator
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return $this-&gt;current();
+    }
+    function valid(): bool
+    {
+        if (!parent::valid())
+        {
+            echo __METHOD__ . &quot; = false\n&quot;;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+class RecursiveArrayIteratorIterator extends RecursiveIteratorIterator
+{
+    private $max_depth;
+    private $over = 0;
+    private $skip = false;
+    function __construct($it, $max_depth)
+    {
+        $this-&gt;max_depth = $max_depth;
+        parent::__construct($it, RecursiveIteratorIterator::LEAVES_ONLY, RecursiveIteratorIterator::CATCH_GET_CHILD);
+    }
+    function rewind(): void
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        $this-&gt;skip = false;
+        parent::rewind();
+    }
+    function valid(): bool
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        if ($this-&gt;skip)
+        {
+            $this-&gt;skip = false;
+            $this-&gt;next();
+        }
+        return parent::valid();
+    }
+    function current(): mixed
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return parent::current();
+    }
+    function key(): int
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        return parent::key();
+    }
+    function next(): void
+    {
+        echo __METHOD__ . &quot;\n&quot;;
+        parent::next();
+    }
+    function callHasChildren(): bool
+    {
+        $this-&gt;skip = false;
+        $has = parent::callHasChildren();
+        $res = $this-&gt;getDepth() &lt; $this-&gt;max_depth &amp;&amp; $has;
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;) = &quot;.($res?&quot;yes&quot;:&quot;no&quot;).&quot;/&quot;.($has?&quot;yes&quot;:&quot;no&quot;).&quot;\n&quot;;
+        if ($has &amp;&amp; !$res)
+        {
+            $this-&gt;over++;
+            if ($this-&gt;over == 2) {
+                $this-&gt;skip = true;
+            }
+        }
+        return $res;
+    }
+    function callGetChildren(): MyRecursiveArrayIterator
+    {
+        if ($this-&gt;over == 2)
+        {
+            echo __METHOD__ . &quot;(throw)\n&quot;;
+            throw new Exception(&quot;Thrown in callGetChildren()&quot;);
+        }
+        echo __METHOD__ . &quot;(ok:{$this-&gt;over})\n&quot;;
+        return new MyRecursiveArrayIterator($this-&gt;current());
+    }
+    function beginChildren(): void
+    {
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
+    }
+    function endChildren(): void
+    {
+        echo __METHOD__ . &quot;(&quot;.$this-&gt;getDepth().&quot;)\n&quot;;
+    }
+}
+try
+{
+    foreach(new RecursiveArrayIteratorIterator(new MyRecursiveArrayIterator(array(&quot;a&quot;, array(&quot;ba&quot;, array(&quot;bba&quot;, &quot;bbb&quot;), array(array(&quot;bcaa&quot;), array(&quot;bcba&quot;))), array(&quot;ca&quot;), &quot;d&quot;)), 2) as $k=&gt;$v)
+    {
+        if (is_array($v)) $v = join(&#x27;&#x27;,$v);
+        echo &quot;$k=&gt;$v\n&quot;;
+    }
+}
+catch(UnexpectedValueException $e)
+{
+    echo $e-&gt;getMessage() . &quot;\n&quot;;
+}
+$fusion = $skip;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+echo &quot;*** Testing strval() : usage variations  - Pass all valid char codes ***\n&quot;;
+$s0 = &quot;\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f&quot;;
+$s1 = &quot;\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f&quot;;
+$s2 = &quot;\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f&quot;;
+$s3 = &quot;\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f&quot;;
+$s4 = &quot;\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f&quot;;
+$s5 = &quot;\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f&quot;;
+$s6 = &quot;\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f&quot;;
+$s7 = &quot;\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f&quot;;
+$s8 = &quot;\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f&quot;;
+$s9 = &quot;\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f&quot;;
+$sa = &quot;\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf&quot;;
+$sb = &quot;\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf&quot;;
+$sc = &quot;\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf&quot;;
+$sd = &quot;\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf&quot;;
+$fusion = &quot;\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef&quot;;
+$sf = &quot;\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;;
+echo bin2hex(strval($s0));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s1));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s2));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s3));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s4));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s5));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s6));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s7));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s8));
+echo &quot;\n&quot;;
+echo bin2hex(strval($s9));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sa));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sb));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sc));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sd));
+echo &quot;\n&quot;;
+echo bin2hex(strval($se));
+echo &quot;\n&quot;;
+echo bin2hex(strval($sf));
+echo &quot;\n&quot;;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXPECT--
+RecursiveArrayIteratorIterator::rewind
+RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;a
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(1) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;ba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;bba
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/no
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+1=&gt;bbb
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(1) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(ok:0)
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::beginChildren(2)
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+0=&gt;bcaa
+RecursiveArrayIteratorIterator::next
+RecursiveArrayIteratorIterator::callHasChildren(2) = no/yes
+RecursiveArrayIteratorIterator::valid
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(2)
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::endChildren(1)
+RecursiveArrayIteratorIterator::callHasChildren(0) = yes/yes
+RecursiveArrayIteratorIterator::callGetChildren(throw)
+RecursiveArrayIteratorIterator::callHasChildren(0) = no/no
+RecursiveArrayIteratorIterator::current
+RecursiveArrayIteratorIterator::key
+3=&gt;d
+RecursiveArrayIteratorIterator::next
+MyRecursiveArrayIterator::valid = false
+RecursiveArrayIteratorIterator::valid
+MyRecursiveArrayIterator::valid = false
+*** Testing strval() : usage variations  - Pass all valid char codes ***
+000102030405060708090a0b0c0d0e0f
+101112131415161718191a1b1c1d1e1f
+202122232425262728292a2b2c2d2e2f
+303132333435363738393a3b3c3d3e3f
+404142434445464748494a4b4c4d4e4f
+505152535455565758595a5b5c5d5e5f
+606162636465666768696a6b6c6d6e6f
+707172737475767778797a7b7c7d7e7f
+808182838485868788898a8b8c8d8e8f
+909192939495969798999a9b9c9d9e9f
+a0a1a2a3a4a5a6a7a8a9aaabacadaeaf
+b0b1b2b3b4b5b6b7b8b9babbbcbdbebf
+c0c1c2c3c4c5c6c7c8c9cacbcccdcecf
+d0d1d2d3d4d5d6d7d8d9dadbdcdddedf
+e0e1e2e3e4e5e6e7e8e9eaebecedeeef
+f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,365636,0&#x27;
+export HOSTNAME=&#x27;5e1b6fbd118f&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker10&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=128M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;opcache.preload=/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/preload_inheritance_error_ind.inc&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused2109.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
