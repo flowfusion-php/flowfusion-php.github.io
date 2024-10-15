@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Crash Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        pre {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output, .keywords, .bughit, .crash-site, .script, .phpt, .testcase {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHP Crash Report</h1>
+
+        <div class="php-commit">
+            <div class="section-title">PHP Commit:</div>
+            <pre>41c55d18f5afa091bec20043743f821522a0b2e6
+</pre>
+        </div>
+
+        <div class="configure">
+            <div class="section-title">Compiling Flags:</div>
+            <pre> ./configure --enable-debug --enable-address-sanitizer --enable-undefined-sanitizer --enable-re2c-cgoto --enable-fpm --enable-litespeed --enable-phpdbg-debug --enable-zts --enable-bcmath --enable-calendar --enable-dba --enable-dl-test --enable-exif --enable-ftp --enable-gd --enable-gd-jis-conv --enable-mbstring --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvmsg --enable-zend-test --with-openssl --with-zlib --with-bz2 --with-curl --with-enchant --with-ffi --with-gettext --with-gmp --with-mhash --with-ldap --with-libedit --with-readline --with-snmp --with-sodium --with-xsl --with-zip
+</pre>
+        </div>
+
+        <div class="crash-site">
+            <div class="section-title">Crash Site:</div>
+            <pre>/php-src/ext/date/lib/tm2unixtime.c:209</pre>
+        </div>
+
+        <div class="keywords">
+            <div class="section-title">Keywords:</div>
+            <pre>['integer overflow']</pre>
+        </div>
+
+        <div class="bughit">
+            <div class="section-title">Bug Hit Count:</div>
+            <pre>this bug has been detected for 1 times</pre>
+        </div>
+
+        <div class="rconfig">
+            <div class="section-title">Reproducing config:</div>
+            <pre>
+
+            </pre>
+        </div>
+
+        <div class="rphp">
+            <div class="section-title">Reproducing PHP (best-effort reduced):</div>
+            <pre>
+&lt;?php
+$tStamp = mktime (17, 17, 17, 1, PHP_INT_MAX, 1970);
+            </pre>
+        </div>
+
+        <div class="bugout">
+            <div class="section-title">Output:</div>
+            <pre>
+TZ=America/Mendoza - wrong day.
+tStamp=Sunday 1992-10-18 17:17:17 -02 1
+result=Sunday 1992-10-25 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Catamarca - wrong day.
+tStamp=Sunday 1990-10-21 17:17:17 -02 1
+result=Sunday 1990-10-28 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Cordoba - wrong day.
+tStamp=Sunday 1990-10-21 17:17:17 -02 1
+result=Sunday 1990-10-28 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Rosario - wrong day.
+tStamp=Tuesday 1991-10-15 17:17:17 -04 0
+result=Tuesday 1991-10-22 00:00:00 -02 1
+wanted=Tuesday           00:00:00
+
+TZ=Europe/Vienna - wrong day - giving unexpected results, at
+least on my system :-)
+tStamp=Thursday 1980-04-03 17:17:17 CET 0
+result=Thursday 1980-04-10 00:00:00 CEST 1
+wanted=Thursday             00:00:00
+
+TZ=Asia/Baku - wrong day.
+tStamp=Sunday 1992-09-20 17:17:17 +04 1
+result=Monday 1992-09-28 00:00:00 +04 0
+wanted=Monday              00:00:00
+
+TZ=America/Noronha - wrong day.
+tStamp=Friday 1999-10-01 17:17:17 -02 0
+result=Friday 1999-10-08 00:00:00 -01 1
+wanted=Friday              00:00:00
+
+TZ=America/Havana - wrong day.
+/home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:209:14: runtime error: signed integer overflow: 9223372036854775807 + 719468 cannot be represented in type &#x27;long long&#x27;
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/phpfuzz/WorkSpace/flowfusion/php-src/ext/date/lib/tm2unixtime.c:209:14 in
+            </pre>
+        </div>
+
+        <div class="php">
+            <div class="section-title">Reproducing PHP:</div>
+            <pre>
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+print &quot;TZ=America/Mendoza - wrong day.\n&quot;;
+$tStamp = mktime (17, 17, 17, 1, 8327, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Catamarca - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Catamarca&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7599, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Cordoba - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Cordoba&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7599, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Rosario - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Rosario&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7958, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Tuesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Tuesday           00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Vienna - wrong day - giving unexpected results, at
+least on my system :-)\n&quot;;
+date_default_timezone_set(&quot;Europe/Vienna&quot;);
+$tStamp = mktime (17, 17, 17, 1, 3746, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Baku - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Baku&quot;);
+$tStamp = mktime (17, 17, 17, 1, 8299, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;second Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Noronha - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Noronha&quot;);
+$tStamp = mktime (17, 17, 17, 1, 10866, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Havana - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Havana&quot;);
+$tStamp = mktime (17, 17, 17, 1, PHP_INT_MAX, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Tallinn - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Europe/Tallinn&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11777, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Saturday          00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Jerusalem - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Jerusalem&quot;);
+$tStamp = mktime (17, 17, 17, 1, 13056, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Vilnius - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Europe/Vilnius&quot;);
+$tStamp = mktime (17, 17, 17, 1, 12140, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday            00:00:00\n\n&quot;;
+print &quot;TZ=Pacific/Kwajalein - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Pacific/Kwajalein&quot;);
+$tStamp = mktime (17, 17, 17, 1, 8627, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Ulan_Bator - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Ulan_Bator&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11588, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Saturday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Cancun - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Cancun&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11785, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Mexico_City - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Mexico_City&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11781, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Wednesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Wednesday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Mazatlan - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Mazatlan&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11780, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Tuesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Tuesday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Chihuahua - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Chihuahua&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11782, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Kuala_Lumpur - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Kuala_Lumpur&quot;);
+$tStamp = mktime (17, 17, 17, 1, 4380, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday            00:00:00\n\n&quot;;
+print &quot;TZ=Pacific/Chatham - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Pacific/Chatham&quot;);
+$tStamp = mktime (17, 17, 17, 1, 1762, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Lima - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Lima&quot;);
+$tStamp = mktime (17, 17, 17, 1, 5839, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Karachi - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Karachi&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11783, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Asuncion - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Asuncion&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11746, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Wednesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Wednesday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Singapore - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Singapore&quot;);
+$tStamp = mktime (17, 17, 17, 1, 4383, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=America/Montevideo - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Montevideo&quot;);
+$tStamp = mktime (17, 17, 17, 1, 12678, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+$fusion = $tStamp;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+Class C {}
+$a = &#x27;foo&#x27;;
+C::$fusion =&amp; $a;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+
+            </pre>
+        </div>
+
+        <div class="phpt">
+            <div class="section-title">Reproducing PHPT:</div>
+            <pre>
+--TEST--
+Bug #33414 [1] (Comprehensive list of incorrect days returned after strotime() / date() tests)+Assigning a non-existent static property by reference
+--INI--
+date.timezone=America/Mendoza
+memory_limit=20M
+session.use_strict_mode=1
+--FILE--
+&lt;?php
+function fuzz_internal_interface($vars) {
+    $result = array();
+    // Get all loaded extensions
+    $extensions = get_loaded_extensions();
+    // Initialize an array to hold all internal and extension functions
+    $allInternalFunctions = array();
+    // Get all defined functions
+    $definedFunctions = get_defined_functions();
+    $internalFunctions = $definedFunctions[&#x27;internal&#x27;];
+    $allInternalFunctions = array_merge($allInternalFunctions, $internalFunctions);
+    // Iterate over each extension to get its functions
+    foreach ($extensions as $extension) {
+        $functions = get_extension_funcs($extension);
+        if ($functions !== false) {
+            $allInternalFunctions = array_merge($allInternalFunctions, $functions);
+        }
+    }
+    // Filter out POSIX-related functions
+    $allInternalFunctions = array_filter($allInternalFunctions, function($func) {
+        return strpos($func, &#x27;posix_&#x27;) !== 0 and $func !== &#x27;zend_terminate_string&#x27; and $func !== &#x27;zend_test_crash&#x27;;
+    });
+    foreach ($vars as $i =&gt; $v1) {
+        foreach ($vars as $j =&gt; $v2) {
+            try {
+                // Pick a random internal function
+                $randomFunction = $allInternalFunctions[array_rand($allInternalFunctions)];
+                // Get reflection of the function to determine the number of parameters
+                $reflection = new ReflectionFunction($randomFunction);
+                $numParams = $reflection-&gt;getNumberOfParameters();
+                // Prepare arguments alternating between v1 and v2
+                $args = [];
+                for ($k = 0; $k &lt; $numParams; $k++) {
+                    $args[] = ($k % 2 == 0) ? $v1 : $v2;
+                }
+                // Print out the function being called and arguments
+                echo &quot;Calling function: $randomFunction with arguments: &quot;;
+                echo implode(&#x27;, &#x27;, $args) . &quot;\n&quot;;
+                // Call the function with prepared arguments
+                $result[$randomFunction][] = $reflection-&gt;invokeArgs($args);
+            } catch (\Throwable $e) {
+                // Handle any exceptions or errors
+                echo &quot;Error calling function $randomFunction: &quot; . $e-&gt;getMessage() . &quot;\n&quot;;
+            }
+        }
+    }
+    return $result;
+}
+function var_fusion($var1, $var2, $var3) {
+    $result = array();
+    $vars = [$var1, $var2, $var3];
+    try {
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+        fuzz_internal_interface($vars);
+    } catch (ReflectionException $e) {
+        echo(&quot;Error: &quot; . $e-&gt;getMessage());
+    }
+    return $result;
+}
+    
+print &quot;TZ=America/Mendoza - wrong day.\n&quot;;
+$tStamp = mktime (17, 17, 17, 1, 8327, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Catamarca - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Catamarca&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7599, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Cordoba - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Cordoba&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7599, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Rosario - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Rosario&quot;);
+$tStamp = mktime (17, 17, 17, 1, 7958, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Tuesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Tuesday           00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Vienna - wrong day - giving unexpected results, at
+least on my system :-)\n&quot;;
+date_default_timezone_set(&quot;Europe/Vienna&quot;);
+$tStamp = mktime (17, 17, 17, 1, 3746, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Baku - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Baku&quot;);
+$tStamp = mktime (17, 17, 17, 1, 8299, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;second Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Noronha - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Noronha&quot;);
+$tStamp = mktime (17, 17, 17, 1, 10866, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday              00:00:00\n\n&quot;;
+print &quot;TZ=America/Havana - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Havana&quot;);
+$tStamp = mktime (17, 17, 17, 1, PHP_INT_MAX, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Tallinn - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Europe/Tallinn&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11777, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Saturday          00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Jerusalem - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Jerusalem&quot;);
+$tStamp = mktime (17, 17, 17, 1, 13056, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=Europe/Vilnius - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Europe/Vilnius&quot;);
+$tStamp = mktime (17, 17, 17, 1, 12140, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday            00:00:00\n\n&quot;;
+print &quot;TZ=Pacific/Kwajalein - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Pacific/Kwajalein&quot;);
+$tStamp = mktime (17, 17, 17, 1, 8627, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Ulan_Bator - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Ulan_Bator&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11588, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Saturday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Saturday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Cancun - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Cancun&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11785, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Sunday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Sunday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Mexico_City - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Mexico_City&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11781, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Wednesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Wednesday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Mazatlan - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Mazatlan&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11780, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Tuesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Tuesday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Chihuahua - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Chihuahua&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11782, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Kuala_Lumpur - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Kuala_Lumpur&quot;);
+$tStamp = mktime (17, 17, 17, 1, 4380, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday            00:00:00\n\n&quot;;
+print &quot;TZ=Pacific/Chatham - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Pacific/Chatham&quot;);
+$tStamp = mktime (17, 17, 17, 1, 1762, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Monday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Monday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Lima - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Lima&quot;);
+$tStamp = mktime (17, 17, 17, 1, 5839, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Karachi - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Karachi&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11783, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Friday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Friday            00:00:00\n\n&quot;;
+print &quot;TZ=America/Asuncion - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Asuncion&quot;);
+$tStamp = mktime (17, 17, 17, 1, 11746, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Wednesday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Wednesday            00:00:00\n\n&quot;;
+print &quot;TZ=Asia/Singapore - wrong day.\n&quot;;
+date_default_timezone_set(&quot;Asia/Singapore&quot;);
+$tStamp = mktime (17, 17, 17, 1, 4383, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+print &quot;TZ=America/Montevideo - wrong day.\n&quot;;
+date_default_timezone_set(&quot;America/Montevideo&quot;);
+$tStamp = mktime (17, 17, 17, 1, 12678, 1970);
+print &quot;tStamp=&quot;. date(&quot;l Y-m-d H:i:s T I&quot;, $tStamp). &quot;\n&quot;;
+$strtotime_tstamp = strtotime(&quot;next Thursday&quot;, $tStamp);
+print &quot;result=&quot;.date(&quot;l Y-m-d H:i:s T I&quot;, $strtotime_tstamp).&quot;\n&quot;;
+print &quot;wanted=Thursday             00:00:00\n\n&quot;;
+$fusion = $tStamp;
+$v1=$definedVars[array_rand($definedVars = get_defined_vars())];
+Class C {}
+$a = &#x27;foo&#x27;;
+C::$fusion =&amp; $a;
+$v2=$definedVars[array_rand($definedVars = get_defined_vars())];
+$v3=$definedVars[array_rand($definedVars = get_defined_vars())];
+var_dump(&#x27;random_var:&#x27;,$v1,$v2,$v3);
+var_fusion($v1,$v2,$v3);
+?&gt;
+--EXPECTF--
+TZ=America/Mendoza - wrong day.
+tStamp=Sunday 1992-10-18 17:17:17 -02 1
+result=Sunday 1992-10-25 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Catamarca - wrong day.
+tStamp=Sunday 1990-10-21 17:17:17 -02 1
+result=Sunday 1990-10-28 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Cordoba - wrong day.
+tStamp=Sunday 1990-10-21 17:17:17 -02 1
+result=Sunday 1990-10-28 00:00:00 -02 1
+wanted=Sunday              00:00:00
+
+TZ=America/Rosario - wrong day.
+tStamp=Tuesday 1991-10-15 17:17:17 -04 0
+result=Tuesday 1991-10-22 00:00:00 -02 1
+wanted=Tuesday           00:00:00
+
+TZ=Europe/Vienna - wrong day - giving unexpected results, at
+least on my system :-)
+tStamp=Thursday 1980-04-03 17:17:17 CET 0
+result=Thursday 1980-04-10 00:00:00 CEST 1
+wanted=Thursday             00:00:00
+
+TZ=Asia/Baku - wrong day.
+tStamp=Sunday 1992-09-20 17:17:17 +04 1
+result=Monday 1992-09-28 00:00:00 +04 0
+wanted=Monday              00:00:00
+
+TZ=America/Noronha - wrong day.
+tStamp=Friday 1999-10-01 17:17:17 -02 0
+result=Friday 1999-10-08 00:00:00 -01 1
+wanted=Friday              00:00:00
+
+TZ=America/Havana - wrong day.
+tStamp=Thursday 2004-10-28 17:17:17 CDT 1
+result=Thursday 2004-11-04 00:00:00 CDT 1
+wanted=Thursday             00:00:00
+
+TZ=Europe/Tallinn - wrong day.
+tStamp=Saturday 2002-03-30 17:17:17 EET 0
+result=Saturday 2002-04-06 00:00:00 EEST 1
+wanted=Saturday          00:00:00
+
+TZ=Asia/Jerusalem - wrong day.
+tStamp=Thursday 2005-09-29 17:17:17 IDT 1
+result=Thursday 2005-10-06 00:00:00 IDT 1
+wanted=Thursday             00:00:00
+
+TZ=Europe/Vilnius - wrong day.
+tStamp=Friday 2003-03-28 17:17:17 EET 0
+result=Friday 2003-04-04 00:00:00 EEST 1
+wanted=Friday            00:00:00
+
+TZ=Pacific/Kwajalein - wrong day.
+tStamp=Saturday 1993-08-14 17:17:17 -12 0
+result=Sunday 1993-08-22 00:00:00 +12 0
+wanted=Sunday            00:00:00
+
+TZ=Asia/Ulan_Bator - wrong day.
+tStamp=Saturday 2001-09-22 17:17:17 +09 1
+result=Saturday 2001-09-29 00:00:00 +09 1
+wanted=Saturday            00:00:00
+
+TZ=America/Cancun - wrong day.
+tStamp=Sunday 2002-04-07 17:17:17 CDT 1
+result=Sunday 2002-04-14 00:00:00 CDT 1
+wanted=Sunday            00:00:00
+
+TZ=America/Mexico_City - wrong day.
+tStamp=Wednesday 2002-04-03 17:17:17 CST 0
+result=Wednesday 2002-04-10 00:00:00 CDT 1
+wanted=Wednesday            00:00:00
+
+TZ=America/Mazatlan - wrong day.
+tStamp=Tuesday 2002-04-02 17:17:17 MST 0
+result=Tuesday 2002-04-09 00:00:00 MDT 1
+wanted=Tuesday            00:00:00
+
+TZ=America/Chihuahua - wrong day.
+tStamp=Thursday 2002-04-04 17:17:17 MST 0
+result=Thursday 2002-04-11 00:00:00 MDT 1
+wanted=Thursday            00:00:00
+
+TZ=Asia/Kuala_Lumpur - wrong day.
+tStamp=Monday 1981-12-28 17:17:17 +0730 0
+result=Monday 1982-01-04 00:00:00 +08 0
+wanted=Monday            00:00:00
+
+TZ=Pacific/Chatham - wrong day.
+tStamp=Monday 1974-10-28 17:17:17 +1245 0
+result=Monday 1974-11-04 00:00:00 +1345 1
+wanted=Monday            00:00:00
+
+TZ=America/Lima - wrong day.
+tStamp=Thursday 1985-12-26 17:17:17 -05 0
+result=Thursday 1986-01-02 00:00:00 -04 1
+wanted=Thursday            00:00:00
+
+TZ=Asia/Karachi - wrong day.
+tStamp=Friday 2002-04-05 17:17:17 PKT 0
+result=Friday 2002-04-12 00:00:00 PKST 1
+wanted=Friday            00:00:00
+
+TZ=America/Asuncion - wrong day.
+tStamp=Wednesday 2002-02-27 17:17:17 -03 1
+result=Wednesday 2002-03-06 00:00:00 -03 1
+wanted=Wednesday            00:00:00
+
+TZ=Asia/Singapore - wrong day.
+tStamp=Thursday 1981-12-31 17:17:17 +0730 0
+result=Thursday 1982-01-07 00:00:00 +08 0
+wanted=Thursday             00:00:00
+
+TZ=America/Montevideo - wrong day.
+tStamp=Thursday 2004-09-16 17:17:17 -03 0
+result=Thursday 2004-09-23 00:00:00 -02 1
+wanted=Thursday             00:00:00
+Fatal error: Uncaught Error: Access to undeclared static property C::$p in %s:%d
+Stack trace:
+#0 {main}
+  thrown in %s on line 4
+
+            </pre>
+        </div>
+
+        <div class="script">
+            <div class="section-title">Reproducing Script:</div>
+            <pre>
+#!/bin/sh
+
+export TEST_PHP_SRCDIR=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export CC=&#x27;clang-15&#x27;
+export TEST_PHP_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export SHELL=&#x27;/bin/sh&#x27;
+export TERM_PROGRAM_VERSION=&#x27;3.2a&#x27;
+export TMUX=&#x27;/tmp/tmux-1000/default,365636,0&#x27;
+export HOSTNAME=&#x27;5e1b6fbd118f&#x27;
+export PWD=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src&#x27;
+export MAKEOVERRIDES=&#x27;${-*-command-variables-*-}&#x27;
+export HOME=&#x27;/home/phpfuzz&#x27;
+export LS_COLORS=&#x27;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:&#x27;
+export MFLAGS=&#x27;&#x27;
+export LESSCLOSE=&#x27;/usr/bin/lesspipe %s %s&#x27;
+export MAKEFLAGS=&#x27; -- TEST_PHP_ARGS=-j16&#x27;
+export TERM=&#x27;screen&#x27;
+export LESSOPEN=&#x27;| /usr/bin/lesspipe %s&#x27;
+export TMUX_PANE=&#x27;%0&#x27;
+export SHLVL=&#x27;3&#x27;
+export MAKELEVEL=&#x27;1&#x27;
+export LC_CTYPE=&#x27;C.UTF-8&#x27;
+export PATH=&#x27;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#x27;
+export OLDPWD=&#x27;/home/phpfuzz/WorkSpace&#x27;
+export TEST_PHP_ARGS=&#x27;-j16&#x27;
+export TERM_PROGRAM=&#x27;tmux&#x27;
+export _=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;
+export TEMP=&#x27;/tmp&#x27;
+export SKIP_ONLINE_TESTS=&#x27;1&#x27;
+export TEST_PHP_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHP_CGI_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;
+export TEST_PHP_CGI_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cgi/php-cgi&#x27;\&#x27;&#x27;&#x27;
+export TEST_PHPDBG_EXECUTABLE=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;
+export TEST_PHPDBG_EXECUTABLE_ESCAPED=&#x27;&#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/phpdbg/phpdbg&#x27;\&#x27;&#x27;&#x27;
+export REDIRECT_STATUS=&#x27;1&#x27;
+export QUERY_STRING=&#x27;&#x27;
+export PATH_TRANSLATED=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&#x27;
+export SCRIPT_FILENAME=&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&#x27;
+export REQUEST_METHOD=&#x27;GET&#x27;
+export CONTENT_TYPE=&#x27;&#x27;
+export CONTENT_LENGTH=&#x27;&#x27;
+export TZ=&#x27;&#x27;
+export TEST_PHP_EXTRA_ARGS=&#x27; -n -c &#x27;\&#x27;&#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;\&#x27;&#x27;  -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot;&#x27;
+export HTTP_COOKIE=&#x27;&#x27;
+
+case &quot;$1&quot; in
+&quot;gdb&quot;)
+    gdb --args &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&quot;  2&gt;&amp;1
+    ;;
+&quot;lldb&quot;)
+    lldb -- &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&quot;  2&gt;&amp;1
+    ;;
+&quot;valgrind&quot;)
+    USE_ZEND_ALLOC=0 valgrind $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&quot;  2&gt;&amp;1
+    ;;
+&quot;rr&quot;)
+    rr record $2 &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&quot;  2&gt;&amp;1
+    ;;
+*)
+    &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/sapi/cli/php&#x27;  -n -c &#x27;/home/phpfuzz/WorkSpace/flowfusion/php-src/tmp-php.ini&#x27;   -d &quot;opcache.cache_id=worker2&quot; -d &quot;output_handler=&quot; -d &quot;open_basedir=&quot; -d &quot;disable_functions=&quot; -d &quot;output_buffering=Off&quot; -d &quot;error_reporting=30719&quot; -d &quot;display_errors=1&quot; -d &quot;display_startup_errors=1&quot; -d &quot;log_errors=0&quot; -d &quot;html_errors=0&quot; -d &quot;track_errors=0&quot; -d &quot;report_memleaks=1&quot; -d &quot;report_zend_debug=0&quot; -d &quot;docref_root=&quot; -d &quot;docref_ext=.html&quot; -d &quot;error_prepend_string=&quot; -d &quot;error_append_string=&quot; -d &quot;auto_prepend_file=&quot; -d &quot;auto_append_file=&quot; -d &quot;ignore_repeated_errors=0&quot; -d &quot;precision=14&quot; -d &quot;serialize_precision=-1&quot; -d &quot;memory_limit=20M&quot; -d &quot;opcache.fast_shutdown=0&quot; -d &quot;opcache.file_update_protection=0&quot; -d &quot;opcache.revalidate_freq=0&quot; -d &quot;opcache.jit_hot_loop=1&quot; -d &quot;opcache.jit_hot_func=1&quot; -d &quot;opcache.jit_hot_return=1&quot; -d &quot;opcache.jit_hot_side_exit=1&quot; -d &quot;opcache.jit_max_root_traces=100000&quot; -d &quot;opcache.jit_max_side_traces=100000&quot; -d &quot;opcache.jit_max_exit_counters=100000&quot; -d &quot;opcache.protect_memory=1&quot; -d &quot;zend.assertions=1&quot; -d &quot;zend.exception_ignore_args=0&quot; -d &quot;zend.exception_string_param_max_len=15&quot; -d &quot;short_open_tag=0&quot; -d &quot;extension_dir=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/&quot; -d &quot;zend_extension=/home/phpfuzz/WorkSpace/flowfusion/php-src/modules/opcache.so&quot; -d &quot;session.auto_start=0&quot; -d &quot;zlib.output_compression=Off&quot; -d &quot;date.timezone=America/Mendoza&quot; -d &quot;session.use_strict_mode=1&quot; -f &quot;/home/phpfuzz/WorkSpace/flowfusion/php-src/tests/fused/fused1282.php&quot;  2&gt;&amp;1
+    ;;
+esac
+            </pre>
+        </div>
+
+    </div>
+</body>
+</html>
